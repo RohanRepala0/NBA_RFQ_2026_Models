@@ -4,7 +4,7 @@ Point projections for every NBA player whose role changed this offseason, compar
 
 - **League-wide:** [`docs/CATALOG.md`](docs/CATALOG.md) lists **152 offseason role changes** across 29 teams. They're tagged by usage tier (high / medium / low) and by situation: *arrival* (new team), *vacuum* (a star left, so the remaining players' usage grows) or *squeeze* (a star arrived, so it shrinks).
 - **Case studies:** Giannis to Miami and Kawhi to Toronto, with hand-reviewed minutes.
-- **The waiting list:** [`docs/BOARD.md`](docs/BOARD.md) shows the thesis, projection and fair "N+ points" prices for each situation, and fills in the market as lines post.
+- **The waiting list:** [`docs/BOARD.md`](docs/BOARD.md) shows the thesis, projection and fair "N+ points" prices for each situation, and fills in the market as lines post. There's also an interactive version: [Offseason Usage Board](https://claude.ai/artifact/PrSUHQ8ouReBWT3E3ybbGX).
 
 Research only: this tool doesn't connect to any venue account and doesn't place orders. Every projection and signal is logged before tip and graded afterwards with CLV and calibration. See `HANDOFF.md` for the spec, rules and open decisions.
 
