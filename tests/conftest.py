@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from nba_cold_start.sgo_client import BudgetGuard, RateLimiter, SGOClient
-from nba_cold_start.storage import Storage
+from cold_start_usage.sgo_client import BudgetGuard, RateLimiter, SGOClient
+from cold_start_usage.storage import Storage
 from tests.fixtures.synthetic import events_response, synthetic_event
 
 FAKE_KEY = "test-key-should-never-appear-0123456789"
@@ -47,7 +47,7 @@ class FakeTransport:
 @pytest.fixture(autouse=True)
 def _isolated_output_dirs(tmp_path, monkeypatch):
     """Tests never write into the repo's data/ or reports/ folders."""
-    from nba_cold_start import config
+    from cold_start_usage import config
     monkeypatch.setattr(config, "RAW_DIR", tmp_path / "raw")
     monkeypatch.setattr(config, "REPORTS_DIR", tmp_path / "reports")
     monkeypatch.setattr(config, "BOOKS_FILE", tmp_path / "books.json")   # undiscovered by default
@@ -67,8 +67,8 @@ def storage():
 @pytest.fixture
 def make_client():
     def _make(transport: FakeTransport, hard_stop: int = 2200, storage: Storage | None = None):
-        from nba_cold_start.pipeline import ledger_for
-        from nba_cold_start.storage import utcnow
+        from cold_start_usage.pipeline import ledger_for
+        from cold_start_usage.storage import utcnow
         sleeps: list[float] = []
         client = SGOClient(api_key=FAKE_KEY, transport=transport, guard=BudgetGuard(hard_stop),
                            limiter=RateLimiter(per_minute=1000, sleep=sleeps.append),

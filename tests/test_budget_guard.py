@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 import requests
 
-from nba_cold_start.sgo_client import (BudgetExceeded, BudgetGuard, MissingAPIKey, RateLimiter,
+from cold_start_usage.sgo_client import (BudgetExceeded, BudgetGuard, MissingAPIKey, RateLimiter,
                                        SGOClient, SGOError, Usage)
 from tests.conftest import FAKE_KEY, FakeTransport, usage_body
 from tests.fixtures.synthetic import events_response, synthetic_event
@@ -40,7 +40,7 @@ def test_pagination_stops_on_short_page_and_counts_objects(make_client):
     pages = [events_response([ev, ev], next_cursor="c1"), events_response([ev])]
     transport = FakeTransport(used=0, events=pages)
     client = make_client(transport)
-    import nba_cold_start.config as config
+    import cold_start_usage.config as config
     old = config.EVENTS_PAGE_LIMIT
     config.EVENTS_PAGE_LIMIT = 2
     try:
@@ -112,7 +112,7 @@ def test_api_key_never_exposed(make_client, monkeypatch):
 
 def test_missing_key(monkeypatch, tmp_path):
     monkeypatch.delenv("SPORTS_ODDS_API_KEY", raising=False)
-    monkeypatch.setattr("nba_cold_start.config.REPO_DIR", tmp_path)
+    monkeypatch.setattr("cold_start_usage.config.REPO_DIR", tmp_path)
     with pytest.raises(MissingAPIKey):
         SGOClient()
 

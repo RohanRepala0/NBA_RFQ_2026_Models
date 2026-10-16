@@ -4,8 +4,8 @@ Every venue below was checked for a public, no-account way to read NBA player-po
 
 | Venue | Public market data | NBA player points | How this project reads it |
 |---|---|---|---|
-| **Kalshi** | Yes. `GET https://api.elections.kalshi.com/trade-api/v2/markets`, no key | Series `KXNBAPTS` ("NBA Player Points"), plus rebounds, assists, PRA, threes, doubles. Ladders step by 5: "Paul George: 25+ points" (strike 24.5). They have run on preseason games; regular-season ladders weren't open yet at the last check. | `nba_cold_start/kalshi.py`, `cli kalshi`, `cli venues`; the board prices Kalshi rungs directly |
-| **Polymarket** | Yes. Gamma API (`/public-search`, `/events`) and the CLOB order book (`/book`), no key | Each game is an event (`nba-bos-det-2026-10-20`) with moneyline, spreads, totals and a few player props: "Jayson Tatum: Points O/U 26.5". Books are thin and fees are on (taker base fee per market). | `nba_cold_start/polymarket.py`, `cli venues` (with order-book depth) |
+| **Kalshi** | Yes. `GET https://api.elections.kalshi.com/trade-api/v2/markets`, no key | Series `KXNBAPTS` ("NBA Player Points"), plus rebounds, assists, PRA, threes, doubles. Ladders step by 5: "Paul George: 25+ points" (strike 24.5). They have run on preseason games; regular-season ladders weren't open yet at the last check. | `cold_start_usage/kalshi.py`, `cli kalshi`, `cli venues`; the board prices Kalshi rungs directly |
+| **Polymarket** | Yes. Gamma API (`/public-search`, `/events`) and the CLOB order book (`/book`), no key | Each game is an event (`nba-bos-det-2026-10-20`) with moneyline, spreads, totals and a few player props: "Jayson Tatum: Points O/U 26.5". Books are thin and fees are on (taker base fee per market). | `cold_start_usage/polymarket.py`, `cli venues` (with order-book depth) |
 | **Novig** | No public API found | Yes, in the app | Only through a licensed aggregator (SportsGameOdds carries `novig` on higher plans) |
 | **ProphetX** | Partner-only API | Yes | Through an aggregator (SportsGameOdds `prophetexchange`) |
 | **Sporttrade** | No public API found | Yes | Through an aggregator (SportsGameOdds `sporttrade`) |

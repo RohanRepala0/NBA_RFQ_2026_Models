@@ -20,7 +20,7 @@ from .players import name_key
 
 GAMMA = "https://gamma-api.polymarket.com"
 CLOB = "https://clob.polymarket.com"
-HEADERS = {"User-Agent": "nba-cold-start-research/1.0"}
+HEADERS = {"User-Agent": "cold-start-usage-research/1.0"}
 POINTS_RE = re.compile(r"^(?P<name>.+?):\s*Points O/U\s*(?P<line>\d+(?:\.\d+)?)\s*$", re.I)
 NICK = {abbr: nick.title() for nick, abbr in TEAM_NICKNAMES.items()}
 NICK.update({"POR": "Trail Blazers", "PHI": "76ers"})

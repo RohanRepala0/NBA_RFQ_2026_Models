@@ -5,13 +5,13 @@ from datetime import timedelta
 
 import pytest
 
-from nba_cold_start.cli import main
-from nba_cold_start.grade import graded_signals, summarize
-from nba_cold_start.pipeline import (fetch_results, run_projections, run_signals, snapshot_due,
+from cold_start_usage.cli import main
+from cold_start_usage.grade import graded_signals, summarize
+from cold_start_usage.pipeline import (fetch_results, run_projections, run_signals, snapshot_due,
                                      snapshot_from_file)
-from nba_cold_start.watchlist import watchlist_rows
-from nba_cold_start.report import build_report, write_report
-from nba_cold_start.consensus import venue_quotes
+from cold_start_usage.watchlist import watchlist_rows
+from cold_start_usage.report import build_report, write_report
+from cold_start_usage.consensus import venue_quotes
 from tests.conftest import FakeTransport
 from tests.fixtures.synthetic import EVENT_ID, FETCHED, TIP, events_response, synthetic_event
 
@@ -120,8 +120,8 @@ def test_due_with_signals_logs_at_checkpoint(storage, make_client, tmp_path, cap
     run_projections(storage, DAY, TIP - timedelta(minutes=70), {})
     transport = FakeTransport(events=[events_response([synthetic_event(TIP - timedelta(minutes=58))])])
     client = make_client(transport, storage=storage)
-    monkeypatch.setattr("nba_cold_start.cli._client", lambda *a: client)
-    from nba_cold_start import cli
+    monkeypatch.setattr("cold_start_usage.cli._client", lambda *a: client)
+    from cold_start_usage import cli
     args = cli.build_parser().parse_args(["snapshot", "--due", "--with-signals"])
     assert cli.cmd_snapshot(args, storage, lambda: TIP - timedelta(minutes=58)) == 0
     assert "Signals at t-60m: 11 logged" in capsys.readouterr().out

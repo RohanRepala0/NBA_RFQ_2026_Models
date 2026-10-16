@@ -5,10 +5,10 @@ from datetime import datetime, timedelta
 import pandas as pd
 import pytest
 
-from nba_cold_start.consensus import build_consensus, weighted_median
-from nba_cold_start.odds_math import p_over_normal
-from nba_cold_start.signals import make_signal
-from nba_cold_start.watchlist import contract_for, contract_p, max_price
+from cold_start_usage.consensus import build_consensus, weighted_median
+from cold_start_usage.odds_math import p_over_normal
+from cold_start_usage.signals import make_signal
+from cold_start_usage.watchlist import contract_for, contract_p, max_price
 
 NOW = datetime(2026, 10, 20, 22, 0)
 

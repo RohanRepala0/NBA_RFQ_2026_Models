@@ -4,10 +4,10 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from nba_cold_start.fit import add_spacing_columns, fit_efficiency
-from nba_cold_start.spacing import (LEAGUE_AVERAGE, load_team_shooting, old_context,
+from cold_start_usage.fit import add_spacing_columns, fit_efficiency
+from cold_start_usage.spacing import (LEAGUE_AVERAGE, load_team_shooting, old_context,
                                     projected_team_shooting, spacing_score)
-from nba_cold_start.usage_model import add_spacing
+from cold_start_usage.usage_model import add_spacing
 
 
 @pytest.fixture

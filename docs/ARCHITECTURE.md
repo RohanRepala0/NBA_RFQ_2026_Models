@@ -162,7 +162,7 @@ flowchart LR
     TAG --> OUTS["data/catalog/players.csv · teams.csv<br/>usage_tiers/TIER/SITUATION.csv<br/>scenarios/auto/TEAM.csv · docs/CATALOG.md"]
 ```
 
-Hand-reviewed scenarios in `nba_cold_start/scenarios/` (Miami, Toronto) take precedence over `scenarios/auto/`.
+Hand-reviewed scenarios in `cold_start_usage/scenarios/` (Miami, Toronto) take precedence over `scenarios/auto/`.
 
 ## Tables
 

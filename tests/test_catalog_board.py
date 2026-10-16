@@ -5,10 +5,10 @@ from datetime import timedelta
 import pandas as pd
 import pytest
 
-from nba_cold_start import catalog as cat
-from nba_cold_start.board import build_board, rungs
-from nba_cold_start.pipeline import snapshot_from_file
-from nba_cold_start.players import name_key
+from cold_start_usage import catalog as cat
+from cold_start_usage.board import build_board, rungs
+from cold_start_usage.pipeline import snapshot_from_file
+from cold_start_usage.players import name_key
 from tests.fixtures.synthetic import FETCHED, events_response, synthetic_event
 
 
@@ -119,14 +119,14 @@ KALSHI_MARKETS = [
 
 
 def test_kalshi_parse_handles_cents_and_dollars():
-    from nba_cold_start.kalshi import parse_markets
+    from cold_start_usage.kalshi import parse_markets
     df = parse_markets(KALSHI_MARKETS)
     assert list(df.threshold) == [30, 35] and set(df.player) == {"Giannis Antetokounmpo"}
     assert df.yes_ask.tolist() == [40.0, 23.0] and df.no_ask.tolist() == [61.0, 78.0]
 
 
 def test_kalshi_best_trade_roi_after_fee():
-    from nba_cold_start.kalshi import best_trade, fee, parse_markets
+    from cold_start_usage.kalshi import best_trade, fee, parse_markets
     df = parse_markets(KALSHI_MARKETS)
     trade = best_trade({30: 0.52, 35: 0.25}, df, rate=0.07, min_edge=0.04)
     cost = 0.40 + fee(0.40, 0.07)
@@ -136,7 +136,7 @@ def test_kalshi_best_trade_roi_after_fee():
 
 
 def test_board_marks_kalshi_value_ready(storage):
-    from nba_cold_start.kalshi import parse_markets
+    from cold_start_usage.kalshi import parse_markets
     catalog = pd.DataFrame([{
         "tier": "high", "situation": "arrival", "team": "MIA", "player": "Giannis Antetokounmpo",
         "thesis": "New team (MIL -> MIA)", "proj": 32.0, "sd": 9.6, "ppg_2025_26": 27.6,

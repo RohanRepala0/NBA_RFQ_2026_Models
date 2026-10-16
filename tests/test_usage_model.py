@@ -3,8 +3,8 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
-from nba_cold_start.config import MODEL
-from nba_cold_start.usage_model import (ModelInputError, load_players, load_scenarios, modeled_teams,
+from cold_start_usage.config import MODEL
+from cold_start_usage.usage_model import (ModelInputError, load_players, load_scenarios, modeled_teams,
                                         project_scenario, solve_scale, validate_minutes)
 
 
