@@ -1,6 +1,6 @@
-# NBA Cold-Start Edge Lab
+# Cold Start Usage Projection Modeling
 
-Point projections for every NBA player whose role changed this offseason, compared against a sportsbook consensus. Each disagreement becomes a **pre-market board** entry for prediction markets (Novig, Kalshi, Polymarket) that haven't posted player props yet. When a venue lists "Giannis 30+ points", the fair price and the most it's worth paying are already known.
+Point projections for every NBA player whose role changed this offseason, compared against a sportsbook consensus. These are **cold starts**: the player has no games yet in his new role, so the projection is built from last season's usage and the new roster instead of recent form. Each disagreement becomes a **pre-market board** entry for prediction markets (Novig, Kalshi, Polymarket) that haven't posted player props yet. When a venue lists "Giannis 30+ points", the fair price and the most it's worth paying are already known.
 
 - **League-wide:** [`docs/CATALOG.md`](docs/CATALOG.md) lists **152 offseason role changes** across 29 teams. They're tagged by usage tier (high / medium / low) and by situation: *arrival* (new team), *vacuum* (a star left, so the remaining players' usage grows) or *squeeze* (a star arrived, so it shrinks).
 - **Case studies:** Giannis to Miami and Kawhi to Toronto, with hand-reviewed minutes.

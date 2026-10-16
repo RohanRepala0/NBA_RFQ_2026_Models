@@ -1,5 +1,5 @@
 [project]
-name = "nba-cold-start"
+name = "cold-start-usage-projection-modeling"
 version = "1.0.0"
 description = "NBA player-points projections vs a sportsbook consensus, with a prediction-market watchlist (research only)"
 requires-python = ">=3.11"

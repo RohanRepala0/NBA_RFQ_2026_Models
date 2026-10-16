@@ -1,4 +1,4 @@
-# Handoff: NBA Cold-Start Edge Lab (v1)
+# Handoff: Cold Start Usage Projection Modeling (v1)
 
 Owner: Rohan Repala · Season opener: **Tue Oct 20, 2026**
 
