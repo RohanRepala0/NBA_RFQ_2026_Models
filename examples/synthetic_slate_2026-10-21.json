@@ -1,0 +1,1284 @@
+{
+ "success": true,
+ "data": [
+  {
+   "eventID": "SYNTHETIC_MIN_MIA_20261021",
+   "sportID": "BASKETBALL",
+   "leagueID": "NBA",
+   "type": "match",
+   "info": {
+    "seasonWeek": "1",
+    "broadcasts": [
+     {
+      "broadcasterID": "offlistbook",
+      "name": "offlistbook network",
+      "type": "tv"
+     }
+    ]
+   },
+   "links": {
+    "bookmakers": {
+     "offlistbook": "https://offlistbook.example.invalid"
+    }
+   },
+   "teams": {
+    "home": {
+     "teamID": "MIAMI_HEAT_NBA",
+     "names": {
+      "short": "MIA"
+     }
+    },
+    "away": {
+     "teamID": "MINNESOTA_TIMBERWOLVES_NBA",
+     "names": {
+      "short": "MIN"
+     }
+    }
+   },
+   "players": {
+    "GIANNIS_ANTETOKOUNMPO_1_NBA": {
+     "playerID": "GIANNIS_ANTETOKOUNMPO_1_NBA",
+     "name": "Giannis Antetokounmpo",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "BAM_ADEBAYO_1_NBA": {
+     "playerID": "BAM_ADEBAYO_1_NBA",
+     "name": "Bam Adebayo",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "ANDREW_WIGGINS_1_NBA": {
+     "playerID": "ANDREW_WIGGINS_1_NBA",
+     "name": "Andrew Wiggins",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "DAVION_MITCHELL_1_NBA": {
+     "playerID": "DAVION_MITCHELL_1_NBA",
+     "name": "Davion Mitchell",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "TIM_HARDAWAY_JR_1_NBA": {
+     "playerID": "TIM_HARDAWAY_JR_1_NBA",
+     "name": "Tim Hardaway Jr.",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "PELLE_LARSSON_1_NBA": {
+     "playerID": "PELLE_LARSSON_1_NBA",
+     "name": "Pelle Larsson",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "BOBBY_PORTIS_1_NBA": {
+     "playerID": "BOBBY_PORTIS_1_NBA",
+     "name": "Bobby Portis",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "NIKOLA_JOVIC_1_NBA": {
+     "playerID": "NIKOLA_JOVIC_1_NBA",
+     "name": "Nikola Jovi\u0107",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "SIMONE_FONTECCHIO_1_NBA": {
+     "playerID": "SIMONE_FONTECCHIO_1_NBA",
+     "name": "Simone Fontecchio",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "NICK_RICHARDS_1_NBA": {
+     "playerID": "NICK_RICHARDS_1_NBA",
+     "name": "Nick Richards",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "DRU_SMITH_1_NBA": {
+     "playerID": "DRU_SMITH_1_NBA",
+     "name": "Dru Smith",
+     "teamID": "MIAMI_HEAT_NBA",
+     "status": "active"
+    },
+    "ANTHONY_EDWARDS_1_NBA": {
+     "playerID": "ANTHONY_EDWARDS_1_NBA",
+     "name": "Anthony Edwards",
+     "teamID": "MINNESOTA_TIMBERWOLVES_NBA",
+     "status": "active"
+    }
+   },
+   "status": {
+    "startsAt": "2026-10-21T23:30:00.000Z",
+    "started": false,
+    "ended": false,
+    "finalized": false,
+    "cancelled": false,
+    "oddsAvailable": true,
+    "oddsPresent": true
+   },
+   "results": {},
+   "odds": {
+    "points-GIANNIS_ANTETOKOUNMPO_1_NBA-game-ou-over": {
+     "oddID": "points-GIANNIS_ANTETOKOUNMPO_1_NBA-game-ou-over",
+     "opposingOddID": "points-GIANNIS_ANTETOKOUNMPO_1_NBA-game-ou-under",
+     "marketName": "Giannis Antetokounmpo Points Over/Under",
+     "statID": "points",
+     "statEntityID": "GIANNIS_ANTETOKOUNMPO_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "GIANNIS_ANTETOKOUNMPO_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "29.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/GIANNIS_ANTETOKOUNMPO_1_NBA"
+      },
+      "betmgm": {
+       "odds": "-115",
+       "overUnder": "29.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/betmgm/GIANNIS_ANTETOKOUNMPO_1_NBA"
+      },
+      "caesars": {
+       "odds": "+105",
+       "overUnder": "30.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/caesars/GIANNIS_ANTETOKOUNMPO_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-112",
+       "overUnder": "29.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/GIANNIS_ANTETOKOUNMPO_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "29.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/GIANNIS_ANTETOKOUNMPO_1_NBA"
+      },
+      "kalshi": {
+       "odds": "+105",
+       "overUnder": "29.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:28:00.000Z"
+      }
+     }
+    },
+    "points-GIANNIS_ANTETOKOUNMPO_1_NBA-game-ou-under": {
+     "oddID": "points-GIANNIS_ANTETOKOUNMPO_1_NBA-game-ou-under",
+     "opposingOddID": "points-GIANNIS_ANTETOKOUNMPO_1_NBA-game-ou-over",
+     "marketName": "Giannis Antetokounmpo Points Over/Under",
+     "statID": "points",
+     "statEntityID": "GIANNIS_ANTETOKOUNMPO_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "GIANNIS_ANTETOKOUNMPO_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "29.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/GIANNIS_ANTETOKOUNMPO_1_NBA"
+      },
+      "betmgm": {
+       "odds": "-105",
+       "overUnder": "29.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/betmgm/GIANNIS_ANTETOKOUNMPO_1_NBA"
+      },
+      "caesars": {
+       "odds": "-125",
+       "overUnder": "30.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/caesars/GIANNIS_ANTETOKOUNMPO_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-108",
+       "overUnder": "29.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/GIANNIS_ANTETOKOUNMPO_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "29.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/GIANNIS_ANTETOKOUNMPO_1_NBA"
+      },
+      "kalshi": {
+       "odds": "-125",
+       "overUnder": "29.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:28:00.000Z"
+      }
+     }
+    },
+    "points-BAM_ADEBAYO_1_NBA-game-ou-over": {
+     "oddID": "points-BAM_ADEBAYO_1_NBA-game-ou-over",
+     "opposingOddID": "points-BAM_ADEBAYO_1_NBA-game-ou-under",
+     "marketName": "Bam Adebayo Points Over/Under",
+     "statID": "points",
+     "statEntityID": "BAM_ADEBAYO_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "BAM_ADEBAYO_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "18.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/BAM_ADEBAYO_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-105",
+       "overUnder": "18.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/BAM_ADEBAYO_1_NBA"
+      },
+      "bovada": {
+       "odds": "-115",
+       "overUnder": "18.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/bovada/BAM_ADEBAYO_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "18.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/BAM_ADEBAYO_1_NBA"
+      },
+      "kalshi": {
+       "odds": "-105",
+       "overUnder": "18.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:28:00.000Z"
+      }
+     }
+    },
+    "points-BAM_ADEBAYO_1_NBA-game-ou-under": {
+     "oddID": "points-BAM_ADEBAYO_1_NBA-game-ou-under",
+     "opposingOddID": "points-BAM_ADEBAYO_1_NBA-game-ou-over",
+     "marketName": "Bam Adebayo Points Over/Under",
+     "statID": "points",
+     "statEntityID": "BAM_ADEBAYO_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "BAM_ADEBAYO_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "18.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/BAM_ADEBAYO_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-115",
+       "overUnder": "18.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/BAM_ADEBAYO_1_NBA"
+      },
+      "bovada": {
+       "odds": "-105",
+       "overUnder": "18.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/bovada/BAM_ADEBAYO_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "18.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/BAM_ADEBAYO_1_NBA"
+      },
+      "kalshi": {
+       "odds": "-115",
+       "overUnder": "18.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:28:00.000Z"
+      }
+     }
+    },
+    "points-ANDREW_WIGGINS_1_NBA-game-ou-over": {
+     "oddID": "points-ANDREW_WIGGINS_1_NBA-game-ou-over",
+     "opposingOddID": "points-ANDREW_WIGGINS_1_NBA-game-ou-under",
+     "marketName": "Andrew Wiggins Points Over/Under",
+     "statID": "points",
+     "statEntityID": "ANDREW_WIGGINS_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "ANDREW_WIGGINS_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "14.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/ANDREW_WIGGINS_1_NBA"
+      },
+      "betmgm": {
+       "odds": "+110",
+       "overUnder": "13.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/betmgm/ANDREW_WIGGINS_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-105",
+       "overUnder": "14.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/ANDREW_WIGGINS_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "14.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/ANDREW_WIGGINS_1_NBA"
+      }
+     }
+    },
+    "points-ANDREW_WIGGINS_1_NBA-game-ou-under": {
+     "oddID": "points-ANDREW_WIGGINS_1_NBA-game-ou-under",
+     "opposingOddID": "points-ANDREW_WIGGINS_1_NBA-game-ou-over",
+     "marketName": "Andrew Wiggins Points Over/Under",
+     "statID": "points",
+     "statEntityID": "ANDREW_WIGGINS_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "ANDREW_WIGGINS_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "14.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/ANDREW_WIGGINS_1_NBA"
+      },
+      "betmgm": {
+       "odds": "-130",
+       "overUnder": "13.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/betmgm/ANDREW_WIGGINS_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-115",
+       "overUnder": "14.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/ANDREW_WIGGINS_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "14.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/ANDREW_WIGGINS_1_NBA"
+      }
+     }
+    },
+    "points-DAVION_MITCHELL_1_NBA-game-ou-over": {
+     "oddID": "points-DAVION_MITCHELL_1_NBA-game-ou-over",
+     "opposingOddID": "points-DAVION_MITCHELL_1_NBA-game-ou-under",
+     "marketName": "Davion Mitchell Points Over/Under",
+     "statID": "points",
+     "statEntityID": "DAVION_MITCHELL_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "DAVION_MITCHELL_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "8.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/DAVION_MITCHELL_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-115",
+       "overUnder": "8.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/DAVION_MITCHELL_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "8.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/DAVION_MITCHELL_1_NBA"
+      }
+     }
+    },
+    "points-DAVION_MITCHELL_1_NBA-game-ou-under": {
+     "oddID": "points-DAVION_MITCHELL_1_NBA-game-ou-under",
+     "opposingOddID": "points-DAVION_MITCHELL_1_NBA-game-ou-over",
+     "marketName": "Davion Mitchell Points Over/Under",
+     "statID": "points",
+     "statEntityID": "DAVION_MITCHELL_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "DAVION_MITCHELL_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "8.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/DAVION_MITCHELL_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-105",
+       "overUnder": "8.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/DAVION_MITCHELL_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "8.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/DAVION_MITCHELL_1_NBA"
+      }
+     }
+    },
+    "points-TIM_HARDAWAY_JR_1_NBA-game-ou-over": {
+     "oddID": "points-TIM_HARDAWAY_JR_1_NBA-game-ou-over",
+     "opposingOddID": "points-TIM_HARDAWAY_JR_1_NBA-game-ou-under",
+     "marketName": "Tim Hardaway Jr. Points Over/Under",
+     "statID": "points",
+     "statEntityID": "TIM_HARDAWAY_JR_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "TIM_HARDAWAY_JR_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "12.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/TIM_HARDAWAY_JR_1_NBA"
+      },
+      "betmgm": {
+       "odds": "-105",
+       "overUnder": "12.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/betmgm/TIM_HARDAWAY_JR_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-110",
+       "overUnder": "12.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/TIM_HARDAWAY_JR_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "12.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/TIM_HARDAWAY_JR_1_NBA"
+      }
+     }
+    },
+    "points-TIM_HARDAWAY_JR_1_NBA-game-ou-under": {
+     "oddID": "points-TIM_HARDAWAY_JR_1_NBA-game-ou-under",
+     "opposingOddID": "points-TIM_HARDAWAY_JR_1_NBA-game-ou-over",
+     "marketName": "Tim Hardaway Jr. Points Over/Under",
+     "statID": "points",
+     "statEntityID": "TIM_HARDAWAY_JR_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "TIM_HARDAWAY_JR_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "12.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/TIM_HARDAWAY_JR_1_NBA"
+      },
+      "betmgm": {
+       "odds": "-115",
+       "overUnder": "12.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/betmgm/TIM_HARDAWAY_JR_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-110",
+       "overUnder": "12.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/TIM_HARDAWAY_JR_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "12.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/TIM_HARDAWAY_JR_1_NBA"
+      }
+     }
+    },
+    "points-PELLE_LARSSON_1_NBA-game-ou-over": {
+     "oddID": "points-PELLE_LARSSON_1_NBA-game-ou-over",
+     "opposingOddID": "points-PELLE_LARSSON_1_NBA-game-ou-under",
+     "marketName": "Pelle Larsson Points Over/Under",
+     "statID": "points",
+     "statEntityID": "PELLE_LARSSON_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "PELLE_LARSSON_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-115",
+       "overUnder": "9.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/PELLE_LARSSON_1_NBA"
+      },
+      "caesars": {
+       "odds": "-110",
+       "overUnder": "9.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T21:45:00.000Z",
+       "deeplink": "https://example.invalid/caesars/PELLE_LARSSON_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "9.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/PELLE_LARSSON_1_NBA"
+      }
+     }
+    },
+    "points-PELLE_LARSSON_1_NBA-game-ou-under": {
+     "oddID": "points-PELLE_LARSSON_1_NBA-game-ou-under",
+     "opposingOddID": "points-PELLE_LARSSON_1_NBA-game-ou-over",
+     "marketName": "Pelle Larsson Points Over/Under",
+     "statID": "points",
+     "statEntityID": "PELLE_LARSSON_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "PELLE_LARSSON_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-105",
+       "overUnder": "9.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/PELLE_LARSSON_1_NBA"
+      },
+      "caesars": {
+       "odds": "-110",
+       "overUnder": "9.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T21:45:00.000Z",
+       "deeplink": "https://example.invalid/caesars/PELLE_LARSSON_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "9.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/PELLE_LARSSON_1_NBA"
+      }
+     }
+    },
+    "points-BOBBY_PORTIS_1_NBA-game-ou-over": {
+     "oddID": "points-BOBBY_PORTIS_1_NBA-game-ou-over",
+     "opposingOddID": "points-BOBBY_PORTIS_1_NBA-game-ou-under",
+     "marketName": "Bobby Portis Points Over/Under",
+     "statID": "points",
+     "statEntityID": "BOBBY_PORTIS_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "BOBBY_PORTIS_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "11.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/BOBBY_PORTIS_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-120",
+       "overUnder": "11.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/BOBBY_PORTIS_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "11.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/BOBBY_PORTIS_1_NBA"
+      }
+     }
+    },
+    "points-BOBBY_PORTIS_1_NBA-game-ou-under": {
+     "oddID": "points-BOBBY_PORTIS_1_NBA-game-ou-under",
+     "opposingOddID": "points-BOBBY_PORTIS_1_NBA-game-ou-over",
+     "marketName": "Bobby Portis Points Over/Under",
+     "statID": "points",
+     "statEntityID": "BOBBY_PORTIS_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "BOBBY_PORTIS_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "11.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/BOBBY_PORTIS_1_NBA"
+      },
+      "espnbet": {
+       "odds": "+100",
+       "overUnder": "11.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/BOBBY_PORTIS_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "11.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/BOBBY_PORTIS_1_NBA"
+      }
+     }
+    },
+    "points-NIKOLA_JOVIC_1_NBA-game-ou-over": {
+     "oddID": "points-NIKOLA_JOVIC_1_NBA-game-ou-over",
+     "opposingOddID": "points-NIKOLA_JOVIC_1_NBA-game-ou-under",
+     "marketName": "Nikola Jovi\u0107 Points Over/Under",
+     "statID": "points",
+     "statEntityID": "NIKOLA_JOVIC_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "NIKOLA_JOVIC_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "6.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/NIKOLA_JOVIC_1_NBA"
+      },
+      "betmgm": {
+       "odds": "-110",
+       "overUnder": "6.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/betmgm/NIKOLA_JOVIC_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "6.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/NIKOLA_JOVIC_1_NBA"
+      }
+     }
+    },
+    "points-NIKOLA_JOVIC_1_NBA-game-ou-under": {
+     "oddID": "points-NIKOLA_JOVIC_1_NBA-game-ou-under",
+     "opposingOddID": "points-NIKOLA_JOVIC_1_NBA-game-ou-over",
+     "marketName": "Nikola Jovi\u0107 Points Over/Under",
+     "statID": "points",
+     "statEntityID": "NIKOLA_JOVIC_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "NIKOLA_JOVIC_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "6.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/NIKOLA_JOVIC_1_NBA"
+      },
+      "betmgm": {
+       "odds": "-110",
+       "overUnder": "6.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/betmgm/NIKOLA_JOVIC_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "6.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/NIKOLA_JOVIC_1_NBA"
+      }
+     }
+    },
+    "points-SIMONE_FONTECCHIO_1_NBA-game-ou-over": {
+     "oddID": "points-SIMONE_FONTECCHIO_1_NBA-game-ou-over",
+     "opposingOddID": "points-SIMONE_FONTECCHIO_1_NBA-game-ou-under",
+     "marketName": "Simone Fontecchio Points Over/Under",
+     "statID": "points",
+     "statEntityID": "SIMONE_FONTECCHIO_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "SIMONE_FONTECCHIO_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-125",
+       "overUnder": "7.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/SIMONE_FONTECCHIO_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-120",
+       "overUnder": "7.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/SIMONE_FONTECCHIO_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "7.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/SIMONE_FONTECCHIO_1_NBA"
+      }
+     }
+    },
+    "points-SIMONE_FONTECCHIO_1_NBA-game-ou-under": {
+     "oddID": "points-SIMONE_FONTECCHIO_1_NBA-game-ou-under",
+     "opposingOddID": "points-SIMONE_FONTECCHIO_1_NBA-game-ou-over",
+     "marketName": "Simone Fontecchio Points Over/Under",
+     "statID": "points",
+     "statEntityID": "SIMONE_FONTECCHIO_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "SIMONE_FONTECCHIO_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "+105",
+       "overUnder": "7.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/SIMONE_FONTECCHIO_1_NBA"
+      },
+      "espnbet": {
+       "odds": "+100",
+       "overUnder": "7.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/SIMONE_FONTECCHIO_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "7.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/SIMONE_FONTECCHIO_1_NBA"
+      }
+     }
+    },
+    "points-DRU_SMITH_1_NBA-game-ou-over": {
+     "oddID": "points-DRU_SMITH_1_NBA-game-ou-over",
+     "opposingOddID": "points-DRU_SMITH_1_NBA-game-ou-under",
+     "marketName": "Dru Smith Points Over/Under",
+     "statID": "points",
+     "statEntityID": "DRU_SMITH_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "DRU_SMITH_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "3.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/DRU_SMITH_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "3.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/DRU_SMITH_1_NBA"
+      }
+     }
+    },
+    "points-DRU_SMITH_1_NBA-game-ou-under": {
+     "oddID": "points-DRU_SMITH_1_NBA-game-ou-under",
+     "opposingOddID": "points-DRU_SMITH_1_NBA-game-ou-over",
+     "marketName": "Dru Smith Points Over/Under",
+     "statID": "points",
+     "statEntityID": "DRU_SMITH_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "DRU_SMITH_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "3.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/DRU_SMITH_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "3.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/DRU_SMITH_1_NBA"
+      }
+     }
+    },
+    "points-ANTHONY_EDWARDS_1_NBA-game-ou-over": {
+     "oddID": "points-ANTHONY_EDWARDS_1_NBA-game-ou-over",
+     "opposingOddID": "points-ANTHONY_EDWARDS_1_NBA-game-ou-under",
+     "marketName": "Anthony Edwards Points Over/Under",
+     "statID": "points",
+     "statEntityID": "ANTHONY_EDWARDS_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "over",
+     "playerID": "ANTHONY_EDWARDS_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "27.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/ANTHONY_EDWARDS_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-104",
+       "overUnder": "27.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/ANTHONY_EDWARDS_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "27.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/ANTHONY_EDWARDS_1_NBA"
+      }
+     }
+    },
+    "points-ANTHONY_EDWARDS_1_NBA-game-ou-under": {
+     "oddID": "points-ANTHONY_EDWARDS_1_NBA-game-ou-under",
+     "opposingOddID": "points-ANTHONY_EDWARDS_1_NBA-game-ou-over",
+     "marketName": "Anthony Edwards Points Over/Under",
+     "statID": "points",
+     "statEntityID": "ANTHONY_EDWARDS_1_NBA",
+     "periodID": "game",
+     "betTypeID": "ou",
+     "sideID": "under",
+     "playerID": "ANTHONY_EDWARDS_1_NBA",
+     "started": false,
+     "ended": false,
+     "cancelled": false,
+     "fairOdds": "-900",
+     "bookOdds": "+900",
+     "fairOverUnder": "99.5",
+     "bookOverUnder": "0.5",
+     "bookOddsAvailable": true,
+     "fairOddsAvailable": true,
+     "byBookmaker": {
+      "draftkings": {
+       "odds": "-110",
+       "overUnder": "27.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/draftkings/ANTHONY_EDWARDS_1_NBA"
+      },
+      "espnbet": {
+       "odds": "-116",
+       "overUnder": "27.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:26:00.000Z",
+       "deeplink": "https://example.invalid/espnbet/ANTHONY_EDWARDS_1_NBA"
+      },
+      "prizepicks": {
+       "odds": "+100",
+       "overUnder": "27.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z"
+      },
+      "offlistbook": {
+       "odds": "-500",
+       "overUnder": "99.5",
+       "available": true,
+       "lastUpdatedAt": "2026-10-21T22:30:00.000Z",
+       "deeplink": "https://offlistbook.example.invalid/ANTHONY_EDWARDS_1_NBA"
+      }
+     }
+    }
+   }
+  }
+ ]
+}

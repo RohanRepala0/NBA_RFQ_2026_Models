@@ -1,0 +1,5454 @@
+{
+ "fetched_at": "2026-10-16T03:32:26.079258Z",
+ "source": "SportsGameOdds GET /v2/players/",
+ "teams": {
+  "MIAMI_HEAT_NBA": [
+   {
+    "player_id": "ANDREW_WIGGINS_1_NBA",
+    "name": "Andrew Wiggins",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "BAM_ADEBAYO_1_NBA",
+    "name": "Bam Adebayo",
+    "position": "CF",
+    "jersey": "13",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "BOBBY_PORTIS_1_NBA",
+    "name": "Bobby Portis",
+    "position": "F",
+    "jersey": "95",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "CAM_CARTER_1_NBA",
+    "name": "Cam Carter",
+    "position": "G",
+    "jersey": "57",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "DAVION_MITCHELL_1_NBA",
+    "name": "Davion Mitchell",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "DRU_SMITH_1_NBA",
+    "name": "Dru Smith",
+    "position": "G",
+    "jersey": "12",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "ETHAN_THOMPSON_1_NBA",
+    "name": "Ethan Thompson",
+    "position": null,
+    "jersey": null,
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "EZRA_AUSAR_1_NBA",
+    "name": "Ezra Ausar",
+    "position": "F",
+    "jersey": "77",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "GIANNIS_ANTETOKOUNMPO_1_NBA",
+    "name": "Giannis Antetokounmpo",
+    "position": "F",
+    "jersey": "34",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "IAN_SCHIEFFELIN_1_NBA",
+    "name": "Ian Schieffelin",
+    "position": "F",
+    "jersey": "75",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "JVONNE_HADLEY_1_NBA",
+    "name": "J'Vonne Hadley",
+    "position": "F",
+    "jersey": "73",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "JAHMIR_YOUNG_1_NBA",
+    "name": "Jahmir Young",
+    "position": "G",
+    "jersey": "17",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "KESHAD_JOHNSON_1_NBA",
+    "name": "Keshad Johnson",
+    "position": "F",
+    "jersey": "16",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "KEYSHAWN_HALL_1_NBA",
+    "name": "Keyshawn Hall",
+    "position": "F",
+    "jersey": "74",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "MYRON_GARDNER_1_NBA",
+    "name": "Myron Gardner",
+    "position": "F",
+    "jersey": "15",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "NICK_RICHARDS_1_NBA",
+    "name": "Nick Richards",
+    "position": "C",
+    "jersey": "2",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "NIKOLA_JOVIC_1_NBA",
+    "name": "Nikola Jovi\u0107",
+    "position": "F",
+    "jersey": "5",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "PELLE_LARSSON_1_NBA",
+    "name": "Pelle Larsson",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "RYAN_CONWELL_1_NBA",
+    "name": "Ryan Conwell",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "SIMONE_FONTECCHIO_1_NBA",
+    "name": "Simone Fontecchio",
+    "position": "F",
+    "jersey": "13",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "TERRY_ROZIER_1_NBA",
+    "name": "Terry Rozier",
+    "position": "G",
+    "jersey": "12",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "TIM_HARDAWAY_JR_1_NBA",
+    "name": "Tim Hardaway Jr.",
+    "position": "GF",
+    "jersey": "10",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "TRE_DONALDSON_1_NBA",
+    "name": "Tre Donaldson",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "TRE_WHITE_1_NBA",
+    "name": "Tre White",
+    "position": "F",
+    "jersey": "78",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "TREVOR_KEELS_1_NBA",
+    "name": "Trevor Keels",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "MIAMI_HEAT_NBA"
+   },
+   {
+    "player_id": "VLADISLAV_GOLDIN_1_NBA",
+    "name": "Vladislav Goldin",
+    "position": "C",
+    "jersey": "50",
+    "team_id": "MIAMI_HEAT_NBA"
+   }
+  ],
+  "TORONTO_RAPTORS_NBA": [
+   {
+    "player_id": "AJ_HOGGARD_1_NBA",
+    "name": "A.J. Hoggard",
+    "position": "G",
+    "jersey": "16",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "ABDOU_AZIZ_BANDAOGO_1_NBA",
+    "name": "Abdou Aziz Bandaogo",
+    "position": "F",
+    "jersey": "35",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "ALIJAH_MARTIN_1_NBA",
+    "name": "Alijah Martin",
+    "position": "G",
+    "jersey": "55",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "ALLEN_GRAVES_1_NBA",
+    "name": "Allen Graves",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "CHUCKY_HEPBURN_1_NBA",
+    "name": "Chucky Hepburn",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "COLLIN_MURRAYBOYLES_1_NBA",
+    "name": "Collin Murray-Boyles",
+    "position": "F",
+    "jersey": "30",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "IMMANUEL_QUICKLEY_1_NBA",
+    "name": "Immanuel Quickley",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "JAKOBE_WALTER_1_NBA",
+    "name": "Ja'Kobe Walter",
+    "position": "G",
+    "jersey": "14",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "JADEN_BRADLEY_1_NBA",
+    "name": "Jaden Bradley",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "JAKOB_POELTL_1_NBA",
+    "name": "Jakob Poeltl",
+    "position": "C",
+    "jersey": "19",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "JALEN_CELESTINE_1_NBA",
+    "name": "Jalen Celestine",
+    "position": "G",
+    "jersey": "18",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "JAMAL_SHEAD_1_NBA",
+    "name": "Jamal Shead",
+    "position": "G",
+    "jersey": "23",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "JAMARION_SHARP_1_NBA",
+    "name": "Jamarion Sharp",
+    "position": "C",
+    "jersey": "33",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "JAMISON_BATTLE_1_NBA",
+    "name": "Jamison Battle",
+    "position": "F",
+    "jersey": "77",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "KAWHI_LEONARD_1_NBA",
+    "name": "Kawhi Leonard",
+    "position": "F",
+    "jersey": "2",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "KYLE_ANDERSON_1_NBA",
+    "name": "Kyle Anderson",
+    "position": "F",
+    "jersey": "13",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "MALACHI_SMITH_1_NBA",
+    "name": "Malachi Smith",
+    "position": "G",
+    "jersey": null,
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "MARKELLE_FULTZ_1_NBA",
+    "name": "Markelle Fultz",
+    "position": "G",
+    "jersey": "20",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "NIMARI_BURNETT_1_NBA",
+    "name": "Nimari Burnett",
+    "position": "G",
+    "jersey": "25",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "OLIVIER_SARR_1_NBA",
+    "name": "Olivier Sarr",
+    "position": "C",
+    "jersey": "33",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "RJ_BARRETT_1_NBA",
+    "name": "RJ Barrett",
+    "position": "FG",
+    "jersey": "9",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "SCOTTIE_BARNES_1_NBA",
+    "name": "Scottie Barnes",
+    "position": "F",
+    "jersey": "4",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "SETH_LUNDY_1_NBA",
+    "name": "Seth Lundy",
+    "position": "GF",
+    "jersey": "13",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "TRAYCE_JACKSONDAVIS_1_NBA",
+    "name": "Trayce Jackson-Davis",
+    "position": "FC",
+    "jersey": "32",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "TYREKE_KEY_1_NBA",
+    "name": "Tyreke Key",
+    "position": "G",
+    "jersey": "11",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   },
+   {
+    "player_id": "TYSON_DEGENHART_1_NBA",
+    "name": "Tyson Degenhart",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "TORONTO_RAPTORS_NBA"
+   }
+  ],
+  "ATLANTA_HAWKS_NBA": [
+   {
+    "player_id": "AARON_WIGGINS_1_NBA",
+    "name": "Aaron Wiggins",
+    "position": "G",
+    "jersey": "21",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "ASA_NEWELL_1_NBA",
+    "name": "Asa Newell",
+    "position": "F",
+    "jersey": "14",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "BUDDY_HIELD_1_NBA",
+    "name": "Buddy Hield",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "CJ_MCCOLLUM_1_NBA",
+    "name": "CJ McCollum",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "CAMERON_CORHEN_1_NBA",
+    "name": "Cameron Corhen",
+    "position": "F",
+    "jersey": "28",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "CHRISTIAN_KOLOKO_1_NBA",
+    "name": "Christian Koloko",
+    "position": "C",
+    "jersey": "35",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "COREY_KISPERT_1_NBA",
+    "name": "Corey Kispert",
+    "position": "F",
+    "jersey": "24",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "DEVON_HIGGS_1_NBA",
+    "name": "Devon Higgs",
+    "position": "G",
+    "jersey": "26",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "DYSON_DANIELS_1_NBA",
+    "name": "Dyson Daniels",
+    "position": "G",
+    "jersey": "1",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "ELI_NDIAYE_1_NBA",
+    "name": "Eli Ndiaye",
+    "position": "F",
+    "jersey": "30",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "GABE_MADSEN_1_NBA",
+    "name": "Gabe Madsen",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "GABE_VINCENT_1_NBA",
+    "name": "Gabe Vincent",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "ISAIAH_WONG_1_NBA",
+    "name": "Isaiah Wong",
+    "position": "G",
+    "jersey": "45",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "JALEN_JOHNSON_1_NBA",
+    "name": "Jalen Johnson",
+    "position": "F",
+    "jersey": "1",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "JALEN_WILSON_1_NBA",
+    "name": "Jalen Wilson",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "JOCK_LANDALE_1_NBA",
+    "name": "Jock Landale",
+    "position": "C",
+    "jersey": "31",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "JONATHAN_KUMINGA_1_NBA",
+    "name": "Jonathan Kuminga",
+    "position": "F",
+    "jersey": "0",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "KEATON_WALLACE_1_NBA",
+    "name": "Keaton Wallace",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "KESHON_GILBERT_1_NBA",
+    "name": "Keshon Gilbert",
+    "position": "G",
+    "jersey": "51",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "KINGSTON_FLEMINGS_1_NBA",
+    "name": "Kingston Flemings",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "KOBE_KNOX_1_NBA",
+    "name": "Kobe Knox",
+    "position": "G",
+    "jersey": "19",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "L_BUTLER_1_NBA",
+    "name": "L. Butler",
+    "position": null,
+    "jersey": null,
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "LUGUENTZ_DORT_1_NBA",
+    "name": "Luguentz Dort",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "MOUHAMED_GUEYE_1_NBA",
+    "name": "Mouhamed Gueye",
+    "position": "F",
+    "jersey": "18",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "NFALY_DANTE_1_NBA",
+    "name": "N'Faly Dante",
+    "position": "C",
+    "jersey": "12",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "NICKEIL_ALEXANDERWALKER_1_NBA",
+    "name": "Nickeil Alexander-Walker",
+    "position": "G",
+    "jersey": "7",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "ONYEKA_OKONGWU_1_NBA",
+    "name": "Onyeka Okongwu",
+    "position": "FC",
+    "jersey": "17",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "RAYJ_DENNIS_1_NBA",
+    "name": "RayJ Dennis",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "RYAN_NEMBHARD_1_NBA",
+    "name": "Ryan Nembhard",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "TONY_BRADLEY_1_NBA",
+    "name": "Tony Bradley",
+    "position": "CF",
+    "jersey": "13",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "ZEKE_MAYO_1_NBA",
+    "name": "Zeke Mayo",
+    "position": "G",
+    "jersey": "39",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   },
+   {
+    "player_id": "ZUBY_EJIOFOR_1_NBA",
+    "name": "Zuby Ejiofor",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "ATLANTA_HAWKS_NBA"
+   }
+  ],
+  "BOSTON_CELTICS_NBA": [
+   {
+    "player_id": "A_WILLIAMS_1_NBA",
+    "name": "A. Williams",
+    "position": null,
+    "jersey": null,
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "BAYLOR_SCHEIERMAN_1_NBA",
+    "name": "Baylor Scheierman",
+    "position": "G",
+    "jersey": "55",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "CALEB_GRILL_1_NBA",
+    "name": "Caleb Grill",
+    "position": "G",
+    "jersey": "37",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "CHAUNCEY_WIGGINS_1_NBA",
+    "name": "Chauncey Wiggins",
+    "position": "F",
+    "jersey": "50",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "CHRIS_BOUCHER_1_NBA",
+    "name": "Chris Boucher",
+    "position": "FC",
+    "jersey": "99",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "CHRIS_CENAC_1_NBA",
+    "name": "Chris Cenac",
+    "position": "CF",
+    "jersey": "12",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "CURTIS_JONES_1_NBA",
+    "name": "Curtis Jones",
+    "position": "G",
+    "jersey": "26",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "DERRICK_WHITE_1_NBA",
+    "name": "Derrick White",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "DEVIN_CARTER_1_NBA",
+    "name": "Devin Carter",
+    "position": "G",
+    "jersey": "67",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "DILLON_MITCHELL_1_NBA",
+    "name": "Dillon Mitchell",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "HANK_MORGAN_1_NBA",
+    "name": "Hank Morgan",
+    "position": "F",
+    "jersey": "51",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "HUGO_GONZALEZ_1_NBA",
+    "name": "Hugo Gonzalez",
+    "position": "G",
+    "jersey": "28",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "JAYSON_TATUM_1_NBA",
+    "name": "Jayson Tatum",
+    "position": "FG",
+    "jersey": "0",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "JORDAN_WALSH_1_NBA",
+    "name": "Jordan Walsh",
+    "position": "F",
+    "jersey": "27",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "KYLE_MANGAS_1_NBA",
+    "name": "Kyle Mangas",
+    "position": "G",
+    "jersey": "43",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "LUKA_GARZA_1_NBA",
+    "name": "Luka Garza",
+    "position": "C",
+    "jersey": "52",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "MIKE_CONLEY_1_NBA",
+    "name": "Mike Conley",
+    "position": "G",
+    "jersey": "44",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "MILOS_UZAN_1_NBA",
+    "name": "Milos Uzan",
+    "position": "G",
+    "jersey": "29",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "MITCHELL_ROBINSON_1_NBA",
+    "name": "Mitchell Robinson",
+    "position": "CF",
+    "jersey": "4",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "NEEMIAS_QUETA_1_NBA",
+    "name": "Neemias Queta",
+    "position": "C",
+    "jersey": "88",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "NICK_PRINGLE_1_NBA",
+    "name": "Nick Pringle",
+    "position": "F",
+    "jersey": "40",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "PAUL_GEORGE_1_NBA",
+    "name": "Paul George",
+    "position": "F",
+    "jersey": "13",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "PAYTON_PRITCHARD_1_NBA",
+    "name": "Payton Pritchard",
+    "position": "G",
+    "jersey": "11",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "R_LUIS_1_NBA",
+    "name": "R. Luis",
+    "position": null,
+    "jersey": null,
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "RON_HARPER_JR_1_NBA",
+    "name": "Ron Harper Jr.",
+    "position": "F",
+    "jersey": "13",
+    "team_id": "BOSTON_CELTICS_NBA"
+   },
+   {
+    "player_id": "SAM_HAUSER_1_NBA",
+    "name": "Sam Hauser",
+    "position": "GF",
+    "jersey": "30",
+    "team_id": "BOSTON_CELTICS_NBA"
+   }
+  ],
+  "BROOKLYN_NETS_NBA": [
+   {
+    "player_id": "AARON_SCOTT_1_NBA",
+    "name": "Aaron Scott",
+    "position": "F",
+    "jersey": "10",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "BEN_HUMRICHOUS_1_NBA",
+    "name": "Ben Humrichous",
+    "position": "F",
+    "jersey": "12",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "BEN_SARAF_1_NBA",
+    "name": "Ben Saraf",
+    "position": "G",
+    "jersey": "77",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "D_POWELL_1_NBA",
+    "name": "D. Powell",
+    "position": null,
+    "jersey": null,
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "DAIN_DAINJA_1_NBA",
+    "name": "Dain Dainja",
+    "position": "F",
+    "jersey": "42",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "DANIEL_WOLF_1_NBA",
+    "name": "Danny Wolf",
+    "position": "FC",
+    "jersey": "2",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "DAYRON_SHARPE_1_NBA",
+    "name": "Day'Ron Sharpe",
+    "position": "C",
+    "jersey": "20",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "DUKE_BRENNAN_1_NBA",
+    "name": "Duke Brennan",
+    "position": "F",
+    "jersey": "42",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "DWIGHT_MURRAY_1_NBA",
+    "name": "Dwight Murray",
+    "position": "G",
+    "jersey": "26",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "EGOR_DEMIN_1_NBA",
+    "name": "Egor Demin",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "GRANT_NELSON_1_NBA",
+    "name": "Grant Nelson",
+    "position": "F",
+    "jersey": "16",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "HUNTER_SALLIS_1_NBA",
+    "name": "Hunter Sallis",
+    "position": "G",
+    "jersey": "55",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "JOSH_MINOTT_1_NBA",
+    "name": "Josh Minott",
+    "position": "F",
+    "jersey": "0",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "JULIUS_RANDLE_1_NBA",
+    "name": "Julius Randle",
+    "position": "FC",
+    "jersey": "30",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "KEON_ELLIS_1_NBA",
+    "name": "Keon Ellis",
+    "position": "G",
+    "jersey": "14",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "MICHAEL_PORTER_JR_1_NBA",
+    "name": "Michael Porter Jr.",
+    "position": "F",
+    "jersey": "17",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "MORITZ_WAGNER_1_NBA",
+    "name": "Moritz Wagner",
+    "position": "FC",
+    "jersey": "13",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "NOAH_CLOWNEY_1_NBA",
+    "name": "Noah Clowney",
+    "position": "F",
+    "jersey": "21",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "NOLAN_TRAORE_1_NBA",
+    "name": "Nolan Traore",
+    "position": "F",
+    "jersey": "13",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "TERANCE_MANN_1_NBA",
+    "name": "Terance Mann",
+    "position": "GF",
+    "jersey": "14",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "TYLER_BILODEAU_1_NBA",
+    "name": "Tyler Bilodeau",
+    "position": "F",
+    "jersey": "34",
+    "team_id": "BROOKLYN_NETS_NBA"
+   },
+   {
+    "player_id": "TYSON_ETIENNE_1_NBA",
+    "name": "Tyson Etienne",
+    "position": "G",
+    "jersey": "10",
+    "team_id": "BROOKLYN_NETS_NBA"
+   }
+  ],
+  "CHARLOTTE_HORNETS_NBA": [
+   {
+    "player_id": "BRANDON_MILLER_1_NBA",
+    "name": "Brandon Miller",
+    "position": "F",
+    "jersey": "24",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "CAMERON_MATTHEWS_1_NBA",
+    "name": "Cameron Matthews",
+    "position": "F",
+    "jersey": "25",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "CHRISTIAN_ANDERSON_1_NBA",
+    "name": "Christian Anderson",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "COBY_WHITE_1_NBA",
+    "name": "Coby White",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "D_RODMAN_1_NBA",
+    "name": "D. Rodman",
+    "position": null,
+    "jersey": null,
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "DENNIS_SCHRODER_1_NBA",
+    "name": "Dennis Schr\u00f6der",
+    "position": "G",
+    "jersey": "17",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "DORIAN_FINNEYSMITH_1_NBA",
+    "name": "Dorian Finney-Smith",
+    "position": "F",
+    "jersey": "2",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "GRANT_WILLIAMS_1_NBA",
+    "name": "Grant Williams",
+    "position": "F",
+    "jersey": "2",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "GRAYSON_ALLEN_1_NBA",
+    "name": "Grayson Allen",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "HANNES_STEINBACH_1_NBA",
+    "name": "Hannes Steinbach",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "JOSIAH_ALLICK_1_NBA",
+    "name": "Josiah Allick",
+    "position": "C",
+    "jersey": "53",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "KON_KNUEPPEL_1_NBA",
+    "name": "Kon Knueppel",
+    "position": "G",
+    "jersey": "7",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "KYLAN_BOSWELL_1_NBA",
+    "name": "Kylan Boswell",
+    "position": "G",
+    "jersey": "18",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "LATRELL_WRIGHTSELL_1_NBA",
+    "name": "Latrell Wrightsell",
+    "position": "G",
+    "jersey": "35",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "LIAM_MCNEELEY_1_NBA",
+    "name": "Liam McNeeley",
+    "position": "F",
+    "jersey": "33",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "MICHAEL_AJAYI_1_NBA",
+    "name": "Michael Ajayi",
+    "position": "F",
+    "jersey": "10",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "MOUSSA_DIABATE_1_NBA",
+    "name": "Moussa Diabate",
+    "position": "FC",
+    "jersey": "14",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "NAZ_REID_1_NBA",
+    "name": "Naz Reid",
+    "position": "CF",
+    "jersey": "11",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "PJ_HALL_1_NBA",
+    "name": "PJ Hall",
+    "position": "F",
+    "jersey": "16",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "PAT_CONNAUGHTON_1_NBA",
+    "name": "Pat Connaughton",
+    "position": "G",
+    "jersey": "21",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "ROYCE_ONEALE_1_NBA",
+    "name": "Royce O'Neale",
+    "position": "F",
+    "jersey": "0",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "RYAN_KALKBRENNER_1_NBA",
+    "name": "Ryan Kalkbrenner",
+    "position": "C",
+    "jersey": "11",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "SION_JAMES_1_NBA",
+    "name": "Sion James",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "TIDJANE_SALAUN_1_NBA",
+    "name": "Tidjane Salaun",
+    "position": "F",
+    "jersey": "31",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "WYATT_FRICKS_1_NBA",
+    "name": "Wyatt Fricks",
+    "position": "F",
+    "jersey": "17",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   },
+   {
+    "player_id": "XAVIER_TILLMAN_1_NBA",
+    "name": "Xavier Tillman",
+    "position": "F",
+    "jersey": "26",
+    "team_id": "CHARLOTTE_HORNETS_NBA"
+   }
+  ],
+  "CHICAGO_BULLS_NBA": [
+   {
+    "player_id": "ANTONIO_REEVES_1_NBA",
+    "name": "Antonio Reeves",
+    "position": "G",
+    "jersey": "13",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "DAILYN_SWAIN_1_NBA",
+    "name": "Dailyn Swain",
+    "position": "GF",
+    "jersey": "5",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "GRANT_NEWELL_1_NBA",
+    "name": "Grant Newell",
+    "position": "F",
+    "jersey": "18",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "HOUSTON_MALLETTE_1_NBA",
+    "name": "Houston Mallette",
+    "position": "G",
+    "jersey": "95",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "ISAAC_OKORO_1_NBA",
+    "name": "Isaac Okoro",
+    "position": "FG",
+    "jersey": "35",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "JALEN_SMITH_1_NBA",
+    "name": "Jalen Smith",
+    "position": "FC",
+    "jersey": "25",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "JALEN_WASHINGTON_1_NBA",
+    "name": "Jalen Washington",
+    "position": "C",
+    "jersey": "15",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "JAYLIN_SELLERS_1_NBA",
+    "name": "Jaylin Sellers",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "JOSH_GIDDEY_1_NBA",
+    "name": "Josh Giddey",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "KENNEDY_CHANDLER_1_NBA",
+    "name": "Kennedy Chandler",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "KEYSHAWN_BRYANT_1_NBA",
+    "name": "Keyshawn Bryant",
+    "position": "F",
+    "jersey": "29",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "LEONARD_MILLER_1_NBA",
+    "name": "Leonard Miller",
+    "position": "F",
+    "jersey": "11",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "MAC_MCCLUNG_1_NBA",
+    "name": "Mac McClung",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "MATAS_BUZELIS_1_NBA",
+    "name": "Matas Buzelis",
+    "position": "F",
+    "jersey": "14",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "NIC_CLAXTON_1_NBA",
+    "name": "Nic Claxton",
+    "position": "FC",
+    "jersey": "9",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "NOA_ESSENGUE_1_NBA",
+    "name": "Noa Essengue",
+    "position": "F",
+    "jersey": "24",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "NORMAN_POWELL_1_NBA",
+    "name": "Norman Powell",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "PATRICK_WILLIAMS_1_NBA",
+    "name": "Patrick Williams",
+    "position": "F",
+    "jersey": "44",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "ROB_DILLINGHAM_1_NBA",
+    "name": "Rob Dillingham",
+    "position": "G",
+    "jersey": "7",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "TOBE_AWAKA_1_NBA",
+    "name": "Tobe Awaka",
+    "position": "F",
+    "jersey": "19",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "TRE_JONES_1_NBA",
+    "name": "Tre Jones",
+    "position": "G",
+    "jersey": "30",
+    "team_id": "CHICAGO_BULLS_NBA"
+   },
+   {
+    "player_id": "ZACH_COLLINS_1_NBA",
+    "name": "Zach Collins",
+    "position": "FC",
+    "jersey": "12",
+    "team_id": "CHICAGO_BULLS_NBA"
+   }
+  ],
+  "CLEVELAND_CAVALIERS_NBA": [
+   {
+    "player_id": "CRAIG_PORTER_1_NBA",
+    "name": "Craig Porter",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "DANE_GOODWIN_1_NBA",
+    "name": "Dane Goodwin",
+    "position": "G",
+    "jersey": "37",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "DONOVAN_MITCHELL_1_NBA",
+    "name": "Donovan Mitchell",
+    "position": "G",
+    "jersey": "45",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "ERNEST_UDEH_1_NBA",
+    "name": "Ernest Udeh",
+    "position": "C",
+    "jersey": "39",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "EVAN_MOBLEY_1_NBA",
+    "name": "Evan Mobley",
+    "position": "F",
+    "jersey": "4",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "IAN_MARTINEZ_1_NBA",
+    "name": "Ian Martinez",
+    "position": "G",
+    "jersey": "48",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "JAMES_HARDEN_1_NBA",
+    "name": "James Harden",
+    "position": "G",
+    "jersey": "1",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "JARRETT_ALLEN_1_NBA",
+    "name": "Jarrett Allen",
+    "position": "C",
+    "jersey": "31",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "JAXSON_ROBINSON_1_NBA",
+    "name": "Jaxson Robinson",
+    "position": "G",
+    "jersey": "36",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "JAYLON_TYSON_1_NBA",
+    "name": "Jaylon Tyson",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "MARIO_HEZONJA_1_NBA",
+    "name": "Mario Hezonja",
+    "position": "F",
+    "jersey": "11",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "MILLER_KOPP_1_NBA",
+    "name": "Miller Kopp",
+    "position": null,
+    "jersey": null,
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "NAEQWAN_TOMLIN_1_NBA",
+    "name": "NaeQwan Tomlin",
+    "position": "F",
+    "jersey": "35",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "PEYTON_WATSON_1_NBA",
+    "name": "Peyton Watson",
+    "position": "F",
+    "jersey": "8",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "RASHAUN_AGEE_1_NBA",
+    "name": "Rashaun Agee",
+    "position": "F",
+    "jersey": "46",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "RILEY_MINIX_1_NBA",
+    "name": "Riley Minix",
+    "position": "F",
+    "jersey": "12",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "SAM_MERRILL_1_NBA",
+    "name": "Sam Merrill",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "THOMAS_BRYANT_1_NBA",
+    "name": "Thomas Bryant",
+    "position": "CF",
+    "jersey": "3",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "TREVON_SPILLERS_1_NBA",
+    "name": "Tre'Von Spillers",
+    "position": "F",
+    "jersey": "47",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "TRISTAN_ENARUNA_1_NBA",
+    "name": "Tristan Enaruna",
+    "position": "F",
+    "jersey": "21",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "TYRESE_PROCTOR_1_NBA",
+    "name": "Tyrese Proctor",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   },
+   {
+    "player_id": "XAIVIAN_LEE_1_NBA",
+    "name": "Xaivian Lee",
+    "position": "G",
+    "jersey": "44",
+    "team_id": "CLEVELAND_CAVALIERS_NBA"
+   }
+  ],
+  "DALLAS_MAVERICKS_NBA": [
+   {
+    "player_id": "CALEB_MARTIN_1_NBA",
+    "name": "Caleb Martin",
+    "position": "F",
+    "jersey": "16",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "C_FLAGG_1_NBA",
+    "name": "Cooper Flagg",
+    "position": "GF",
+    "jersey": "32",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "DANIEL_GAFFORD_1_NBA",
+    "name": "Daniel Gafford",
+    "position": "FC",
+    "jersey": "21",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "DENNIS_SMITH_JR_1_NBA",
+    "name": "Dennis Smith",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "DERECK_LIVELY_II_1_NBA",
+    "name": "Dereck Lively II",
+    "position": "C",
+    "jersey": "2",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "JAVIER_FRANCIS_1_NBA",
+    "name": "Ja'Vier Francis",
+    "position": "F",
+    "jersey": "43",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "JADEN_SPRINGER_1_NBA",
+    "name": "Jaden Springer",
+    "position": "G",
+    "jersey": "29",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "JETT_HOWARD_1_NBA",
+    "name": "Jett Howard",
+    "position": "GF",
+    "jersey": "13",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "KLAY_THOMPSON_1_NBA",
+    "name": "Klay Thompson",
+    "position": "G",
+    "jersey": "31",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "KYRIE_IRVING_1_NBA",
+    "name": "Kyrie Irving",
+    "position": "G",
+    "jersey": "11",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "M_CLEVELAND_1_NBA",
+    "name": "M. Cleveland",
+    "position": null,
+    "jersey": null,
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "M_KELLY_1_NBA",
+    "name": "M. Kelly",
+    "position": null,
+    "jersey": null,
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "MARCUS_SASSER_1_NBA",
+    "name": "Marcus Sasser",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "MAX_CHRISTIE_1_NBA",
+    "name": "Max Christie",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "MOUSSA_CISSE_1_NBA",
+    "name": "Moussa Cisse",
+    "position": "C",
+    "jersey": "30",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "NAJI_MARSHALL_1_NBA",
+    "name": "Naji Marshall",
+    "position": "F",
+    "jersey": "3",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "PJ_WASHINGTON_JR_1_NBA",
+    "name": "P.J. Washington Jr.",
+    "position": "F",
+    "jersey": "25",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "SANTI_ALDAMA_1_NBA",
+    "name": "Santi Aldama",
+    "position": "F",
+    "jersey": "7",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "SERGIO_DE_LARREA_1_NBA",
+    "name": "Sergio De Larrea",
+    "position": "G",
+    "jersey": "55",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "TARIK_BIBEROVIC_1_NBA",
+    "name": "Tarik Biberovi\u0107",
+    "position": "F",
+    "jersey": "13",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "TOBI_LAWAL_1_NBA",
+    "name": "Tobi Lawal",
+    "position": "F",
+    "jersey": "33",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "VSEVOLOD_ISHCHENKO_1_NBA",
+    "name": "Vsevolod Ishchenko",
+    "position": "G",
+    "jersey": "13",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   },
+   {
+    "player_id": "ZACCHARIE_RISACHER_1_NBA",
+    "name": "Zaccharie Risacher",
+    "position": "F",
+    "jersey": "21",
+    "team_id": "DALLAS_MAVERICKS_NBA"
+   }
+  ],
+  "DENVER_NUGGETS_NBA": [
+   {
+    "player_id": "AARON_GORDON_1_NBA",
+    "name": "Aaron Gordon",
+    "position": "F",
+    "jersey": "32",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "AARON_NKRUMAH_1_NBA",
+    "name": "Aaron Nkrumah",
+    "position": "F",
+    "jersey": "30",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "CAMERON_JOHNSON_1_NBA",
+    "name": "Cameron Johnson",
+    "position": "F",
+    "jersey": "23",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "CHRISTIAN_BRAUN_1_NBA",
+    "name": "Christian Braun",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "COLEMAN_HAWKINS_1_NBA",
+    "name": "Coleman Hawkins",
+    "position": "F",
+    "jersey": "43",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "DARON_HOLMES_II_1_NBA",
+    "name": "DaRon Holmes II",
+    "position": "FC",
+    "jersey": "14",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "DEJON_JARREAU_1_NBA",
+    "name": "DeJon Jarreau",
+    "position": "G",
+    "jersey": "77",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "DEMAR_DEROZAN_1_NBA",
+    "name": "DeMar DeRozan",
+    "position": "GF",
+    "jersey": "10",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "EJ_ANOSIKE_1_NBA",
+    "name": "E.J. Anosike",
+    "position": "F",
+    "jersey": "24",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "EFE_ABOGIDI_1_NBA",
+    "name": "Efe Abogidi",
+    "position": "C",
+    "jersey": "18",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "JALEN_PICKETT_1_NBA",
+    "name": "Jalen Pickett",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "JAMAL_MURRAY_1_NBA",
+    "name": "Jamal Murray",
+    "position": "G",
+    "jersey": "27",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "JAMES_AKINJO_1_NBA",
+    "name": "James Akinjo",
+    "position": null,
+    "jersey": null,
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "JULIAN_STRAWTHER_1_NBA",
+    "name": "Julian Strawther",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "KJ_SIMPSON_1_NBA",
+    "name": "KJ Simpson",
+    "position": "F",
+    "jersey": "25",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "LONNIE_WALKER_IV_1_NBA",
+    "name": "Lonnie Walker IV",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "MARK_MITCHELL_1_NBA",
+    "name": "Mark Mitchell",
+    "position": "F",
+    "jersey": "26",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "MARK_SEARS_1_NBA",
+    "name": "Mark Sears",
+    "position": "G",
+    "jersey": "19",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "MARVIN_BAGLEY_III_1_NBA",
+    "name": "Marvin Bagley III",
+    "position": "F",
+    "jersey": "35",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "NIKOLA_JOKIC_1_NBA",
+    "name": "Nikola Joki\u0107",
+    "position": "C",
+    "jersey": "15",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "RYLAN_GRIFFEN_1_NBA",
+    "name": "Rylan Griffen",
+    "position": "G",
+    "jersey": "99",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "SPENCER_JONES_1_NBA",
+    "name": "Spencer Jones",
+    "position": "F",
+    "jersey": "21",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "TREVON_BRAZILE_1_NBA",
+    "name": "Trevon Brazile",
+    "position": "F",
+    "jersey": "7",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "TYUS_JONES_1_NBA",
+    "name": "Tyus Jones",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "DENVER_NUGGETS_NBA"
+   },
+   {
+    "player_id": "ZEKE_NNAJI_1_NBA",
+    "name": "Zeke Nnaji",
+    "position": "FC",
+    "jersey": "22",
+    "team_id": "DENVER_NUGGETS_NBA"
+   }
+  ],
+  "DETROIT_PISTONS_NBA": [
+   {
+    "player_id": "AUSAR_THOMPSON_1_NBA",
+    "name": "Ausar Thompson",
+    "position": "GF",
+    "jersey": "9",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "B_WILLIAMS_1_NBA",
+    "name": "B. Williams",
+    "position": null,
+    "jersey": null,
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "BASHEER_JIHAD_1_NBA",
+    "name": "Basheer Jihad",
+    "position": "F",
+    "jersey": "48",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "CADE_CUNNINGHAM_1_NBA",
+    "name": "Cade Cunningham",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "CHAZ_LANIER_1_NBA",
+    "name": "Chaz Lanier",
+    "position": "G",
+    "jersey": "20",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "COLBY_JONES_1_NBA",
+    "name": "Colby Jones",
+    "position": null,
+    "jersey": null,
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "COREY_STEPHENSON_1_NBA",
+    "name": "Corey Stephenson",
+    "position": "FG",
+    "jersey": "47",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "DANISS_JENKINS_1_NBA",
+    "name": "Daniss Jenkins",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "DAWSON_GARCIA_1_NBA",
+    "name": "Dawson Garcia",
+    "position": "F",
+    "jersey": "38",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "DRAKE_ALLEN_1_NBA",
+    "name": "Drake Allen",
+    "position": "G",
+    "jersey": "29",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "DUNCAN_ROBINSON_1_NBA",
+    "name": "Duncan Robinson",
+    "position": "F",
+    "jersey": "55",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "EBUKA_OKORIE_1_NBA",
+    "name": "Ebuka Okorie",
+    "position": "G",
+    "jersey": "23",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "GARY_HARRIS_1_NBA",
+    "name": "Gary Harris",
+    "position": "G",
+    "jersey": "13",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "ISAIAH_JOE_1_NBA",
+    "name": "Isaiah Joe",
+    "position": "G",
+    "jersey": "11",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "JADEN_HENLEY_1_NBA",
+    "name": "Jaden Henley",
+    "position": "G",
+    "jersey": "39",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "JADEN_IVEY_1_NBA",
+    "name": "Jaden Ivey",
+    "position": "G",
+    "jersey": "23",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "JALEN_DUREN_1_NBA",
+    "name": "Jalen Duren",
+    "position": "C",
+    "jersey": "0",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "JAVONTE_GREEN_1_NBA",
+    "name": "Javonte Green",
+    "position": "GF",
+    "jersey": "31",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "JOHN_COLLINS_1_NBA",
+    "name": "John Collins",
+    "position": "FC",
+    "jersey": "20",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "KEVIN_HUERTER_1_NBA",
+    "name": "Kevin Huerter",
+    "position": "GF",
+    "jersey": "27",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "LATAVIOUS_MITCHELL_1_NBA",
+    "name": "Latavious Mitchell",
+    "position": "F",
+    "jersey": "56",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "PAUL_REED_1_NBA",
+    "name": "Paul Reed",
+    "position": "F",
+    "jersey": "7",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "RODDY_GAYLE_1_NBA",
+    "name": "Roddy Gayle",
+    "position": "G",
+    "jersey": "49",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "RON_HOLLAND_1_NBA",
+    "name": "Ron Holland",
+    "position": "F",
+    "jersey": "5",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "STEVEN_CROWL_1_NBA",
+    "name": "Steven Crowl",
+    "position": "F",
+    "jersey": "38",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "TAUREAN_PRINCE_1_NBA",
+    "name": "Taurean Prince",
+    "position": "F",
+    "jersey": "12",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "TOLU_SMITH_1_NBA",
+    "name": "Tolu Smith",
+    "position": "FC",
+    "jersey": "35",
+    "team_id": "DETROIT_PISTONS_NBA"
+   },
+   {
+    "player_id": "UGONNA_ONYENSO_1_NBA",
+    "name": "Ugonna Onyenso",
+    "position": "C",
+    "jersey": "34",
+    "team_id": "DETROIT_PISTONS_NBA"
+   }
+  ],
+  "GOLDEN_STATE_WARRIORS_NBA": [
+   {
+    "player_id": "ALEX_TOOHEY_1_NBA",
+    "name": "Alex Toohey",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "BRANDIN_PODZIEMSKI_1_NBA",
+    "name": "Brandin Podziemski",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "BRANDON_WILLIAMS_1_NBA",
+    "name": "Brandon Williams",
+    "position": "G",
+    "jersey": "10",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "CHANCE_MCMILLIAN_1_NBA",
+    "name": "Chance McMillian",
+    "position": "G",
+    "jersey": "55",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "CHARLES_BASSEY_1_NBA",
+    "name": "Charles Bassey",
+    "position": "CF",
+    "jersey": "28",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "DALEN_TERRY_1_NBA",
+    "name": "Dalen Terry",
+    "position": "G",
+    "jersey": "14",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "DEIVON_SMITH_1_NBA",
+    "name": "Deivon Smith",
+    "position": "G",
+    "jersey": "36",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "DRAYMOND_GREEN_1_NBA",
+    "name": "Draymond Green",
+    "position": "F",
+    "jersey": "23",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "GARY_PAYTON_II_1_NBA",
+    "name": "Gary Payton II",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "GEORGES_NIANG_1_NBA",
+    "name": "Georges Niang",
+    "position": "F",
+    "jersey": "32",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "GRAHAM_IKE_1_NBA",
+    "name": "Graham Ike",
+    "position": "F",
+    "jersey": "45",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "GUI_SANTOS_1_NBA",
+    "name": "Gui Santos",
+    "position": "F",
+    "jersey": "15",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "JACKSEN_MONI_1_NBA",
+    "name": "Jacksen Moni",
+    "position": "F",
+    "jersey": "40",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "KJ_ADAMS_1_NBA",
+    "name": "KJ Adams",
+    "position": "F",
+    "jersey": "26",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "LJ_CRYER_1_NBA",
+    "name": "L.J. Cryer",
+    "position": "G",
+    "jersey": "18",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "LACHLAN_OLBRICH_1_NBA",
+    "name": "Lachlan Olbrich",
+    "position": "C",
+    "jersey": "47",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "MALEVY_LEONS_1_NBA",
+    "name": "Malevy Leons",
+    "position": "F",
+    "jersey": "33",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "MAX_SHULGA_1_NBA",
+    "name": "Max Shulga",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "MOSES_MOODY_1_NBA",
+    "name": "Moses Moody",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "NICHOLAS_BOYD_1_NBA",
+    "name": "Nicholas Boyd",
+    "position": "G",
+    "jersey": "19",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "OMER_YURTSEVEN_1_NBA",
+    "name": "Omer Yurtseven",
+    "position": "C",
+    "jersey": "77",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "WILL_RICHARD_1_NBA",
+    "name": "Will Richard",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   },
+   {
+    "player_id": "YAXEL_LENDEBORG_1_NBA",
+    "name": "Yaxel Lendeborg",
+    "position": "F",
+    "jersey": "1",
+    "team_id": "GOLDEN_STATE_WARRIORS_NBA"
+   }
+  ],
+  "HOUSTON_ROCKETS_NBA": [
+   {
+    "player_id": "AARON_HOLIDAY_1_NBA",
+    "name": "Aaron Holiday",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "ALPEREN_SENGUN_1_NBA",
+    "name": "Alperen Sengun",
+    "position": "C",
+    "jersey": "28",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "AMEN_THOMPSON_1_NBA",
+    "name": "Amen Thompson",
+    "position": "G",
+    "jersey": "1",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "BEN_MIDDLEBROOKS_1_NBA",
+    "name": "Ben Middlebrooks",
+    "position": "F",
+    "jersey": "48",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "BOGDAN_BOGDANOVIC_1_NBA",
+    "name": "Bogdan Bogdanovi\u0107",
+    "position": "G",
+    "jersey": "7",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "BRUCE_THORNTON_1_NBA",
+    "name": "Bruce Thornton",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "CHRISTOPHER_LEDLUM_1_NBA",
+    "name": "Chris Ledlum",
+    "position": "F",
+    "jersey": "47",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "CLINT_CAPELA_1_NBA",
+    "name": "Clint Capela",
+    "position": "C",
+    "jersey": "30",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "DAISHEN_NIX_1_NBA",
+    "name": "Daishen Nix",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "DAVIDE_CASARIN_1_NBA",
+    "name": "Davide Casarin",
+    "position": "G",
+    "jersey": null,
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "FRED_VANVLEET_1_NBA",
+    "name": "Fred VanVleet",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "ISAIAH_CRAWFORD_1_NBA",
+    "name": "Isaiah Crawford",
+    "position": "F",
+    "jersey": "27",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "JABARI_SMITH_1_NBA",
+    "name": "Jabari Smith Jr.",
+    "position": "F",
+    "jersey": "10",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "JAESEAN_TATE_1_NBA",
+    "name": "Jae'Sean Tate",
+    "position": "F",
+    "jersey": "8",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "JULIAN_PHILLIPS_1_NBA",
+    "name": "Julian Phillips",
+    "position": "F",
+    "jersey": "15",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "KEVIN_DURANT_1_NBA",
+    "name": "Kevin Durant",
+    "position": "F",
+    "jersey": "7",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "MARCUS_SMART_1_NBA",
+    "name": "Marcus Smart",
+    "position": "G",
+    "jersey": "36",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "QUADIR_COPELAND_1_NBA",
+    "name": "Quadir Copeland",
+    "position": "G",
+    "jersey": "25",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "REED_SHEPPARD_1_NBA",
+    "name": "Reed Sheppard",
+    "position": "G",
+    "jersey": "15",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "SEAN_PEDULLA_1_NBA",
+    "name": "Sean Pedulla",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "STEVEN_ADAMS_1_NBA",
+    "name": "Steven Adams",
+    "position": "C",
+    "jersey": "12",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "STEVIE_MITCHELL_1_NBA",
+    "name": "Stevie Mitchell",
+    "position": "G",
+    "jersey": "49",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   },
+   {
+    "player_id": "TARI_EASON_1_NBA",
+    "name": "Tari Eason",
+    "position": "F",
+    "jersey": "17",
+    "team_id": "HOUSTON_ROCKETS_NBA"
+   }
+  ],
+  "INDIANA_PACERS_NBA": [
+   {
+    "player_id": "AARON_NESMITH_1_NBA",
+    "name": "Aaron Nesmith",
+    "position": "GF",
+    "jersey": "23",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "ANDREW_NEMBHARD_1_NBA",
+    "name": "Andrew Nembhard",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "BEN_SHEPPARD_1_NBA",
+    "name": "Ben Sheppard",
+    "position": "G",
+    "jersey": "26",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "BRADEN_SMITH_1_NBA",
+    "name": "Braden Smith",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "CAMERON_HILDRETH_1_NBA",
+    "name": "Cameron Hildreth",
+    "position": "G",
+    "jersey": "7",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "DELON_WRIGHT_1_NBA",
+    "name": "Delon Wright",
+    "position": "G",
+    "jersey": "55",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "GABE_MCGLOTHAN_1_NBA",
+    "name": "Gabe McGlothan",
+    "position": "F",
+    "jersey": "41",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "IVICA_ZUBAC_1_NBA",
+    "name": "Ivica Zubac",
+    "position": "C",
+    "jersey": "40",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "JALEN_SLAWSON_1_NBA",
+    "name": "Jalen Slawson",
+    "position": "F",
+    "jersey": "18",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "JALEN_WARLEY_1_NBA",
+    "name": "Jalen Warley",
+    "position": "G",
+    "jersey": "20",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "JARACE_WALKER_1_NBA",
+    "name": "Jarace Walker",
+    "position": "F",
+    "jersey": "5",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "JAY_HUFF_1_NBA",
+    "name": "Jay Huff",
+    "position": "C",
+    "jersey": "32",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "JOHNNY_FURPHY_1_NBA",
+    "name": "Johnny Furphy",
+    "position": "G",
+    "jersey": "12",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "KEBA_KEITA_1_NBA",
+    "name": "Keba Keita",
+    "position": "C",
+    "jersey": "13",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "KELLY_OUBRE_JR_1_NBA",
+    "name": "Kelly Oubre Jr.",
+    "position": "FG",
+    "jersey": "10",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "KOBE_BROWN_1_NBA",
+    "name": "Kobe Brown",
+    "position": "F",
+    "jersey": "24",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "KOWACIE_REEVES_1_NBA",
+    "name": "Kowacie Reeves",
+    "position": "G",
+    "jersey": "16",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "LARRY_NANCE_JR_1_NBA",
+    "name": "Larry Nance Jr.",
+    "position": "FC",
+    "jersey": "22",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "MJ_IRALDI_1_NBA",
+    "name": "MJ Iraldi",
+    "position": "GF",
+    "jersey": "10",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "MONTE_MORRIS_1_NBA",
+    "name": "Monte Morris",
+    "position": "G",
+    "jersey": "11",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "OBI_TOPPIN_1_NBA",
+    "name": "Obi Toppin",
+    "position": "F",
+    "jersey": "1",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "PASCAL_SIAKAM_1_NBA",
+    "name": "Pascal Siakam",
+    "position": "F",
+    "jersey": "43",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "QUENTON_JACKSON_1_NBA",
+    "name": "Quenton Jackson",
+    "position": "G",
+    "jersey": "29",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "RIENK_MAST_1_NBA",
+    "name": "Rienk Mast",
+    "position": "F",
+    "jersey": "51",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "TJ_MCCONNELL_1_NBA",
+    "name": "T.J. McConnell",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "TAEVION_KINSEY_1_NBA",
+    "name": "Taevion Kinsey",
+    "position": "GF",
+    "jersey": "25",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "TAMIN_LIPSEY_1_NBA",
+    "name": "Tamin Lipsey",
+    "position": "G",
+    "jersey": "14",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "TYRESE_HALIBURTON_1_NBA",
+    "name": "Tyrese Haliburton",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "WADE_TAYLOR_1_NBA",
+    "name": "Wade Taylor",
+    "position": "G",
+    "jersey": "41",
+    "team_id": "INDIANA_PACERS_NBA"
+   },
+   {
+    "player_id": "YUKI_KAWAMURA_1_NBA",
+    "name": "Yuki Kawamura",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "INDIANA_PACERS_NBA"
+   }
+  ],
+  "LOS_ANGELES_LAKERS_NBA": [
+   {
+    "player_id": "AK_OKEREKE_1_NBA",
+    "name": "AK Okereke",
+    "position": "F",
+    "jersey": "31",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "ADOU_THIERO_1_NBA",
+    "name": "Adou Thiero",
+    "position": "F",
+    "jersey": "1",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "ANTON_WATSON_1_NBA",
+    "name": "Anton Watson",
+    "position": "F",
+    "jersey": "41",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "ARTHUR_KALUMA_1_NBA",
+    "name": "Arthur Kaluma",
+    "position": "F",
+    "jersey": "47",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "AUSTIN_REAVES_1_NBA",
+    "name": "Austin Reaves",
+    "position": "G",
+    "jersey": "15",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "BRONNY_JAMES_1_NBA",
+    "name": "Bronny James",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "CAMERON_CARR_1_NBA",
+    "name": "Cameron Carr",
+    "position": "G",
+    "jersey": "43",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "CHASE_ROSS_1_NBA",
+    "name": "Chase Ross",
+    "position": "G",
+    "jersey": "29",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "CHRIS_MANON_1_NBA",
+    "name": "Chris Manon",
+    "position": "G",
+    "jersey": "30",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "COLLIN_SEXTON_1_NBA",
+    "name": "Collin Sexton",
+    "position": "G",
+    "jersey": "10",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "DALTON_KNECHT_1_NBA",
+    "name": "Dalton Knecht",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "JACARI_WHITE_1_NBA",
+    "name": "Jacari White",
+    "position": "G",
+    "jersey": "50",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "JADEN_HARDY_1_NBA",
+    "name": "Jaden Hardy",
+    "position": "G",
+    "jersey": "7",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "JAKE_LARAVIA_1_NBA",
+    "name": "Jake LaRavia",
+    "position": "F",
+    "jersey": "12",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "JARRED_VANDERBILT_1_NBA",
+    "name": "Jarred Vanderbilt",
+    "position": "F",
+    "jersey": "2",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "JARRON_CUMBERLAND_1_NBA",
+    "name": "Jarron Cumberland",
+    "position": null,
+    "jersey": null,
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "JON_ELMORE_1_NBA",
+    "name": "Jon Elmore",
+    "position": "G",
+    "jersey": "40",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "KEVON_LOONEY_1_NBA",
+    "name": "Kevon Looney",
+    "position": "F",
+    "jersey": "55",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "LUKA_DONCIC_1_NBA",
+    "name": "Luka Don\u010di\u0107",
+    "position": "FG",
+    "jersey": "77",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "MATISSE_THYBULLE_1_NBA",
+    "name": "Matisse Thybulle",
+    "position": "GF",
+    "jersey": "4",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "QUENTIN_GRIMES_1_NBA",
+    "name": "Quentin Grimes",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "R_DAVIS_1_NBA",
+    "name": "R. Davis",
+    "position": null,
+    "jersey": null,
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "ROBBIE_AVILA_1_NBA",
+    "name": "Robbie Avila",
+    "position": "C",
+    "jersey": "67",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "ROBERT_MCCRAY_1_NBA",
+    "name": "Robert McCray",
+    "position": "G",
+    "jersey": "27",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "SANDRO_MAMUKELASHVILI_1_NBA",
+    "name": "Sandro Mamukelashvili",
+    "position": "FC",
+    "jersey": "5",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "TEVIAN_JONES_1_NBA",
+    "name": "Tevian Jones",
+    "position": null,
+    "jersey": null,
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "WALKER_KESSLER_1_NBA",
+    "name": "Walker Kessler",
+    "position": "C",
+    "jersey": "14",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "WILLIAM_HICKEY_1_NBA",
+    "name": "William Hickey",
+    "position": "G",
+    "jersey": "66",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "WILLIAM_KYLE_1_NBA",
+    "name": "William Kyle",
+    "position": "F",
+    "jersey": "45",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "ZHAIRE_SMITH_1_NBA",
+    "name": "Zhaire Smith",
+    "position": "GF",
+    "jersey": "38",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "ZIAIRE_WILLIAMS_1_NBA",
+    "name": "Ziaire Williams",
+    "position": "F",
+    "jersey": "8",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   },
+   {
+    "player_id": "LUKE_GOODE_1_NBA",
+    "name": "luke Goode",
+    "position": "F",
+    "jersey": "37",
+    "team_id": "LOS_ANGELES_LAKERS_NBA"
+   }
+  ],
+  "MEMPHIS_GRIZZLIES_NBA": [
+   {
+    "player_id": "BRANDON_CLARKE_1_NBA",
+    "name": "Brandon Clarke",
+    "position": "F",
+    "jersey": "15",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "BRENDAN_HAUSEN_1_NBA",
+    "name": "Brendan Hausen",
+    "position": "G",
+    "jersey": "1",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "CAM_SPENCER_1_NBA",
+    "name": "Cam Spencer",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "CAMERON_BOOZER_1_NBA",
+    "name": "Cameron Boozer",
+    "position": "F",
+    "jersey": "27",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "CARSON_COOPER_1_NBA",
+    "name": "Carson Cooper",
+    "position": "C",
+    "jersey": "20",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "CEDRIC_COWARD_1_NBA",
+    "name": "Cedric Coward",
+    "position": "GF",
+    "jersey": "23",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "DANGELO_RUSSELL_1_NBA",
+    "name": "D'Angelo Russell",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "DARIQ_WHITEHEAD_1_NBA",
+    "name": "Dariq Whitehead",
+    "position": "F",
+    "jersey": "0",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "GG_JACKSON_1_NBA",
+    "name": "GG Jackson II",
+    "position": "F",
+    "jersey": "45",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "ISAIAH_STEWART_1_NBA",
+    "name": "Isaiah Stewart",
+    "position": "FC",
+    "jersey": "28",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "J_SMALL_1_NBA",
+    "name": "J. Small",
+    "position": null,
+    "jersey": null,
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "JAHMAI_MASHACK_1_NBA",
+    "name": "Jahmai Mashack",
+    "position": "G",
+    "jersey": "21",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "JAYLEN_WELLS_1_NBA",
+    "name": "Jaylen Wells",
+    "position": "F",
+    "jersey": "0",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "JERAMI_GRANT_1_NBA",
+    "name": "Jerami Grant",
+    "position": "F",
+    "jersey": "9",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "JESTIN_PORTER_1_NBA",
+    "name": "Jestin Porter",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "JEVON_PORTER_1_NBA",
+    "name": "Jevon Porter",
+    "position": "F",
+    "jersey": "14",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "JORDAN_HAWKINS_1_NBA",
+    "name": "Jordan Hawkins",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "KENTAVIOUS_CALDWELLPOPE_1_NBA",
+    "name": "Kentavious Caldwell-Pope",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "KRIS_MURRAY_1_NBA",
+    "name": "Kris Murray",
+    "position": "F",
+    "jersey": "24",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "LAWSON_LOVERING_1_NBA",
+    "name": "Lawson Lovering",
+    "position": "C",
+    "jersey": "34",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "LUCAS_WILLIAMSON_1_NBA",
+    "name": "Lucas Williamson",
+    "position": null,
+    "jersey": null,
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "MICAH_PEAVY_1_NBA",
+    "name": "Micah Peavy",
+    "position": "G",
+    "jersey": "14",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "OLIVIERMAXENCE_PROSPER_1_NBA",
+    "name": "Olivier-Maxence Prosper",
+    "position": "F",
+    "jersey": "18",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "Q_POST_1_NBA",
+    "name": "Quinten Post",
+    "position": "C",
+    "jersey": "21",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "RICHIE_SAUNDERS_1_NBA",
+    "name": "Richie Saunders",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "SCOTTY_PIPPEN_JR_1_NBA",
+    "name": "Scotty Pippen Jr.",
+    "position": "G",
+    "jersey": "1",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "T_BURTON_1_NBA",
+    "name": "T. Burton",
+    "position": null,
+    "jersey": null,
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "TAJ_GIBSON_1_NBA",
+    "name": "Taj Gibson",
+    "position": "F",
+    "jersey": "67",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "TAYLOR_HENDRICKS_1_NBA",
+    "name": "Taylor Hendricks",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "TY_JEROME_1_NBA",
+    "name": "Ty Jerome",
+    "position": "GF",
+    "jersey": "2",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "WALTER_CLAYTON_1_NBA",
+    "name": "Walter Clayton Jr.",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   },
+   {
+    "player_id": "ZACH_EDEY_1_NBA",
+    "name": "Zach Edey",
+    "position": "C",
+    "jersey": "14",
+    "team_id": "MEMPHIS_GRIZZLIES_NBA"
+   }
+  ],
+  "MILWAUKEE_BUCKS_NBA": [
+   {
+    "player_id": "AJ_GREEN_1_NBA",
+    "name": "AJ Green",
+    "position": "G",
+    "jersey": "20",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "ANDRE_JACKSON_JR_1_NBA",
+    "name": "Andre Jackson Jr.",
+    "position": "GF",
+    "jersey": "44",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "BOGOLJUB_MARKOVIC_1_NBA",
+    "name": "Bogoljub Markovi\u0107",
+    "position": "F",
+    "jersey": "23",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "BRANDON_BOSTON_JR_1_NBA",
+    "name": "Brandon Boston Jr.",
+    "position": "GF",
+    "jersey": "11",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "BRAYDEN_BURRIES_1_NBA",
+    "name": "Brayden Burries",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "CAM_THOMAS_1_NBA",
+    "name": "Cam Thomas",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "CARIS_LEVERT_1_NBA",
+    "name": "Caris LeVert",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "COLE_ANTHONY_1_NBA",
+    "name": "Cole Anthony",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "CORMAC_RYAN_1_NBA",
+    "name": "Cormac Ryan",
+    "position": "G",
+    "jersey": "30",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "EARL_TIMBERLAKE_1_NBA",
+    "name": "Earl Timberlake",
+    "position": "G",
+    "jersey": "47",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "GARY_TRENT_JR_1_NBA",
+    "name": "Gary Trent Jr.",
+    "position": "GF",
+    "jersey": "5",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "JAIME_JAQUEZ_JR_1_NBA",
+    "name": "Jaime Jaquez Jr.",
+    "position": "F",
+    "jersey": "24",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "JERICHO_SIMS_1_NBA",
+    "name": "Jericho Sims",
+    "position": "C",
+    "jersey": "0",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "JESSE_EDWARDS_1_NBA",
+    "name": "Jesse Edwards",
+    "position": "C",
+    "jersey": "14",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "KASPARAS_JAKUCIONIS_1_NBA",
+    "name": "Kasparas Jakucionis",
+    "position": "G",
+    "jersey": "25",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "KELEL_WARE_1_NBA",
+    "name": "Kel'el Ware",
+    "position": "C",
+    "jersey": "9",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "KEVIN_PORTER_1_NBA",
+    "name": "Kevin Porter",
+    "position": "GF",
+    "jersey": "7",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "KOBE_STEWART_1_NBA",
+    "name": "Kobe Stewart",
+    "position": "GF",
+    "jersey": "27",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "KYLE_KUZMA_1_NBA",
+    "name": "Kyle Kuzma",
+    "position": "F",
+    "jersey": "18",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "LUKE_TRAVERS_1_NBA",
+    "name": "Luke Travers",
+    "position": "G",
+    "jersey": "37",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "MYLES_TURNER_1_NBA",
+    "name": "Myles Turner",
+    "position": "CF",
+    "jersey": "3",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "OUSMANE_DIENG_1_NBA",
+    "name": "Ousmane Dieng",
+    "position": "F",
+    "jersey": "21",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "PETE_NANCE_1_NBA",
+    "name": "Pete Nance",
+    "position": "F",
+    "jersey": "35",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "RAFAEL_CASTRO_1_NBA",
+    "name": "Rafael Castro",
+    "position": "F",
+    "jersey": "40",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "RYAN_ROLLINS_1_NBA",
+    "name": "Ryan Rollins",
+    "position": "G",
+    "jersey": "13",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "THANASIS_ANTETOKOUNMPO_1_NBA",
+    "name": "Thanasis Antetokounmpo",
+    "position": "F",
+    "jersey": "43",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "TYLER_HERRO_1_NBA",
+    "name": "Tyler Herro",
+    "position": "G",
+    "jersey": "11",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   },
+   {
+    "player_id": "ZACK_AUSTIN_1_NBA",
+    "name": "Zach Austin",
+    "position": "F",
+    "jersey": "55",
+    "team_id": "MILWAUKEE_BUCKS_NBA"
+   }
+  ],
+  "MINNESOTA_TIMBERWOLVES_NBA": [
+   {
+    "player_id": "AIDAN_MAHANEY_1_NBA",
+    "name": "Aidan Mahaney",
+    "position": "G",
+    "jersey": "50",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "ALIZE_JOHNSON_1_NBA",
+    "name": "Alize Johnson",
+    "position": null,
+    "jersey": null,
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "ANTHONY_EDWARDS_1_NBA",
+    "name": "Anthony Edwards",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "AYO_DOSUNMU_1_NBA",
+    "name": "Ayo Dosunmu",
+    "position": "G",
+    "jersey": "13",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "BONES_HYLAND_1_NBA",
+    "name": "Bones Hyland",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "CHRISTOPHER_MANTIS_1_NBA",
+    "name": "Christopher Mantis",
+    "position": "F",
+    "jersey": "29",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "CODY_WILLIAMS_1_NBA",
+    "name": "Cody Williams",
+    "position": "F",
+    "jersey": "5",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "DAJUAN_HARRIS_1_NBA",
+    "name": "Dajuan Harris",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "DAMION_BAUGH_1_NBA",
+    "name": "Damion Baugh",
+    "position": "G",
+    "jersey": "23",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "DEVIN_MCGLOCKTON_1_NBA",
+    "name": "Devin McGlockton",
+    "position": "F",
+    "jersey": "91",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "DONTE_DIVINCENZO_1_NBA",
+    "name": "Donte DiVincenzo",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "ENRIQUE_FREEMAN_1_NBA",
+    "name": "Enrique Freeman",
+    "position": "F",
+    "jersey": "25",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "JADEN_MCDANIELS_1_NBA",
+    "name": "Jaden McDaniels",
+    "position": "F",
+    "jersey": "3",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "JAYLEN_CLARK_1_NBA",
+    "name": "Jaylen Clark",
+    "position": "G",
+    "jersey": "22",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "JOAN_BERINGER_1_NBA",
+    "name": "Joan Beringer",
+    "position": "C",
+    "jersey": "19",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "JOE_INGLES_1_NBA",
+    "name": "Joe Ingles",
+    "position": "F",
+    "jersey": "7",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "JULES_BERNARD_1_NBA",
+    "name": "Jules Bernard",
+    "position": null,
+    "jersey": null,
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "LAMELO_BALL_1_NBA",
+    "name": "LaMelo Ball",
+    "position": "G",
+    "jersey": "1",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "NATE_SANTOS_1_NBA",
+    "name": "Nate Santos",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "ROCCO_ZIKARSKY_1_NBA",
+    "name": "Rocco Zikarsky",
+    "position": "C",
+    "jersey": "44",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "RUDY_GOBERT_1_NBA",
+    "name": "Rudy Gobert",
+    "position": "C",
+    "jersey": "27",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "TERRENCE_SHANNON_1_NBA",
+    "name": "Terrence Shannon Jr.",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "TOBY_HARRIS_1_NBA",
+    "name": "Toby Harris",
+    "position": "F",
+    "jersey": "31",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "TREY_CAMPBELL_1_NBA",
+    "name": "Trey Campbell",
+    "position": "G",
+    "jersey": "35",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "TREY_KAUFMAN_RENN_1_NBA",
+    "name": "Trey Kaufman-Renn",
+    "position": "F",
+    "jersey": "14",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "TREY_LYLES_1_NBA",
+    "name": "Trey Lyles",
+    "position": "F",
+    "jersey": "0",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "TRISTEN_NEWTON_1_NBA",
+    "name": "Tristen Newton",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   },
+   {
+    "player_id": "ZYON_PULLIN_1_NBA",
+    "name": "Zyon Pullin",
+    "position": "G",
+    "jersey": "15",
+    "team_id": "MINNESOTA_TIMBERWOLVES_NBA"
+   }
+  ],
+  "NEW_ORLEANS_PELICANS_NBA": [
+   {
+    "player_id": "AJ_JOHNSON_1_NBA",
+    "name": "AJ Johnson",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "BENNEDICT_MATHURIN_1_NBA",
+    "name": "Bennedict Mathurin",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "BRYCE_MCGOWENS_1_NBA",
+    "name": "Bryce McGowens",
+    "position": "GF",
+    "jersey": "11",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "CALEB_HOUSTAN_1_NBA",
+    "name": "Caleb Houstan",
+    "position": "F",
+    "jersey": "33",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "CHRIS_BELL_1_NBA",
+    "name": "Chris Bell",
+    "position": "G",
+    "jersey": "44",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "CHRISTIAN_SHUMATE_1_NBA",
+    "name": "Christian Shumate",
+    "position": "F",
+    "jersey": "42",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "DEANDRE_JORDAN_1_NBA",
+    "name": "DeAndre Jordan",
+    "position": "C",
+    "jersey": "6",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "DEJOUNTE_MURRAY_1_NBA",
+    "name": "Dejounte Murray",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "DERIK_QUEEN_1_NBA",
+    "name": "Derik Queen",
+    "position": "C",
+    "jersey": "22",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "HERBERT_JONES_1_NBA",
+    "name": "Herb Jones",
+    "position": "F",
+    "jersey": "2",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "JARON_PIERRE_1_NBA",
+    "name": "Jaron Pierre",
+    "position": "G",
+    "jersey": "10",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "JEREMIAH_FEARS_1_NBA",
+    "name": "Jeremiah Fears",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "JOHNNY_ONEIL_1_NBA",
+    "name": "Johnny O'Neil",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "JON_ONEILL_1_NBA",
+    "name": "Jon O'Neill",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "JORDAN_POOLE_1_NBA",
+    "name": "Jordan Poole",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "JOSH_ODURO_1_NBA",
+    "name": "Josh Oduro",
+    "position": "F",
+    "jersey": "13",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "KARLO_MATKOVIC_1_NBA",
+    "name": "Karlo Matkovic",
+    "position": "FC",
+    "jersey": "17",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "KOBE_BUFKIN_1_NBA",
+    "name": "Kobe Bufkin",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "MALIK_DIA_1_NBA",
+    "name": "Malik Dia",
+    "position": "F",
+    "jersey": "35",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "MELVIN_COUNCIL_1_NBA",
+    "name": "Melvin Council",
+    "position": "G",
+    "jersey": "40",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "SADDIQ_BEY_1_NBA",
+    "name": "Saddiq Bey",
+    "position": "F",
+    "jersey": "41",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "SOLOMON_WASHINGTON_1_NBA",
+    "name": "Solomon Washington",
+    "position": "F",
+    "jersey": "27",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "TRENDON_WATFORD_1_NBA",
+    "name": "Trendon Watford",
+    "position": "F",
+    "jersey": "12",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "TREY_MURPHY_III_1_NBA",
+    "name": "Trey Murphy III",
+    "position": "F",
+    "jersey": "25",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "YVES_MISSI_1_NBA",
+    "name": "Yves Missi",
+    "position": "C",
+    "jersey": "21",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   },
+   {
+    "player_id": "ZION_WILLIAMSON_1_NBA",
+    "name": "Zion Williamson",
+    "position": "F",
+    "jersey": "1",
+    "team_id": "NEW_ORLEANS_PELICANS_NBA"
+   }
+  ],
+  "NEW_YORK_KNICKS_NBA": [
+   {
+    "player_id": "A_OCONNELL_1_NBA",
+    "name": "A. O'Connell",
+    "position": null,
+    "jersey": null,
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "ANDRE_DRUMMOND_1_NBA",
+    "name": "Andre Drummond",
+    "position": "C",
+    "jersey": "0",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "DILLON_JONES_1_NBA",
+    "name": "Dillon Jones",
+    "position": "F",
+    "jersey": "1",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "DREW_EUBANKS_1_NBA",
+    "name": "Drew Eubanks",
+    "position": "FC",
+    "jersey": "19",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "ERIK_REYNOLDS_1_NBA",
+    "name": "Erik Reynolds",
+    "position": "G",
+    "jersey": "35",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "GARRISON_MATHEWS_1_NBA",
+    "name": "Garrison Mathews",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "IGOR_MILICIC_1_NBA",
+    "name": "Igor Milicic",
+    "position": "G",
+    "jersey": "28",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "JADEN_AKINS_1_NBA",
+    "name": "Jaden Akins",
+    "position": "G",
+    "jersey": "21",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "JALEN_BRUNSON_1_NBA",
+    "name": "Jalen Brunson",
+    "position": "G",
+    "jersey": "11",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "JOHN_KONCHAR_1_NBA",
+    "name": "John Konchar",
+    "position": "G",
+    "jersey": "55",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "JORDAN_CLARKSON_1_NBA",
+    "name": "Jordan Clarkson",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "JOSE_ALVARADO_1_NBA",
+    "name": "Jose Alvarado",
+    "position": "G",
+    "jersey": "10",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "JOSH_HART_1_NBA",
+    "name": "Josh Hart",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "KARLANTHONY_TOWNS_1_NBA",
+    "name": "Karl-Anthony Towns",
+    "position": "F",
+    "jersey": "32",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "KEITH_PALEK_1_NBA",
+    "name": "Keith Palek",
+    "position": "F",
+    "jersey": "29",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "KEVIN_MCCULLAR_1_NBA",
+    "name": "Kevin McCullar Jr.",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "LANCE_WARE_1_NBA",
+    "name": "Lance Ware",
+    "position": "F",
+    "jersey": "45",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "LANDRY_SHAMET_1_NBA",
+    "name": "Landry Shamet",
+    "position": "G",
+    "jersey": "44",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "LIAM_ROBBINS_1_NBA",
+    "name": "Liam Robbins",
+    "position": "C",
+    "jersey": "31",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "MALCOLM_BROGDON_1_NBA",
+    "name": "Malcolm Brogdon",
+    "position": "G",
+    "jersey": "15",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "MIKAL_BRIDGES_1_NBA",
+    "name": "Mikal Bridges",
+    "position": "F",
+    "jersey": "25",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "MILES_MCBRIDE_1_NBA",
+    "name": "Miles McBride",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "MOHAMED_DIAWARA_1_NBA",
+    "name": "Mohamed Diawara",
+    "position": "F",
+    "jersey": "51",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "NICK_JOURDAIN_1_NBA",
+    "name": "Nick Jourdain",
+    "position": "F",
+    "jersey": "91",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "OG_ANUNOBY_1_NBA",
+    "name": "OG Anunoby",
+    "position": "F",
+    "jersey": "8",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "OZIYAH_SELLERS_1_NBA",
+    "name": "Oziyah Sellers",
+    "position": "G",
+    "jersey": "27",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "PACOME_DADIET_1_NBA",
+    "name": "Pacome Dadiet",
+    "position": "F",
+    "jersey": "4",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "TOBY_OKANI_1_NBA",
+    "name": "Toby Okani",
+    "position": "G",
+    "jersey": "14",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "TREY_JEMISON_1_NBA",
+    "name": "Trey Jemison",
+    "position": "C",
+    "jersey": "50",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "TREYSEN_EAGLESTAFF_1_NBA",
+    "name": "Treysen Eaglestaff",
+    "position": "G",
+    "jersey": "36",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "TYLER_KOLEK_1_NBA",
+    "name": "Tyler Kolek",
+    "position": "G",
+    "jersey": "13",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "TYLER_NICKEL_1_NBA",
+    "name": "Tyler Nickel",
+    "position": "F",
+    "jersey": "55",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   },
+   {
+    "player_id": "WILL_JOHNSTON_1_NBA",
+    "name": "Will Johnston",
+    "position": "G",
+    "jersey": "26",
+    "team_id": "NEW_YORK_KNICKS_NBA"
+   }
+  ],
+  "OKLAHOMA_CITY_THUNDER_NBA": [
+   {
+    "player_id": "ADAY_MARA_1_NBA",
+    "name": "Aday Mara",
+    "position": "C",
+    "jersey": "15",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "AJAY_MITCHELL_1_NBA",
+    "name": "Ajay Mitchell",
+    "position": "G",
+    "jersey": "25",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "ALEX_CARUSO_1_NBA",
+    "name": "Alex Caruso",
+    "position": "G",
+    "jersey": "9",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "ANTHONY_PRITCHARD_1_NBA",
+    "name": "Anthony Pritchard",
+    "position": "G",
+    "jersey": "30",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "BENNETT_STIRTZ_1_NBA",
+    "name": "Bennett Stirtz",
+    "position": "G",
+    "jersey": "14",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "BROOKS_BARNHIZER_1_NBA",
+    "name": "Brooks Barnhizer",
+    "position": "G",
+    "jersey": "23",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "CASON_WALLACE_1_NBA",
+    "name": "Cason Wallace",
+    "position": "G",
+    "jersey": "22",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "CHET_HOLMGREN_1_NBA",
+    "name": "Chet Holmgren",
+    "position": "FC",
+    "jersey": "7",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "CHRISTOPH_TILLY_1_NBA",
+    "name": "Christoph Tilly",
+    "position": "C",
+    "jersey": "50",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "ISAIAH_HARTENSTEIN_1_NBA",
+    "name": "Isaiah Hartenstein",
+    "position": "CF",
+    "jersey": "55",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "JALEN_WILLIAMS_1_NBA",
+    "name": "Jalen Williams",
+    "position": "GF",
+    "jersey": "8",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "JARED_MCCAIN_1_NBA",
+    "name": "Jared McCain",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "JAYLIN_WILLIAMS_1_NBA",
+    "name": "Jaylin Williams",
+    "position": "F",
+    "jersey": "6",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "JOSH_DIX_1_NBA",
+    "name": "Josh Dix",
+    "position": "G",
+    "jersey": "21",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "KENRICH_WILLIAMS_1_NBA",
+    "name": "Kenrich Williams",
+    "position": "GF",
+    "jersey": "34",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "LAMAR_WILKERSON_1_NBA",
+    "name": "Lamar Wilkerson",
+    "position": "G",
+    "jersey": "42",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "NIKOLA_TOPIC_1_NBA",
+    "name": "Nikola Topic",
+    "position": "G",
+    "jersey": "44",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "OTEGA_OWEH_1_NBA",
+    "name": "Otega Oweh",
+    "position": "G",
+    "jersey": "13",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "PAYTON_SANDFORT_1_NBA",
+    "name": "Payton Sandfort",
+    "position": "F",
+    "jersey": "16",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "SHAI_GILGEOUSALEXANDER_1_NBA",
+    "name": "Shai Gilgeous-Alexander",
+    "position": "GF",
+    "jersey": "2",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   },
+   {
+    "player_id": "THOMAS_SORBER_1_NBA",
+    "name": "Thomas Sorber",
+    "position": "C",
+    "jersey": "12",
+    "team_id": "OKLAHOMA_CITY_THUNDER_NBA"
+   }
+  ],
+  "ORLANDO_MAGIC_NBA": [
+   {
+    "player_id": "ADRIAN_BALDWIN_1_NBA",
+    "name": "Adrian Baldwin",
+    "position": "G",
+    "jersey": "12",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "ANTHONY_BLACK_1_NBA",
+    "name": "Anthony Black",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "CJ_ELLEBY_1_NBA",
+    "name": "CJ Elleby",
+    "position": "FG",
+    "jersey": "18",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "CAM_REDDISH_1_NBA",
+    "name": "Cam Reddish",
+    "position": "FG",
+    "jersey": "33",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "COLIN_CASTLETON_1_NBA",
+    "name": "Colin Castleton",
+    "position": "C",
+    "jersey": "14",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "DESMOND_BANE_1_NBA",
+    "name": "Desmond Bane",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "FRANZ_WAGNER_1_NBA",
+    "name": "Franz Wagner",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "GOGA_BITADZE_1_NBA",
+    "name": "Goga Bitadze",
+    "position": "CF",
+    "jersey": "35",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "HUNTER_TYSON_1_NBA",
+    "name": "Hunter Tyson",
+    "position": "F",
+    "jersey": "31",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "IZAIYAH_NELSON_1_NBA",
+    "name": "Izaiyah Nelson",
+    "position": "F",
+    "jersey": "25",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "JD_DAVISON_1_NBA",
+    "name": "JD Davison",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "JALEN_SUGGS_1_NBA",
+    "name": "Jalen Suggs",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "JAMAL_CAIN_1_NBA",
+    "name": "Jamal Cain",
+    "position": "F",
+    "jersey": "8",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "JASE_RICHARDSON_1_NBA",
+    "name": "Jase Richardson",
+    "position": "G",
+    "jersey": "11",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "JEVON_CARTER_1_NBA",
+    "name": "Jevon Carter",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "JONATHAN_ISAAC_1_NBA",
+    "name": "Jonathan Isaac",
+    "position": "F",
+    "jersey": "1",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "KEON_JOHNSON_1_NBA",
+    "name": "Keon Johnson",
+    "position": "G",
+    "jersey": "17",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "LESTER_QUINONES_1_NBA",
+    "name": "Lester Quinones",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "MALAKI_BRANHAM_1_NBA",
+    "name": "Malaki Branham",
+    "position": "F",
+    "jersey": "38",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "MALIK_RENEAU_1_NBA",
+    "name": "Malik Reneau",
+    "position": "F",
+    "jersey": "42",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "NIKOLA_VUCEVIC_1_NBA",
+    "name": "Nikola Vu\u010devi\u0107",
+    "position": "C",
+    "jersey": "9",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "NOAH_PENDA_1_NBA",
+    "name": "Noah Penda",
+    "position": "F",
+    "jersey": "93",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "PAOLO_BANCHERO_1_NBA",
+    "name": "Paolo Banchero",
+    "position": "F",
+    "jersey": "5",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "PHILLIP_WHEELER_1_NBA",
+    "name": "Phillip Wheeler",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "RICKY_COUNCIL_IV_1_NBA",
+    "name": "Ricky Council IV",
+    "position": "G",
+    "jersey": "7",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "TRE_HOLLOMAN_1_NBA",
+    "name": "Tre Holloman",
+    "position": "G",
+    "jersey": "16",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "TRISTAN_DA_SILVA_1_NBA",
+    "name": "Tristan da Silva",
+    "position": "F",
+    "jersey": "23",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "TYTY_WASHINGTON_1_NBA",
+    "name": "Tyty Washington Jr.",
+    "position": "G",
+    "jersey": "15",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "WENDELL_CARTER_JR_1_NBA",
+    "name": "Wendell Carter Jr.",
+    "position": "CF",
+    "jersey": "34",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   },
+   {
+    "player_id": "WILL_BAKER_1_NBA",
+    "name": "Will Baker",
+    "position": "C",
+    "jersey": "45",
+    "team_id": "ORLANDO_MAGIC_NBA"
+   }
+  ],
+  "PHOENIX_SUNS_NBA": [
+   {
+    "player_id": "BARRY_EVANS_1_NBA",
+    "name": "Barry Evans",
+    "position": "F",
+    "jersey": "47",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "CJ_HUNTLEY_1_NBA",
+    "name": "CJ Huntley",
+    "position": "F",
+    "jersey": "21",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "COLLIN_GILLESPIE_1_NBA",
+    "name": "Collin Gillespie",
+    "position": "G",
+    "jersey": "12",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "COREY_CAMPER_JR_1_NBA",
+    "name": "Corey Camper Jr.",
+    "position": "G",
+    "jersey": "51",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "DEVIN_BOOKER_1_NBA",
+    "name": "Devin Booker",
+    "position": "G",
+    "jersey": "15",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "DILLON_BROOKS_1_NBA",
+    "name": "Dillon Brooks",
+    "position": "GF",
+    "jersey": "3",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "HAYWOOD_HIGHSMITH_1_NBA",
+    "name": "Haywood Highsmith",
+    "position": "F",
+    "jersey": "7",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "ISAIAH_LIVERS_1_NBA",
+    "name": "Isaiah Livers",
+    "position": "F",
+    "jersey": "18",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "JAKE_STEPHENS_1_NBA",
+    "name": "Jake Stephens",
+    "position": "C",
+    "jersey": "52",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "JALEN_GREEN_1_NBA",
+    "name": "Jalen Green",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "JAMAREE_BOUYEA_1_NBA",
+    "name": "Jamaree Bouyea",
+    "position": "G",
+    "jersey": "17",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "JAMEER_NELSON_JR_1_NBA",
+    "name": "Jameer Nelson Jr.",
+    "position": "G",
+    "jersey": "54",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "JAVONTE_COOK_1_NBA",
+    "name": "Javonte Cook",
+    "position": "G",
+    "jersey": "46",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "JORDAN_GOODWIN_1_NBA",
+    "name": "Jordan Goodwin",
+    "position": "G",
+    "jersey": "23",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "KHAMAN_MALUACH_1_NBA",
+    "name": "Khaman Maluach",
+    "position": "C",
+    "jersey": "6",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "KOA_PEAT_1_NBA",
+    "name": "Koa Peat",
+    "position": "F",
+    "jersey": "18",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "KOBY_BREA_1_NBA",
+    "name": "Koby Brea",
+    "position": "G",
+    "jersey": "14",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "LUKE_KENNARD_1_NBA",
+    "name": "Luke Kennard",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "MARK_WILLIAMS_1_NBA",
+    "name": "Mark Williams",
+    "position": "C",
+    "jersey": "25",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "MILES_BRIDGES_1_NBA",
+    "name": "Miles Bridges",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "OSO_IGHODARO_1_NBA",
+    "name": "Oso Ighodaro",
+    "position": "F",
+    "jersey": "11",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "PAT_SPENCER_1_NBA",
+    "name": "Pat Spencer",
+    "position": "G",
+    "jersey": "61",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "RASHEER_FLEMING_1_NBA",
+    "name": "Rasheer Fleming",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "RYAN_DUNN_1_NBA",
+    "name": "Ryan Dunn",
+    "position": "F",
+    "jersey": "0",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "SAM_HOIBERG_1_NBA",
+    "name": "Sam Hoiberg",
+    "position": "G",
+    "jersey": "48",
+    "team_id": "PHOENIX_SUNS_NBA"
+   },
+   {
+    "player_id": "TRAMON_MARK_1_NBA",
+    "name": "Tramon Mark",
+    "position": "G",
+    "jersey": "53",
+    "team_id": "PHOENIX_SUNS_NBA"
+   }
+  ],
+  "PORTLAND_TRAIL_BLAZERS_NBA": [
+   {
+    "player_id": "ALIOU_DIARRA_1_NBA",
+    "name": "Aliou Diarra",
+    "position": "C",
+    "jersey": "31",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "ANDREW_CARR_1_NBA",
+    "name": "Andrew Carr",
+    "position": "F",
+    "jersey": "65",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "BARRY_DUNNING_1_NBA",
+    "name": "Barry Dunning",
+    "position": "G",
+    "jersey": "18",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "BRANDEN_CARLSON_1_NBA",
+    "name": "Branden Carlson",
+    "position": "C",
+    "jersey": "10",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "CHRIS_YOUNGBLOOD_1_NBA",
+    "name": "Chris Youngblood",
+    "position": "G",
+    "jersey": "11",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "DAMIAN_LILLARD_1_NBA",
+    "name": "Damian Lillard",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "DENI_AVDIJA_1_NBA",
+    "name": "Deni Avdija",
+    "position": "F",
+    "jersey": "8",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "DONOVAN_CLINGAN_1_NBA",
+    "name": "Donovan Clingan",
+    "position": "C",
+    "jersey": "23",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "DUOP_REATH_1_NBA",
+    "name": "Duop Reath",
+    "position": "C",
+    "jersey": "26",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "FRANKIE_FIDLER_1_NBA",
+    "name": "Frankie Fidler",
+    "position": "F",
+    "jersey": "42",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "J_COOKE_1_NBA",
+    "name": "J. Cooke",
+    "position": null,
+    "jersey": null,
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "JA_MORANT_1_NBA",
+    "name": "Ja Morant",
+    "position": "G",
+    "jersey": "1",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "JALEN_BRIDGES_1_NBA",
+    "name": "Jalen Bridges",
+    "position": "F",
+    "jersey": "26",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "JAYLEN_MARTIN_1_NBA",
+    "name": "Jaylen Martin",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "JAYSON_KENT_1_NBA",
+    "name": "Jayson Kent",
+    "position": "F",
+    "jersey": "29",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "JEREMY_SOCHAN_1_NBA",
+    "name": "Jeremy Sochan",
+    "position": "F",
+    "jersey": "17",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "JRUE_HOLIDAY_1_NBA",
+    "name": "Jrue Holiday",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "KIRA_LEWIS_1_NBA",
+    "name": "Kira Lewis Jr.",
+    "position": "G",
+    "jersey": "73",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "MICAH_POTTER_1_NBA",
+    "name": "Micah Potter",
+    "position": "F",
+    "jersey": "9",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "ROBERT_WILLIAMS_III_1_NBA",
+    "name": "Robert Williams III",
+    "position": "CF",
+    "jersey": "35",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "SCOOT_HENDERSON_1_NBA",
+    "name": "Scoot Henderson",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "SHAEDON_SHARPE_1_NBA",
+    "name": "Shaedon Sharpe",
+    "position": "G",
+    "jersey": "17",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "SIDY_CISSOKO_1_NBA",
+    "name": "Sidy Cissoko",
+    "position": "G",
+    "jersey": "91",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "TOUMANI_CAMARA_1_NBA",
+    "name": "Toumani Camara",
+    "position": "F",
+    "jersey": "33",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "VIT_KREJCI_1_NBA",
+    "name": "V\u00edt Krejci",
+    "position": "F",
+    "jersey": "27",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   },
+   {
+    "player_id": "HANSEN_YANG_1_NBA",
+    "name": "Yang Hansen",
+    "position": "C",
+    "jersey": "16",
+    "team_id": "PORTLAND_TRAIL_BLAZERS_NBA"
+   }
+  ],
+  "SACRAMENTO_KINGS_NBA": [
+   {
+    "player_id": "ADAM_FLAGLER_1_NBA",
+    "name": "Adam Flagler",
+    "position": "G",
+    "jersey": "20",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "BJ_EDWARDS_1_NBA",
+    "name": "BJ Edwards",
+    "position": "G",
+    "jersey": "50",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "BEN_SIMMONS_1_NBA",
+    "name": "Ben Simmons",
+    "position": "GF",
+    "jersey": "25",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "DAEQWON_PLOWDEN_1_NBA",
+    "name": "Daeqwon Plowden",
+    "position": "GF",
+    "jersey": "29",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "DEANDRE_HUNTER_1_NBA",
+    "name": "De'Andre Hunter",
+    "position": "FG",
+    "jersey": "15",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "DOMANTAS_SABONIS_1_NBA",
+    "name": "Domantas Sabonis",
+    "position": "FC",
+    "jersey": "11",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "DYLAN_CARDWELL_1_NBA",
+    "name": "Dylan Cardwell",
+    "position": "C",
+    "jersey": "32",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "ELIAS_RALPH_1_NBA",
+    "name": "Elias Ralph",
+    "position": "F",
+    "jersey": "26",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "EMANUEL_SHARP_1_NBA",
+    "name": "Emanuel Sharp",
+    "position": "G",
+    "jersey": "34",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "HAOWEN_GUO_1_NBA",
+    "name": "Haowen Guo",
+    "position": "G",
+    "jersey": "43",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "ISAIAH_STEVENS_1_NBA",
+    "name": "Isaiah Stevens",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "JONATHAN_MOGBO_1_NBA",
+    "name": "Jonathan Mogbo",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "KEEGAN_MURRAY_1_NBA",
+    "name": "Keegan Murray",
+    "position": "F",
+    "jersey": "13",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "MALIK_MONK_1_NBA",
+    "name": "Malik Monk",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "MARQUEL_SUTTON_1_NBA",
+    "name": "Marquel Sutton",
+    "position": "F",
+    "jersey": "49",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "MASON_JONES_1_NBA",
+    "name": "Mason Jones",
+    "position": "G",
+    "jersey": "18",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "MAXIME_RAYNAUD_1_NBA",
+    "name": "Maxime Raynaud",
+    "position": "F",
+    "jersey": "42",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "MITCH_MASCARI_1_NBA",
+    "name": "Mitch Mascari",
+    "position": "G",
+    "jersey": "25",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "NIQUE_CLIFFORD_1_NBA",
+    "name": "Nique Clifford",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "PRECIOUS_ACHIUWA_1_NBA",
+    "name": "Precious Achiuwa",
+    "position": "F",
+    "jersey": "9",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "RUSSELL_WESTBROOK_1_NBA",
+    "name": "Russell Westbrook",
+    "position": "G",
+    "jersey": "18",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "VIKTOR_LAKHIN_1_NBA",
+    "name": "Viktor Lakhin",
+    "position": "C",
+    "jersey": "30",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   },
+   {
+    "player_id": "ZACH_LAVINE_1_NBA",
+    "name": "Zach LaVine",
+    "position": "GF",
+    "jersey": "8",
+    "team_id": "SACRAMENTO_KINGS_NBA"
+   }
+  ],
+  "SAN_ANTONIO_SPURS_NBA": [
+   {
+    "player_id": "CARTER_BRYANT_1_NBA",
+    "name": "Carter Bryant",
+    "position": "F",
+    "jersey": "11",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "DAVID_JONES_1_NBA",
+    "name": "David Jones",
+    "position": "F",
+    "jersey": "25",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "DAVID_MUOKA_1_NBA",
+    "name": "David Muoka",
+    "position": "C",
+    "jersey": "27",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "DEAARON_FOX_1_NBA",
+    "name": "De'Aaron Fox",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "DEVIN_VASSELL_1_NBA",
+    "name": "Devin Vassell",
+    "position": "GF",
+    "jersey": "24",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "DYLAN_HARPER_1_NBA",
+    "name": "Dylan Harper",
+    "position": "G",
+    "jersey": "2",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "EMANUEL_MILLER_1_NBA",
+    "name": "Emanuel Miller",
+    "position": "F",
+    "jersey": "14",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "HARRISON_BARNES_1_NBA",
+    "name": "Harrison Barnes",
+    "position": "F",
+    "jersey": "40",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "HARRY_WESSELS_1_NBA",
+    "name": "Harry Wessels",
+    "position": "C",
+    "jersey": "38",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "HYUNJUNG_LEE_1_NBA",
+    "name": "Hyunjung Lee",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "JAYDEN_NUNN_1_NBA",
+    "name": "Jayden Nunn",
+    "position": "G",
+    "jersey": "33",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "JAYDEN_QUAINTANCE_1_NBA",
+    "name": "Jayden Quaintance",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "JORDAN_MCLAUGHLIN_1_NBA",
+    "name": "Jordan McLaughlin",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "JULIAN_CHAMPAGNIE_1_NBA",
+    "name": "Julian Champagnie",
+    "position": "G",
+    "jersey": "30",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "KELDON_JOHNSON_1_NBA",
+    "name": "Keldon Johnson",
+    "position": "FG",
+    "jersey": "3",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "KELLY_OLYNYK_1_NBA",
+    "name": "Kelly Olynyk",
+    "position": "FC",
+    "jersey": "13",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "LUKE_KORNET_1_NBA",
+    "name": "Luke Kornet",
+    "position": "FC",
+    "jersey": "7",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "STEPHON_CASTLE_1_NBA",
+    "name": "Stephon Castle",
+    "position": "G",
+    "jersey": "5",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "TAELON_PETER_1_NBA",
+    "name": "Taelon Peter",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "TARRIS_REED_1_NBA",
+    "name": "Tarris Reed",
+    "position": "C",
+    "jersey": "10",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "TOBIAS_HARRIS_1_NBA",
+    "name": "Tobias Harris",
+    "position": "F",
+    "jersey": "23",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "TYON_GRANT_FOSTER_1_NBA",
+    "name": "Tyon Grant-Foster",
+    "position": "G",
+    "jersey": "34",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   },
+   {
+    "player_id": "VICTOR_WEMBANYAMA_1_NBA",
+    "name": "Victor Wembanyama",
+    "position": "FC",
+    "jersey": "1",
+    "team_id": "SAN_ANTONIO_SPURS_NBA"
+   }
+  ],
+  "UTAH_JAZZ_NBA": [
+   {
+    "player_id": "AIRIOUS_BAILEY_1_NBA",
+    "name": "Ace Bailey",
+    "position": "GF",
+    "jersey": "19",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "ANDERSSON_GARCIA_1_NBA",
+    "name": "Andersson Garcia",
+    "position": "F",
+    "jersey": "17",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "BEZ_MBENG_1_NBA",
+    "name": "Bez Mbeng",
+    "position": "G",
+    "jersey": "21",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "BRICE_SENSABAUGH_1_NBA",
+    "name": "Brice Sensabaugh",
+    "position": "GF",
+    "jersey": "28",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "DARRYN_PETERSON_1_NBA",
+    "name": "Darryn Peterson",
+    "position": "G",
+    "jersey": "22",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "EJ_HARKLESS_1_NBA",
+    "name": "EJ Harkless",
+    "position": "G",
+    "jersey": "16",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "ERIC_DIXON_1_NBA",
+    "name": "Eric Dixon",
+    "position": "F",
+    "jersey": "43",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "HARRISON_INGRAM_1_NBA",
+    "name": "Harrison Ingram",
+    "position": "F",
+    "jersey": "55",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "HAYDEN_GRAY_1_NBA",
+    "name": "Hayden Gray",
+    "position": "G",
+    "jersey": "33",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "ISAIAH_COLLIER_1_NBA",
+    "name": "Isaiah Collier",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "J_TONJE_1_NBA",
+    "name": "J. Tonje",
+    "position": null,
+    "jersey": null,
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "JAREN_JACKSON_JR_1_NBA",
+    "name": "Jaren Jackson Jr.",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "JAXON_KOHLER_1_NBA",
+    "name": "Jaxon Kohler",
+    "position": "C",
+    "jersey": "52",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "JAXSON_HAYES_1_NBA",
+    "name": "Jaxson Hayes",
+    "position": "CF",
+    "jersey": "11",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "JONAS_AIDOO_1_NBA",
+    "name": "Jonas Aidoo",
+    "position": "C",
+    "jersey": "50",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "JOSH_GREEN_1_NBA",
+    "name": "Josh Green",
+    "position": "G",
+    "jersey": "6",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "JOSH_OKOGIE_1_NBA",
+    "name": "Josh Okogie",
+    "position": "G",
+    "jersey": "21",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "JUSUF_NURKIC_1_NBA",
+    "name": "Jusuf Nurkic",
+    "position": "C",
+    "jersey": "0",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "KEVIN_LOVE_1_NBA",
+    "name": "Kevin Love",
+    "position": "FC",
+    "jersey": "42",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "KEYONTE_GEORGE_1_NBA",
+    "name": "Keyonte George",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "KYLE_FILIPOWSKI_1_NBA",
+    "name": "Kyle Filipowski",
+    "position": "FC",
+    "jersey": "2",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "KYLOR_KELLEY_1_NBA",
+    "name": "Kylor Kelley",
+    "position": "C",
+    "jersey": "60",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "LAURI_MARKKANEN_1_NBA",
+    "name": "Lauri Markkanen",
+    "position": "FC",
+    "jersey": "23",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "M_MURRELL_1_NBA",
+    "name": "M. Murrell",
+    "position": null,
+    "jersey": null,
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "MICAH_HANDLOGTEN_1_NBA",
+    "name": "Micah Handlogten",
+    "position": "C",
+    "jersey": "88",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "MO_BAMBA_1_NBA",
+    "name": "Mo Bamba",
+    "position": "C",
+    "jersey": "11",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "MOHAMED_WAGUE_1_NBA",
+    "name": "Mohamed Wague",
+    "position": "C",
+    "jersey": "70",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "ORLANDO_ROBINSON_1_NBA",
+    "name": "Orlando Robinson",
+    "position": "C",
+    "jersey": "40",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "OSCAR_TSHIEBWE_1_NBA",
+    "name": "Oscar Tshiebwe",
+    "position": "FC",
+    "jersey": "34",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "SVI_MYKHAILIUK_1_NBA",
+    "name": "Svi Mykhailiuk",
+    "position": "GF",
+    "jersey": "10",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "TAMAR_BATES_1_NBA",
+    "name": "Tamar Bates",
+    "position": "G",
+    "jersey": "7",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "TREY_ALEXANDER_1_NBA",
+    "name": "Trey Alexander",
+    "position": "G",
+    "jersey": "15",
+    "team_id": "UTAH_JAZZ_NBA"
+   },
+   {
+    "player_id": "VINCE_WILLIAMS_JR_1_NBA",
+    "name": "Vince Williams",
+    "position": "GF",
+    "jersey": "5",
+    "team_id": "UTAH_JAZZ_NBA"
+   }
+  ],
+  "WASHINGTON_WIZARDS_NBA": [
+   {
+    "player_id": "AJ_DYBANTSA_1_NBA",
+    "name": "AJ Dybantsa",
+    "position": "F",
+    "jersey": "4",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "ALEXANDRE_SARR_1_NBA",
+    "name": "Alexandre Sarr",
+    "position": "F",
+    "jersey": "20",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "ALONDES_WILLIAMS_1_NBA",
+    "name": "Alondes Williams",
+    "position": "G",
+    "jersey": "46",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "ANTHONY_DAVIS_1_NBA",
+    "name": "Anthony Davis",
+    "position": "FC",
+    "jersey": "23",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "ANTHONY_GILL_1_NBA",
+    "name": "Anthony Gill",
+    "position": "F",
+    "jersey": "16",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "BILAL_COULIBALY_1_NBA",
+    "name": "Bilal Coulibaly",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "BUB_CARRINGTON_1_NBA",
+    "name": "Bub Carrington",
+    "position": "G",
+    "jersey": "7",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "CAM_WHITMORE_1_NBA",
+    "name": "Cam Whitmore",
+    "position": "F",
+    "jersey": "1",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "CHRIS_LIVINGSTON_1_NBA",
+    "name": "Chris Livingston",
+    "position": "F",
+    "jersey": "24",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "DAMARI_MONSANTO_1_NBA",
+    "name": "Damari Monsanto",
+    "position": "G",
+    "jersey": "12",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "DEANDRE_AYTON_1_NBA",
+    "name": "Deandre Ayton",
+    "position": "C",
+    "jersey": "1",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "FELIX_OKPARA_1_NBA",
+    "name": "Felix Okpara",
+    "position": "C",
+    "jersey": "34",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "JAMIR_WATKINS_1_NBA",
+    "name": "Jamir Watkins",
+    "position": "F",
+    "jersey": "5",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "JUSTIN_CHAMPAGNIE_1_NBA",
+    "name": "Justin Champagnie",
+    "position": "F",
+    "jersey": "9",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "KADARY_RICHMOND_1_NBA",
+    "name": "Kadary Richmond",
+    "position": "G",
+    "jersey": "19",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "KHRIS_MIDDLETON_1_NBA",
+    "name": "Khris Middleton",
+    "position": "F",
+    "jersey": "22",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "KYSHAWN_GEORGE_1_NBA",
+    "name": "Kyshawn George",
+    "position": "F",
+    "jersey": "18",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "LEAKY_BLACK_1_NBA",
+    "name": "Leaky Black",
+    "position": "F",
+    "jersey": "17",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "REECE_BEEKMAN_1_NBA",
+    "name": "Reece Beekman",
+    "position": "G",
+    "jersey": "26",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "SETH_TRIMBLE_1_NBA",
+    "name": "Seth Trimble",
+    "position": "F",
+    "jersey": "55",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "SHARIFE_COOPER_1_NBA",
+    "name": "Sharife Cooper",
+    "position": "G",
+    "jersey": "13",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "SKAL_LABISSIERE_1_NBA",
+    "name": "Skal Labissiere",
+    "position": null,
+    "jersey": null,
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "TRAE_YOUNG_1_NBA",
+    "name": "Trae Young",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "TRE_CARROLL_1_NBA",
+    "name": "Tre Carroll",
+    "position": "F",
+    "jersey": "77",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "TRE_JOHNSON_1_NBA",
+    "name": "Tre Johnson",
+    "position": "G",
+    "jersey": "12",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "TRE_MANN_1_NBA",
+    "name": "Tre Mann",
+    "position": "G",
+    "jersey": "23",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "T_VUKCEVIC_1_NBA",
+    "name": "Tristan Vukcevic",
+    "position": "C",
+    "jersey": "0",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   },
+   {
+    "player_id": "WILL_RILEY_1_NBA",
+    "name": "Will Riley",
+    "position": "F",
+    "jersey": "27",
+    "team_id": "WASHINGTON_WIZARDS_NBA"
+   }
+  ],
+  "LA_CLIPPERS_NBA": [
+   {
+    "player_id": "BRADLEY_BEAL_1_NBA",
+    "name": "Bradley Beal",
+    "position": "G",
+    "jersey": "0",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "BRANDON_INGRAM_1_NBA",
+    "name": "Brandon Ingram",
+    "position": "F",
+    "jersey": "3",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "BROOK_LOPEZ_1_NBA",
+    "name": "Brook Lopez",
+    "position": "C",
+    "jersey": "11",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "CAM_CHRISTIE_1_NBA",
+    "name": "Cam Christie",
+    "position": "G",
+    "jersey": "24",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "CHRIS_PAUL_1_NBA",
+    "name": "Chris Paul",
+    "position": "G",
+    "jersey": "3",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "DALANO_BANTON_1_NBA",
+    "name": "Dalano Banton",
+    "position": "F",
+    "jersey": "5",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "DARIUS_GARLAND_1_NBA",
+    "name": "Darius Garland",
+    "position": "G",
+    "jersey": "10",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "DERRICK_JONES_JR_1_NBA",
+    "name": "Derrick Jones Jr.",
+    "position": "F",
+    "jersey": "5",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "FLETCHER_LOYER_1_NBA",
+    "name": "Fletcher Loyer",
+    "position": "G",
+    "jersey": "44",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "GRADEY_DICK_1_NBA",
+    "name": "Gradey Dick",
+    "position": "GF",
+    "jersey": "1",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "ISAIAH_JACKSON_1_NBA",
+    "name": "Isaiah Jackson",
+    "position": "F",
+    "jersey": "23",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "JAHMYL_TELFORT_1_NBA",
+    "name": "Jahmyl Telfort",
+    "position": "F",
+    "jersey": "51",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "JOHNI_BROOME_1_NBA",
+    "name": "Johni Broome",
+    "position": "FC",
+    "jersey": "22",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "JORDAN_MILLER_1_NBA",
+    "name": "Jordan Miller",
+    "position": "F",
+    "jersey": "11",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "JUWAN_GARY_1_NBA",
+    "name": "Juwan Gary",
+    "position": "F",
+    "jersey": "50",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "KEATON_WAGLER_1_NBA",
+    "name": "Keaton Wagler",
+    "position": "G",
+    "jersey": "1",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "KOBE_SANDERS_1_NBA",
+    "name": "Kobe Sanders",
+    "position": "G",
+    "jersey": "4",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "KRIS_DUNN_1_NBA",
+    "name": "Kris Dunn",
+    "position": "G",
+    "jersey": "8",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "MAX_STRUS_1_NBA",
+    "name": "Max Strus",
+    "position": "GF",
+    "jersey": "2",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "NICK_MARTINELLI_1_NBA",
+    "name": "Nick Martinelli",
+    "position": "F",
+    "jersey": "12",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "NORCHAD_OMIER_1_NBA",
+    "name": "Norchad Omier",
+    "position": "F",
+    "jersey": "55",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "RILEY_KUGEL_1_NBA",
+    "name": "Riley Kugel",
+    "position": "G",
+    "jersey": "35",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "RUI_HACHIMURA_1_NBA",
+    "name": "Rui Hachimura",
+    "position": "F",
+    "jersey": "28",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "THEMUS_FULKS_1_NBA",
+    "name": "Themus Fulks",
+    "position": "G",
+    "jersey": "41",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "YANIC_KONAN_NIEDERHAUSER_1_NBA",
+    "name": "Yanic Konan Niederhauser",
+    "position": "F",
+    "jersey": "14",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "ZACH_FREEMANTLE_1_NBA",
+    "name": "Zach Freemantle",
+    "position": "F",
+    "jersey": "42",
+    "team_id": "LA_CLIPPERS_NBA"
+   },
+   {
+    "player_id": "ZAVIER_SIMPSON_1_NBA",
+    "name": "Zavier Simpson",
+    "position": "G",
+    "jersey": "35",
+    "team_id": "LA_CLIPPERS_NBA"
+   }
+  ]
+ }
+}

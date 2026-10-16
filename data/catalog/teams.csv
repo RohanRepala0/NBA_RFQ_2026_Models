@@ -1,0 +1,30 @@
+team,scenario_source,offseason_usage_effect_pct,usage_min_out,usage_min_in,top_departures,top_arrivals,spacing_new
+ATL,auto,0.3,931.0,1427.0,"Jonathan Kuminga (23.3%), Zaccharie Risacher (17.6%)","Devin Carter (23.5%), Aaron Wiggins (19.9%), Luguentz Dort (14.2%)",51.6
+BKN,auto,3.6,923.0,1428.0,"Nic Claxton (17.7%), Ziaire Williams (18.8%)","Julius Randle (26.4%), Moritz Wagner (24.2%), Keon Ellis (13.1%)",69.4
+BOS,auto,-15.4,1850.0,1133.0,"Jaylen Brown (36.1%), Nikola Vučević (21.4%)","Paul George (23.3%), Mike Conley (11.5%), Mitchell Robinson (10.6%)",59.5
+CHA,auto,-4.5,2399.0,2872.0,"LaMelo Ball (32.1%), Miles Bridges (22.3%), Buddy Hield (19.8%)","Grayson Allen (23.8%), Naz Reid (22.2%), Dennis Schröder (21.0%)",70.5
+CHI,auto,-2.0,1816.0,1640.0,"Collin Sexton (25.9%), Anfernee Simons (23.7%), Rob Dillingham (23.2%)","Norman Powell (27.1%), Nic Claxton (17.7%), Buddy Hield (19.8%)",47.6
+CLE,auto,4.4,1602.0,1006.0,"Dennis Schröder (21.0%), Max Strus (17.5%), Keon Ellis (13.1%)","Peyton Watson (20.5%), Cam Whitmore (23.7%)",50.5
+DAL,auto,-10.8,2427.0,1196.0,"Brandon Williams (24.9%), Klay Thompson (22.8%), Khris Middleton (20.6%)","Santi Aldama (20.2%), Zaccharie Risacher (17.6%), Marcus Sasser (19.8%)",33.7
+DEN,auto,1.4,1099.0,1081.0,"Peyton Watson (20.5%), Tim Hardaway Jr. (18.5%)","DeMar DeRozan (22.7%), Marvin Bagley III (18.6%)",52.7
+DET,auto,0.2,1493.0,1422.0,"Tobias Harris (18.9%), Isaiah Stewart (16.6%), Caris LeVert (18.4%)","John Collins (19.5%), Isaiah Joe (18.5%), Taurean Prince (16.3%)",58.3
+GSW,auto,2.5,327.0,552.0,Quinten Post (18.9%),Brandon Williams (24.9%),57.3
+HOU,auto,1.9,379.0,810.0,"Josh Okogie (11.4%), Dorian Finney-Smith (10.8%)","Marcus Smart (15.5%), Bogdan Bogdanović (18.7%)",43.2
+IND,auto,0.2,346.0,754.0,Micah Potter (17.9%),"Kelly Oubre Jr. (18.2%), Larry Nance Jr. (14.1%)",45.4
+LAC,auto,-15.0,2722.0,2026.0,"Kawhi Leonard (33.4%), Bennedict Mathurin (25.1%), John Collins (19.5%)","Brandon Ingram (26.9%), Rui Hachimura (15.3%), Max Strus (17.5%)",59.9
+LAL,auto,5.3,2759.0,3287.0,"LeBron James (27.2%), Deandre Ayton (16.7%), Marcus Smart (15.5%)","Collin Sexton (25.9%), Quentin Grimes (19.0%), Walker Kessler (16.4%)",57.0
+MEM,auto,-5.6,1862.0,2611.0,"Ja Morant (32.4%), Santi Aldama (20.2%), Kentavious Caldwell-Pope (17.7%)","Jerami Grant (23.7%), D'Angelo Russell (26.0%), Isaiah Stewart (16.6%)",60.4
+MIA,reviewed,5.6,2857.0,2868.0,"Norman Powell (27.1%), Tyler Herro (24.8%), Jaime Jaquez Jr. (22.4%)","Giannis Antetokounmpo (36.6%), Bobby Portis (23.2%), Klay Thompson (22.8%)",53.2
+MIL,auto,-5.8,2117.0,2408.0,"Giannis Antetokounmpo (36.6%), Bobby Portis (23.2%), Taurean Prince (16.3%)","Tyler Herro (24.8%), Jaime Jaquez Jr. (22.4%), Kel'el Ware (18.1%)",56.7
+MIN,auto,4.4,1919.0,1825.0,"Julius Randle (26.4%), Naz Reid (22.2%), Kyle Anderson (13.1%)","LaMelo Ball (32.1%), Jonathan Kuminga (23.3%), Cody Williams (16.0%)",60.3
+NOP,auto,4.3,606.0,1240.0,"Jordan Hawkins (18.3%), Micah Peavy (14.1%), Kevon Looney (10.0%)","Bennedict Mathurin (25.1%), Trendon Watford (17.9%), AJ Johnson (20.6%)",38.0
+NYK,auto,1.2,464.0,291.0,"Mitchell Robinson (10.6%), Jeremy Sochan (14.6%), Ariel Hukporti (10.9%)",Andre Drummond (14.9%),61.5
+OKC,auto,1.5,1427.0,0.0,"Aaron Wiggins (19.9%), Isaiah Joe (18.5%), Luguentz Dort (14.2%)",,38.3
+ORL,auto,2.1,287.0,608.0,Moritz Wagner (24.2%),Nikola Vučević (21.4%),38.9
+PHX,auto,1.2,1093.0,983.0,"Grayson Allen (23.8%), Royce O'Neale (14.4%)","Miles Bridges (22.3%), Luke Kennard (13.5%)",47.5
+POR,auto,7.7,1188.0,1644.0,"Jerami Grant (23.7%), Kris Murray (10.6%), Matisse Thybulle (14.7%)","Ja Morant (32.4%), Micah Potter (17.9%), Branden Carlson (19.0%)",47.8
+SAC,auto,-0.9,1142.0,0.0,"DeMar DeRozan (22.7%), Devin Carter (23.5%)",,34.6
+SAS,auto,1.5,0.0,524.0,,Tobias Harris (18.9%),48.3
+TOR,reviewed,2.0,1584.0,1329.0,"Brandon Ingram (26.9%), Sandro Mamukelashvili (18.8%), Gradey Dick (18.7%)","Kawhi Leonard (33.4%), Kyle Anderson (13.1%)",43.0
+UTA,auto,-0.3,895.0,601.0,"Walker Kessler (16.4%), Cody Williams (16.0%)","Jaxson Hayes (12.9%), Josh Okogie (11.4%), Josh Green (10.7%)",43.9
+WAS,auto,0.1,1280.0,1219.0,"D'Angelo Russell (26.0%), Cam Whitmore (23.7%), Jaden Hardy (24.4%)","Khris Middleton (20.6%), Deandre Ayton (16.7%), Tre Mann (23.4%)",39.2

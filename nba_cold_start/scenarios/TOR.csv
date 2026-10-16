@@ -1,0 +1,20 @@
+scenario,player,proj_mpg
+full_strength,Scottie Barnes,34
+full_strength,Kawhi Leonard,32
+full_strength,Immanuel Quickley,31
+full_strength,RJ Barrett,30
+full_strength,Jakob Poeltl,26
+full_strength,Ja'Kobe Walter,20
+full_strength,Collin Murray-Boyles,20
+full_strength,Jamal Shead,18
+full_strength,Kyle Anderson,15
+full_strength,Jamison Battle,14
+kawhi_out,Scottie Barnes,36
+kawhi_out,Immanuel Quickley,33
+kawhi_out,RJ Barrett,33
+kawhi_out,Jakob Poeltl,27
+kawhi_out,Ja'Kobe Walter,25
+kawhi_out,Collin Murray-Boyles,24
+kawhi_out,Jamal Shead,22
+kawhi_out,Kyle Anderson,22
+kawhi_out,Jamison Battle,18
