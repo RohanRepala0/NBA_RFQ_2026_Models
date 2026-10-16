@@ -1,7 +1,7 @@
 # Usage-squeeze model, v0 reference implementation
 
 `usage_model.py` is the original single-file model. It is kept unchanged (apart from
-the example in its help text) as the reference that `nba_cold_start/usage_model.py`
+the example in its help text) as the reference that `cold_start_usage/usage_model.py`
 must reproduce exactly. `tests/test_v0_regression.py` runs this script on frozen
 Miami and Toronto inputs (`tests/fixtures/regression/`) and checks the package
 output matches it to within 0.01, with spacing switched off.

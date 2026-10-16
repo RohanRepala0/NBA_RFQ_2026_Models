@@ -9,13 +9,13 @@ from datetime import timedelta
 import pandas as pd
 import pytest
 
-from nba_cold_start import config
-from nba_cold_start.cli import main
-from nba_cold_start.consensus import consensus_by_player
-from nba_cold_start.ingest import save_raw
-from nba_cold_start.pipeline import snapshot_from_file, snapshot_slate
-from nba_cold_start.sgo_client import filter_event, off_list_book_count
-from nba_cold_start.storage import SCHEMA, OffListBookError
+from cold_start_usage import config
+from cold_start_usage.cli import main
+from cold_start_usage.consensus import consensus_by_player
+from cold_start_usage.ingest import save_raw
+from cold_start_usage.pipeline import snapshot_from_file, snapshot_slate
+from cold_start_usage.sgo_client import filter_event, off_list_book_count
+from cold_start_usage.storage import SCHEMA, OffListBookError
 from tests.conftest import FakeTransport
 from tests.fixtures.synthetic import EVENT_ID, FETCHED, OFF_LIST_BOOK, events_response, synthetic_event
 

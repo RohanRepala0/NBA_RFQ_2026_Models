@@ -1,11 +1,11 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
 catalog | board | kalshi | venues.
 
-    python -m nba_cold_start.cli snapshot --date 2026-10-21
-    python -m nba_cold_start.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
-    python -m nba_cold_start.cli signals --date 2026-10-21
-    python -m nba_cold_start.cli watchlist --date 2026-10-21
-    python -m nba_cold_start.cli grade --date 2026-10-21
+    python -m cold_start_usage.cli snapshot --date 2026-10-21
+    python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
+    python -m cold_start_usage.cli signals --date 2026-10-21
+    python -m cold_start_usage.cli watchlist --date 2026-10-21
+    python -m cold_start_usage.cli grade --date 2026-10-21
 
 Research only: nothing here places, sizes or routes an order anywhere.
 """
@@ -471,7 +471,7 @@ COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "p
 
 
 def build_parser() -> argparse.ArgumentParser:
-    ap = argparse.ArgumentParser(prog="nba_cold_start.cli", description=__doc__.split("\n")[0])
+    ap = argparse.ArgumentParser(prog="cold_start_usage.cli", description=__doc__.split("\n")[0])
     ap.add_argument("--db", default=str(config.DB_PATH), help="DuckDB path (default data/edge_lab.duckdb)")
     ap.add_argument("--now", help="Simulated UTC time (ISO). Only allowed with a non-default --db.")
     sub = ap.add_subparsers(dest="command", required=True)
@@ -505,7 +505,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("venues", help="Read-only: Polymarket + Kalshi player-points prices vs consensus and model")
     p.add_argument("--date", type=_parse_date)
     p = sub.add_parser("fit", help="Fit eff_per_usg_point and spacing_coef from team-changers")
-    p.add_argument("--input", required=True, help="CSV of player-season pairs (see nba_cold_start/fit.py)")
+    p.add_argument("--input", required=True, help="CSV of player-season pairs (see cold_start_usage/fit.py)")
     p.add_argument("--teams-old", help="Team shooting table for the earlier season")
     p.add_argument("--teams-new", help="Team shooting table for the later season")
     p.add_argument("--min-minutes", type=float, default=500.0)

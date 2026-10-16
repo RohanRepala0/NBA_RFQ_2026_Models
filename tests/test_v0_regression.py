@@ -15,9 +15,9 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from nba_cold_start.config import MODEL
-from nba_cold_start.spacing import load_team_shooting
-from nba_cold_start.usage_model import load_players, project_team
+from cold_start_usage.config import MODEL
+from cold_start_usage.spacing import load_team_shooting
+from cold_start_usage.usage_model import load_players, project_team
 
 REPO = Path(__file__).resolve().parents[1]
 V0 = REPO / "v0" / "usage_model.py"

@@ -42,7 +42,7 @@ def _bar(v: float | None, scale: float = 0.01) -> str:
 
 def build_report(storage: Storage, start: date, end: date) -> str:
     df = graded_signals(storage, start, end)
-    lines = [f"# Edge Lab report: {start} to {end}", ""]
+    lines = [f"# Cold Start Usage Projection Modeling report: {start} to {end}", ""]
     if df.empty:
         return "\n".join(lines + ["No signals logged in this window.", ""])
     paper = df[df.decision == "paper"]

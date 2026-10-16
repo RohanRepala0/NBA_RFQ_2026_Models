@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from nba_cold_start.odds_math import (american_to_decimal, american_to_prob, devig, implied_mean,
+from cold_start_usage.odds_math import (american_to_decimal, american_to_prob, devig, implied_mean,
                                       no_vig_two_way, p_over_normal, parse_american, points_sd,
                                       prob_to_american)
 

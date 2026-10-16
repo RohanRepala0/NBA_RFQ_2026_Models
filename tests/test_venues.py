@@ -5,9 +5,9 @@ from datetime import timedelta
 import pandas as pd
 import pytest
 
-from nba_cold_start.pipeline import run_projections, snapshot_from_file
-from nba_cold_start.polymarket import points_markets, taker_fee
-from nba_cold_start.venues import evaluate, kalshi_event_code, max_price, scan
+from cold_start_usage.pipeline import run_projections, snapshot_from_file
+from cold_start_usage.polymarket import points_markets, taker_fee
+from cold_start_usage.venues import evaluate, kalshi_event_code, max_price, scan
 from tests.fixtures.synthetic import FETCHED, TIP, events_response, synthetic_event
 
 POLY_EVENT = {

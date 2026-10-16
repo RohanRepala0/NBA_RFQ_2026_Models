@@ -1,5 +1,5 @@
 [project]
-name = "nba-cold-start"
+name = "cold-start-usage-projection-modeling"
 version = "1.0.0"
 description = "NBA player-points projections vs a sportsbook consensus, with a prediction-market watchlist (research only)"
 requires-python = ">=3.11"
@@ -9,10 +9,10 @@ dependencies = ["pandas>=2.0", "duckdb>=1.0", "requests>=2.31"]
 dev = ["pytest>=8.0"]
 
 [tool.setuptools]
-packages = ["nba_cold_start"]
+packages = ["cold_start_usage"]
 
 [tool.setuptools.package-data]
-nba_cold_start = ["scenarios/*.csv", "books.json"]
+cold_start_usage = ["scenarios/*.csv", "scenarios/auto/*.csv", "books.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
