@@ -8,7 +8,7 @@ Rohan can trade on two venues: **Kalshi** and **Polymarket US**. Sportsbooks are
 | Can a US resident open positions? | Yes, except in states where sports contracts are blocked or geofenced. Confirm in the app. | Yes, except in some states (Nevada is out; reports differ on others). Confirm in the app. | **No.** The US is close-only ("can close existing positions but cannot open new ones"). |
 | Role here | Actionable | Actionable | Reference price only, never actionable |
 | Public market data | `api.elections.kalshi.com/trade-api/v2`, no key | `gateway.polymarket.us`, no key | Gamma + CLOB, no key |
-| NBA player points | Series `KXNBAPTS`: "N+ points" ladders in steps of 5 (10+, 15+, ...), 3-5 rungs per player | Player-prop schema exists (`basketball_player_points`, "N+" ladders, any integer line). None listed for the NBA opening slate; the WNBA Finals had 24. | "Points O/U X.5" markets |
+| NBA player points | Series `KXNBAPTS`: "N+ points" ladders in steps of 5 (10+, 15+, ...), 3-5 rungs per player | `basketball_player_points` "N+" ladders. NBA ones appeared on Oct 19 for the opening games, in steps of 5 (5+, 10+, ...). | "Points O/U X.5" markets |
 | Taker fee | 0.07 × C × P × (1 − P), rounded up to the cent per order | 0.0695 × C × P × (1 − P), rounded to the cent (half to even) | 0.05 × C × P × (1 − P) |
 | Maker fee | 0 on `KXNBAPTS` (fee type "quadratic") | 0 (no maker rebate at tier 1) | 0 |
 | Player doesn't play | Settles at a "fair price" set by the exchange | Settles at the last fair market price | Resolves NO |
@@ -58,7 +58,7 @@ See "How a venue contract becomes actionable" in the README and `cold_start_usag
   - The median spread was 12c; only 8 rungs were within 2c, and 36 of 86 had no volume yet.
   - Liquidity was concentrated: LeBron's 15+ and 20+ rungs made up about 63k of the slate's 70k contracts traded.
   - No Oct 21 ladders were up yet.
-- **Polymarket US:** no NBA player props. The 14 opening-week games listed only moneylines, spreads and totals.
+- **Polymarket US:** no NBA player props on Oct 18; the 14 opening-week games listed only moneylines, spreads and totals. On Oct 19 it listed 96 points markets for the three Oct 20 games. 38 were two-sided, with a median spread of 17.5c (Kalshi's 70 two-sided markets: 14.5c). All parsed and mapped to the rosters, except two players not yet on the stored sportsbook roster.
 - **polymarket.com:** 54 points markets across 9 games, only 6 with a real two-sided quote.
 
 ## Out of scope

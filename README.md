@@ -112,7 +112,7 @@ It's one pick per player-game, sized at quarter Kelly, capped at 0.5% of bankrol
   - Kalshi: 0.07 × C × P × (1 − P), rounded up to the cent; resting orders on player points pay no maker fee. Accounts held directly with Kalshi may be charged on a finer $0.0001 grid, so check one real fill.
   - Polymarket US: 0.0695 × C × P × (1 − P), rounded to the cent.
 - **Players who don't play** aren't voids. Kalshi settles their markets at a "fair price" the exchange sets (Paul George's preseason 20+ settled at 21c), and Polymarket US settles at the last fair market price. A position bought far from that value loses on a scratch.
-- **Polymarket US had no NBA player props** for the opening slate. It lists them for the WNBA, so they may appear close to tip; the reader picks them up when they do. Until then, Kalshi is the only venue with prices.
+- **Polymarket US listed NBA player props on Oct 19** for the three opening games: 96 "N+ points" markets in 5-point steps. Only 38 had a two-sided book (median spread 17.5c, vs 14.5c on Kalshi's 70 two-sided markets), and none had depth yet. Both venues are read at every checkpoint.
 
 ## Layout
 

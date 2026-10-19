@@ -111,7 +111,7 @@ Plan: 2,500 objects/month, 10 requests/minute, 9 bookmakers, no historical data,
 
 All three readers are public, keyless GETs with no account, order or portfolio endpoint:
 - **Kalshi** (`kalshi.py`): series `KXNBAPTS`, "N+ points" ladders in steps of 5, with order-book depth in batches of 100.
-- **Polymarket US** (`polymarket_us.py`, `gateway.polymarket.us`): the CFTC-regulated US exchange. Its player props are "N+" ladders. None were listed for the NBA opening slate, but they were for the WNBA Finals, so the reader picks them up when they appear.
+- **Polymarket US** (`polymarket_us.py`, `gateway.polymarket.us`): the CFTC-regulated US exchange. Its player props are "N+" ladders; NBA points ladders appeared on Oct 19 for the opening games.
 - **polymarket.com** (`polymarket.py`): the international book. It's close-only for US persons, so it's logged as a reference price and never actionable.
 
 `cli venues` (and the cron's venue step) decides every contract side and logs it. Fees, settlement rules (including the fair-price settlement for players who don't play) and what was listed are in `docs/VENUES.md`.
@@ -266,7 +266,7 @@ The weekly `report` adds CLV by week (the edge-decay chart).
 |---|---|---|
 | **Sat Oct 17** | **M1:** config, client with budget guard, allowlist test, usage check, book list, storage, odds math, first snapshot | Done. The key works, the books are discovered, and the first live snapshot (BOS @ DET) is stored. |
 | **Mon Oct 19** | **M2:** consensus, usage model for the case-study teams, `project` + `signals`, dry run | MIA and TOR done with spacing, and dry-run on a synthetic MIN @ MIA slate. The scenario minutes need Rohan's review. |
-| **Before Tue Oct 20** | **M3:** install the cron job (`snapshot --due --with-signals --with-venues --with-projections`, every 5 minutes) on Rohan's machine before Opening Night (first tip 3:00 PM ET), so history starts with the first tip. It covers every game; projections and signals cover all 29 catalog teams. The MIA and TOR openers (both 7:30 PM ET, Oct 21) use the reviewed minutes. | Ready. Kalshi only for now (Polymarket US has no NBA props yet). Run `catalog` and `board --docs` first, `tickets` before each tip, and `grade` each morning. |
+| **Before Tue Oct 20** | **M3:** install the cron job (`snapshot --due --with-signals --with-venues --with-projections`, every 5 minutes) on Rohan's machine before Opening Night (first tip 3:00 PM ET), so history starts with the first tip. It covers every game; projections and signals cover all 29 catalog teams. The MIA and TOR openers (both 7:30 PM ET, Oct 21) use the reviewed minutes. | Ready. Kalshi and Polymarket US both list NBA points props (Polymarket US since Oct 19). Run `catalog` and `board --docs` first, `tickets` before each tip, and `grade` each morning. |
 | **Week 1** | **M3b:** backtests on Kalshi's 2025-26 archive (`cli history`). The strategies: venue vs consensus, longshot bias, ladder and cross-venue consistency, entry timing, the teammate-vacuum news signal, and limit vs market orders. | The archive download is running; the engine is next. |
 | **Week 2** | **M4:** weekly report; review auto minutes for the teams being acted on; fit `eff_per_usg_point` and `spacing_coef`; stats-source decision | `report`, `fit`, `catalog` and `board` are built. Data for the fits is still to be collected. |
 
