@@ -56,6 +56,8 @@ class Tape:
         # its markets closed (rungs close early in-game when the strike is hit).
         first_close = m.groupby("event_ticker").close_time.transform("min") - pd.Timedelta(minutes=30)
         m["tip_est"] = pd.concat([m.groupby("event_ticker").tip_est.transform("min"), first_close], axis=1).min(axis=1)
+        self.archive_markets = int(self.con.execute("SELECT count(*) FROM markets").fetchone()[0])
+        self.archive_games = int(self.con.execute("SELECT count(DISTINCT event_ticker) FROM markets").fetchone()[0])
         m["game_date"] = (pd.to_datetime(m.tip_est).dt.tz_localize("UTC").dt.tz_convert("America/New_York").dt.date)
         m["game"] = m.event_ticker.str.split("-").str[1]
         m["value"] = np.where(m.result == "yes", 1.0, np.where(m.result == "no", 0.0, m.settlement_value))
@@ -288,7 +290,13 @@ def report(results: dict[str, pd.DataFrame], tape: Tape) -> str:
     m = tape.markets
     lines = ["# Backtest: Kalshi NBA player points, 2025-26", "",
              f"Archive: {len(m):,} settled `KXNBAPTS` markets with candles across {m.game.nunique():,} games, "
-             f"{m.game_date.min()} to {m.game_date.max()} (`cli history`; `cli backtest --docs` rebuilds this page).", "",
+             f"{m.game_date.min()} to {m.game_date.max()} (`cli history`; `cli backtest --docs` rebuilds this page).", ""]
+    if len(m) < tape.archive_markets:
+        lines += [f"**Partial archive: {len(m):,} of {tape.archive_markets:,} markets ({100 * len(m) / tape.archive_markets:.0f}%), "
+                  f"{m.game.nunique():,} of {tape.archive_games:,} games.** The download fetches whole games in random order "
+                  "(after November and part of December, which came first), so this is a season-wide sample, but a small "
+                  "one. Treat every number here as preliminary.", ""]
+    lines += [
              "**How it's scored.**",
              "- Fills:",
              "  - A taker order fills at the ask at the decision time, but only if that ask is at or under its limit.",
