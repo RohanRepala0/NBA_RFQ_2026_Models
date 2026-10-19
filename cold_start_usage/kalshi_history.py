@@ -93,10 +93,12 @@ class KalshiArchive:
             self.throttle.wait()
             try:
                 resp = self.session.get(f"{BASE}{path}", params=params, headers=HEADERS, timeout=30)
-            except requests.RequestException:          # proxy drops and timeouts: wait and retry
+            except requests.RequestException as exc:   # proxy drops and timeouts: wait and retry
+                print(f"retry {attempt + 1} {path}: {type(exc).__name__}", flush=True)
                 time.sleep(min(120, 30 * (attempt + 1)))
                 continue
             if resp.status_code == 429 or resp.status_code >= 500:
+                print(f"retry {attempt + 1} {path}: HTTP {resp.status_code}", flush=True)
                 time.sleep(min(120, 30 * (attempt + 1)))  # no Retry-After header is sent
                 continue
             resp.raise_for_status()
