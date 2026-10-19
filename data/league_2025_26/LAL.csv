@@ -1,19 +1,19 @@
-name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts
-LeBron James,LAL,27.2,60,33.2,20.9,4.1,31.7,1989,1256
-Marcus Smart,LAL,15.5,62,28.5,9.3,4.7,33.1,1769,579
-Luke Kennard,LAL,14.6,32,23.0,9.0,3.0,44.8,737,288
-Maxi Kleber,LAL,9.6,43,10.7,2.0,0.6,23.1,461,86
-Deandre Ayton,LAL,16.7,72,27.2,12.5,0.0,,1958,897
-Luka Dončić,LAL,38.0,64,35.8,33.5,10.8,36.6,2289,2143
-Jarred Vanderbilt,LAL,12.5,65,17.4,4.4,1.5,29.3,1128,288
-Gabe Vincent,LAL,11.6,29,19.3,4.8,3.6,36.9,559,138
-Jaxson Hayes,LAL,12.9,66,18.3,7.5,0.0,100.0,1207,497
-Rui Hachimura,LAL,15.3,68,28.3,11.5,3.9,44.3,1927,780
-Austin Reaves,LAL,26.6,51,34.5,23.3,6.4,36.0,1762,1187
-Jake LaRavia,LAL,14.4,82,25.1,8.2,3.0,32.1,2061,674
-Nick Smith Jr.,LAL,22.1,30,12.5,6.2,2.9,39.5,375,185
-Kobe Bufkin,LAL,22.2,16,7.4,2.9,1.6,19.2,119,46
-Drew Timme,LAL,15.5,27,8.7,3.4,0.9,44.0,235,92
-Dalton Knecht,LAL,17.8,54,10.2,4.2,2.1,34.2,553,228
-Bronny James,LAL,16.8,42,8.9,2.9,1.4,38.6,375,122
-Adou Thiero,LAL,14.5,25,6.0,1.9,0.1,33.3,149,47
+name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts,reb,ast,oreb,dreb,reb_ast_source
+LeBron James,LAL,27.2,60,33.2,20.9,4.1,31.7,1989,1256,364,432,43,321,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Marcus Smart,LAL,15.5,62,28.5,9.3,4.7,33.1,1769,579,172,185,36,136,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Luke Kennard,LAL,14.6,32,23.0,9.0,3.0,44.8,737,288,83,78,13,70,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Maxi Kleber,LAL,9.6,43,10.7,2.0,0.6,23.1,461,86,84,27,36,48,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Deandre Ayton,LAL,16.7,72,27.2,12.5,0.0,,1958,897,575,59,185,390,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Luka Dončić,LAL,38.0,64,35.8,33.5,10.8,36.6,2289,2143,495,530,41,454,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Jarred Vanderbilt,LAL,12.5,65,17.4,4.4,1.5,29.3,1128,288,292,84,80,212,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Gabe Vincent,LAL,11.6,29,19.3,4.8,3.6,36.9,559,138,27,37,7,20,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Jaxson Hayes,LAL,12.9,66,18.3,7.5,0.0,100.0,1207,497,271,59,99,172,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Rui Hachimura,LAL,15.3,68,28.3,11.5,3.9,44.3,1927,780,226,57,41,185,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Austin Reaves,LAL,26.6,51,34.5,23.3,6.4,36.0,1762,1187,240,280,33,207,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Jake LaRavia,LAL,14.4,82,25.1,8.2,3.0,32.1,2061,674,326,145,116,210,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Nick Smith Jr.,LAL,22.1,30,12.5,6.2,2.9,39.5,375,185,23,31,3,20,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Kobe Bufkin,LAL,22.2,16,7.4,2.9,1.6,19.2,119,46,13,10,1,12,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Drew Timme,LAL,15.5,27,8.7,3.4,0.9,44.0,235,92,33,23,10,23,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Dalton Knecht,LAL,17.8,54,10.2,4.2,2.1,34.2,553,228,75,21,14,61,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Bronny James,LAL,16.8,42,8.9,2.9,1.4,38.6,375,122,23,51,5,18,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26
+Adou Thiero,LAL,14.5,25,6.0,1.9,0.1,33.3,149,47,28,10,9,19,https://www.statmuse.com/nba/ask/lakers-players-total-offensive-rebounds-2025-26

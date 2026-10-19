@@ -1,17 +1,17 @@
-name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts
-Tyus Jones,ORL,9.9,48,15.7,3.0,2.1,29.4,754,144
-Jonathan Isaac,ORL,12.3,52,10.0,2.6,0.7,18.4,521,134
-Wendell Carter Jr.,ORL,15.6,78,29.3,11.8,2.9,31.9,"2,288",922
-Moritz Wagner,ORL,24.2,36,11.9,6.9,1.9,31.4,427,247
-Jevon Carter,ORL,16.2,30,20.4,7.2,4.6,33.6,613,215
-Goga Bitadze,ORL,13.5,64,15.2,5.9,0.2,18.2,972,375
-Desmond Bane,ORL,23.3,82,33.6,20.1,5.2,39.1,"2,756","1,647"
-Franz Wagner,ORL,26.9,34,30.0,20.6,4.1,34.5,"1,019",699
-Jalen Suggs,ORL,23.0,57,27.6,13.8,6.3,33.9,"1,574",786
-Paolo Banchero,ORL,27.4,72,34.8,22.2,3.8,30.5,"2,502","1,599"
-Jamal Cain,ORL,16.6,40,12.2,5.4,1.8,38.4,486,215
-Anthony Black,ORL,22.2,64,29.8,15.0,4.7,33.3,"1,910",959
-Jett Howard,ORL,17.3,55,12.6,5.5,2.6,37.2,695,301
-Tristan da Silva,ORL,16.3,77,24.7,9.9,4.2,37.4,"1,899",762
-Jase Richardson,ORL,16.8,54,10.9,4.4,1.5,35.4,587,239
-Noah Penda,ORL,14.9,59,12.8,3.8,1.6,32.3,757,227
+name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts,reb,ast,oreb,dreb,reb_ast_source
+Tyus Jones,ORL,9.9,48,15.7,3.0,2.1,29.4,754,144,53,116,9,44,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Jonathan Isaac,ORL,12.3,52,10.0,2.6,0.7,18.4,521,134,132,22,43,89,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Wendell Carter Jr.,ORL,15.6,78,29.3,11.8,2.9,31.9,"2,288",922,577,154,162,415,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Moritz Wagner,ORL,24.2,36,11.9,6.9,1.9,31.4,427,247,115,27,27,88,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Jevon Carter,ORL,16.2,30,20.4,7.2,4.6,33.6,613,215,63,68,9,54,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Goga Bitadze,ORL,13.5,64,15.2,5.9,0.2,18.2,972,375,320,84,137,183,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Desmond Bane,ORL,23.3,82,33.6,20.1,5.2,39.1,"2,756","1,647",338,338,98,240,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Franz Wagner,ORL,26.9,34,30.0,20.6,4.1,34.5,"1,019",699,177,113,43,134,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Jalen Suggs,ORL,23.0,57,27.6,13.8,6.3,33.9,"1,574",786,220,312,36,184,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Paolo Banchero,ORL,27.4,72,34.8,22.2,3.8,30.5,"2,502","1,599",604,373,85,519,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Jamal Cain,ORL,16.6,40,12.2,5.4,1.8,38.4,486,215,78,29,28,50,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Anthony Black,ORL,22.2,64,29.8,15.0,4.7,33.3,"1,910",959,244,236,47,197,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Jett Howard,ORL,17.3,55,12.6,5.5,2.6,37.2,695,301,87,45,23,64,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Tristan da Silva,ORL,16.3,77,24.7,9.9,4.2,37.4,"1,899",762,284,124,58,226,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Jase Richardson,ORL,16.8,54,10.9,4.4,1.5,35.4,587,239,63,58,21,42,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26
+Noah Penda,ORL,14.9,59,12.8,3.8,1.6,32.3,757,227,187,70,67,120,https://www.statmuse.com/nba/ask/magic-players-total-offensive-rebounds-2025-26

@@ -1,23 +1,23 @@
-name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts
-CJ McCollum,WAS,24.4,35,30.9,18.8,7.0,39.3,"1,082",658
-Khris Middleton,WAS,19.6,34,24.3,10.3,2.9,33.3,827,351
-Marvin Bagley III,WAS,18.9,38,19.2,10.1,0.5,42.1,731,385
-Trae Young,WAS,26.1,5,20.8,15.2,4.2,42.9,104,76
-Anthony Gill,WAS,11.9,55,17.3,5.8,0.9,35.4,951,321
-Corey Kispert,WAS,16.7,19,19.5,9.2,4.0,39.5,370,174
-Sharife Cooper,WAS,20.0,41,17.1,8.1,1.9,38.2,700,333
-Justin Champagnie,WAS,16.7,69,20.0,8.7,2.4,31.9,"1,377",597
-Alondes Williams,WAS,14.3,4,25.3,11.0,3.5,35.7,101,44
-Malaki Branham,WAS,18.3,28,9.8,4.6,1.3,37.8,275,128
-Jaden Hardy,WAS,25.4,23,20.4,12.6,6.0,42.0,470,290
-Cam Whitmore,WAS,23.7,21,16.9,9.2,2.7,28.6,354,193
-Bilal Coulibaly,WAS,19.9,56,26.2,11.7,3.6,31.9,"1,468",657
-Tristan Vukcevic,WAS,26.6,49,13.7,9.0,2.9,34.7,671,441
-Leaky Black,WAS,11.7,15,28.9,7.1,3.7,34.5,433,106
-Kyshawn George,WAS,22.8,48,29.0,14.8,5.4,38.1,"1,391",710
-Bub Carrington,WAS,18.1,82,27.7,10.7,5.0,40.8,"2,271",878
-Alex Sarr,WAS,25.7,48,27.2,16.3,3.1,33.3,"1,305",783
-AJ Johnson,WAS,20.8,25,8.6,2.8,1.0,28.0,214,70
-Tre Johnson,WAS,22.6,60,24.1,12.2,5.4,35.8,"1,443",733
-Will Riley,WAS,20.2,74,22.1,10.3,3.3,31.6,"1,633",764
-Jamir Watkins,WAS,15.0,50,20.6,7.4,3.2,29.7,"1,032",368
+name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts,reb,ast,oreb,dreb,reb_ast_source
+CJ McCollum,WAS,24.4,35,30.9,18.8,7.0,39.3,"1,082",658,124,126,23,101,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Khris Middleton,WAS,19.6,34,24.3,10.3,2.9,33.3,827,351,134,111,30,104,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Marvin Bagley III,WAS,18.9,38,19.2,10.1,0.5,42.1,731,385,216,56,97,119,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Trae Young,WAS,26.1,5,20.8,15.2,4.2,42.9,104,76,15,31,4,11,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Anthony Gill,WAS,11.9,55,17.3,5.8,0.9,35.4,951,321,158,69,58,100,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Corey Kispert,WAS,16.7,19,19.5,9.2,4.0,39.5,370,174,44,32,6,38,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Sharife Cooper,WAS,20.0,41,17.1,8.1,1.9,38.2,700,333,86,124,18,68,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Justin Champagnie,WAS,16.7,69,20.0,8.7,2.4,31.9,"1,377",597,384,84,145,239,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Alondes Williams,WAS,14.3,4,25.3,11.0,3.5,35.7,101,44,25,12,5,20,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Malaki Branham,WAS,18.3,28,9.8,4.6,1.3,37.8,275,128,44,23,12,32,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Jaden Hardy,WAS,25.4,23,20.4,12.6,6.0,42.0,470,290,39,29,4,35,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Cam Whitmore,WAS,23.7,21,16.9,9.2,2.7,28.6,354,193,58,15,19,39,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Bilal Coulibaly,WAS,19.9,56,26.2,11.7,3.6,31.9,"1,468",657,243,145,48,195,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Tristan Vukcevic,WAS,26.6,49,13.7,9.0,2.9,34.7,671,441,147,55,32,115,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Leaky Black,WAS,11.7,15,28.9,7.1,3.7,34.5,433,106,75,22,15,60,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Kyshawn George,WAS,22.8,48,29.0,14.8,5.4,38.1,"1,391",710,245,214,43,202,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Bub Carrington,WAS,18.1,82,27.7,10.7,5.0,40.8,"2,271",878,276,381,33,243,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Alex Sarr,WAS,25.7,48,27.2,16.3,3.1,33.3,"1,305",783,355,130,105,250,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+AJ Johnson,WAS,20.8,25,8.6,2.8,1.0,28.0,214,70,31,22,8,23,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Tre Johnson,WAS,22.6,60,24.1,12.2,5.4,35.8,"1,443",733,170,122,29,141,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Will Riley,WAS,20.2,74,22.1,10.3,3.3,31.6,"1,633",764,212,146,56,156,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
+Jamir Watkins,WAS,15.0,50,20.6,7.4,3.2,29.7,"1,032",368,194,67,49,145,https://www.statmuse.com/nba/ask/wizards-players-total-offensive-rebounds-2025-26
