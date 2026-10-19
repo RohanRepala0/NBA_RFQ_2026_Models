@@ -1,5 +1,5 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
-catalog | board | kalshi | venues | tickets | fill | history.
+catalog | board | kalshi | venues | tickets | fill | history | backtest.
 
     python -m cold_start_usage.cli snapshot --date 2026-10-21
     python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
@@ -581,10 +581,44 @@ def cmd_history(args, storage, now_fn) -> int:
     return 0
 
 
+def cmd_backtest(args, storage, now_fn) -> int:
+    """Walk-forward backtests of every strategy on Kalshi's 2025-26 archive (read-only)."""
+    from .backtest import Tape, monthly_folds, report, walk_forward
+    from .strategies import default_suite
+    path = Path(args.history_db) if args.history_db else None
+    tape = Tape(path)
+    if tape.markets.empty:
+        print("No archive yet: run `history` first.")
+        return 1
+    folds = monthly_folds(tape.markets.game_date)
+    print(f"{len(tape.markets):,} markets, {tape.markets.game.nunique():,} games; folds: "
+          + ", ".join(f.name for f in folds))
+    results = {}
+    for st in default_suite():
+        if args.only and not any(k.lower() in st.name.lower() for k in args.only):
+            continue
+        bets = walk_forward(tape, st, folds)
+        bets.attrs["executable_by_hand"] = st.executable_by_hand
+        results[st.name] = bets
+        print(f"  {st.name}: {int(bets.filled.sum()) if len(bets) else 0} fills")
+    md = report(results, tape)
+    config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    out = config.REPORTS_DIR / "backtest.md"
+    out.write_text(md)
+    bets = pd.concat([b for b in results.values() if len(b)], ignore_index=True) if results else pd.DataFrame()
+    if len(bets):
+        bets.to_csv(config.REPORTS_DIR / "backtest_bets.csv", index=False)
+    if args.docs:
+        (config.REPO_DIR / "docs" / "BACKTEST.md").write_text(md)
+    print(md)
+    return 0
+
+
 COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "project": cmd_project,
             "signals": cmd_signals, "watchlist": cmd_watchlist, "grade": cmd_grade, "report": cmd_report,
             "fit": cmd_fit, "catalog": cmd_catalog, "board": cmd_board, "kalshi": cmd_kalshi,
-            "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill}
+            "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
+            "backtest": cmd_backtest}
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -646,6 +680,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--limit", type=int, help="Markets to fetch this run (default: all remaining)")
     p.add_argument("--history-db", help="Research cache path (default data/history/kalshi_history.duckdb)")
     p.add_argument("--no-refresh", action="store_true", help="Reuse the stored market list")
+    p = sub.add_parser("backtest", help="Walk-forward backtests on the Kalshi archive (run `history` first)")
+    p.add_argument("--history-db", help="Research cache path (default data/history/kalshi_history.duckdb)")
+    p.add_argument("--only", nargs="*", help="Run only strategies whose name contains one of these words")
+    p.add_argument("--docs", action="store_true", help="Also write docs/BACKTEST.md")
     p = sub.add_parser("fit", help="Fit eff_per_usg_point and spacing_coef from team-changers")
     p.add_argument("--input", required=True, help="CSV of player-season pairs (see cold_start_usage/fit.py)")
     p.add_argument("--teams-old", help="Team shooting table for the earlier season")
@@ -667,8 +705,8 @@ def main(argv: list[str] | None = None) -> int:
         now_fn = lambda: fixed  # noqa: E731
     else:
         now_fn = utcnow
-    if args.command == "history":                  # a separate cache: don't hold the decision log open for hours
-        return cmd_history(args, None, now_fn)
+    if args.command in ("history", "backtest"):     # the research cache: don't hold the decision log open
+        return COMMANDS[args.command](args, None, now_fn)
     with Storage(args.db) as storage:
         try:
             return COMMANDS[args.command](args, storage, now_fn)

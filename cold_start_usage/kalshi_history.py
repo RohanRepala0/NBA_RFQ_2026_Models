@@ -91,13 +91,17 @@ class KalshiArchive:
     def get(self, path: str, params: dict | None = None) -> dict:
         for attempt in range(self.max_retries):
             self.throttle.wait()
-            resp = self.session.get(f"{BASE}{path}", params=params, headers=HEADERS, timeout=30)
+            try:
+                resp = self.session.get(f"{BASE}{path}", params=params, headers=HEADERS, timeout=30)
+            except requests.RequestException:          # proxy drops and timeouts: wait and retry
+                time.sleep(min(120, 30 * (attempt + 1)))
+                continue
             if resp.status_code == 429 or resp.status_code >= 500:
                 time.sleep(min(120, 30 * (attempt + 1)))  # no Retry-After header is sent
                 continue
             resp.raise_for_status()
             return resp.json()
-        raise RuntimeError(f"Kalshi {path}: still throttled after {self.max_retries} retries")
+        raise RuntimeError(f"Kalshi {path}: still failing after {self.max_retries} retries")
 
     def markets(self, series: str) -> list[dict]:
         out, cursor = [], None

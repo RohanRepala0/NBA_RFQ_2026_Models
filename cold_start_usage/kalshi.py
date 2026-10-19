@@ -70,7 +70,11 @@ class KalshiReader:
     def get(self, path: str, params: dict | None = None) -> dict:
         for attempt in range(self.max_retries):
             self.throttle.wait()
-            resp = self.session.get(f"{BASE}{path}", params=params, headers=HEADERS, timeout=20)
+            try:
+                resp = self.session.get(f"{BASE}{path}", params=params, headers=HEADERS, timeout=20)
+            except requests.RequestException:          # proxy drops and timeouts: wait and retry
+                time.sleep(min(120, 30 * (attempt + 1)))
+                continue
             if resp.status_code == 429 or resp.status_code >= 500:
                 time.sleep(min(120, 30 * (attempt + 1)))
                 continue
