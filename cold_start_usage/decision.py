@@ -26,14 +26,14 @@ from __future__ import annotations
 import hashlib
 import json
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 
 import pandas as pd
 
 from . import config
 from .config import MODEL, ModelParams
-from .fees import fee_per_contract
+from .fees import fee_per_contract, fee_total
 from .odds_math import p_over_normal, points_sd
 
 
@@ -204,12 +204,18 @@ def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float
         return done("abstain", "no ask on this side")
 
     n_plan = config.PLANNED_CONTRACTS
-    cost = ask + fee_per_contract(venue, n_plan, ask, rate=q.get("fee_rate"))
+    rate = _rate(q.get("fee_rate"))
+    cost = ask + fee_per_contract(venue, n_plan, ask, rate=rate)
     ev_m, ev_b = p_mkt - cost, p_bl - cost
-    cap_price = max_price(p_bl, venue, tau, n_plan, q.get("fee_rate"))
-    book = levels if levels else ([(ask, row["ask_size"])] if row["ask_size"] else [])
+    # The limit must keep the edge on the blend AND never pay more than the market alone says
+    # it's worth: otherwise the counted depth reaches prices the model-only gate would refuse.
+    caps = [max_price(p_bl, venue, tau, n_plan, rate), max_price(p_mkt, venue, 0.0, n_plan, rate)]
+    cap_price = None if None in caps else min(caps)
+    book = levels if levels is not None else ([(ask, row["ask_size"])] if row["ask_size"] else [])
     size = size_at(book, cap_price)
-    row.update(cost=cost, ev_market=ev_m, ev_blend=ev_b, max_price=cap_price, size_at_edge=size)
+    row.update(cost=cost, ev_market=ev_m, ev_blend=ev_b, max_price=cap_price, size_at_edge=size,
+               ladder=";".join(f"{p:.4f}:{q_:g}" for p, q_ in sorted(book) if cap_price is not None
+                               and p <= cap_price + 1e-9))
     if config.MAX_CREDIBLE_EDGE is not None and ev_m > config.MAX_CREDIBLE_EDGE:
         return done("abstain", f"edge {100 * ev_m:.1f}pp > {100 * config.MAX_CREDIBLE_EDGE:.0f}pp cap: "
                                "check inputs or a stale book")
@@ -221,20 +227,48 @@ def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float
         return done("watch", f"player listed {status}: wait for the report")
     need = config.MIN_SIZE_AT_EDGE.get(venue, 10)
     if size < need:
-        return done("watch", f"thin: {size:g} contracts at or under {100 * cap_price:.0f}c (need {need})")
+        cap_txt = "?" if cap_price is None else f"{100 * cap_price:.0f}c"
+        return done("watch", f"thin: {size:g} contracts at or under {cap_txt} (need {need})")
     return done("actionable", f"EV {100 * ev_b:.1f}pp (market {100 * ev_m:.1f}pp) at {100 * ask:.0f}c"
                               + (f"; {flag}" if flag else ""))
 
 
-def pick_per_group(rows: pd.DataFrame) -> pd.DataFrame:
-    """Keep the best actionable contract per player-game (across venues, rungs and sides)."""
+def _rate(rate) -> float | None:
+    return None if rate is None or (isinstance(rate, float) and math.isnan(rate)) else float(rate)
+
+
+def parse_ladder(text) -> list[tuple[float, float]]:
+    if not isinstance(text, str) or not text:
+        return []
+    return sorted((float(p), float(q)) for p, q in (lv.split(":") for lv in text.split(";")))
+
+
+def fill_cost(levels: list[tuple[float, float]], n: int, venue: str, rate: float | None) -> float | None:
+    """All-in dollars for n contracts bought up the ladder: price paid level by level plus the
+    venue fee for the order (taken at the average price, which can only overstate it)."""
+    got, paid = 0.0, 0.0
+    for p, s in levels:
+        take = min(s, n - got)
+        got += take
+        paid += take * p
+        if got >= n - 1e-9:
+            return paid + fee_total(venue, n, paid / n, rate=rate)
+    return None
+
+
+def pick_per_group(rows: pd.DataFrame, filled: set | None = None) -> pd.DataFrame:
+    """Keep the best actionable contract per player-game (across venues, rungs and sides).
+    A player-game Rohan already holds (`filled`) gets no new pick."""
     if rows.empty or "decision" not in rows:
         return rows
     rows = rows.copy()
     act = rows[rows.decision == "actionable"]
     if act.empty:
         return rows
-    for _, grp in act.groupby([act.event_id.fillna(act.event_ticker), act.player_id.fillna(act.player)]):
+    for key, grp in act.groupby([act.event_id.fillna(act.event_ticker), act.player_id.fillna(act.player)]):
+        if filled and key in filled:
+            rows.loc[grp.index, ["decision", "reason"]] = ["abstain", "already holding this player-game"]
+            continue
         best = grp.ev_blend.idxmax()
         for i in grp.index:
             if i != best:
@@ -249,35 +283,70 @@ def kelly_fraction(p: float, cost: float) -> float:
     return 0.0 if cost >= 1 else max(0.0, (p - cost) / (1 - cost))
 
 
-def size_positions(rows: pd.DataFrame, bankroll: float | None) -> pd.DataFrame:
-    """Suggested contracts for actionable rows: quarter Kelly, capped per bet, per game
-    and per slate (highest EV first). No bankroll -> no stakes shown."""
+@dataclass
+class Exposure:
+    """Stake already committed today, as fractions of bankroll: fills plus live picks from
+    earlier scans of other games. Caps hold across scans, not just within one."""
+    slate: float = 0.0
+    game: dict = field(default_factory=dict)        # event id -> fraction
+    group: dict = field(default_factory=dict)       # (event id, player id) -> fraction
+    filled: set = field(default_factory=set)        # player-games already held
+
+
+def size_positions(rows: pd.DataFrame, bankroll: float | None, prior: Exposure | None = None) -> pd.DataFrame:
+    """Suggested contracts for actionable rows, highest EV first. Each contract's cost is walked up
+    its ladder (VWAP plus the fee at the real order size), and the count is the largest that keeps
+    EV >= tau on the blend, >= 0 on the market alone, quarter Kelly, and the per-bet, per-game
+    and per-slate caps (counting `prior` exposure). No bankroll: the size available at the edge."""
     rows = rows.copy()
-    for col in ("kelly", "stake_frac", "contracts", "stake_usd", "ev_blend", "p_blend", "cost", "size_at_edge"):
+    for col in ("kelly", "stake_frac", "contracts", "stake_usd", "ev_blend", "p_blend", "p_market",
+                "cost", "size_at_edge", "ladder", "tau"):
         if col not in rows:
             rows[col] = None
     act = rows[rows.decision == "actionable"].sort_values("ev_blend", ascending=False)
     if act.empty:
         return rows
-    game_used: dict[str, float] = {}
-    slate_used = 0.0
+    prior = prior or Exposure()
+    game_used, group_used, slate_used = dict(prior.game), dict(prior.group), prior.slate
     for i, r in act.iterrows():
-        k = kelly_fraction(r.p_blend, r.cost)
-        frac = min(config.MAX_BET_FRAC, config.KELLY_LAMBDA * k)
-        rows.loc[i, "kelly"] = k
-        if bankroll is None:
-            rows.loc[i, "stake_frac"] = frac
-            continue
+        levels = parse_ladder(r.ladder) or ([(r.ask, r.size_at_edge)] if r.size_at_edge else [])
+        rate = _rate(r.fee_rate)
         game = r.event_id or r.event_ticker
-        room = min(frac, config.MAX_GAME_FRAC - game_used.get(game, 0.0), config.MAX_SLATE_FRAC - slate_used)
-        contracts = math.floor(max(0.0, room) * bankroll / r.cost) if r.cost > 0 else 0
-        contracts = min(contracts, int(r.size_at_edge or 0))
-        if contracts < 1:
-            rows.loc[i, ["decision", "reason"]] = ["watch", "over the game or slate cap" if room < frac
-                                                   else "stake rounds to 0 contracts"]
+        group = (game, r.player_id or r.player)
+        room = None
+        if bankroll is not None:
+            room = bankroll * max(0.0, min(config.MAX_BET_FRAC - group_used.get(group, 0.0),
+                                           config.MAX_GAME_FRAC - game_used.get(game, 0.0),
+                                           config.MAX_SLATE_FRAC - slate_used))
+        best = None
+        n_max = min(int(sum(s for _, s in levels)), 20000)
+        for n in range(1, n_max + 1):
+            total = fill_cost(levels, n, r.venue, rate)
+            if total is None:
+                break
+            if room is not None and total > room + 1e-9:
+                break                                    # stakes only grow with n
+            unit = total / n
+            # Per-order fee rounding makes 1-2 contracts dearer per contract than 10, so a small n
+            # can miss the bar while a larger one clears it: keep scanning, keep the largest valid n.
+            if r.p_blend - unit < r.tau - 1e-12 or r.p_market - unit < -1e-12:
+                continue
+            if room is not None and total > config.KELLY_LAMBDA * kelly_fraction(r.p_blend, unit) * bankroll + 1e-9:
+                continue
+            best = (n, total, unit)
+        if best is None:
+            reason = ("over the game or slate cap" if room is not None and room < 0.01
+                      else "stake rounds to 0 contracts" if bankroll is not None else "no size at the edge")
+            rows.loc[i, ["decision", "reason"]] = ["watch", reason]
             continue
-        used = contracts * r.cost / bankroll
-        game_used[game] = game_used.get(game, 0.0) + used
-        slate_used += used
-        rows.loc[i, ["stake_frac", "contracts", "stake_usd"]] = [used, contracts, round(contracts * r.cost, 2)]
+        n, total, unit = best
+        rows.loc[i, ["contracts", "cost", "ev_blend", "ev_market", "kelly"]] = [
+            n, unit, r.p_blend - unit, r.p_market - unit, kelly_fraction(r.p_blend, unit)]
+        rows.loc[i, "stake_usd"] = round(total, 2)
+        if bankroll is not None:
+            frac = total / bankroll
+            rows.loc[i, "stake_frac"] = frac
+            game_used[game] = game_used.get(game, 0.0) + frac
+            group_used[group] = group_used.get(group, 0.0) + frac
+            slate_used += frac
     return rows

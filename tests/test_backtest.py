@@ -160,3 +160,49 @@ def test_bootstrap_interval_brackets_the_yield():
     lo, hi = bootstrap_yield(bets)
     y = bets.pnl.sum() / bets.cost.sum()
     assert lo <= y <= hi
+
+
+def test_game_tip_is_the_earliest_estimate_and_before_any_in_game_close():
+    late = market("M2", n=25)
+    late["tip_est"] = TIP + timedelta(hours=2)                     # a placeholder occurrence time
+    early_close = market("M3", n=10)
+    early_close["close_time"] = TIP + timedelta(minutes=20)        # 10+ hit in the first quarter
+    tape = make_tape([market("M1"), late, early_close], [candle(t, TIP - timedelta(hours=3), 0.4, 0.42) for t in ("M1", "M2", "M3")])
+    tips = set(pd.to_datetime(tape.markets.tip_est))
+    assert tips == {pd.Timestamp(TIP - timedelta(minutes=10))}     # min(tip, first close - 30 min), for every rung
+
+
+def test_clv_close_skips_pulled_books_and_drawdown_starts_at_zero():
+    t = TIP - timedelta(hours=2)
+    tape = make_tape([market("Y")], [candle("Y", t, 0.40, 0.42), candle("Y", TIP - timedelta(minutes=30), 0.50, 0.52),
+                                     candle("Y", TIP - timedelta(minutes=1), 0.01, 0.99)])   # pulled at the end
+    bets = simulate(tape, orders(("Y", "YES", "take", 0.42, 10, t)))
+    assert bets.close_mid.iloc[0] == pytest.approx(0.51)
+    losing = pd.DataFrame([{"filled": True, "game_date": date(2026, 1, 1), "pnl": -4.0, "cost": 4.0, "contracts": 10,
+                            "won": 0.0, "price": 0.4, "clv": 0.0, "result": "no"}])
+    assert summarize(losing)["max_drawdown"] == 4.0                 # a first-day loss is a drawdown
+
+
+def test_vacuum_never_buys_the_teammate_who_just_fell_and_ignores_quote_flickers():
+    start = TIP - timedelta(hours=8)
+    ms = [market(t, player=n, n=15) for t, n in (("A", "Alpha"), ("B", "Beta"), ("S", "Star"), ("C", "Gamma"))]
+    cs = [candle(t, start, 0.49, 0.51) for t in "ABSC"]
+    jump = TIP - timedelta(hours=3)
+    cs += [candle("A", jump, 0.64, 0.66), candle("B", jump + timedelta(minutes=2), 0.65, 0.67),
+           candle("S", jump, 0.10, 0.12)]                          # the star's ladder collapses
+    tape = make_tape(ms, cs)
+    bets = walk_forward(tape, TeammateVacuum(), [Fold("x", date(2026, 1, 1), date(2026, 1, 1), date(2026, 2, 1))])
+    assert bets.ticker.tolist() == ["C"]                            # not S
+    flicker = make_tape(ms[:3], [candle(t, start, 0.49, 0.51) for t in "ABS"]
+                        + [candle("A", jump, 0.01, 0.98), candle("B", jump, 0.02, 0.97),
+                           candle("A", jump + timedelta(minutes=1), 0.49, 0.51), candle("B", jump + timedelta(minutes=1), 0.49, 0.51)])
+    assert walk_forward(flicker, TeammateVacuum(), [Fold("x", date(2026, 1, 1), date(2026, 1, 1), date(2026, 2, 1))]).empty
+
+
+def test_arbitrage_buys_each_leg_once():
+    t = TIP - timedelta(hours=2)
+    ms = [market(f"L{n}", n=n) for n in (10, 15, 20, 25)]
+    books = {10: (0.15, 0.17), 15: (0.30, 0.32), 20: (0.35, 0.37), 25: (0.40, 0.42)}   # all crossed vs 10+
+    tape = make_tape(ms, [candle(f"L{n}", t, *books[n]) for n in books])
+    arb = walk_forward(tape, LadderArbitrage(), [Fold("x", date(2026, 1, 1), date(2026, 1, 1), date(2026, 2, 1))])
+    assert len(arb) == 2 and arb.ticker.is_unique

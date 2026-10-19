@@ -86,12 +86,13 @@ SCHEMA: dict[str, dict[str, str]] = {
         "ev_market": "DOUBLE", "ev_blend": "DOUBLE", "tau": "DOUBLE",
         "kelly": "DOUBLE", "stake_frac": "DOUBLE", "contracts": "DOUBLE", "stake_usd": "DOUBLE",
         "decision": "VARCHAR", "reason": "VARCHAR", "model_version": "VARCHAR", "config_hash": "VARCHAR",
+        "ladder": "VARCHAR",
     },
     # Fills Rohan entered by hand on a venue (never placed by this code).
     "tickets": {
         "ts": "TIMESTAMP", "filled_at": "TIMESTAMP", "venue": "VARCHAR", "ticker": "VARCHAR",
         "side": "VARCHAR", "contracts": "DOUBLE", "price": "DOUBLE", "fees": "DOUBLE",
-        "signal_id": "VARCHAR", "note": "VARCHAR",
+        "signal_id": "VARCHAR", "note": "VARCHAR", "fill_id": "VARCHAR", "replaces": "VARCHAR",
     },
     # Venue settlements: 1 / 0, or a fair price for a player who never took the court.
     "venue_settlements": {
@@ -171,12 +172,26 @@ def assert_allowed_books(df: pd.DataFrame, table: str) -> None:
             raise OffListBookError(f"{table}.{col}: {int(bad.sum())} value(s) not on the book allowlist")
 
 
+def _connect_waiting(path: str, wait_s: float = 120.0) -> duckdb.DuckDBPyConnection:
+    """DuckDB lets one process hold the file. A cron tick reading venues can hold it for a minute
+    or two, so a manual `tickets` or `fill` waits for the lock instead of failing."""
+    import time
+    deadline = time.monotonic() + wait_s
+    while True:
+        try:
+            return duckdb.connect(path)
+        except duckdb.IOException as exc:
+            if "lock" not in str(exc).lower() or time.monotonic() > deadline:
+                raise
+            time.sleep(2)
+
+
 class Storage:
     def __init__(self, path: Path | str = DB_PATH):
         self.path = Path(path)
         if str(path) != ":memory:":
             self.path.parent.mkdir(parents=True, exist_ok=True)
-        self._con = duckdb.connect(str(path))
+        self._con = _connect_waiting(str(path))
         for table, cols in SCHEMA.items():
             ddl = ", ".join(f"{c} {t}" for c, t in cols.items())
             self._con.execute(f"CREATE TABLE IF NOT EXISTS {table} ({ddl})")

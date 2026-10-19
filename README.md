@@ -14,7 +14,7 @@ Research only: this tool doesn't connect to any venue account and doesn't place 
 pip install -r requirements.txt          # Python 3.11+
 export SPORTS_ODDS_API_KEY=...           # or put it in .env (git-ignored); never commit it
 export COLD_START_BANKROLL_USD=1000     # optional: turns on suggested contract counts (never read from any account)
-python -m pytest -q                      # 125 offline tests
+python -m pytest -q                      # 147 offline tests
 ```
 
 ## Opening Night plan: cron goes live before Tue 10/20
@@ -43,8 +43,9 @@ On each game day:
 # ~65 min before tip, after the injury report: confirm or change each team's scenario
 python -m cold_start_usage.cli project --scenario MIA=full_strength --scenario TOR=kawhi_out
 python -m cold_start_usage.cli venues                # read Kalshi + Polymarket US now, decide, log (cron does this at each checkpoint)
-python -m cold_start_usage.cli tickets               # the actionable contracts: venue, ticker, side, limit price, quantity, cancel-by
-# enter the tickets by hand as limit orders, then record what you got:
+python -m cold_start_usage.cli tickets               # reads the venues now, then lists the actionable contracts: venue, ticker,
+                                                     # side, limit price, quantity, cancel-by (only reads from the last 20 min)
+# enter the tickets by hand as limit orders, then record what you got (a typo? log the right one with --replaces):
 python -m cold_start_usage.cli fill --signal-id <id> --contracts 10 --price 0.41
 python -m cold_start_usage.cli board                 # the waiting list: READY only when a venue price clears the bar
 python -m cold_start_usage.cli watchlist             # sportsbook leans next to what the venues list (not actionable)
@@ -72,7 +73,7 @@ The matchup and player IDs are real; the odds are invented. `--now` only works w
 |---|---|---|
 | Odds and results | SportsGameOdds API (licensed, free Amateur plan) | 9 books on this key; 3 post player points. No prediction markets on this plan. |
 | Prediction-market prices | Kalshi (`api.elections.kalshi.com`) and Polymarket US (`gateway.polymarket.us`) public market-data APIs: read-only, no key | What each venue lists, its fees and its settlement rules: [`docs/VENUES.md`](docs/VENUES.md). The international polymarket.com book is read only as a reference price (US persons can't open positions there). |
-| Backtest archive | Kalshi `/historical/...`: every 2025-26 player-points ladder, result and 1-minute candles | `cli history` downloads it (resumable, ~8 hours at the public rate limit) into `data/history/` (git-ignored). |
+| Backtest archive | Kalshi `/historical/...`: every 2025-26 player-points ladder, result and 1-minute candles | `cli history` downloads it into `data/history/` (git-ignored). It's resumable, in random game order, so a partial download is a season-wide sample; the full download takes ~7 hours at the public rate limit. `cli backtest --docs` writes [`docs/BACKTEST.md`](docs/BACKTEST.md); the April-onward holdout stays sealed until `--reveal-holdout`. |
 | 2025-26 player lines (all 30 teams) | StatMuse team pages, one source URL per row | Every row is checked against its season totals. |
 | 2026-27 rosters | Manual overrides > NBA.com offseason tracker > SportsGameOdds `/players` > last season's team | SportsGameOdds has gaps (Curry, Butler and Horford show no team; Klay was stale), so it isn't trusted alone. Confirmed corrections go in `data/roster_overrides_2026_27.csv`. |
 | Team 3-point volume and accuracy (spacing) | StatMuse team pages | |
@@ -92,7 +93,7 @@ What the free plan can't do, and the paid feed options, are noted in [`docs/SCAL
 3. The edge after the venue's fee is at least 4pp (5pp with only 2 books), the sportsbook market alone isn't against it, and it's below the 15pp "check inputs" cap.
 4. At least 10 contracts are offered at or under the max price.
 
-It's one pick per player-game, sized at quarter Kelly, capped at 0.5% of bankroll per bet, 1.5% per game and 3% per slate while ungraded. Questionable players and thin books show as `watch`.
+It's one pick per player-game, sized at quarter Kelly, capped at 0.5% of bankroll per bet, 1.5% per game and 3% per slate while ungraded. The caps count your logged fills and the live picks from earlier scans, so following every ticket can't stack past them, and a player-game you already hold gets no new pick. Each contract's cost is walked up the order book (average price plus the fee at the real order size). The limit price never exceeds what the sportsbook market alone says the contract is worth. Questionable players and thin books show as `watch`.
 
 ## Rules the code enforces
 

@@ -147,3 +147,103 @@ def test_no_code_path_can_place_an_order():
             assert f'"{path}' not in src and f"'{path}" not in src, (name, path)
     for src in (p.read_text() for p in PACKAGE.glob("*.py")):
         assert not re.search(r"KALSHI_(API_)?KEY|POLYMARKET_(API_)?KEY|PRIVATE_KEY", src)
+
+
+# --- regressions from the adversarial review -------------------------------------------
+GIANNIS = lambda: kalshi_market("MIAGANTETOKOUNMPO34", "Giannis Antetokounmpo", 30, 0.38, 0.40, 50, 50)  # noqa: E731
+
+
+def test_old_actionable_decisions_expire_and_a_failed_read_drops_them(storage):
+    from cold_start_usage.venues import latest_venue_signals
+    _actionable_slate(storage)                                   # scan at FETCHED + 1 min
+    t0 = FETCHED + timedelta(minutes=1)
+    assert (latest_venue_signals(storage, t0 + timedelta(minutes=5)).decision == "actionable").any()
+    assert latest_venue_signals(storage, t0 + timedelta(minutes=25)).empty   # older than 20 min: gone
+
+    def down():
+        raise RuntimeError("rate limited")
+    scan(storage, DAY, t0 + timedelta(minutes=10), Fetchers(kalshi_markets=down))
+    # The failed read logged nothing, so no fresh decision supersedes the old one; it still expires.
+    assert latest_venue_signals(storage, t0 + timedelta(minutes=21)).empty
+
+
+def test_a_read_that_returns_after_tip_is_not_logged(storage):
+    snapshot_from_file(storage, events_response([synthetic_event()]), FETCHED)
+    run_projections(storage, DAY, FETCHED, {})
+    f = Fetchers(kalshi_markets=lambda: [GIANNIS()], clock=lambda: TIP + timedelta(seconds=30))
+    df = scan(storage, DAY, TIP - timedelta(minutes=5), f, tag="t-5m")   # tick before tip, answer after
+    assert df.empty and storage.count("venue_signals") == 0 and storage.count("venue_snapshots") == 0
+    assert any("after tip" in e for e in f.errors)
+
+
+def test_failed_kalshi_read_leaves_the_checkpoint_open(storage):
+    from cold_start_usage.pipeline import venue_due_plan
+    snapshot_from_file(storage, events_response([synthetic_event()]), FETCHED)
+    now = TIP - timedelta(minutes=58)
+
+    def down():
+        raise RuntimeError("429")
+    scan(storage, DAY, now, Fetchers(kalshi_markets=down, pm_intl_event=lambda a, h, d: None), tag="t-60m")
+    assert venue_due_plan(storage, now + timedelta(minutes=5)) != {}         # retried next tick
+    scan(storage, DAY, now + timedelta(minutes=5), Fetchers(kalshi_markets=lambda: []), tag="t-60m")
+    assert venue_due_plan(storage, now + timedelta(minutes=10)) == {}        # "no listing" counts as read
+
+
+def test_auto_projection_error_does_not_stop_the_tick(storage, monkeypatch, capsys):
+    snapshot_from_file(storage, events_response([synthetic_event()]), FETCHED)
+    monkeypatch.setattr("cold_start_usage.venues.live_fetchers", lambda: Fetchers(kalshi_markets=lambda: [GIANNIS()]))
+    monkeypatch.setattr(cli, "_client", lambda *a: (_ for _ in ()).throw(__import__(
+        "cold_start_usage.sgo_client", fromlist=["MissingAPIKey"]).MissingAPIKey("no key")))
+
+    def broken(*a, **k):
+        raise ValueError("MIA: no scenario 'full_strength'")
+    monkeypatch.setattr(cli, "run_projections", broken)
+    args = cli.build_parser().parse_args(["snapshot", "--due", "--with-venues", "--with-projections"])
+    assert cli.cmd_snapshot(args, storage, lambda: TIP - timedelta(minutes=58)) == 0
+    out = capsys.readouterr().out
+    assert "Auto-projection skipped" in out and "Venues (t-60m)" in out
+
+
+def test_a_manual_scenario_replaces_the_whole_team_run(storage):
+    from cold_start_usage.pipeline import latest_projections
+    snapshot_from_file(storage, events_response([synthetic_event()]), FETCHED)
+    run_projections(storage, DAY, FETCHED, {"MIA": "full_strength"})
+    run_projections(storage, DAY, FETCHED + timedelta(minutes=5), {"MIA": "giannis_out"})
+    lp = latest_projections(storage, "SYNTHETIC_MIN_MIA_20261021", FETCHED + timedelta(minutes=6))
+    assert "Giannis Antetokounmpo" not in set(lp.player_name)             # not his stale full_strength row
+    assert set(lp.scenario[lp.team == "MIA"]) == {"giannis_out"}
+
+
+def test_fill_validation_and_corrections(storage, capsys):
+    ticker, df = _actionable_slate(storage)
+    sid = df[df.decision == "actionable"].signal_id.iloc[0]
+    now = lambda: FETCHED + timedelta(minutes=5)  # noqa: E731
+    p = cli.build_parser()
+    assert cli.cmd_fill(p.parse_args(["fill", "--signal-id", sid, "--contracts", "10", "--price", "41"]), storage, now) == 2
+    assert cli.cmd_fill(p.parse_args(["fill", "--venue", "kalshi", "--ticker", "KXNBAPTS-NOPE", "--side", "YES",
+                                      "--contracts", "1", "--price", "0.4"]), storage, now) == 2
+    assert cli.cmd_fill(p.parse_args(["fill", "--signal-id", sid, "--contracts", "10", "--price", "0.40"]), storage, now) == 0
+    first = storage.query("SELECT fill_id FROM tickets").fill_id.iloc[0]
+    assert cli.cmd_fill(p.parse_args(["fill", "--signal-id", sid, "--contracts", "8", "--price", "0.41",
+                                      "--replaces", first]), storage, now) == 0
+    storage.append("venue_settlements", [{"venue": "kalshi", "ticker": ticker, "result": "yes", "settlement_value": 1.0}])
+    f = fills_graded(storage)
+    assert len(f) == 1 and f.contracts.iloc[0] == 8                       # the correction only
+
+
+def test_failed_slate_fetch_backs_off_instead_of_billing_every_tick(storage):
+    from cold_start_usage.pipeline import slate_already_fetched
+    d = DAY.isoformat()
+    t = TIP - timedelta(hours=8)
+    storage.append("api_calls", [{"ts": t, "endpoint": "/events/", "objects": 1, "note": f"slate:{d} | failed"}])
+    assert slate_already_fetched(storage, DAY, t + timedelta(minutes=5))      # backing off
+    assert not slate_already_fetched(storage, DAY, t + timedelta(minutes=61))  # one retry an hour later
+    storage.append("api_calls", [{"ts": t + timedelta(hours=k), "endpoint": "/events/", "objects": 1,
+                                  "note": f"slate:{d} | failed"} for k in (1, 2)])
+    assert slate_already_fetched(storage, DAY, t + timedelta(hours=5))        # 3 failures: done for today
+
+
+def test_live_venue_reads_refused_at_simulated_time(capsys, tmp_path):
+    db = tmp_path / "sim.duckdb"
+    assert cli.main(["--db", str(db), "--now", "2026-10-21T22:30:00Z", "venues", "--date", "2026-10-21"]) == 0
+    assert "simulated" in capsys.readouterr().out

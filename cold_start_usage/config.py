@@ -158,6 +158,7 @@ MAX_BET_FRAC = 0.005                     # per contract and per player-game, whi
 MAX_GAME_FRAC = 0.015                    # both teams in one game
 MAX_SLATE_FRAC = 0.03                    # one ET slate
 TICKET_CANCEL_BEFORE_TIP_MIN = 5         # cancel unfilled limit orders this long before tip
+VENUE_SIGNAL_MAX_AGE_MIN = 20            # tickets and READY come only from a venue read this recent
 
 # Venue snapshots (free public reads), minutes before tip. t-5m is the venue close for CLV.
 VENUE_OFFSETS_MIN = {"t-6h": 360, "t-2h": 120, "t-60m": 60, "t-15m": 15, "t-5m": 5}

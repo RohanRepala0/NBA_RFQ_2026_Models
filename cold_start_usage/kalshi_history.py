@@ -216,8 +216,12 @@ def download(series: str = "KXNBAPTS", store: HistoryStore | None = None, archiv
         rows = [market_row(m, now) for m in archive.markets(series)]
         store.upsert_markets(rows)
         log(f"{series}: {len(rows)} archive markets")
+    # Games in a fixed pseudo-random order (by a hash of the event ticker), all of a game's
+    # rungs together: any partial download is then a random sample of whole games across
+    # the season, not just its first weeks.
     markets = store.query("""SELECT ticker, open_time, tip_est FROM markets
-                             WHERE series = ? AND tip_est IS NOT NULL ORDER BY tip_est, ticker""", [series])
+                             WHERE series = ? AND tip_est IS NOT NULL
+                             ORDER BY hash(event_ticker), ticker""", [series])
     done = store.done()
     todo = [m for m in markets.itertuples() if any((m.ticker, w[0]) not in done for w in WINDOWS)]
     if limit is not None:
@@ -233,7 +237,11 @@ def download(series: str = "KXNBAPTS", store: HistoryStore | None = None, archiv
             start, end = tip - lead, tip - lag
             if opened is not None:
                 start = max(start, opened)
-            rows = [] if start >= end else candle_rows(m.ticker, interval, archive.candles(m.ticker, start, end, interval))
+            try:
+                rows = [] if start >= end else candle_rows(m.ticker, interval, archive.candles(m.ticker, start, end, interval))
+            except RuntimeError as exc:                # still failing after retries: skip, a later run retries it
+                log(f"  skipped {m.ticker}: {exc}")
+                continue
             store.add_candles(m.ticker, interval, rows, datetime.now(timezone.utc).replace(tzinfo=None))
             fetched += 1
         if i % 200 == 0:

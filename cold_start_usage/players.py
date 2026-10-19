@@ -18,7 +18,8 @@ SUFFIXES = {"jr", "sr", "ii", "iii", "iv"}
 
 
 def name_key(name: str) -> str:
-    s = unicodedata.normalize("NFKD", str(name)).encode("ascii", "ignore").decode().lower()
+    name = re.sub(r'["\u201c\u201d][^"\u201c\u201d]*["\u201c\u201d]', " ", str(name))   # drop quoted nicknames
+    s = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower()
     s = s.replace("'", "").replace(".", "")
     tokens = [t for t in re.findall(r"[a-z0-9]+", s) if t not in SUFFIXES]
     return "".join(tokens)

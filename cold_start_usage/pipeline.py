@@ -83,9 +83,25 @@ def snapshot_from_file(storage: Storage, payload, now: datetime) -> dict:
     return {"objects": 0, **ingest(storage, events, now, "adhoc", "file", raw=False)}
 
 
-def slate_already_fetched(storage: Storage, d: date) -> bool:
-    df = storage.query("SELECT count(*) AS n FROM api_calls WHERE note = ?", [f"slate:{d.isoformat()}"])
-    return int(df.n.iloc[0]) > 0
+SLATE_RETRY_AFTER_MIN = 60
+SLATE_MAX_FAILURES = 3
+
+
+def slate_already_fetched(storage: Storage, d: date, now: datetime | None = None) -> bool:
+    """True once the day's slate is stored, and also while a failed fetch is backing off: a failed
+    /events call is billed, so retrying it every 5-minute cron tick would burn the budget. At most
+    SLATE_MAX_FAILURES attempts a day, an hour apart."""
+    df = storage.query("""SELECT count(*) FILTER (WHERE note = ?) AS ok,
+                                 count(*) FILTER (WHERE note = ?) AS failed,
+                                 max(ts) FILTER (WHERE note = ?) AS last_failed
+                          FROM api_calls""", [f"slate:{d.isoformat()}", f"slate:{d.isoformat()} | failed",
+                                             f"slate:{d.isoformat()} | failed"])
+    r = df.iloc[0]
+    if int(r.ok) > 0 or int(r.failed) >= SLATE_MAX_FAILURES:
+        return True
+    if now is not None and int(r.failed) > 0 and pd.notna(r.last_failed):
+        return pd.Timestamp(now) - pd.Timestamp(r.last_failed) < pd.Timedelta(minutes=SLATE_RETRY_AFTER_MIN)
+    return False
 
 
 def due_snapshot_plan(storage: Storage, now: datetime) -> dict[str, str]:
@@ -101,7 +117,7 @@ def snapshot_due(client: SGOClient, storage: Storage, now: datetime) -> dict:
     """For cron: fetch today's slate once, then only events at a new checkpoint."""
     today = et_date(now)
     out = {"objects": 0, "slate": None, "due": {}}
-    if not slate_already_fetched(storage, today):
+    if not slate_already_fetched(storage, today, now):
         out["slate"] = snapshot_slate(client, storage, today, now)
         out["objects"] += out["slate"]["objects"]
     plan = due_snapshot_plan(storage, now)
@@ -195,10 +211,15 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
 
 # --- Signals -------------------------------------------------------------------------
 def latest_projections(storage: Storage, event_id: str, now: datetime) -> pd.DataFrame:
+    """Each team's most recent projection run for the game. A later run (say `project --scenario
+    MIA=giannis_out` after an auto full_strength) replaces the whole team, so a player left out
+    of the new scenario doesn't keep his stale earlier projection."""
     return storage.query("""
+        WITH runs AS (SELECT team, max(ts) AS ts FROM projections WHERE event_id = ? AND ts <= ? GROUP BY team)
         SELECT * EXCLUDE (rn) FROM (
-          SELECT *, row_number() OVER (PARTITION BY player_id ORDER BY ts DESC) rn
-          FROM projections WHERE event_id = ? AND ts <= ?) WHERE rn = 1""", [event_id, now])
+          SELECT p.*, row_number() OVER (PARTITION BY p.player_id ORDER BY p.ts DESC) rn
+          FROM projections p JOIN runs USING (team, ts) WHERE p.event_id = ?) WHERE rn = 1""",
+                         [event_id, now, event_id])
 
 
 def run_signals(storage: Storage, d: date, now: datetime, timing: str | None = None,
@@ -304,7 +325,9 @@ def venue_due_plan(storage: Storage, now: datetime) -> dict[str, str]:
     """event_id -> venue checkpoint (t-6h ... t-5m) that has passed and not been read yet."""
     plan = {}
     for ev in events_on(storage, et_date(now)).itertuples():
-        taken = set(storage.query("SELECT DISTINCT tag FROM venue_snapshots WHERE event_id = ?",
+        # Taken only once Kalshi answered for the game (a listing or a "no listing" marker): a
+        # failed Kalshi read, or reference-only rows, leave the checkpoint open for the next tick.
+        taken = set(storage.query("SELECT DISTINCT tag FROM venue_snapshots WHERE event_id = ? AND venue = 'kalshi'",
                                   [ev.event_id]).tag.dropna())
         tag = due_tag(pd.Timestamp(ev.starts_at).to_pydatetime(), now, taken, config.VENUE_OFFSETS_MIN)
         if tag:

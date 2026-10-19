@@ -151,10 +151,16 @@ def _snapshot_due(args, storage, now_fn, now) -> int:
     if args.with_projections:
         due_ids = set(out["due"]) | set(venue_plan)
         missing = events_without_projections(storage, due_ids)
-        if missing:
-            table, msgs = run_projections(storage, et_date(now), now, {}, event_ids=missing)
-            print(f"Auto-projected {len(missing)} game(s) with full_strength / auto rotations "
-                  f"({len(table)} rows); `project --scenario` later replaces them")
+        done = 0
+        for eid in sorted(missing):
+            try:
+                run_projections(storage, et_date(now), now, {}, event_ids={eid})
+                done += 1
+            except Exception as exc:                 # one team's bad scenario file never stops the tick
+                print(f"Auto-projection skipped for {eid}: {type(exc).__name__}: {exc}")
+        if done:
+            print(f"Auto-projected {done} game(s) with full_strength / auto rotations; "
+                  "`project --scenario` later replaces a team's run")
     if args.with_signals:
         for tag in config.SIGNAL_TIMINGS:
             ids = {e for e, t in out["due"].items() if t == tag}
@@ -168,7 +174,7 @@ def _snapshot_due(args, storage, now_fn, now) -> int:
     for tag in sorted(set(venue_plan.values()), key=lambda t: -config.VENUE_OFFSETS_MIN[t]):
         ids = {e for e, t in venue_plan.items() if t == tag}
         try:
-            _venue_scan(storage, now, tag=tag, event_ids=ids)
+            _venue_scan(storage, now, tag=tag, event_ids=ids, simulated=args.now is not None)
         except Exception as exc:
             print(f"Venue step at {tag} failed: {type(exc).__name__}: {exc}")
     return 0
@@ -419,9 +425,12 @@ def _kalshi_markets(now) -> pd.DataFrame | None:
     return df
 
 
-def _venue_scan(storage, now, d=None, tag="adhoc", event_ids=None, quiet=False) -> pd.DataFrame:
+def _venue_scan(storage, now, d=None, tag="adhoc", event_ids=None, quiet=False, simulated=False) -> pd.DataFrame:
     """Read the venues for un-tipped games on the stored slate, decide, and log (free reads)."""
     from .venues import live_fetchers, scan
+    if simulated:
+        print("Venue reads skipped: live prices can't be logged at a simulated --now time")
+        return pd.DataFrame()
     f = live_fetchers()
     df = scan(storage, d or et_date(now), now, f, tag=tag, event_ids=event_ids, bankroll=config.bankroll_usd())
     for e in f.errors:
@@ -452,7 +461,7 @@ def cmd_venues(args, storage, now_fn) -> int:
     decide every contract side, and log it before tip."""
     now = now_fn()
     d = args.date or et_date(now)
-    df = _venue_scan(storage, now, d)
+    df = _venue_scan(storage, now, d, simulated=args.now is not None)
     if df.empty:
         print(f"No venue prices mapped for {d}: the slate must be stored first (the cron's daily slate fetch, "
               "or `snapshot --date`), and the venues must list the games.")
@@ -481,7 +490,7 @@ def cmd_board(args, storage, now_fn) -> int:
     catalog = pd.read_csv(path)
     now = now_fn()
     if not args.no_scan and not events_on(storage, et_date(now)).empty:
-        _venue_scan(storage, now)
+        _venue_scan(storage, now, simulated=args.now is not None)
     kalshi_df = None if args.no_kalshi else _kalshi_markets(now)
     board = build_board(catalog, storage, now, kalshi=kalshi_df)
     md = board_markdown(board, cat.summary(catalog), now)
@@ -501,34 +510,39 @@ def cmd_board(args, storage, now_fn) -> int:
 
 
 def cmd_tickets(args, storage, now_fn) -> int:
-    """Order tickets to enter by hand: the latest actionable decision per contract, pre-tip."""
+    """Order tickets to enter by hand: actionable decisions from a fresh venue read, pre-cancel-by."""
     from .venues import latest_venue_signals
     now = now_fn()
     d = args.date or et_date(now)
+    if not args.no_scan and d == et_date(now) and not events_on(storage, d).empty:
+        _venue_scan(storage, now, d, quiet=True, simulated=args.now is not None)
     vs = latest_venue_signals(storage, now)
-    vs = vs[vs.tip_ts.map(et_date) == d] if len(vs) else vs
+    if len(vs):
+        cancel_by = pd.to_datetime(vs.tip_ts) - pd.Timedelta(minutes=config.TICKET_CANCEL_BEFORE_TIP_MIN)
+        vs = vs[(vs.tip_ts.map(et_date) == d) & (cancel_by > pd.Timestamp(now))]
     act = vs[vs.decision == "actionable"].sort_values("ev_blend", ascending=False) if len(vs) else vs
     lines = [f"# Tickets: {d}", "", "Enter by hand as limit orders. Limit = the max price that still leaves the edge "
-             "after the venue fee; cancel anything unfilled by the cancel-by time. Log fills with "
-             "`fill --signal-id ...`. Research only: nothing here places an order.", ""]
+             "after the venue fee (and never above what the books alone say it's worth); cancel anything "
+             "unfilled by the cancel-by time. Log fills with `fill --signal-id ...`. Only decisions from a venue "
+             f"read in the last {config.VENUE_SIGNAL_MAX_AGE_MIN} minutes are listed. Research only: nothing here "
+             "places an order.", ""]
     if act.empty:
         print(f"No actionable venue contracts for {d} as of {now:%H:%M} UTC.")
         lines.append("Nothing actionable.")
     else:
-        bankroll = config.bankroll_usd()
+        to_et = lambda x: pd.Timestamp(x).tz_localize("UTC").tz_convert(config.ET).strftime("%H:%M")  # noqa: E731
         t = act.assign(
-            tip_et=act.tip_ts.map(lambda x: pd.Timestamp(x).tz_localize("UTC").tz_convert(config.ET).strftime("%H:%M")),
-            cancel_by_et=act.tip_ts.map(lambda x: (pd.Timestamp(x) - pd.Timedelta(minutes=config.TICKET_CANCEL_BEFORE_TIP_MIN))
-                                        .tz_localize("UTC").tz_convert(config.ET).strftime("%H:%M")),
+            tip_et=act.tip_ts.map(to_et),
+            cancel_by_et=(pd.to_datetime(act.tip_ts) - pd.Timedelta(minutes=config.TICKET_CANCEL_BEFORE_TIP_MIN)).map(to_et),
             limit_c=(100 * act.max_price).round(0), ask_c=(100 * act.ask).round(0),
             fair_c=(100 * act.p_blend).round(1), market_c=(100 * act.p_market).round(1),
             ev_pp=(100 * act.ev_blend).round(1),
-            qty=act.contracts if bankroll else act.size_at_edge)
+            qty=act.contracts.where(act.contracts.notna(), act.size_at_edge))
         cols = ["game", "tip_et", "cancel_by_et", "venue", "ticker", "player", "contract", "ask_c", "limit_c",
                 "qty", "fair_c", "market_c", "ev_pp", "stake_usd", "signal_id"]
         _print_table(t, cols)
-        if not bankroll:
-            print(f"qty = contracts available at or under the limit; set {config.BANKROLL_ENV} for sized stakes.")
+        if t.stake_frac.isna().all():
+            print(f"qty = contracts available at the edge; set {config.BANKROLL_ENV} (where the cron runs) for sized stakes.")
         lines += ["| " + " | ".join(cols) + " |", "|" + "---|" * len(cols)]
         lines += ["| " + " | ".join("" if pd.isna(v) else str(v) for v in r) + " |" for r in t[cols].itertuples(index=False)]
     config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -539,24 +553,46 @@ def cmd_tickets(args, storage, now_fn) -> int:
 
 
 def cmd_fill(args, storage, now_fn) -> int:
-    """Record a fill Rohan entered by hand on a venue (append-only; a correction is a new row)."""
+    """Record a fill Rohan entered by hand on a venue. Append-only: a correction is a new row with
+    --replaces <fill_id>, and grading then uses the correction only."""
+    import hashlib
     now = now_fn()
-    venue, ticker, side = args.venue, args.ticker, args.side
+    venue, ticker, side = args.venue, args.ticker, (args.side or "").upper() or None
     if args.signal_id:
-        s = storage.query("SELECT venue, ticker, side FROM venue_signals WHERE signal_id = ? LIMIT 1", [args.signal_id])
-        if s.empty:
+        sig = storage.query("SELECT venue, ticker, side FROM venue_signals WHERE signal_id = ? LIMIT 1", [args.signal_id])
+        if sig.empty:
             print(f"No logged signal {args.signal_id}")
             return 2
-        venue, ticker, side = s.iloc[0]
-    if not (venue and ticker and side):
-        print("Give --signal-id, or --venue, --ticker and --side")
+        venue, ticker, side = sig.iloc[0]
+    if not (venue and ticker and side in ("YES", "NO")):
+        print("Give --signal-id, or --venue, --ticker and --side YES|NO")
         return 2
+    if not 0 < args.price < 1:
+        print(f"--price is in dollars between 0 and 1 (e.g. 0.41 for 41c), got {args.price}")
+        return 2
+    if args.contracts <= 0:
+        print("--contracts must be positive")
+        return 2
+    known = storage.query("SELECT count(*) AS n FROM venue_snapshots WHERE venue = ? AND ticker = ?", [venue, ticker])
+    if int(known.n.iloc[0]) == 0:
+        print(f"{venue} {ticker} was never read by the venue scan: check the ticker (nothing logged)")
+        return 2
+    if args.replaces:
+        prev = storage.query("SELECT count(*) AS n FROM tickets WHERE fill_id = ?", [args.replaces])
+        if int(prev.n.iloc[0]) == 0:
+            print(f"No fill {args.replaces} to replace")
+            return 2
     from .fees import fee_total
     fees = args.fees if args.fees is not None else fee_total(venue, args.contracts, args.price)
-    storage.append("tickets", [{"ts": now, "filled_at": to_naive_utc(args.filled_at) if args.filled_at else now,
-                                "venue": venue, "ticker": ticker, "side": side.upper(), "contracts": args.contracts,
-                                "price": args.price, "fees": fees, "signal_id": args.signal_id, "note": args.note}])
-    print(f"Logged fill: {venue} {ticker} {side.upper()} {args.contracts:g} @ {100 * args.price:.0f}c, fees ${fees:.2f}")
+    filled_at = to_naive_utc(args.filled_at) if args.filled_at else now
+    fill_id = hashlib.blake2s(f"{now.isoformat()}|{venue}|{ticker}|{side}|{args.contracts}|{args.price}".encode(),
+                              digest_size=6).hexdigest()
+    storage.append("tickets", [{"ts": now, "filled_at": filled_at, "venue": venue, "ticker": ticker, "side": side,
+                                "contracts": args.contracts, "price": args.price, "fees": fees,
+                                "signal_id": args.signal_id, "note": args.note, "fill_id": fill_id,
+                                "replaces": args.replaces}])
+    print(f"Logged fill {fill_id}: {venue} {ticker} {side} {args.contracts:g} @ {100 * args.price:.0f}c, fees ${fees:.2f}"
+          + (f" (replaces {args.replaces})" if args.replaces else ""))
     return 0
 
 
@@ -591,6 +627,8 @@ def cmd_backtest(args, storage, now_fn) -> int:
         print("No archive yet: run `history` first.")
         return 1
     folds = monthly_folds(tape.markets.game_date)
+    if not args.reveal_holdout:                       # the holdout stays sealed until strategies are frozen
+        folds = [f for f in folds if not f.holdout]
     print(f"{len(tape.markets):,} markets, {tape.markets.game.nunique():,} games; folds: "
           + ", ".join(f.name for f in folds))
     results = {}
@@ -665,6 +703,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--top", type=int, default=30)
     p = sub.add_parser("tickets", help="Actionable venue contracts as limit-order tickets to enter by hand")
     p.add_argument("--date", type=_parse_date)
+    p.add_argument("--no-scan", action="store_true", help="Don't read the venues first (list the last read only)")
     p = sub.add_parser("fill", help="Record a fill you entered by hand (append-only)")
     p.add_argument("--signal-id")
     p.add_argument("--venue", choices=list(config.ACTIONABLE_VENUES))
@@ -675,6 +714,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--fees", type=float, help="Fees paid in dollars (default: the venue formula)")
     p.add_argument("--filled-at", help="UTC time of the fill (default now)")
     p.add_argument("--note")
+    p.add_argument("--replaces", help="fill_id of an earlier fill this one corrects")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")
     p.add_argument("--series", default="KXNBAPTS")
     p.add_argument("--limit", type=int, help="Markets to fetch this run (default: all remaining)")
@@ -684,6 +724,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--history-db", help="Research cache path (default data/history/kalshi_history.duckdb)")
     p.add_argument("--only", nargs="*", help="Run only strategies whose name contains one of these words")
     p.add_argument("--docs", action="store_true", help="Also write docs/BACKTEST.md")
+    p.add_argument("--reveal-holdout", action="store_true",
+                   help="Also score the holdout (April on). Do this once, after strategies and parameters are frozen")
     p = sub.add_parser("fit", help="Fit eff_per_usg_point and spacing_coef from team-changers")
     p.add_argument("--input", required=True, help="CSV of player-season pairs (see cold_start_usage/fit.py)")
     p.add_argument("--teams-old", help="Team shooting table for the earlier season")

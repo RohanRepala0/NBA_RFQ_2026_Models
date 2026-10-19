@@ -48,8 +48,14 @@ class Tape:
     def __init__(self, path: Path | str | None = None, con: duckdb.DuckDBPyConnection | None = None):
         self.con = con or duckdb.connect(str(path or HISTORY_DB), read_only=True)
         m = self.con.execute("""
-            SELECT ticker, event_ticker, player, team, threshold, result, settlement_value, volume, tip_est, open_time
+            SELECT ticker, event_ticker, player, team, threshold, result, settlement_value, volume, tip_est, open_time,
+                   close_time
             FROM markets WHERE tip_est IS NOT NULL AND ticker IN (SELECT DISTINCT ticker FROM candles)""").df()
+        # One tip per game. occurrence_datetime - 3h isn't always right (placeholders, reschedules),
+        # so take the game's earliest estimate, and never later than 30 minutes before the first of
+        # its markets closed (rungs close early in-game when the strike is hit).
+        first_close = m.groupby("event_ticker").close_time.transform("min") - pd.Timedelta(minutes=30)
+        m["tip_est"] = pd.concat([m.groupby("event_ticker").tip_est.transform("min"), first_close], axis=1).min(axis=1)
         m["game_date"] = (pd.to_datetime(m.tip_est).dt.tz_localize("UTC").dt.tz_convert("America/New_York").dt.date)
         m["game"] = m.event_ticker.str.split("-").str[1]
         m["value"] = np.where(m.result == "yes", 1.0, np.where(m.result == "no", 0.0, m.settlement_value))
@@ -72,6 +78,20 @@ class Tape:
         df["mid"] = (df.bid + df.ask) / 2
         df["spread"] = df.ask - df.bid
         return df
+
+    def close_mids(self, tickers) -> pd.DataFrame:
+        """Mid of the last two-sided, reasonably tight book before tip (the CLV close). Books are
+        often pulled in the last minute; a 0.01/0.99 placeholder isn't a price."""
+        probe = self.markets[self.markets.ticker.isin(set(tickers))][["ticker", "tip_est"]]
+        self.con.register("probe", probe)
+        try:
+            return self.con.execute("""
+                SELECT p.ticker, (c.yes_bid_close + c.yes_ask_close) / 2 AS close_mid
+                FROM probe p ASOF LEFT JOIN (SELECT * FROM candles WHERE yes_bid_close > 0 AND yes_ask_close < 1
+                                             AND yes_ask_close - yes_bid_close <= 0.20) c
+                  ON p.ticker = c.ticker AND c.end_ts < p.tip_est""").df()
+        finally:
+            self.con.unregister("probe")
 
     def trade_extremes(self, orders: pd.DataFrame) -> pd.DataFrame:
         """Lowest and highest trade price between each order's decision time and tip."""
@@ -117,8 +137,7 @@ def simulate(tape: Tape, orders: pd.DataFrame) -> pd.DataFrame:
     finally:
         tape.con.unregister("probe")
     o = o.merge(at, on=["ticker", "decided_at"], how="left")
-    close = tape.books_at([0], tickers=o.ticker.unique())[["ticker", "mid"]].rename(columns={"mid": "close_mid"})
-    o = o.merge(close, on="ticker", how="left")
+    o = o.merge(tape.close_mids(o.ticker.unique()), on="ticker", how="left")
     ext = tape.trade_extremes(o)
     o = o.merge(ext, on=["ticker", "decided_at"], how="left")
 
@@ -147,7 +166,7 @@ def summarize(bets: pd.DataFrame) -> dict:
     if f.empty:
         return out
     daily = f.groupby("game_date").pnl.sum().sort_index()
-    curve = daily.cumsum()
+    curve = pd.concat([pd.Series([0.0]), daily.cumsum().reset_index(drop=True)])   # equity starts at 0
     out.update({
         "cost": round(float(f.cost.sum()), 2), "pnl": round(float(f.pnl.sum()), 2),
         "yield": float(f.pnl.sum() / f.cost.sum()) if f.cost.sum() > 0 else None,
@@ -301,6 +320,9 @@ def report(results: dict[str, pd.DataFrame], tape: Tape) -> str:
                          f"{s.get('contracts', 0):,.0f} | {_fmt(s.get('cost'))} | {_fmt(s.get('pnl'))} | "
                          f"{_fmt(s.get('yield'), True)} | {ci_txt} | {_fmt(s.get('hit_rate'), True)} | "
                          f"{_fmt(s.get('avg_clv'))} | {_fmt(s.get('max_drawdown'))} |")
+    if not any(len(b) and b.holdout.any() for b in results.values()):
+        lines += ["", f"**Holdout ({HOLDOUT_START} on): sealed.** It is scored once, with `--reveal-holdout`, after the "
+                      "strategies and their parameters are frozen."]
     timing = [(n, b) for n, b in results.items() if " @ t-" in n and len(b)]
     if timing:
         lines += ["", "## Entry timing (walk-forward only)", "", "| strategy | entry | fills | yield | avg CLV |",

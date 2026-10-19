@@ -63,7 +63,7 @@ Positions on prediction markets are entered by hand. The tool never connects to 
 | `cold_start_usage/books.json` | Which allowlisted books this API key returns (from `cli books`) |
 | `v0/usage_model.py` | The original single-file model, kept as the reference implementation |
 | `examples/synthetic_*.json` | Made-up `/events` payloads (real matchup and IDs, invented odds) for dry runs |
-| `tests/` | 125 tests, all offline |
+| `tests/` | 147 tests, all offline |
 
 **Regression test** (`tests/test_v0_regression.py`): the package reproduces v0 to within 0.01 on frozen inputs in `tests/fixtures/regression/`, with spacing computed but switched off.
 
@@ -274,7 +274,7 @@ The weekly `report` adds CLV by week (the edge-decay chart).
 
 ## 10. Acceptance criteria
 
-`pytest` passes (125 tests), including:
+`pytest` passes (147 tests), including:
 - allowlist exclusion (storage, consensus, raw cache, stdout)
 - discovered-books request filter
 - v0 regression on MIA and TOR

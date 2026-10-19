@@ -141,20 +141,25 @@ def fetch_venue_settlements(storage: Storage, start: date, end: date, now,
     for v, t in want.itertuples(index=False):
         if (v, t) in have:
             continue
-        if v == "kalshi" and kalshi_market is not None:
-            m = kalshi_market(t) or {}
-            result = m.get("result")
-            if result in ("yes", "no", "scalar") and m.get("status") in ("finalized", "settled", "determined"):
-                value = {"yes": 1.0, "no": 0.0}.get(result)
-                if value is None and m.get("settlement_value_dollars") not in (None, ""):
-                    value = float(m["settlement_value_dollars"])
-                rows.append({"ts": now, "venue": v, "ticker": t, "result": result, "settlement_value": value,
-                             "settled_ts": m.get("settlement_ts")})
-        elif v == "polymarket_us" and pm_us_settlement is not None:
-            value = pm_us_settlement(t)
-            if value is not None:
-                rows.append({"ts": now, "venue": v, "ticker": t, "settlement_value": value,
-                             "result": {1.0: "yes", 0.0: "no"}.get(value, "scalar")})
+        try:
+            if v == "kalshi" and kalshi_market is not None:
+                m = kalshi_market(t) or {}
+                result = m.get("result")
+                if result in ("yes", "no", "scalar") and m.get("status") in ("finalized", "settled", "determined"):
+                    value = {"yes": 1.0, "no": 0.0}.get(result)
+                    if value is None and m.get("settlement_value_dollars") not in (None, ""):
+                        value = float(m["settlement_value_dollars"])
+                    if value is None:
+                        continue                      # fair price not published yet: fetch again next run
+                    rows.append({"ts": now, "venue": v, "ticker": t, "result": result, "settlement_value": value,
+                                 "settled_ts": m.get("settlement_ts")})
+            elif v == "polymarket_us" and pm_us_settlement is not None:
+                value = pm_us_settlement(t)
+                if value is not None:
+                    rows.append({"ts": now, "venue": v, "ticker": t, "settlement_value": value,
+                                 "result": {1.0: "yes", 0.0: "no"}.get(value, "scalar")})
+        except Exception:                             # one failed read never loses the others
+            continue
     return storage.append("venue_settlements", rows)
 
 
@@ -169,18 +174,21 @@ def venue_graded(storage: Storage, start: date, end: date) -> pd.DataFrame:
     """First actionable decision per contract side, with settlement, P&L per contract and venue CLV."""
     lo, _ = et_day_bounds(start)
     _, hi = et_day_bounds(end)
+    # One paper bet per player-game: the first time it was actionable, on whatever contract that was.
     sig = storage.query("""
         SELECT * EXCLUDE (rn) FROM (
-          SELECT *, row_number() OVER (PARTITION BY venue, ticker, side ORDER BY ts) rn
+          SELECT *, row_number() OVER (PARTITION BY coalesce(event_id, event_ticker), coalesce(player_id, player)
+                                       ORDER BY ts, ev_blend DESC) rn
           FROM venue_signals WHERE decision = 'actionable' AND tip_ts >= ? AND tip_ts < ?) WHERE rn = 1""",
                         [lo, hi])
     if sig.empty:
         return sig
+    # The close is the last two-sided book before tip (an empty side reads as 0 / 1, not a price).
     close = storage.query("""
         SELECT * EXCLUDE (rn) FROM (
           SELECT venue, ticker, yes_bid, yes_ask,
                  row_number() OVER (PARTITION BY venue, ticker ORDER BY ts DESC) rn
-          FROM venue_snapshots WHERE ts < tip_ts) WHERE rn = 1""")
+          FROM venue_snapshots WHERE ts < tip_ts AND yes_bid > 0 AND yes_ask < 1) WHERE rn = 1""")
     df = sig.merge(_settled(storage)[["venue", "ticker", "result", "settlement_value"]],
                    on=["venue", "ticker"], how="left").merge(close, on=["venue", "ticker"], how="left")
     yes_value = df.settlement_value
@@ -194,9 +202,11 @@ def venue_graded(storage: Storage, start: date, end: date) -> pd.DataFrame:
 
 
 def fills_graded(storage: Storage) -> pd.DataFrame:
+    """Rohan's fills at the price he paid; a fill replaced by a correction is left out."""
     t = storage.query("SELECT * FROM tickets")
     if t.empty:
         return t
+    t = t[~t.fill_id.isin(set(t.replaces.dropna()))]
     df = t.merge(_settled(storage)[["venue", "ticker", "result", "settlement_value"]],
                  on=["venue", "ticker"], how="left")
     value = df.settlement_value.where(df.side == "YES", 1 - df.settlement_value)

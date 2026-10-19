@@ -90,24 +90,52 @@ def test_value_needs_the_market_to_agree_size_and_a_sane_edge():
     assert model_only["decision"] == "abstain"
 
 
-def test_one_pick_per_player_game_and_capped_kelly_sizing():
-    rows = pd.DataFrame([
-        {"event_id": "E", "player_id": "P", "event_ticker": "K", "player": "X", "venue": "kalshi", "contract": "20+ YES",
-         "decision": "actionable", "ev_blend": 0.06, "p_blend": 0.55, "cost": 0.49, "size_at_edge": 500},
-        {"event_id": "E", "player_id": "P", "event_ticker": "K", "player": "X", "venue": "kalshi", "contract": "25+ NO",
-         "decision": "actionable", "ev_blend": 0.09, "p_blend": 0.70, "cost": 0.61, "size_at_edge": 500},
-        {"event_id": "E", "player_id": "Q", "event_ticker": "K", "player": "Y", "venue": "kalshi", "contract": "15+ YES",
-         "decision": "actionable", "ev_blend": 0.05, "p_blend": 0.60, "cost": 0.55, "size_at_edge": 4},
-    ])
+def _act(event, player, contract, ev, p, ask, ladder, p_market=None, tau=0.04):
+    return {"event_id": event, "player_id": player, "event_ticker": "K", "player": player, "venue": "kalshi",
+            "contract": contract, "decision": "actionable", "ev_blend": ev, "p_blend": p,
+            "p_market": p if p_market is None else p_market, "ask": ask, "cost": ask + 0.02, "tau": tau,
+            "fee_rate": None, "size_at_edge": sum(float(x.split(":")[1]) for x in ladder.split(";")),
+            "ladder": ladder}
+
+
+def test_one_pick_per_player_game_and_holdings():
+    rows = pd.DataFrame([_act("E", "P", "20+ YES", 0.06, 0.55, 0.49, "0.49:500"),
+                         _act("E", "P", "25+ NO", 0.09, 0.70, 0.61, "0.61:500"),
+                         _act("E", "Q", "15+ YES", 0.05, 0.60, 0.55, "0.55:4")])
     picked = pick_per_group(rows)
     assert picked.decision.tolist() == ["abstain", "actionable", "actionable"]
     assert "already has a pick" in picked.reason.iloc[0]
+    held = pick_per_group(rows, filled={("E", "P")})
+    assert held.decision.tolist()[:2] == ["abstain", "abstain"] and "already holding" in held.reason.iloc[1]
+
+
+def test_sizing_walks_the_ladder_and_respects_caps_across_scans():
+    from cold_start_usage.decision import Exposure, fill_cost
     assert kelly_fraction(0.55, 0.50) == pytest.approx(0.10)
-    sized = size_positions(picked, bankroll=1000.0)
-    top = sized.iloc[1]
-    assert top.contracts == 8 and top.stake_usd == pytest.approx(4.88)     # $5 = 0.5% cap, at 61c
-    assert sized.iloc[2].contracts == 4                                     # limited by size at the price
-    assert size_positions(picked, bankroll=None).contracts.isna().all()     # no bankroll, no stakes
+    # 3 @ 44c then 200 @ 47c, p = 0.55: cost is walked up the ladder, fee at the real order size.
+    assert fill_cost([(0.44, 3), (0.47, 200)], 5, "kalshi", None) == pytest.approx(3 * 0.44 + 2 * 0.47 + 0.09)
+    row = _act("E", "P", "20+ YES", 0.09, 0.55, 0.44, "0.44:3;0.47:200")
+    sized = size_positions(pd.DataFrame([row]), bankroll=1000.0).iloc[0]
+    assert sized.stake_usd <= 5.0 + 1e-9                         # 0.5% of $1000, VWAP and fee included
+    assert sized.contracts == 10 and sized.cost == pytest.approx(sized.stake_usd / 10, abs=1e-3)
+    assert sized.ev_blend >= 0.04 - 1e-9                        # EV re-priced at the real cost
+    # The same player-game already took 0.4% in an earlier scan's fill: only 0.1% left.
+    prior = Exposure(slate=0.004, game={"E": 0.004}, group={("E", "P"): 0.004})
+    assert size_positions(pd.DataFrame([row]), 1000.0, prior).iloc[0].contracts == 2
+    # The slate is already at its 3% cap from other games: nothing more today.
+    full = size_positions(pd.DataFrame([row]), 1000.0, Exposure(slate=0.03))
+    assert full.decision.iloc[0] == "watch" and "cap" in full.reason.iloc[0]
+    assert size_positions(pd.DataFrame([row]), bankroll=None).iloc[0].stake_frac is None
+
+
+def test_limit_never_exceeds_what_the_market_alone_pays():
+    # Model 24.4 vs books 20.0 (0.73 SD: w = 0.2) lifts p_blend above p_market; the ladder's
+    # deep level at 51c is fine on the blend but negative EV on the market alone.
+    q = quote(0.44, size=3)
+    r = evaluate_contract(q, "YES", ctx(model_mean=24.4), levels=[(0.44, 3), (0.51, 200)])
+    assert r["max_price"] <= 0.51 - 0.01 and r["p_market"] - r["max_price"] - fee_per_contract("kalshi", 10, r["max_price"]) >= 0
+    assert r["size_at_edge"] == 3                                # the 51c level isn't counted
+    assert evaluate_contract(q, "YES", ctx(), levels=[])["reason"].startswith("thin: 0")   # empty book is empty
 
 
 def test_config_hash_is_stable_and_changes_with_a_threshold(monkeypatch):

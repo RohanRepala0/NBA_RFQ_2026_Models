@@ -62,7 +62,7 @@ class Throttle:
 
 class KalshiReader:
     def __init__(self, session: requests.Session | None = None, throttle: Throttle | None = None,
-                 max_retries: int = 5):
+                 max_retries: int = 3):
         self.session = session or requests.Session()
         self.throttle = throttle or Throttle()
         self.max_retries = max_retries
@@ -70,13 +70,16 @@ class KalshiReader:
     def get(self, path: str, params: dict | None = None) -> dict:
         for attempt in range(self.max_retries):
             self.throttle.wait()
+            last = attempt == self.max_retries - 1
             try:
                 resp = self.session.get(f"{BASE}{path}", params=params, headers=HEADERS, timeout=20)
             except requests.RequestException:          # proxy drops and timeouts: wait and retry
-                time.sleep(min(120, 30 * (attempt + 1)))
+                if not last:
+                    time.sleep(30 * (attempt + 1))
                 continue
             if resp.status_code == 429 or resp.status_code >= 500:
-                time.sleep(min(120, 30 * (attempt + 1)))
+                if not last:
+                    time.sleep(30 * (attempt + 1))   # live reads give up after ~90 s, not minutes
                 continue
             resp.raise_for_status()
             return resp.json()

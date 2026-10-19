@@ -167,18 +167,27 @@ class LadderArbitrage(Strategy):
         rows = []
         for _, g in b.groupby(["game", "player"]):
             g = g.sort_values("threshold").to_dict("records")
+            best = None                                  # one pair per player: each leg bought once
             for i, lo in enumerate(g):
                 for hi in g[i + 1:]:
                     cost = lo["ask"] + _fee(lo["ask"]) + (1 - hi["bid"]) + _fee(1 - hi["bid"])
-                    if 1 - cost >= p["min_profit"]:
-                        rows += [{"ticker": lo["ticker"], "side": "YES", "limit": lo["ask"], "at": lo["at"], "signal": 1 - cost},
-                                 {"ticker": hi["ticker"], "side": "NO", "limit": 1 - hi["bid"], "at": hi["at"], "signal": 1 - cost}]
+                    if 1 - cost >= p["min_profit"] and (best is None or 1 - cost > best[0]):
+                        best = (1 - cost, lo, hi)
+            if best:
+                profit, lo, hi = best
+                rows += [{"ticker": lo["ticker"], "side": "YES", "limit": lo["ask"], "at": lo["at"], "signal": profit},
+                         {"ticker": hi["ticker"], "side": "NO", "limit": 1 - hi["bid"], "at": hi["at"], "signal": profit}]
         return _orders(pd.DataFrame(rows), self.name, p["contracts"], note="paired legs")
 
 
+MAX_MID_SPREAD = 0.15
+
+
 def _minute_mids(series: pd.DataFrame, start, end) -> pd.DataFrame:
-    """Per-minute as-of mids (rows: minutes, columns: tickers) from sparse candles."""
-    s = series[(series.bid > 0) & (series.ask < 1)].assign(mid=lambda d: (d.bid + d.ask) / 2)
+    """Per-minute as-of mids (rows: minutes, columns: tickers) from sparse candles. Only tight
+    two-sided books count: a one-minute quote pull (0.01/0.98) would otherwise look like a move."""
+    s = series[(series.bid > 0) & (series.ask < 1) & (series.ask - series.bid <= MAX_MID_SPREAD)]
+    s = s.assign(mid=lambda d: (d.bid + d.ask) / 2)
     if s.empty:
         return pd.DataFrame()
     wide = s.pivot_table(index="end_ts", columns="ticker", values="mid", aggfunc="last")
@@ -193,7 +202,8 @@ class TeammateVacuum(Strategy):
     name: str = "teammate vacuum"
     params: dict = field(default_factory=lambda: {"window_min": 15, "jump": 0.10, "min_movers": 2,
                                                   "laggard_max": 0.03, "max_spread": 0.12, "lookback_h": 8,
-                                                  "contracts": 10})
+                                                  "delay_min": 1, "contracts": 10})
+    executable_by_hand: bool = False
     detections: list = field(default_factory=list)
 
     def decide(self, tape, test):
@@ -219,10 +229,12 @@ class TeammateVacuum(Strategy):
             if hits.empty:
                 continue
             t = hits.index[0]
-            decide_at = t + timedelta(minutes=1)            # act a minute after seeing it
+            decide_at = t + timedelta(minutes=p["delay_min"])     # act this long after seeing it
             if decide_at >= tip:
                 continue
-            laggards = [c for c in mids.columns if pd.notna(delta.loc[t, c]) and delta.loc[t, c] <= p["laggard_max"]]
+            # A laggard hasn't moved either way: a teammate whose ladder just fell may be the player
+            # who was ruled out, and must never be bought.
+            laggards = [c for c in mids.columns if pd.notna(delta.loc[t, c]) and abs(delta.loc[t, c]) <= p["laggard_max"]]
             self.detections.append({"game": game, "team": team, "at": t, "movers": int(hits.iloc[0]),
                                     "laggards": len(laggards)})
             if not laggards:
@@ -320,10 +332,15 @@ def default_suite() -> list[Strategy]:
         lad = LadderFit(name=f"ladder fit @ {tag}")
         lad.params = {**lad.params, "offset": off}
         suite += [cal, lad]
-    suite += [LadderArbitrage(), TeammateVacuum(), MoveFollow(name="reversion (1-min)"),
+    vac_auto = TeammateVacuum(name="teammate vacuum (1-min, automated)")
+    vac_hand = TeammateVacuum(name="teammate vacuum (10-min, by hand)", executable_by_hand=True)
+    vac_hand.params = {**vac_hand.params, "delay_min": 10}
+    suite += [LadderArbitrage(), vac_auto, vac_hand, MoveFollow(name="reversion (1-min)"),
               MoveFollow(name="momentum (1-min)", params={"mode": "follow", "move": 0.10, "window_min": 5,
                                                          "max_spread": 0.10, "lookback_h": 6, "contracts": 10})]
     lad60 = LadderFit(name="ladder fit @ t-60m")
     suite.append(Maker(base=lad60))
-    suite.append(Maker(base=TeammateVacuum()))
+    vac_hand_maker = TeammateVacuum(name="teammate vacuum (10-min, by hand)", executable_by_hand=True)
+    vac_hand_maker.params = {**vac_hand_maker.params, "delay_min": 10}
+    suite.append(Maker(base=vac_hand_maker))
     return suite
