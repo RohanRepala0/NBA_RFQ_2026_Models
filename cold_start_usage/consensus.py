@@ -180,8 +180,9 @@ def consensus_by_player(storage: Storage, event_id: str, as_of: datetime, *,
             for pid, grp in rows.groupby("player_id")}
 
 
-def venue_quotes(storage: Storage, event_id: str, before: datetime | None = None) -> pd.DataFrame:
-    """Latest target-venue (prediction market) quotes per player, if any have posted."""
+def sgo_target_quotes(storage: Storage, event_id: str, before: datetime | None = None) -> pd.DataFrame:
+    """Prediction-market quotes as SportsGameOdds carries them (role 'target'), if a plan ever
+    returns any. Prices Rohan can act on come from the venues' own APIs (venues.py)."""
     _, rows = latest_snapshot_rows(storage, event_id, before=before)
     if rows.empty:
         return rows

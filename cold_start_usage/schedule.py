@@ -27,12 +27,13 @@ def week_of_season(d: date) -> int:
     return (d - SEASON_OPENER).days // 7 + 1
 
 
-def due_tag(starts_at: datetime, now: datetime, taken: set[str]) -> str | None:
+def due_tag(starts_at: datetime, now: datetime, taken: set[str],
+            offsets: dict[str, int] | None = None) -> str | None:
     """The most recent checkpoint already passed, if not yet taken. None after tip."""
     if now >= starts_at:
         return None
     minutes_to_tip = (starts_at - now).total_seconds() / 60
-    passed = [(off, tag) for tag, off in SNAPSHOT_OFFSETS_MIN.items() if minutes_to_tip <= off]
+    passed = [(off, tag) for tag, off in (offsets or SNAPSHOT_OFFSETS_MIN).items() if minutes_to_tip <= off]
     if not passed:
         return None
     tag = min(passed)[1]

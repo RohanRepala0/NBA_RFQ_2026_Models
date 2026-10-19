@@ -38,9 +38,10 @@ REFERENCE_BOOKS = frozenset({
     "betonline", "bovada", "lowvig", "espnbet", "fanatics", "hardrockbet",
     "betrivers", "williamhill", "ballybet", "betparx", "thescorebet",
 })
-# Target venues: the prediction markets we are waiting on. Stored so we can see
-# when (and at what price) they post, but never part of the consensus.
-TARGET_VENUES = frozenset({"kalshi", "novig", "polymarket"})
+# Target venues: prediction markets as SportsGameOdds labels them. Stored if a
+# plan ever carries them, never part of the consensus. (Prices Rohan can act on
+# are read from the venues' own public APIs: see "Venues" below.)
+TARGET_VENUES = frozenset({"kalshi", "polymarket"})
 # DFS pick'em apps post placeholder prices (+100 both ways): logged, never priced.
 UNPRICED_BOOKS = frozenset({"prizepicks", "underdog", "sleeper", "parlayplay", "hotstreak"})
 
@@ -109,13 +110,58 @@ STALENESS_CLOCK = "quote"
 OVERROUND_RANGE = (0.98, 1.25)           # outside this a book's pair is ignored
 
 # --- Signals and the watchlist ----------------------------------------------------
-EDGE_THRESHOLD = 0.04                    # 4 percentage points
+EDGE_THRESHOLD = 0.04                    # 4 percentage points (sportsbook-line signals)
 MAX_CREDIBLE_EDGE = 0.15                 # above this: abstain, "check inputs" (None = off)
-# Prediction-market taker fee per contract = rate * price * (1 - price).
-# 0.07 is Kalshi's published general formula; the Novig and Polymarket values
-# are conservative placeholders, not verified. Check each venue's fee page.
-VENUE_FEE_RATE = {"kalshi": 0.07, "novig": 0.07, "polymarket": 0.07}
 LADDER_HALF_WIDTH = 3                    # "N+ points" rungs either side of the line
+
+# --- Venues (the only places Rohan can trade) -------------------------------------
+# Actionable: Kalshi and Polymarket US (the CFTC-regulated US exchange). The
+# international polymarket.com book is close-only for US persons, so it is read
+# as a reference price and never actionable.
+ACTIONABLE_VENUES = ("kalshi", "polymarket_us")
+REFERENCE_VENUES = ("polymarket_intl",)
+VENUES = ACTIONABLE_VENUES + REFERENCE_VENUES
+# Taker fee per order = rate * C * P * (1 - P), rounded per order:
+#   kalshi: up to the next cent (KXNBAPTS fee_type "quadratic": makers pay 0)
+#   polymarket_us: to the cent, half to even (feeCoefficient 0.0695; no maker rebate at tier 1)
+#   polymarket_intl: 5 decimals (feeSchedule rate 0.05, sports_fees_v3)
+VENUE_FEES = {
+    "kalshi": {"rate": 0.07, "rounding": "up_cent", "maker_rate": 0.0},
+    "polymarket_us": {"rate": 0.0695, "rounding": "half_even_cent", "maker_rate": 0.0},
+    "polymarket_intl": {"rate": 0.05, "rounding": "5dp", "maker_rate": 0.0},
+}
+VENUE_MIN_EDGE = {"kalshi": 0.04, "polymarket_us": 0.04}   # expected value per $1 contract, after fees
+THIN_CONSENSUS_EXTRA_EDGE = 0.01         # +1pp when only 2 books make the consensus
+MIN_SIZE_AT_EDGE = {"kalshi": 10, "polymarket_us": 10}     # contracts available at or under the max price
+PLANNED_CONTRACTS = 10                   # order size used to price fees before sizing
+TAIL_P = (0.10, 0.90)                    # market P outside this: the rung is too far from the books' line
+LEAK_TOLERANCE_MIN = 2                   # consensus may not be newer than the venue quote by more than this
+QUESTIONABLE_STATUSES = frozenset({"questionable", "game time decision", "gtd", "probable"})
+OUT_STATUSES = frozenset({"out", "doubtful", "suspended", "inactive", "injured", "not with team"})
+
+# Model vs market: price contracts from a blend that leans on the market
+# (mean space): m = consensus + W_MODEL * (model - consensus), and only while
+# |model - consensus| <= Z_GAP_MAX consensus SDs (beyond that w = 0 and the row
+# is flagged). Frozen until walk-forward grading has ~800 rows.
+W_MODEL = 0.20
+Z_GAP_MAX = 0.75
+# Robust pricing away from the books' line: a contract's probability is the
+# lower of the linear SD (sd_fraction) and a compound-Poisson SD,
+# sqrt(a * m + (b * m)^2), so far rungs aren't priced off one SD assumption.
+SD_COMPOUND = (2.2, 0.15)
+
+# --- Sizing (suggested contracts only; nothing is ever placed) ---------------------
+# Set COLD_START_BANKROLL_USD in the environment (or .env) to see stakes; see bankroll_usd().
+BANKROLL_ENV = "COLD_START_BANKROLL_USD"
+KELLY_LAMBDA = 0.25                      # quarter Kelly
+MAX_BET_FRAC = 0.005                     # per contract and per player-game, while ungraded
+MAX_GAME_FRAC = 0.015                    # both teams in one game
+MAX_SLATE_FRAC = 0.03                    # one ET slate
+TICKET_CANCEL_BEFORE_TIP_MIN = 5         # cancel unfilled limit orders this long before tip
+
+# Venue snapshots (free public reads), minutes before tip. t-5m is the venue close for CLV.
+VENUE_OFFSETS_MIN = {"t-6h": 360, "t-2h": 120, "t-60m": 60, "t-15m": 15, "t-5m": 5}
+VENUE_CLOSE_TAG = "t-5m"
 
 # --- League-wide catalog (catalog.py) ------------------------------------------------
 USAGE_TIERS = {"high": 25.0, "medium": 18.0}   # 2025-26 USG%: >= 25 high, >= 18 medium, else low
@@ -182,3 +228,27 @@ def load_books(path: Path = BOOKS_FILE) -> dict:
     for key in ("reference", "target", "unpriced"):
         books[key] = [b for b in books.get(key, []) if is_allowed_book(b)]
     return books
+
+
+def env_value(name: str) -> str | None:
+    """An environment variable, falling back to the git-ignored .env file."""
+    value = os.environ.get(name)
+    if value:
+        return value.strip()
+    env_file = REPO_DIR / ".env"
+    if env_file.exists():
+        for line in env_file.read_text().splitlines():
+            key, sep, val = line.partition("=")
+            if sep and key.strip() == name:
+                return val.strip().strip('"').strip("'") or None
+    return None
+
+
+def bankroll_usd() -> float | None:
+    """Rohan's bankroll for suggested contract counts. Typed in by him; no account is ever read."""
+    raw = env_value(BANKROLL_ENV)
+    try:
+        value = float(raw) if raw else None
+    except ValueError:
+        return None
+    return value if value and value > 0 else None

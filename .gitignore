@@ -8,6 +8,9 @@ data/*.duckdb
 data/*.duckdb.wal
 data/raw/
 data/cron.log
+data/history/*.duckdb
+data/history/*.duckdb.wal
+data/history/*.log
 reports/
 
 # python

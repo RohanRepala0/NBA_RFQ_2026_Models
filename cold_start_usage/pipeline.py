@@ -131,7 +131,7 @@ def _roster(storage: Storage, event_id: str) -> pd.DataFrame:
 
 def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: dict[str, str],
                     players: pd.DataFrame | None = None, scenarios_dir=None,
-                    log: bool = True) -> tuple[pd.DataFrame, list[str]]:
+                    log: bool = True, event_ids: set[str] | None = None) -> tuple[pd.DataFrame, list[str]]:
     players = load_players() if players is None else players
     team_shooting = load_team_shooting()
     teams = set(modeled_teams(scenarios_dir))
@@ -142,6 +142,8 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
     if events.empty:
         messages.append(f"No stored events for {d}. Run `snapshot --date {d}` first.")
     for ev in events.itertuples():
+        if event_ids is not None and ev.event_id not in event_ids:
+            continue
         starts = pd.Timestamp(ev.starts_at).to_pydatetime()
         for team in (ev.away_abbr, ev.home_abbr):
             if team not in teams:
@@ -295,3 +297,23 @@ def fetch_results(client: SGOClient, storage: Storage, d: date, now: datetime) -
         save_raw(result.events, now, f"results_{d.isoformat()}")
     n, messages = ingest_results(storage, result.events, now)
     return result.objects, n, messages
+
+
+# --- Venue checkpoints (free public reads) ----------------------------------------------
+def venue_due_plan(storage: Storage, now: datetime) -> dict[str, str]:
+    """event_id -> venue checkpoint (t-6h ... t-5m) that has passed and not been read yet."""
+    plan = {}
+    for ev in events_on(storage, et_date(now)).itertuples():
+        taken = set(storage.query("SELECT DISTINCT tag FROM venue_snapshots WHERE event_id = ?",
+                                  [ev.event_id]).tag.dropna())
+        tag = due_tag(pd.Timestamp(ev.starts_at).to_pydatetime(), now, taken, config.VENUE_OFFSETS_MIN)
+        if tag:
+            plan[ev.event_id] = tag
+    return plan
+
+
+def events_without_projections(storage: Storage, event_ids: set[str]) -> set[str]:
+    if not event_ids:
+        return set()
+    have = set(storage.query("SELECT DISTINCT event_id FROM projections").event_id)
+    return set(event_ids) - have

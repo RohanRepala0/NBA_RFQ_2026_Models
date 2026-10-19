@@ -15,7 +15,7 @@ from typing import Iterable, Mapping
 import duckdb
 import pandas as pd
 
-from .config import DB_PATH, is_allowed_book
+from .config import DB_PATH, VENUES, is_allowed_book
 
 SCHEMA: dict[str, dict[str, str]] = {
     "api_calls": {
@@ -61,10 +61,42 @@ SCHEMA: dict[str, dict[str, str]] = {
         "books": "VARCHAR", "snapshot_ts": "TIMESTAMP", "projection_ts": "TIMESTAMP",
         "model_version": "VARCHAR",
     },
-    "venue_quotes": {
-        "ts": "TIMESTAMP", "venue": "VARCHAR", "ticker": "VARCHAR", "event_ticker": "VARCHAR",
-        "player": "VARCHAR", "threshold": "INTEGER", "yes_bid": "DOUBLE", "yes_ask": "DOUBLE",
-        "no_bid": "DOUBLE", "no_ask": "DOUBLE", "close_time": "TIMESTAMP",
+    # Prediction-market prices read from the venues' own public APIs (dollars).
+    "venue_snapshots": {
+        "ts": "TIMESTAMP", "tag": "VARCHAR", "venue": "VARCHAR", "event_id": "VARCHAR",
+        "event_ticker": "VARCHAR", "ticker": "VARCHAR", "player": "VARCHAR", "player_id": "VARCHAR",
+        "team": "VARCHAR", "threshold": "INTEGER", "line": "DOUBLE",
+        "yes_bid": "DOUBLE", "yes_ask": "DOUBLE", "no_bid": "DOUBLE", "no_ask": "DOUBLE",
+        "yes_ask_size": "DOUBLE", "no_ask_size": "DOUBLE", "volume": "DOUBLE", "open_interest": "DOUBLE",
+        "fee_rate": "DOUBLE", "tip_ts": "TIMESTAMP", "parse_error": "VARCHAR",
+    },
+    # One row per venue contract and side, from decision.evaluate_contract: the only
+    # place a contract can be called actionable.
+    "venue_signals": {
+        "ts": "TIMESTAMP", "signal_id": "VARCHAR", "tag": "VARCHAR", "event_id": "VARCHAR",
+        "game": "VARCHAR", "player_id": "VARCHAR", "player": "VARCHAR", "team": "VARCHAR",
+        "venue": "VARCHAR", "ticker": "VARCHAR", "event_ticker": "VARCHAR", "contract": "VARCHAR",
+        "side": "VARCHAR", "threshold": "INTEGER", "line": "DOUBLE", "rung_distance": "DOUBLE",
+        "quote_ts": "TIMESTAMP", "tip_ts": "TIMESTAMP", "status": "VARCHAR",
+        "bid": "DOUBLE", "ask": "DOUBLE", "ask_size": "DOUBLE", "max_price": "DOUBLE",
+        "size_at_edge": "DOUBLE", "cost": "DOUBLE", "fee_rate": "DOUBLE",
+        "consensus_ts": "TIMESTAMP", "consensus_mean": "DOUBLE", "consensus_line": "DOUBLE",
+        "n_books": "INTEGER", "p_market": "DOUBLE", "model_mean": "DOUBLE", "projection_ts": "TIMESTAMP",
+        "w_model": "DOUBLE", "blend_mean": "DOUBLE", "p_blend": "DOUBLE", "p_spread": "DOUBLE",
+        "ev_market": "DOUBLE", "ev_blend": "DOUBLE", "tau": "DOUBLE",
+        "kelly": "DOUBLE", "stake_frac": "DOUBLE", "contracts": "DOUBLE", "stake_usd": "DOUBLE",
+        "decision": "VARCHAR", "reason": "VARCHAR", "model_version": "VARCHAR", "config_hash": "VARCHAR",
+    },
+    # Fills Rohan entered by hand on a venue (never placed by this code).
+    "tickets": {
+        "ts": "TIMESTAMP", "filled_at": "TIMESTAMP", "venue": "VARCHAR", "ticker": "VARCHAR",
+        "side": "VARCHAR", "contracts": "DOUBLE", "price": "DOUBLE", "fees": "DOUBLE",
+        "signal_id": "VARCHAR", "note": "VARCHAR",
+    },
+    # Venue settlements: 1 / 0, or a fair price for a player who never took the court.
+    "venue_settlements": {
+        "ts": "TIMESTAMP", "venue": "VARCHAR", "ticker": "VARCHAR", "result": "VARCHAR",
+        "settlement_value": "DOUBLE", "settled_ts": "TIMESTAMP",
     },
     "results": {
         "ts": "TIMESTAMP", "event_id": "VARCHAR", "player_id": "VARCHAR",
@@ -80,6 +112,13 @@ _READ_ONLY = re.compile(r"^\s*(select|with|describe|show|pragma\s+table_info)\b"
 
 class OffListBookError(RuntimeError):
     """A bookmakerID that is not on the allowlist tried to reach storage."""
+
+
+class AfterTipError(RuntimeError):
+    """A venue price or decision stamped at or after tip (log before outcome)."""
+
+
+PRE_TIP_TABLES = {"venue_snapshots": "ts", "venue_signals": "quote_ts"}
 
 
 BOOK_COLUMNS = ("book",)          # one bookmakerID per row
@@ -100,6 +139,23 @@ def to_naive_utc(ts) -> datetime | None:
     if t.tzinfo is not None:
         t = t.tz_convert("UTC").tz_localize(None)
     return t.to_pydatetime()
+
+
+def assert_allowed_venues(df: pd.DataFrame, table: str) -> None:
+    if "venue" in df.columns:
+        bad = df.venue.dropna().astype(str).map(lambda v: v not in VENUES)
+        if bad.any():
+            raise OffListBookError(f"{table}.venue: {int(bad.sum())} value(s) not in {VENUES}")
+
+
+def assert_pre_tip(df: pd.DataFrame, table: str) -> None:
+    col = PRE_TIP_TABLES.get(table)
+    if col is None or "tip_ts" not in df.columns or col not in df.columns:
+        return
+    t = pd.to_datetime(df[col]); tip = pd.to_datetime(df.tip_ts)
+    late = (t.notna() & tip.notna() & (t >= tip))
+    if late.any():
+        raise AfterTipError(f"{table}: {int(late.sum())} row(s) stamped at or after tip")
 
 
 def assert_allowed_books(df: pd.DataFrame, table: str) -> None:
@@ -124,6 +180,13 @@ class Storage:
         for table, cols in SCHEMA.items():
             ddl = ", ".join(f"{c} {t}" for c, t in cols.items())
             self._con.execute(f"CREATE TABLE IF NOT EXISTS {table} ({ddl})")
+            # Additive migration only: a column added to SCHEMA is added to an
+            # existing table; nothing is ever dropped or rewritten.
+            have = {r[0] for r in self._con.execute(
+                "SELECT column_name FROM information_schema.columns WHERE table_name = ?", [table]).fetchall()}
+            for c, t in cols.items():
+                if c not in have:
+                    self._con.execute(f"ALTER TABLE {table} ADD COLUMN {c} {t}")
 
     def close(self) -> None:
         self._con.close()
@@ -146,6 +209,8 @@ class Storage:
         if "ts" not in df.columns:
             df["ts"] = utcnow()
         assert_allowed_books(df, table)
+        assert_allowed_venues(df, table)
+        assert_pre_tip(df, table)
         for col, typ in SCHEMA[table].items():
             if col not in df.columns:
                 df[col] = None

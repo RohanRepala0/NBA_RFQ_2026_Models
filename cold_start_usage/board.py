@@ -1,29 +1,33 @@
-"""Pre-market board: the positions waiting on prediction markets.
+"""Pre-market board: the positions waiting on Kalshi and Polymarket US.
 
 One row per catalog player whose role changed (arrival / vacuum / squeeze):
-the thesis, our projection, and fair "N+ points" prices. As markets open,
-the same rows fill in the sportsbook consensus, the edge, and any
-prediction-market price SportsGameOdds reports, so the board turns from
-"waiting for a line" into "line up, here is the gap" without a new tool.
+the thesis, our projection, and fair "N+ points" prices. As markets open the
+row moves through:
+  waiting for a line -> lean vs books (no venue price) / listed on Kalshi
+  -> listed, no edge / watch (thin, questionable) -> READY (venue)
+READY comes only from a logged venue decision (venues.scan ->
+decision.evaluate_contract): a Kalshi or Polymarket US price that clears the
+bar after fees, with size behind it and the sportsbook market not against it.
+A sportsbook line alone is never READY: Rohan can't trade there.
 
-Research only: the board lists what to look at, it never places anything.
+Research only: the board lists what to look at; it never places anything.
 """
 from __future__ import annotations
 
-import math
 from datetime import datetime
 
 import pandas as pd
 
 from . import config
-from .consensus import consensus_by_player, venue_quotes
+from .consensus import consensus_by_player
 from .players import name_from_player_id, name_key
 from .signals import make_signal
 from .storage import Storage
-from .watchlist import cents_floor, contract_for, contract_p, max_price, p_at_least
+from .watchlist import p_at_least
 
 SITUATION_ORDER = {"vacuum": 0, "arrival": 1, "squeeze": 2}
 TIER_ORDER = {"high": 0, "medium": 1, "low": 2}
+VENUE_NAME = {"kalshi": "Kalshi", "polymarket_us": "Polymarket US", "polymarket_intl": "Polymarket intl"}
 
 
 def rungs(mean: float) -> list[int]:
@@ -33,36 +37,79 @@ def rungs(mean: float) -> list[int]:
 
 
 def market_view(storage: Storage | None, now: datetime) -> dict[str, dict]:
-    """name_key -> latest consensus + venue quotes across stored events (pre-tip only)."""
+    """name_key -> latest sportsbook consensus across stored, un-tipped events."""
     if storage is None or storage.count("odds_snapshots") == 0:
         return {}
     ev = storage.latest_events()
     ev = ev[(ev.starts_at > now) & ~ev.cancelled.fillna(False).astype(bool)]
     out: dict[str, dict] = {}
     for e in ev.itertuples():
-        cons = consensus_by_player(storage, e.event_id, as_of=now, before=now)
-        venues = venue_quotes(storage, e.event_id, before=now)
-        for pid, c in cons.items():
-            key = name_key(name_from_player_id(pid))
-            out[key] = {"event_id": e.event_id, "starts_at": e.starts_at, "consensus": c,
-                        "venues": venues[venues.player_id == pid] if not venues.empty else venues}
+        for pid, c in consensus_by_player(storage, e.event_id, as_of=now, before=now).items():
+            out[name_key(name_from_player_id(pid))] = {"event_id": e.event_id, "starts_at": e.starts_at, "consensus": c}
     return out
 
 
-def build_board(catalog: pd.DataFrame, storage: Storage | None = None,
-                now: datetime | None = None, kalshi: pd.DataFrame | None = None) -> pd.DataFrame:
-    """`kalshi`: parsed open Kalshi markets (kalshi.parse_markets); rows with a rung
-    priced below our fair value by EDGE_THRESHOLD after fees become READY (Kalshi)."""
-    from .kalshi import best_trade
+def venue_view(storage: Storage | None, now: datetime) -> dict[tuple[str, str], pd.DataFrame]:
+    """(name_key, team) -> latest logged venue decisions for games that haven't tipped."""
+    if storage is None or storage.count("venue_signals") == 0:
+        return {}
+    from .venues import latest_venue_signals
+    df = latest_venue_signals(storage, now)
+    if df.empty:
+        return {}
+    df = df.assign(key=df.player.fillna("").map(name_key))
+    return {k: g for k, g in df.groupby(["key", df.team.fillna("")])}
+
+
+def _cents(x) -> str:
+    return "?" if x is None or pd.isna(x) else f"{100 * x:.0f}c"
+
+
+def venue_status(rows: pd.DataFrame) -> dict:
+    """Best line of the board from a player's logged venue decisions."""
+    act = rows[rows.decision == "actionable"]
+    if len(act):
+        r = act.sort_values("ev_blend", ascending=False).iloc[0]
+        size = (f" x {int(r.contracts)} (${r.stake_usd:.2f})" if pd.notna(r.contracts)
+                else " (set COLD_START_BANKROLL_USD for a size)")
+        return {"status": f"READY ({VENUE_NAME[r.venue]}): buy {r.contract} at or under {_cents(r.max_price)}"
+                          f"{size}, EV {100 * r.ev_blend:.1f}pp",
+                "venue": r.venue, "contract": r.contract, "max_cents": round(100 * r.max_price),
+                "ev_pp": round(100 * r.ev_blend, 1), "contracts": r.contracts}
+    watch = rows[rows.decision == "watch"]
+    if len(watch):
+        r = watch.sort_values("ev_blend", ascending=False).iloc[0]
+        return {"status": f"watch ({VENUE_NAME[r.venue]} {r.contract} at {_cents(r.ask)}): {r.reason}",
+                "venue": r.venue, "contract": r.contract, "max_cents": None, "ev_pp": round(100 * r.ev_blend, 1),
+                "contracts": None}
+    priced = rows[rows.ev_blend.notna()] if "ev_blend" in rows else rows.iloc[0:0]
+    if len(priced):
+        r = priced.sort_values("ev_blend", ascending=False).iloc[0]
+        return {"status": f"listed, no edge: best is {VENUE_NAME[r.venue]} {r.contract} at {_cents(r.ask)} "
+                          f"({r.reason})", "venue": r.venue, "contract": None, "max_cents": None,
+                "ev_pp": round(100 * r.ev_blend, 1), "contracts": None}
+    r = rows.iloc[0]
+    return {"status": f"listed on {VENUE_NAME.get(r.venue, r.venue)}: {r.reason}", "venue": r.venue,
+            "contract": None, "max_cents": None, "ev_pp": None, "contracts": None}
+
+
+def build_board(catalog: pd.DataFrame, storage: Storage | None = None, now: datetime | None = None,
+                kalshi: pd.DataFrame | None = None) -> pd.DataFrame:
+    """`kalshi`: parsed open Kalshi markets (kalshi.parse_markets), shown as listings with our
+    fair price next to the ask. Listings alone never make a row READY."""
     from .storage import utcnow
     now = now or utcnow()
     markets = market_view(storage, now)
+    venues = venue_view(storage, now)
     kalshi = pd.DataFrame() if kalshi is None else kalshi
+    if len(kalshi):
+        kalshi = kalshi[kalshi.parse_error.isna() & (kalshi.tip_est > now)]
     rows = []
     live = catalog[(catalog.situation != "steady") & catalog.proj.notna()
                    & ~catalog.team.isin(config.CATALOG_EXCLUDED_TEAMS)]
     for r in live.itertuples():
         sd = r.sd if not pd.isna(r.sd) else max(config.MODEL.sd_floor, config.MODEL.sd_fraction * r.proj)
+        key = name_key(r.player)
         row = {
             "tier": r.tier, "situation": r.situation, "team": r.team, "player": r.player,
             "thesis": r.thesis, "proj": r.proj, "ppg_2025_26": r.ppg_2025_26,
@@ -71,39 +118,28 @@ def build_board(catalog: pd.DataFrame, storage: Storage | None = None,
         for n in rungs(r.proj):
             row[f"fair_{n}+"] = round(100 * p_at_least(n, r.proj, sd), 0)
         row["fair_ladder"] = "  ".join(f"{n}+ {100 * p_at_least(n, r.proj, sd):.0f}c" for n in rungs(r.proj))
-        m = markets.get(name_key(r.player))
-        if m is None:
-            row.update(status="waiting for a line", line=None, side=None, edge_pp=None,
-                       contract=None, max_cents=None, posted="")
-        else:
-            c = m["consensus"]
-            sig = make_signal({"mean": r.proj, "sd": sd}, c)
-            contract, max_c = None, None
-            if sig["side"]:
-                n, outcome = contract_for(sig["side"], sig["line"])
-                p = contract_p(n, outcome, r.proj, sd)
-                contract = f"{n}+ {outcome}"
-                max_c = cents_floor(max_price(p, max(config.VENUE_FEE_RATE.values())))
-            posted = "; ".join(f"{q.book} {q.side} {q.line:g} @ {round(100 * (100 / (q.odds_american + 100) if q.odds_american > 0 else -q.odds_american / (-q.odds_american + 100)))}c"
-                               for q in m["venues"].itertuples()) if len(m["venues"]) else ""
-            row.update(status=("READY: " if sig["decision"] == "paper" else "line up: ") + sig["reason"],
-                       line=sig["line"], side=sig["side"],
-                       edge_pp=None if sig["edge"] is None else round(100 * sig["edge"], 1),
-                       contract=contract, max_cents=max_c, posted=posted)
-        row.update(kalshi="", kalshi_roi=None)
-        k = kalshi[kalshi.key == name_key(r.player)] if len(kalshi) else kalshi
+        listed = ""
+        k = kalshi[(kalshi.key == key) & (kalshi.team == r.team)] if len(kalshi) else kalshi
         if len(k):
-            p_yes = {int(n): p_at_least(int(n), r.proj, sd) for n in k.threshold.unique()}
-            trade = best_trade(p_yes, k, config.VENUE_FEE_RATE["kalshi"], config.EDGE_THRESHOLD)
-            listed = ", ".join(f"{int(q.threshold)}+ {q.yes_ask:.0f}c" for q in k.sort_values("threshold").itertuples()
-                               if q.yes_ask is not None and not pd.isna(q.yes_ask))
-            if trade:
-                row.update(status=f"READY (Kalshi): buy {trade['contract']} @ {trade['ask_cents']:.0f}c, "
-                                  f"fair {trade['fair_cents']:.0f}c, ROI {100 * trade['roi']:+.0f}%",
-                           kalshi=listed, kalshi_roi=trade["roi"])
+            listed = ", ".join(f"{int(q.threshold)}+ {_cents(q.yes_ask)} (fair {100 * p_at_least(int(q.threshold), r.proj, sd):.0f}c)"
+                               for q in k.sort_values("threshold").itertuples())
+        row.update(kalshi=listed, venue=None, contract=None, max_cents=None, ev_pp=None, contracts=None)
+        v = venues.get((key, r.team))
+        if v is not None:
+            row.update(venue_status(v))
+        elif key in markets:
+            sig = make_signal({"mean": r.proj, "sd": sd}, markets[key]["consensus"])
+            if sig["decision"] == "paper":
+                lean = f"lean vs books: {sig['side']} {sig['line']:g} by {100 * sig['edge']:.1f}pp"
+            elif sig["line"] is not None:
+                lean = f"books {sig['line']:g}: {sig['reason']}"
             else:
-                row.update(kalshi=listed, status=row["status"] if row["status"] != "waiting for a line"
-                           else "Kalshi listed: no rung clears 4pp")
+                lean = f"books: {sig['reason']}"
+            row["status"] = f"{lean} (no venue price yet)"
+        elif listed:
+            row["status"] = "listed on Kalshi (no sportsbook consensus yet)"
+        else:
+            row["status"] = "waiting for a line"
         rows.append(row)
     board = pd.DataFrame(rows)
     if board.empty:
@@ -115,11 +151,12 @@ def build_board(catalog: pd.DataFrame, storage: Storage | None = None,
 
 
 def board_markdown(board: pd.DataFrame, counts: pd.DataFrame, built: datetime) -> str:
-    lines = ["# Pre-market board: role changes waiting on prediction markets", "",
+    lines = ["# Pre-market board: role changes waiting on Kalshi and Polymarket US", "",
              "Each row is a player whose usage should move this season. **Fair** prices are what our",
-             "projection says an \"N+ points\" YES contract is worth, in cents. Once a sportsbook line",
-             "posts, the status shows the gap to the market consensus; `READY` rows clear the 4pp",
-             "threshold, and **max** is the most to pay after a 0.07 x P x (1-P) taker fee.", "",
+             "projection says an \"N+ points\" YES contract is worth, in cents. A row turns `READY` only when",
+             "a Kalshi or Polymarket US price clears the edge bar after the venue's fee, with size at or",
+             "under the max price and the sportsbook consensus not against it. A sportsbook line on its",
+             "own shows as a lean, never as READY.", "",
              "## How many situations", "",
              "| tier (2025-26 usage) | " + " | ".join(counts.columns) + " |",
              "|---|" + "---|" * len(counts.columns)]
@@ -131,9 +168,9 @@ def board_markdown(board: pd.DataFrame, counts: pd.DataFrame, built: datetime) -
                   "| player | team | situation | thesis | proj (25-26) | fair ladder | status |",
                   "|---|---|---|---|---|---|---|"]
         for r in part.itertuples():
-            status = r.status + (f" - {r.contract} max {r.max_cents}c" if r.contract else "")
-            if r.posted:
-                status += f" - posted: {r.posted}"
+            status = r.status
+            if isinstance(r.kalshi, str) and r.kalshi and not status.startswith("READY"):
+                status += f" - Kalshi: {r.kalshi}"
             lines.append(f"| {r.player} | {r.team} | {r.situation} | {r.thesis} | "
                          f"{r.proj:.1f} ({r.ppg_2025_26:.1f}) | {r.fair_ladder} | {status} |")
     return "\n".join(lines) + "\n"
