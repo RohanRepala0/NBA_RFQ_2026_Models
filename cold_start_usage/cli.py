@@ -605,9 +605,9 @@ def cmd_backtest(args, storage, now_fn) -> int:
     config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     out = config.REPORTS_DIR / "backtest.md"
     out.write_text(md)
-    bets = pd.concat([b for b in results.values() if len(b)], ignore_index=True) if results else pd.DataFrame()
-    if len(bets):
-        bets.to_csv(config.REPORTS_DIR / "backtest_bets.csv", index=False)
+    nonempty = [b for b in results.values() if len(b)]
+    if nonempty:
+        pd.concat(nonempty, ignore_index=True).to_csv(config.REPORTS_DIR / "backtest_bets.csv", index=False)
     if args.docs:
         (config.REPO_DIR / "docs" / "BACKTEST.md").write_text(md)
     print(md)

@@ -234,28 +234,96 @@ def walk_forward(tape: Tape, strategy: Strategy, folds: list[Fold] | None = None
     return pd.concat(out, ignore_index=True) if out else pd.DataFrame()
 
 
+STRATEGY_NOTES = {
+    "baseline": "Buy every YES at the ask an hour before tip. What the spread and fee cost with no edge at all.",
+    "calibration": "Learn on earlier dates how often contracts in each price bucket paid, net of the spread and fee, "
+                   "and take the side history favours (the favourite-longshot bias, if Kalshi has one).",
+    "ladder fit": "A player's rungs should agree with one points distribution. Fit it to the other rungs and buy the "
+                  "rung that sits off the curve.",
+    "ladder arbitrage": "YES on a lower rung plus NO on a higher rung for under $1 after fees: pays at least $1 "
+                        "whatever happens.",
+    "teammate vacuum": "Several teammates' ladders jumping together is the market hearing that a star is out. Buy the "
+                       "teammates that haven't moved yet.",
+    "reversion": "Fade a one-minute move in one market with no team-wide move. Needs automation.",
+    "momentum": "Follow a one-minute move in one market with no team-wide move. Needs automation.",
+    "as limit orders": "The same orders resting one tick over the bid instead of taking the ask (no maker fee).",
+}
+
+
+def _fmt(v, pct: bool = False) -> str:
+    if v is None or (isinstance(v, float) and math.isnan(v)):
+        return ""
+    return f"{100 * v:+.1f}%" if pct else f"{v:,.2f}"
+
+
+def liquidity_by_month(tape: Tape) -> pd.DataFrame:
+    b = tape.books_at([60]).merge(tape.markets[["ticker", "game_date", "volume"]], on="ticker")
+    b["month"] = pd.to_datetime(b.game_date).dt.strftime("%Y-%m")
+    b["two_sided"] = (b.bid > 0) & (b.ask < 1)
+    b["spread2"] = b.spread.where(b.two_sided)
+    return b.groupby("month").agg(markets=("ticker", "size"), two_sided=("two_sided", "mean"),
+                                  median_spread=("spread2", "median"), median_volume=("volume", "median")).reset_index()
+
+
 def report(results: dict[str, pd.DataFrame], tape: Tape) -> str:
     m = tape.markets
     lines = ["# Backtest: Kalshi NBA player points, 2025-26", "",
-             f"Archive: {len(m):,} markets with candles across {m.game.nunique():,} games, "
-             f"{m.game_date.min()} to {m.game_date.max()}. Holdout (never used to choose anything): "
-             f"{HOLDOUT_START} on.", "",
-             "Taker fills at the ask at decision time; maker fills only when a trade printed through the limit. "
-             "Kalshi taker fee per order, rounded up to the cent; makers pay 0. Players who never played "
-             "settle at the exchange's fair price.", "",
-             "| strategy | by hand? | period | fills | contracts | cost | P&L | yield | 95% CI (by date) | hit rate | avg CLV | max DD |",
-             "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+             f"Archive: {len(m):,} settled `KXNBAPTS` markets with candles across {m.game.nunique():,} games, "
+             f"{m.game_date.min()} to {m.game_date.max()} (`cli history`; `cli backtest --docs` rebuilds this page).", "",
+             "**How it's scored.**",
+             "- Fills:",
+             "  - A taker order fills at the ask at the decision time, but only if that ask is at or under its limit.",
+             "  - A resting limit fills only if a later trade printed *through* it before tip.",
+             "- Fees: Kalshi's taker fee per 10-contract order, rounded up to the cent. Makers pay nothing on this series.",
+             "- Settlement: a player who never played settles at the exchange's fair price.",
+             "- CLV: the last pre-tip mid minus the price paid.",
+             "- Folds: walk-forward monthly folds; each fold's parameters come only from earlier dates, with a one-day embargo.",
+             f"- **Holdout: {HOLDOUT_START} on.** It was never used to choose anything and is reported once, separately.",
+             "- The 95% interval on yield resamples whole game dates, because bets on one slate move together.", "",
+             "## Liquidity by month (books an hour before tip)", "",
+             "| month | markets | two-sided | median spread | median volume |", "|---|---|---|---|---|"]
+    for r in liquidity_by_month(tape).itertuples():
+        spread = "" if pd.isna(r.median_spread) else f"{100 * r.median_spread:.0f}c"
+        lines.append(f"| {r.month} | {r.markets:,} | {100 * r.two_sided:.0f}% | {spread} | {r.median_volume:,.0f} |")
+    lines += ["", "## Results", "",
+              "| strategy | by hand? | period | fills | contracts | cost | P&L | yield | 95% CI (by date) | hit rate | avg CLV | max DD |",
+              "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for name, bets in results.items():
         if bets.empty:
-            lines.append(f"| {name} | | | 0 | | | | | | | | |")
+            lines.append(f"| {name} | | both | 0 | | | | | | | | |")
             continue
         hand = bets.attrs.get("executable_by_hand", True)
         for period, part in (("walk-forward", bets[~bets.holdout]), ("holdout", bets[bets.holdout])):
             s = summarize(part)
             ci = bootstrap_yield(part)
-            fmt = lambda v, p=False: "" if v is None or (isinstance(v, float) and math.isnan(v)) else (f"{100 * v:+.1f}%" if p else f"{v:,.2f}")  # noqa: E731
-            lines.append(f"| {name} | {'yes' if hand else 'no'} | {period} | {s.get('fills', 0)} | {s.get('contracts', 0):,.0f} | "
-                         f"{fmt(s.get('cost'))} | {fmt(s.get('pnl'))} | {fmt(s.get('yield'), True)} | "
-                         f"{'' if ci is None else f'{100 * ci[0]:+.1f}% to {100 * ci[1]:+.1f}%'} | "
-                         f"{fmt(s.get('hit_rate'), True)} | {fmt(s.get('avg_clv'))} | {fmt(s.get('max_drawdown'))} |")
-    return "\n".join(lines) + "\n"
+            ci_txt = "" if ci is None else f"{100 * ci[0]:+.1f}% to {100 * ci[1]:+.1f}%"
+            lines.append(f"| {name} | {'yes' if hand else 'no'} | {period} | {s.get('fills', 0)} | "
+                         f"{s.get('contracts', 0):,.0f} | {_fmt(s.get('cost'))} | {_fmt(s.get('pnl'))} | "
+                         f"{_fmt(s.get('yield'), True)} | {ci_txt} | {_fmt(s.get('hit_rate'), True)} | "
+                         f"{_fmt(s.get('avg_clv'))} | {_fmt(s.get('max_drawdown'))} |")
+    timing = [(n, b) for n, b in results.items() if " @ t-" in n and len(b)]
+    if timing:
+        lines += ["", "## Entry timing (walk-forward only)", "", "| strategy | entry | fills | yield | avg CLV |",
+                  "|---|---|---|---|---|"]
+        for n, b in timing:
+            base, tag = n.split(" @ ")
+            s = summarize(b[~b.holdout])
+            lines.append(f"| {base} | {tag} | {s.get('fills', 0)} | {_fmt(s.get('yield'), True)} | {_fmt(s.get('avg_clv'))} |")
+    lines += ["", "## By month", "", "| strategy | month | fills | yield |", "|---|---|---|---|"]
+    for n, b in results.items():
+        f = b[b.filled] if len(b) else b
+        if f.empty:
+            continue
+        for month, g in f.groupby(pd.to_datetime(f.game_date).dt.strftime("%Y-%m")):
+            lines.append(f"| {n} | {month} | {len(g)} | {_fmt(g.pnl.sum() / g.cost.sum() if g.cost.sum() else None, True)} |")
+    lines += ["", "## The strategies", ""] + [f"- **{k}**: {v}" for k, v in STRATEGY_NOTES.items()]
+    lines += ["", "## Caveats", "",
+              "- **No sportsbook consensus here.** These strategies use Kalshi's own prices only. The live system's main "
+              "strategy (venue vs the books' consensus) needs historical sportsbook lines (SportsGameOdds objects, "
+              "Rohan's call) or this season's own logs, which start on Opening Night.",
+              "- **No usage model here either.** Its 2025-26 inputs are season averages that include the games being "
+              "tested, which would leak the future.",
+              "- **No depth in candles.** Every order is a fixed 10 contracts. Thin books may not have had even that.",
+              "- **Many strategies, one season.** Some will look good by luck. Trust a result only if the holdout agrees "
+              "and CLV is positive, not just P&L.", ""]
+    return "\n".join(lines)
