@@ -1,10 +1,14 @@
-"""Read-only Kalshi market data for NBA player points (series KXNBAPTS).
+"""Read-only Kalshi market data for NBA player points, rebounds and assists.
 
-Kalshi lists player points as "N+ points" ladders, one binary market per rung
-(10+, 15+, ... in steps of 5), grouped into one event per game:
-KXNBAPTS-26OCT20BOSDET is Celtics at Pistons (away then home, ET date), and
-KXNBAPTS-26OCT20BOSDET-BOSDWHITE9-25 is "Derrick White: 25+ points" with
-floor_strike 24.5. YES pays $1 if the player scores more than floor_strike.
+Kalshi lists each stat as its own series (config.KALSHI_SERIES: KXNBAPTS,
+KXNBAREB, KXNBAAST) of "N+" ladders, one binary market per rung (points 10+,
+15+, ... in steps of 5; rebounds and assists in steps of 1-2), grouped into one
+event per game: KXNBAPTS-26OCT20BOSDET is Celtics at Pistons (away then home,
+ET date), and KXNBAPTS-26OCT20BOSDET-BOSDWHITE9-25 is "Derrick White: 25+
+points" with floor_strike 24.5. YES pays $1 if the player's total is more than
+floor_strike. The stat comes from the series prefix of the event ticker and must
+match the title's stat word ("Victor Wembanyama: 8+ rebounds"); a mismatch or an
+unknown series is a parse error, never a guess.
 
 Facts this module relies on (checked against the live API):
 - Prices are dollar strings (yes_ask_dollars ...); the old integer-cent fields
@@ -33,16 +37,18 @@ from datetime import date, timedelta
 import pandas as pd
 import requests
 
+from . import config
 from .players import name_key
 
 BASE = "https://api.elections.kalshi.com/trade-api/v2"
-SERIES = "KXNBAPTS"
+SERIES = "KXNBAPTS"                                # points: the archive and the backtest use this one
+SERIES_STAT = {series: stat for stat, series in config.KALSHI_SERIES.items()}
 HEADERS = {"User-Agent": "cold-start-usage-research/1.0"}
 # "Derrick White: 25+ points" (live), "Tyler Herro records 30+ points" (archive), "Derrick White: 25+" (sub-title)
-TITLE_RE = re.compile(r"^(?P<name>.+?)(?::\s*|\s+records\s+)(?P<n>\d+)\+", re.I)
+TITLE_RE = re.compile(r"^(?P<name>.+?)(?::\s*|\s+records\s+)(?P<n>\d+)\+(?:\s+(?P<word>[a-z][a-z-]*))?", re.I)
 MONTHS = "JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split()
 TIP_BEFORE_OCCURRENCE = timedelta(hours=3)
-COLUMNS = ["ticker", "event_ticker", "player", "key", "team", "threshold", "line", "strike_type",
+COLUMNS = ["ticker", "event_ticker", "stat", "player", "key", "team", "threshold", "line", "strike_type",
            "yes_bid", "yes_ask", "no_bid", "no_ask", "yes_bid_size", "yes_ask_size", "no_ask_size",
            "volume", "open_interest", "status", "close_time", "tip_est", "parse_error"]
 
@@ -143,6 +149,17 @@ def _ts(x):
     return None if not x else pd.Timestamp(x).tz_convert("UTC").tz_localize(None)
 
 
+def stat_from_ticker(ticker: str | None) -> str | None:
+    """KXNBAREB-26OCT20OKCSAS(-...) -> 'rebounds'; None for a series not in config.KALSHI_SERIES."""
+    return SERIES_STAT.get((ticker or "").split("-")[0])
+
+
+def stat_word_ok(word: str | None, stat: str) -> bool:
+    """A title's stat word ('rebounds', 'rebound') against the series' stat. No word (a sub-title
+    such as 'Derrick White: 25+') leaves the series to decide."""
+    return word is None or word.lower().rstrip("s") == stat.rstrip("s")
+
+
 def team_from_ticker(ticker: str) -> str | None:
     """KXNBAPTS-26OCT20BOSDET-BOSDWHITE9-25 -> 'BOS' (must be one of the event's two teams)."""
     parts = (ticker or "").split("-")
@@ -153,27 +170,33 @@ def team_from_ticker(ticker: str) -> str | None:
 
 
 def parse_markets(markets: list[dict]) -> pd.DataFrame:
-    """One row per market. Rows that can't be parsed are kept with `parse_error` set,
-    so a format change shows up in the log instead of silently emptying the board."""
+    """One row per market, with its stat from the series. Rows that can't be parsed are kept with
+    `parse_error` set, so a format change shows up in the log instead of silently emptying the board."""
     rows = []
     for m in markets:
         title = (m.get("title") or m.get("yes_sub_title") or "").strip()
         hit = TITLE_RE.match(title)
         floor = _num(m.get("floor_strike"))
         threshold = None if floor is None else int(round(floor + 0.5))
+        series = (m.get("event_ticker") or m.get("ticker") or "").split("-")[0]
+        stat = stat_from_ticker(series)
         error = None
         if floor is None or abs(floor + 0.5 - round(floor + 0.5)) > 1e-9:
             error = f"no half-point floor_strike ({m.get('floor_strike')})"
         elif m.get("strike_type") not in ("greater", "structured"):
             error = f"strike_type {m.get('strike_type')!r}"
+        elif stat is None:
+            error = f"unknown series {series!r}"
         elif not hit:
             error = f"unparsed title {title!r}"
         elif int(hit["n"]) != threshold:
             error = f"title says {hit['n']}+ but floor_strike is {floor}"
+        elif not stat_word_ok(hit["word"], stat):
+            error = f"title says {hit['word']!r} but {series} is {stat}"
         occ = _ts(m.get("occurrence_datetime") or m.get("expected_expiration_time"))
         player = hit["name"].strip() if hit else None
         rows.append({
-            "ticker": m.get("ticker"), "event_ticker": m.get("event_ticker"),
+            "ticker": m.get("ticker"), "event_ticker": m.get("event_ticker"), "stat": stat,
             "player": player, "key": name_key(player) if player else None,
             "team": team_from_ticker(m.get("ticker")), "threshold": threshold,
             "line": floor, "strike_type": m.get("strike_type"),

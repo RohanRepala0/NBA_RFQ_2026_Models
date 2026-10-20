@@ -10,6 +10,10 @@ decision.evaluate_contract): a Kalshi or Polymarket US price that clears the
 bar after fees, with size behind it and the sportsbook market not against it.
 A sportsbook line alone is never READY: Rohan can't trade there.
 
+The thesis, projection and fair ladder are points. The venue status is the
+player's best logged decision on any stat, labelled with it ("READY (Kalshi):
+buy 8+ REB YES ...") when that is a rebounds or assists contract.
+
 Research only: the board lists what to look at; it never places anything.
 """
 from __future__ import annotations
@@ -103,7 +107,8 @@ def build_board(catalog: pd.DataFrame, storage: Storage | None = None, now: date
     venues = venue_view(storage, now)
     kalshi = pd.DataFrame() if kalshi is None else kalshi
     if len(kalshi):
-        kalshi = kalshi[kalshi.parse_error.isna() & (kalshi.tip_est > now)]
+        points = kalshi.stat.eq("points") if "stat" in kalshi else True     # the fair ladder is points
+        kalshi = kalshi[kalshi.parse_error.isna() & (kalshi.tip_est > now) & points]
     rows = []
     live = catalog[(catalog.situation != "steady") & catalog.proj.notna()
                    & ~catalog.team.isin(config.CATALOG_EXCLUDED_TEAMS)]

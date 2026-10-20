@@ -123,8 +123,9 @@ def by_segment(df: pd.DataFrame, col: str) -> pd.DataFrame:
 # --- Venue grading: what Kalshi and Polymarket US actually pay ---------------------------
 # A contract pays its settlement value: 1 or 0, or, for a player who never takes
 # the court, a fair price the venue sets (Kalshi "scalar", Polymarket US LFMP).
-# NO pays 1 - value. Paper P&L takes the first actionable decision per contract
-# side at its logged all-in cost; fills use what Rohan actually paid.
+# NO pays 1 - value. Paper P&L takes the first actionable decision per player-game
+# and stat at its logged all-in cost (points, rebounds and assists are graded
+# apart); fills use what Rohan actually paid.
 
 def fetch_venue_settlements(storage: Storage, start: date, end: date, now,
                             kalshi_market=None, pm_us_settlement=None) -> int:
@@ -171,14 +172,16 @@ def _settled(storage: Storage) -> pd.DataFrame:
 
 
 def venue_graded(storage: Storage, start: date, end: date) -> pd.DataFrame:
-    """First actionable decision per contract side, with settlement, P&L per contract and venue CLV."""
+    """First actionable decision per player-game and stat, with settlement, P&L per contract and venue CLV."""
     lo, _ = et_day_bounds(start)
     _, hi = et_day_bounds(end)
-    # One paper bet per player-game: the first time it was actionable, on whatever contract that was.
+    # One paper bet per player-game and stat: the first time it was actionable, on whatever contract that was.
     sig = storage.query("""
         SELECT * EXCLUDE (rn) FROM (
-          SELECT *, row_number() OVER (PARTITION BY coalesce(event_id, event_ticker), coalesce(player_id, player)
-                                       ORDER BY ts, ev_blend DESC) rn
+          SELECT * REPLACE (coalesce(stat, 'points') AS stat),
+                 row_number() OVER (PARTITION BY coalesce(event_id, event_ticker), coalesce(player_id, player),
+                                                 coalesce(stat, 'points')
+                                    ORDER BY ts, ev_blend DESC) rn
           FROM venue_signals WHERE decision = 'actionable' AND tip_ts >= ? AND tip_ts < ?) WHERE rn = 1""",
                         [lo, hi])
     if sig.empty:
@@ -227,3 +230,11 @@ def venue_summary(df: pd.DataFrame, min_n: int = 50) -> dict:
         out.update(yield_per_contract=float(s.pnl_per_contract.sum() / s.cost.sum()),
                    hit_rate=float((binary.value == 1).mean()) if len(binary) else None)
     return out
+
+
+def venue_summary_by_stat(df: pd.DataFrame, min_n: int = 50) -> dict[str, dict]:
+    """venue_summary for each stat on its own (a NULL stat is points)."""
+    if df.empty:
+        return {}
+    stats = df.stat.fillna("points") if "stat" in df else pd.Series("points", index=df.index)
+    return {stat: venue_summary(df[stats == stat], min_n) for stat in sorted(set(stats))}

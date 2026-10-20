@@ -1,14 +1,18 @@
 """Venue scan: Kalshi and Polymarket prices for a slate, decided and logged before tip.
 
 For every game on the stored slate that hasn't tipped:
-1. read the venues: the game's Kalshi KXNBAPTS event, its Polymarket US event,
-   and the international Polymarket event as a reference price only;
+1. read the venues: the game's Kalshi events in the points, rebounds and assists
+   series (config.KALSHI_SERIES), its Polymarket US event (points, rebounds and
+   assists props), and the international Polymarket event as a points reference
+   price only;
 2. map each market to the game and to a player on one of its two rosters (by
    name within the game, never league-wide; Kalshi's team code must match);
-3. evaluate both sides with decision.evaluate_contract, reading order-book
-   depth only for contracts that already clear the bar at the top of the book;
-4. keep one pick per player-game, size it, and append every quote to
-   venue_snapshots and every decision to venue_signals.
+3. evaluate both sides with decision.evaluate_contract against that stat's
+   consensus and projection, reading order-book depth only for contracts that
+   already clear the bar at the top of the book;
+4. keep one pick per player-game and stat, size it (the per-bet cap is shared
+   across a player's stats), and append every quote to venue_snapshots and every
+   decision to venue_signals, each with its stat.
 
 Every parsed market yields two rows, actionable or not, so nothing in the
 cold-start population disappears silently. Venue reads are free public GETs
@@ -25,7 +29,7 @@ import pandas as pd
 from . import config
 from .consensus import consensus_by_player
 from .decision import Context, Exposure, evaluate_contract, pick_per_group, size_positions
-from .kalshi import SERIES, event_code
+from .kalshi import event_code
 from .pipeline import events_on, latest_projections
 from .players import name_key
 from .schedule import et_date
@@ -39,7 +43,7 @@ class Fetchers:
     """Injected venue readers, so tests (and a run without network) never touch a venue.
     Any of them may be None; errors are reported per game, never fatal. `clock` stamps each
     read with when the venue actually answered (live: wall-clock UTC; tests: the scan time)."""
-    kalshi_markets: Callable[[], list[dict]] | None = None             # all open KXNBAPTS markets
+    kalshi_markets: Callable[[], list[dict]] | None = None             # open markets of every KALSHI_SERIES
     kalshi_books: Callable[[list[str]], dict[str, dict[str, Levels]]] | None = None  # tickers -> ladders
     pm_us_event: Callable[[str, str, date], dict | None] | None = None
     pm_us_book: Callable[[str], dict[str, Levels]] | None = None        # market slug -> ladders
@@ -55,10 +59,28 @@ def live_fetchers() -> Fetchers:
     from .storage import utcnow
     session = requests.Session()
     reader = kalshi.KalshiReader(session)
-    return Fetchers(kalshi_markets=lambda: reader.open_markets(SERIES), kalshi_books=reader.orderbooks,
-                    pm_us_event=lambda a, h, d: polymarket_us.find_game(a, h, d, session),
-                    pm_us_book=lambda s: polymarket_us.book(s, session),
-                    pm_intl_event=lambda a, h, d: polymarket.find_game(a, h, d, session), clock=utcnow)
+    f = Fetchers(kalshi_books=reader.orderbooks,
+                 pm_us_event=lambda a, h, d: polymarket_us.find_game(a, h, d, session),
+                 pm_us_book=lambda s: polymarket_us.book(s, session),
+                 pm_intl_event=lambda a, h, d: polymarket.find_game(a, h, d, session), clock=utcnow)
+    f.kalshi_markets = lambda: kalshi_series_markets(reader.open_markets, f.errors)
+    return f
+
+
+def kalshi_series_markets(read: Callable[[str], list[dict]], errors: list[str]) -> list[dict]:
+    """Open markets of every configured Kalshi series, one read each. A series that fails is
+    recorded and skipped, so a rebounds outage never drops the points ladders; only when
+    every series fails does the read fail (and the checkpoint stays open for the next tick)."""
+    out, failed = [], []
+    for series in config.KALSHI_SERIES.values():
+        try:
+            out += read(series)
+        except Exception as exc:
+            failed.append(series)
+            errors.append(f"kalshi {series}: {type(exc).__name__}: {exc}")
+    if len(failed) == len(config.KALSHI_SERIES):
+        raise RuntimeError(f"every Kalshi series failed ({', '.join(failed)})")
+    return out
 
 
 def _roster(storage: Storage, event_id: str) -> pd.DataFrame:
@@ -90,9 +112,10 @@ def game_quotes(ev, fetchers: Fetchers, kalshi_df: pd.DataFrame | None, kalshi_t
     d = et_date(ev.starts_at)
     parts = []
     if kalshi_df is not None and len(kalshi_df):
-        k = kalshi_df[kalshi_df.event_ticker == f"{SERIES}-{event_code(d, ev.away_abbr, ev.home_abbr)}"]
+        code = event_code(d, ev.away_abbr, ev.home_abbr)
+        k = kalshi_df[kalshi_df.event_ticker.isin({f"{series}-{code}" for series in config.KALSHI_SERIES.values()})]
         parts.append(k.assign(venue="kalshi", fee_rate=None, quote_ts=kalshi_ts))
-    for name, getter, parse in (("polymarket_us", fetchers.pm_us_event, polymarket_us.points_markets),
+    for name, getter, parse in (("polymarket_us", fetchers.pm_us_event, polymarket_us.prop_markets),
                                 ("polymarket_intl", fetchers.pm_intl_event, polymarket.points_markets)):
         if getter is None:
             continue
@@ -116,7 +139,7 @@ def prior_exposure(storage: Storage, d: date, now: datetime, scanning: set[str],
         fills = fills[fills.tip_ts.notna()]
         fills = fills[fills.tip_ts.map(et_date) == d]
         for r in fills.itertuples():
-            out.filled.add((r.event_id, r.player_id))
+            out.filled.add((r.event_id, r.player_id, "points" if pd.isna(r.stat) else r.stat))
             if bankroll:
                 frac = (r.contracts * r.price + (0.0 if pd.isna(r.fees) else r.fees)) / bankroll
                 out.game[r.event_id] = out.game.get(r.event_id, 0.0) + frac
@@ -128,7 +151,8 @@ def prior_exposure(storage: Storage, d: date, now: datetime, scanning: set[str],
         if len(live):
             live = live[live.tip_ts.map(et_date) == d]
             for r in live.itertuples():
-                if (r.event_id, r.player_id) in out.filled or pd.isna(r.stake_usd):
+                stat = "points" if pd.isna(r.stat) else r.stat
+                if (r.event_id, r.player_id, stat) in out.filled or pd.isna(r.stake_usd):
                     continue
                 frac = r.stake_usd / bankroll
                 out.game[r.event_id] = out.game.get(r.event_id, 0.0) + frac
@@ -137,13 +161,14 @@ def prior_exposure(storage: Storage, d: date, now: datetime, scanning: set[str],
 
 
 def fills_with_games(storage: Storage) -> pd.DataFrame:
-    """Rohan's current fills (corrections applied), with the game and player they belong to."""
+    """Rohan's current fills (corrections applied), with the game, player and stat they belong to."""
     t = storage.query("SELECT * FROM tickets")
     if t.empty:
         return t
     replaced = set(t.replaces.dropna())
     t = t[~t.fill_id.isin(replaced)]
-    games = storage.query("""SELECT DISTINCT venue, ticker, event_id, player_id, tip_ts FROM venue_signals
+    games = storage.query("""SELECT DISTINCT venue, ticker, event_id, player_id, coalesce(stat, 'points') AS stat,
+                                    tip_ts FROM venue_signals
                              WHERE ticker IS NOT NULL""").drop_duplicates(["venue", "ticker"])
     return t.merge(games, on=["venue", "ticker"], how="left")
 
@@ -182,8 +207,9 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
         scanned.add(ev.event_id)
         roster = _roster(storage, ev.event_id)
         by_key, dupes = roster_keys(roster)
-        cons = consensus_by_player(storage, ev.event_id, as_of=now, before=now)
-        projs = {p.player_id: p for p in latest_projections(storage, ev.event_id, now).itertuples()}
+        cons = {stat: consensus_by_player(storage, ev.event_id, as_of=now, before=now, stat=stat)
+                for stat in config.STATS}
+        projs = {(p.player_id, p.stat): p for p in latest_projections(storage, ev.event_id, now).itertuples()}
         game = f"{ev.away_abbr} @ {ev.home_abbr}"
         rows, pending = [], []
         for q in quotes.to_dict("records"):
@@ -195,18 +221,20 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
             pid = r.player_id if team_ok else None
             if team_ok and q_team is None:
                 q = {**q, "team": r.team_abbr}               # venues without a team code take the roster's
-            p = projs.get(pid)
-            ctx = Context(now=now, tip=tip, event_id=ev.event_id, game=game, player_id=pid,
+            stat = q.get("stat") if q.get("stat") in config.STATS else None   # unknown: already a parse error
+            p = projs.get((pid, stat))
+            ctx = Context(now=now, tip=tip, event_id=ev.event_id, game=game, player_id=pid, stat=stat or "points",
                           status=None if r is None or pd.isna(r.status) else str(r.status).lower(),
-                          consensus=cons.get(pid), model_mean=None if p is None or pd.isna(p.mean) else float(p.mean),
+                          consensus=cons.get(stat, {}).get(pid),
+                          model_mean=None if p is None or pd.isna(p.mean) else float(p.mean),
                           projection_ts=None if p is None else p.ts)
             if q.get("key") in dupes:
                 q = {**q, "parse_error": "ambiguous name on this game's rosters"}
             qts = q.get("quote_ts")
             if qts is not None and pd.Timestamp(qts) < pd.Timestamp(tip):
-                snaps.append({k: q.get(k) for k in ("venue", "event_ticker", "ticker", "player", "team", "threshold",
-                                                    "line", "yes_bid", "yes_ask", "no_bid", "no_ask", "yes_ask_size",
-                                                    "no_ask_size", "volume", "fee_rate", "parse_error")}
+                snaps.append({k: q.get(k) for k in ("venue", "event_ticker", "ticker", "player", "team", "stat",
+                                                    "threshold", "line", "yes_bid", "yes_ask", "no_bid", "no_ask",
+                                                    "yes_ask_size", "no_ask_size", "volume", "fee_rate", "parse_error")}
                              | {"ts": qts, "tag": tag, "event_id": ev.event_id, "player_id": pid, "tip_ts": tip,
                                 "open_interest": q.get("open_interest")})
             for side in ("YES", "NO"):

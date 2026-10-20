@@ -136,9 +136,12 @@ def test_scan_logs_two_rows_per_market_and_decides(storage):
                                                     "title": "Something else"}],
                  pm_us_event=lambda a, h, d: US_EVENT, pm_intl_event=lambda a, h, d: INTL_EVENT)
     df = scan(storage, DAY, FETCHED + timedelta(minutes=1), f, tag="t-60m")
-    assert len(df) == 2 * (5 + 2 + 2)                        # 5 Kalshi in this game (1 unparsed), 2 US, 2 intl
-    assert storage.count("venue_signals") == len(df) and storage.count("venue_snapshots") == 9
+    # 5 Kalshi in this game (1 unparsed), 3 US (the rebounds market is read too, unparsed: no line), 2 intl
+    assert len(df) == 2 * (5 + 3 + 2)
+    assert storage.count("venue_signals") == len(df) and storage.count("venue_snapshots") == 10
     assert df[df.ticker == "KXNBAPTS-26OCT21MINMIA-ODD"].reason.str.startswith("unparsed").all()
+    reb = df[df.ticker == "x-reb"]
+    assert set(reb.stat) == {"rebounds"} and reb.reason.str.startswith("unparsed").all()
     by = {(r.venue, r.contract): r for r in df.itertuples()}
     act = by[("kalshi", "30+ YES")]
     assert act.decision == "actionable" and act.ev_blend >= 0.04 and act.ev_market >= 0

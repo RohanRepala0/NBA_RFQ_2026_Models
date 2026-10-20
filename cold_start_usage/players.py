@@ -3,6 +3,8 @@
 Order of precedence: explicit `sgo_player_id` column in the players CSV, then
 data/player_id_overrides.csv, then a normalized-name match against the event's
 roster (same team first). Ambiguous or missing matches are reported, never guessed.
+An explicit ID that two players share is refused (both fall back to the name
+match, and the clash is reported): one ID can only ever be one person.
 """
 from __future__ import annotations
 
@@ -48,14 +50,29 @@ def candidates_for_event(roster: pd.DataFrame, odds_player_ids: list[str]) -> pd
     return pd.concat([roster, extra], ignore_index=True).drop_duplicates("player_id")
 
 
+def duplicate_ids(explicit: dict[str, str]) -> dict[str, set[str]]:
+    """player ID -> the names that claim it, for IDs claimed by more than one name."""
+    by_id: dict[str, set[str]] = {}
+    for name, pid in explicit.items():
+        if isinstance(pid, str) and pid:
+            by_id.setdefault(pid, set()).add(name)
+    return {pid: names for pid, names in by_id.items() if len(names) > 1}
+
+
 def map_players(names: list[str], candidates: pd.DataFrame, team: str | None = None,
                 explicit: dict[str, str] | None = None,
                 overrides: dict[str, str] | None = None) -> tuple[dict[str, str | None], list[str]]:
     explicit = {k: v for k, v in (explicit or {}).items() if isinstance(v, str) and v}
     overrides = load_overrides() if overrides is None else overrides
+    problems: list[str] = []
+    shared = duplicate_ids(explicit)
+    for pid, holders in sorted(shared.items()):
+        if any(n in names for n in holders):
+            problems.append(f"explicit ID {pid} is given to {', '.join(sorted(holders))}: ignored, "
+                            "matched by name instead (fix sgo_player_id in the players CSV)")
+    explicit = {k: v for k, v in explicit.items() if v not in shared}
     keyed = candidates.assign(key=candidates.name.map(name_key))
     out: dict[str, str | None] = {}
-    problems: list[str] = []
     for name in names:
         if name in explicit:
             out[name] = explicit[name]

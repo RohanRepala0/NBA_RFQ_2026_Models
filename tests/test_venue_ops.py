@@ -137,16 +137,22 @@ def test_archive_rows_and_resumable_download(tmp_path):
 
 
 def test_no_code_path_can_place_an_order():
-    """Hard rule 4, enforced statically: venue modules only GET public market data."""
-    venue_files = ["kalshi.py", "kalshi_history.py", "polymarket.py", "polymarket_us.py", "venues.py", "grade.py"]
-    for name in venue_files:
-        src = (PACKAGE / name).read_text()
+    """Hard rule 4, enforced statically on every module in the package (the venue readers, the
+    scan, decisions, distributions, the CLI, and anything added later): GETs of public market
+    data only, no order or portfolio path, never the authenticated Polymarket US host."""
+    modules = sorted(PACKAGE.glob("*.py"))
+    assert {"kalshi.py", "kalshi_history.py", "polymarket.py", "polymarket_us.py", "venues.py", "grade.py",
+            "decision.py", "distributions.py", "pipeline.py", "cli.py"} <= {p.name for p in modules}
+    for path in modules:
+        name, src = path.name, path.read_text()
         assert not re.search(r"\.(post|put|delete|patch)\(", src), name
-        assert "https://api.polymarket.us" not in src, name         # the authenticated trading host
-        for path in ("/portfolio", "/orders", "/order", "/balance", "/positions"):
-            assert f'"{path}' not in src and f"'{path}" not in src, (name, path)
-    for src in (p.read_text() for p in PACKAGE.glob("*.py")):
-        assert not re.search(r"KALSHI_(API_)?KEY|POLYMARKET_(API_)?KEY|PRIVATE_KEY", src)
+        assert "https://api.polymarket.us" not in src and "//api.polymarket.us" not in src, name   # trading host
+        for p in ("/portfolio", "/orders", "/order", "/balance", "/positions"):
+            assert f'"{p}' not in src and f"'{p}" not in src, (name, p)
+        assert not re.search(r"KALSHI_(API_)?KEY|POLYMARKET_(API_)?KEY|PRIVATE_KEY", src), name
+        # Hard rule 2: SportsGameOdds' precomputed consensus fields are named only where they are dropped.
+        if name != "sgo_client.py":
+            assert not re.search(r"fairOdds|bookOdds|fairOverUnder|bookOverUnder", src), name
 
 
 # --- regressions from the adversarial review -------------------------------------------

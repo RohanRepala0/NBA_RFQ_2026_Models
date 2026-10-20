@@ -34,9 +34,11 @@ SCHEMA: dict[str, dict[str, str]] = {
         "team_id": "VARCHAR", "team_abbr": "VARCHAR", "name": "VARCHAR",
         "status": "VARCHAR",
     },
+    # `stat` (points | rebounds | assists) on odds, projections, signals and venue rows: NULL in
+    # rows logged before rebounds and assists were added, and every read treats NULL as points.
     "odds_snapshots": {
         "ts": "TIMESTAMP", "event_id": "VARCHAR", "odd_id": "VARCHAR",
-        "player_id": "VARCHAR", "side": "VARCHAR", "book": "VARCHAR",
+        "player_id": "VARCHAR", "stat": "VARCHAR", "side": "VARCHAR", "book": "VARCHAR",
         "book_role": "VARCHAR", "line": "DOUBLE", "odds_american": "DOUBLE", "available": "BOOLEAN",
         "is_main_line": "BOOLEAN", "quote_ts": "TIMESTAMP", "snapshot_tag": "VARCHAR",
     },
@@ -47,14 +49,14 @@ SCHEMA: dict[str, dict[str, str]] = {
     "projections": {
         "ts": "TIMESTAMP", "event_id": "VARCHAR", "player_id": "VARCHAR",
         "player_name": "VARCHAR", "team": "VARCHAR", "new_team": "BOOLEAN",
-        "scenario": "VARCHAR", "mean": "DOUBLE", "sd": "DOUBLE",
+        "scenario": "VARCHAR", "stat": "VARCHAR", "mean": "DOUBLE", "sd": "DOUBLE",
         "proj_mpg": "DOUBLE", "usg_proj": "DOUBLE",
         "inputs_hash": "VARCHAR", "model_version": "VARCHAR",
     },
     "signals": {
         "ts": "TIMESTAMP", "event_id": "VARCHAR", "player_id": "VARCHAR",
         "player_name": "VARCHAR", "team": "VARCHAR", "new_team": "BOOLEAN",
-        "timing": "VARCHAR", "side": "VARCHAR", "model_p": "DOUBLE",
+        "timing": "VARCHAR", "stat": "VARCHAR", "side": "VARCHAR", "model_p": "DOUBLE",
         "consensus_p": "DOUBLE", "line": "DOUBLE", "edge": "DOUBLE",
         "decision": "VARCHAR", "reason": "VARCHAR",
         "model_mean": "DOUBLE", "consensus_mean": "DOUBLE", "n_books": "INTEGER",
@@ -65,7 +67,7 @@ SCHEMA: dict[str, dict[str, str]] = {
     "venue_snapshots": {
         "ts": "TIMESTAMP", "tag": "VARCHAR", "venue": "VARCHAR", "event_id": "VARCHAR",
         "event_ticker": "VARCHAR", "ticker": "VARCHAR", "player": "VARCHAR", "player_id": "VARCHAR",
-        "team": "VARCHAR", "threshold": "INTEGER", "line": "DOUBLE",
+        "team": "VARCHAR", "stat": "VARCHAR", "threshold": "INTEGER", "line": "DOUBLE",
         "yes_bid": "DOUBLE", "yes_ask": "DOUBLE", "no_bid": "DOUBLE", "no_ask": "DOUBLE",
         "yes_ask_size": "DOUBLE", "no_ask_size": "DOUBLE", "volume": "DOUBLE", "open_interest": "DOUBLE",
         "fee_rate": "DOUBLE", "tip_ts": "TIMESTAMP", "parse_error": "VARCHAR",
@@ -75,8 +77,9 @@ SCHEMA: dict[str, dict[str, str]] = {
     "venue_signals": {
         "ts": "TIMESTAMP", "signal_id": "VARCHAR", "tag": "VARCHAR", "event_id": "VARCHAR",
         "game": "VARCHAR", "player_id": "VARCHAR", "player": "VARCHAR", "team": "VARCHAR",
-        "venue": "VARCHAR", "ticker": "VARCHAR", "event_ticker": "VARCHAR", "contract": "VARCHAR",
-        "side": "VARCHAR", "threshold": "INTEGER", "line": "DOUBLE", "rung_distance": "DOUBLE",
+        "venue": "VARCHAR", "ticker": "VARCHAR", "event_ticker": "VARCHAR", "stat": "VARCHAR",
+        "contract": "VARCHAR", "side": "VARCHAR", "threshold": "INTEGER", "line": "DOUBLE",
+        "rung_distance": "DOUBLE",
         "quote_ts": "TIMESTAMP", "tip_ts": "TIMESTAMP", "status": "VARCHAR",
         "bid": "DOUBLE", "ask": "DOUBLE", "ask_size": "DOUBLE", "max_price": "DOUBLE",
         "size_at_edge": "DOUBLE", "cost": "DOUBLE", "fee_rate": "DOUBLE",
@@ -101,7 +104,8 @@ SCHEMA: dict[str, dict[str, str]] = {
     },
     "results": {
         "ts": "TIMESTAMP", "event_id": "VARCHAR", "player_id": "VARCHAR",
-        "actual_points": "DOUBLE", "close_consensus_line": "DOUBLE",
+        "actual_points": "DOUBLE", "actual_rebounds": "DOUBLE", "actual_assists": "DOUBLE",
+        "close_consensus_line": "DOUBLE",
         "close_consensus_p": "DOUBLE", "close_consensus_mean": "DOUBLE",
         "close_n_books": "INTEGER", "close_snapshot_ts": "TIMESTAMP",
         "close_source": "VARCHAR",

@@ -12,6 +12,20 @@ from tests.fixtures.synthetic import events_response, synthetic_event
 FAKE_KEY = "test-key-should-never-appear-0123456789"
 
 
+@pytest.fixture(autouse=True)
+def offline(monkeypatch):
+    """Tests never reach a venue or any other host: the live venue readers are empty (a test that
+    needs quotes patches its own), and any socket connect fails at once."""
+    import socket
+
+    from cold_start_usage import venues
+    monkeypatch.setattr(venues, "live_fetchers", lambda: venues.Fetchers())
+
+    def refuse(*args, **kwargs):
+        raise RuntimeError("network access in a test")
+    monkeypatch.setattr(socket.socket, "connect", refuse)
+
+
 def usage_body(used: int, style: str = "spec") -> dict:
     if style == "spec":
         month = {"max-requests": "unlimited", "current-requests": 3, "max-entities": 2500, "current-entities": used}

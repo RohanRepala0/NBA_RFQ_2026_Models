@@ -4,22 +4,27 @@ Every Kalshi rung and Polymarket market becomes one row per side with a
 decision in {actionable, watch, abstain, reference} and a reason. Nothing else
 in the package may call a contract actionable (or READY).
 
-Fair value. One points distribution per player-game, leaning on the market:
+Fair value. One distribution per player-game and stat (points, rebounds or
+assists), leaning on the market:
     m = consensus_mean + w * (model_mean - consensus_mean)
 with w = W_MODEL while the model sits within Z_GAP_MAX consensus SDs of the
-market, else w = 0 and the row is flagged (a big gap is more often a minutes
-or injury input than a mispriced market). A contract's probability is the
-lower of two SD models (linear and compound-Poisson), so rungs far from the
-books' line aren't priced off one SD assumption. EV_market is the same with
-w = 0: the venue against the sportsbook consensus alone.
+market (the stat's own SD), else w = 0 and the row is flagged (a big gap is more
+often a minutes or injury input than a mispriced market). A contract's
+probability is the lower of two models (distributions.robust_p: for points the
+linear and compound-Poisson SDs, for rebounds and assists a negative binomial at
+phi and phi_alt), so rungs far from the books' line aren't priced off one
+assumption. EV_market is the same with w = 0: the venue against the sportsbook
+consensus alone.
 
 Gates, in order (the first that fails is the reason):
-  reference venue -> after tip -> unparsed -> player out (questionable: watch)
-  -> no / stale consensus -> leak (consensus newer than the quote) -> tail rung
-  -> no ask -> EV_market above the sanity cap ("check inputs")
+  reference venue -> after tip -> unparsed (or a quote of another stat) -> player out
+  (questionable: watch) -> no / stale consensus -> leak (consensus newer than the quote)
+  -> tail rung -> no ask -> EV_market above the sanity cap ("check inputs")
   -> EV_blend below tau -> EV_market < 0 ("model-only value")
   -> size at the max price below the minimum ("thin": watch)
-Then one pick per player-game, and fractional-Kelly contracts under caps.
+Then one pick per player-game and stat, and fractional-Kelly contracts under caps. The
+per-bet cap is per player-game across stats: a player's points and rebounds picks share
+it, since both ride on his minutes.
 """
 from __future__ import annotations
 
@@ -31,38 +36,29 @@ from datetime import datetime, timedelta
 
 import pandas as pd
 
-from . import config
+from . import config, distributions
 from .config import MODEL, ModelParams
+from .distributions import normal_side_p as side_p    # noqa: F401  (points: P(YES) under N(mean, sd))
+from .distributions import sd_compound                # noqa: F401
 from .fees import fee_per_contract, fee_total
-from .odds_math import p_over_normal, points_sd
 
 
-def sd_compound(mean: float, ab: tuple[float, float] = config.SD_COMPOUND) -> float:
-    a, b = ab
-    return math.sqrt(max(a * mean + (b * mean) ** 2, 1e-9))
-
-
-def side_p(mean: float, line: float, side: str, sd: float) -> float:
-    """P(YES) = P(points > line) for side YES, else 1 - that. Lines are X.5."""
-    p = p_over_normal(mean, line, sd=sd)
-    return p if side == "YES" else 1.0 - p
-
-
-def robust_p(mean: float, line: float, side: str, params: ModelParams = MODEL) -> tuple[float, float]:
-    """(lower of the two SD models, spread between them)."""
-    p1 = side_p(mean, line, side, points_sd(mean, params))
-    p2 = side_p(mean, line, side, sd_compound(mean))
-    return min(p1, p2), abs(p1 - p2)
+def robust_p(mean: float, line: float, side: str, params: ModelParams = MODEL,
+             stat: str = "points") -> tuple[float, float]:
+    """(lower of the two models, spread between them): see distributions.robust_p."""
+    return distributions.robust_p(stat, mean, line, side, params)
 
 
 def blend(model_mean: float | None, cons_mean: float, params: ModelParams = MODEL,
-          w: float = config.W_MODEL, z_max: float = config.Z_GAP_MAX) -> tuple[float, float, str | None]:
-    """(blended mean, weight used, flag)."""
+          w: float = config.W_MODEL, z_max: float = config.Z_GAP_MAX,
+          stat: str = "points") -> tuple[float, float, str | None]:
+    """(blended mean, weight used, flag). The gap is judged in the stat's own SD."""
     if model_mean is None or (isinstance(model_mean, float) and math.isnan(model_mean)):
         return cons_mean, 0.0, "no projection: market only"
     gap = model_mean - cons_mean
-    if abs(gap) > z_max * points_sd(cons_mean, params):
-        return cons_mean, 0.0, f"model {gap:+.1f} pts from market (> {z_max} SD): check minutes/injury inputs"
+    if abs(gap) > z_max * distributions.sd(stat, cons_mean, params):
+        return cons_mean, 0.0, (f"model {gap:+.1f} {distributions.unit(stat)} from market (> {z_max} SD): "
+                                "check minutes/injury inputs")
     return cons_mean + w * gap, w, None
 
 
@@ -104,7 +100,7 @@ def config_hash() -> str:
     keys = ["EDGE_THRESHOLD", "MAX_CREDIBLE_EDGE", "VIG_METHOD", "BOOK_WEIGHTS", "VENUE_FEES", "VENUE_MIN_EDGE",
             "THIN_CONSENSUS_EXTRA_EDGE", "MIN_SIZE_AT_EDGE", "PLANNED_CONTRACTS", "TAIL_P", "W_MODEL",
             "Z_GAP_MAX", "SD_COMPOUND", "KELLY_LAMBDA", "MAX_BET_FRAC", "MAX_GAME_FRAC", "MAX_SLATE_FRAC",
-            "MAX_QUOTE_AGE_MIN", "MIN_PRICED_BOOKS", "LEAK_TOLERANCE_MIN"]
+            "MAX_QUOTE_AGE_MIN", "MIN_PRICED_BOOKS", "LEAK_TOLERANCE_MIN", "STATS", "COUNT_DISPERSION"]
     blob = json.dumps({k: getattr(config, k) for k in keys} | {"MODEL": MODEL.__dict__},
                       sort_keys=True, default=str)
     return hashlib.sha256(blob.encode()).hexdigest()[:12]
@@ -123,6 +119,7 @@ class Context:
     event_id: str | None = None
     game: str | None = None
     player_id: str | None = None
+    stat: str = "points"                      # points | rebounds | assists
     status: str | None = None                 # roster / injury status, lower case
     consensus: object | None = None           # consensus.Consensus
     model_mean: float | None = None
@@ -130,10 +127,12 @@ class Context:
     params: ModelParams = MODEL
 
 
-def contract_label(q: dict, side: str) -> str:
+def contract_label(q: dict, side: str, stat: str = "points") -> str:
+    """'25+ YES' / 'over 24.5' for points (as always); '8+ REB YES' / 'over 7.5 REB' for others."""
+    tag = "" if stat == "points" else f" {config.STAT_LABELS.get(stat, stat)}"
     if q.get("threshold") is not None and not pd.isna(q.get("threshold")):
-        return f"{int(q['threshold'])}+ {side}"
-    return f"{'over' if side == 'YES' else 'under'} {q['line']:g}"
+        return f"{int(q['threshold'])}+{tag} {side}"
+    return f"{'over' if side == 'YES' else 'under'} {q['line']:g}{tag}"
 
 
 def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float, float]] | None = None,
@@ -146,11 +145,15 @@ def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float
     ask = None if ask is None or pd.isna(ask) or not 0 < ask < 1 else float(ask)
     quote_ts = q.get("quote_ts") or ctx.now
     c = ctx.consensus
+    stat = ctx.stat
+    q_stat = q.get("stat") if isinstance(q.get("stat"), str) else None
     row = {
         "ts": ctx.now, "signal_id": signal_id(venue, q.get("ticker"), side, tag, quote_ts), "tag": tag,
         "event_id": ctx.event_id, "game": ctx.game, "player_id": ctx.player_id, "player": q.get("player"),
         "team": q.get("team"), "venue": venue, "ticker": q.get("ticker"), "event_ticker": q.get("event_ticker"),
-        "contract": contract_label(q, side) if q.get("line") is not None and not pd.isna(q.get("line")) else None,
+        "stat": q_stat if "stat" in q else stat,
+        "contract": (contract_label(q, side, q_stat or stat) if q.get("line") is not None
+                     and not pd.isna(q.get("line")) else None),
         "side": side, "threshold": q.get("threshold"), "line": q.get("line"), "quote_ts": quote_ts,
         "tip_ts": ctx.tip, "status": ctx.status, "bid": bid, "ask": ask,
         "ask_size": None if top_size is None or pd.isna(top_size) else float(top_size),
@@ -173,11 +176,15 @@ def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float
         return done("abstain", "after tip: in-game price")
     if isinstance(q.get("parse_error"), str) and q["parse_error"]:   # NaN from pandas is not an error
         return done("abstain", f"unparsed: {q['parse_error']}")
+    if "stat" in q and q_stat != stat:                                # never price one stat off another
+        return done("abstain", f"unparsed: a {q_stat or 'stat-less'} quote priced as {stat}")
     if ctx.player_id is None:
         return done("abstain", "unmatched name: not on this game's roster")
     status = (ctx.status or "").lower()
     if status in config.OUT_STATUSES:
         return done("abstain", f"player listed {status}")
+    if c is not None and getattr(c, "stat", stat) != stat:            # a points consensus never prices rebounds
+        return done("abstain", f"no consensus: the one given is for {c.stat}, not {stat}")
     if c is None or c.mean is None:
         return done("abstain", "no consensus: fewer than 2 priced books" if c is None else
                     (c.abstain_reason or "no consensus"))
@@ -189,10 +196,10 @@ def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float
 
     line = float(q["line"])
     row["rung_distance"] = round(line - c.line, 2) if c.line is not None else None
-    p_mkt, _ = robust_p(c.mean, line, side, ctx.params)
-    p_mkt_center = side_p(c.mean, line, side, points_sd(c.mean, ctx.params))
-    m_b, w_eff, flag = blend(ctx.model_mean, c.mean, ctx.params)
-    p_bl, spread = robust_p(m_b, line, side, ctx.params)
+    p_mkt, _ = distributions.robust_p(stat, c.mean, line, side, ctx.params)
+    p_mkt_center = distributions.side_p(stat, c.mean, line, side, ctx.params)
+    m_b, w_eff, flag = blend(ctx.model_mean, c.mean, ctx.params, stat=stat)
+    p_bl, spread = distributions.robust_p(stat, m_b, line, side, ctx.params)
     tau = tau_for(venue, c.n_books)
     row.update(p_market=p_mkt, w_model=w_eff, blend_mean=m_b, p_blend=p_bl, p_spread=spread, tau=tau)
     lo, hi = config.TAIL_P
@@ -256,18 +263,25 @@ def fill_cost(levels: list[tuple[float, float]], n: int, venue: str, rate: float
     return None
 
 
+def _stats(rows: pd.DataFrame) -> pd.Series:
+    return rows.stat.fillna("points") if "stat" in rows else pd.Series("points", index=rows.index)
+
+
 def pick_per_group(rows: pd.DataFrame, filled: set | None = None) -> pd.DataFrame:
-    """Keep the best actionable contract per player-game (across venues, rungs and sides).
-    A player-game Rohan already holds (`filled`) gets no new pick."""
+    """Keep the best actionable contract per player-game and stat (across venues, rungs and
+    sides). A (game, player, stat) Rohan already holds (`filled`) gets no new pick on that stat;
+    a bare (game, player) key in `filled` blocks every stat of that player-game."""
     if rows.empty or "decision" not in rows:
         return rows
     rows = rows.copy()
     act = rows[rows.decision == "actionable"]
     if act.empty:
         return rows
-    for key, grp in act.groupby([act.event_id.fillna(act.event_ticker), act.player_id.fillna(act.player)]):
-        if filled and key in filled:
-            rows.loc[grp.index, ["decision", "reason"]] = ["abstain", "already holding this player-game"]
+    for key, grp in act.groupby([act.event_id.fillna(act.event_ticker), act.player_id.fillna(act.player),
+                                 _stats(act)]):
+        if filled and (key in filled or key[:2] in filled):
+            what = "player-game" if key[2] == "points" else f"player-game ({key[2]})"
+            rows.loc[grp.index, ["decision", "reason"]] = ["abstain", f"already holding this {what}"]
             continue
         best = grp.ev_blend.idxmax()
         for i in grp.index:
@@ -289,15 +303,16 @@ class Exposure:
     earlier scans of other games. Caps hold across scans, not just within one."""
     slate: float = 0.0
     game: dict = field(default_factory=dict)        # event id -> fraction
-    group: dict = field(default_factory=dict)       # (event id, player id) -> fraction
-    filled: set = field(default_factory=set)        # player-games already held
+    group: dict = field(default_factory=dict)       # (event id, player id) -> fraction, across stats
+    filled: set = field(default_factory=set)        # (event id, player id, stat) already held
 
 
 def size_positions(rows: pd.DataFrame, bankroll: float | None, prior: Exposure | None = None) -> pd.DataFrame:
     """Suggested contracts for actionable rows, highest EV first. Each contract's cost is walked up
     its ladder (VWAP plus the fee at the real order size), and the count is the largest that keeps
     EV >= tau on the blend, >= 0 on the market alone, quarter Kelly, and the per-bet, per-game
-    and per-slate caps (counting `prior` exposure). No bankroll: the size available at the edge."""
+    and per-slate caps (counting `prior` exposure). The per-bet cap is per player-game across
+    stats (points and rebounds on one player share it). No bankroll: the size available at the edge."""
     rows = rows.copy()
     for col in ("kelly", "stake_frac", "contracts", "stake_usd", "ev_blend", "p_blend", "p_market",
                 "cost", "size_at_edge", "ladder", "tau"):
@@ -335,8 +350,14 @@ def size_positions(rows: pd.DataFrame, bankroll: float | None, prior: Exposure |
                 continue
             best = (n, total, unit)
         if best is None:
-            reason = ("over the game or slate cap" if room is not None and room < 0.01
-                      else "stake rounds to 0 contracts" if bankroll is not None else "no size at the edge")
+            if room is not None and room < 0.01:
+                # Name the cap that binds: a player's stats share one per-player cap.
+                player_room = config.MAX_BET_FRAC - group_used.get(group, 0.0)
+                other_room = min(config.MAX_GAME_FRAC - game_used.get(game, 0.0), config.MAX_SLATE_FRAC - slate_used)
+                reason = (f"per-player cap ({100 * config.MAX_BET_FRAC:g}% per player-game, all stats) "
+                          "used by an earlier pick" if player_room <= other_room else "over the game or slate cap")
+            else:
+                reason = "stake rounds to 0 contracts" if bankroll is not None else "no size at the edge"
             rows.loc[i, ["decision", "reason"]] = ["watch", reason]
             continue
         n, total, unit = best

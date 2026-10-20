@@ -17,8 +17,8 @@ flowchart LR
         SGO["SportsGameOdds API<br/>/events · /players · /account/usage"]
         STAT["StatMuse team pages<br/>2025-26 lines · team 3PT"]
         MOVES["NBA.com offseason tracker<br/>+ roster overrides"]
-        KAL["Kalshi public API<br/>KXNBAPTS ladders · books"]
-        PMUS["Polymarket US gateway<br/>player props · books"]
+        KAL["Kalshi public API<br/>KXNBAPTS · KXNBAREB · KXNBAAST<br/>ladders · books"]
+        PMUS["Polymarket US gateway<br/>points · rebounds · assists props · books"]
         PMI["polymarket.com<br/>reference price only"]
     end
 
@@ -43,10 +43,10 @@ flowchart LR
     subgraph MODEL["Model layer"]
         direction TB
         CAT["catalog.py<br/>roster precedence ·<br/>offseason effect · tiers"]
-        USG["usage_model.py + spacing.py<br/>usage squeeze per scenario"]
-        CONS["consensus.py<br/>no-vig · weighted median ·<br/>abstain rules"]
+        USG["usage_model.py + spacing.py<br/>usage squeeze per scenario ·<br/>rebound / assist budgets"]
+        CONS["consensus.py<br/>per stat: no-vig · weighted<br/>median · abstain rules"]
         SIG["signals.py<br/>leans vs the books"]
-        DEC["decision.py<br/>market-leaning blend · gates ·<br/>one pick · capped Kelly"]
+        DEC["decision.py + distributions.py<br/>market-leaning blend · gates ·<br/>one pick per stat · capped Kelly"]
     end
 
     subgraph OUT["Outputs"]
@@ -114,7 +114,7 @@ Only **reference** books build the consensus. Prediction markets that SportsGame
 
 ## The venue decision path
 
-Every Kalshi and Polymarket US contract side goes through the same gates in `decision.py`. The first gate that fails becomes the logged reason. Every side is logged, so nothing silently drops out.
+Every Kalshi and Polymarket US contract side goes through the same gates in `decision.py`, against the consensus and projection of its own stat (points, rebounds or assists). The first gate that fails becomes the logged reason. Every side is logged, so nothing silently drops out.
 
 ```mermaid
 flowchart TB
@@ -133,7 +133,7 @@ flowchart TB
     EV -- yes --> Z{"Questionable?<br/>10+ contracts at<br/>the max price?"}
     Z -- "questionable or thin" --> W["watch"]
     Z -- ok --> A["actionable"]
-    A --> P["one pick per player-game ·<br/>quarter Kelly, 0.5% / 1.5% / 3% caps"]
+    A --> P["one pick per player-game and stat ·<br/>quarter Kelly, 0.5% per player-game<br/>across stats / 1.5% / 3% caps"]
     P --> TK["ticket: venue · market · side ·<br/>limit price · quantity · cancel-by"]
 ```
 
@@ -157,9 +157,9 @@ sequenceDiagram
     CLI->>SGO: slate for the ET day (once)
     SGO-->>DB: events, event_players
     loop each game at T-6h, T-2h, T-60m, T-15m
-        CLI->>SGO: player points for that game (metered)
+        CLI->>SGO: player points, rebounds, assists for that game (metered, 1 object)
         SGO-->>DB: odds_snapshots (allowlisted books only)
-        CLI->>DB: auto projections if none yet · leans at T-60m / T-15m
+        CLI->>DB: auto projections if none current · leans at T-60m / T-15m
     end
     loop each game at T-6h, T-2h, T-60m, T-15m, T-5m (free)
         CLI->>Venues: markets + order books (public GETs)
@@ -184,7 +184,7 @@ sequenceDiagram
 
 ```mermaid
 flowchart LR
-    SPLITS["data/league_2025_26/*.csv<br/>StatMuse lines, ≥100 min"] --> PT["players table<br/>usg · min · ppg"]
+    SPLITS["data/league_2025_26/*.csv<br/>StatMuse lines, ≥100 min"] --> PT["players table<br/>usg · min · ppg · rpg · apg"]
     OVR["roster_overrides_2026_27.csv"] --> RR{"Roster precedence<br/>overrides > NBA.com moves ><br/>SGO /players > last season"}
     MV["offseason_moves_2026.csv"] --> RR
     SGOR["rosters_2026_27_sgo.json"] --> RR
@@ -209,14 +209,14 @@ Hand-reviewed scenarios in `cold_start_usage/scenarios/` (Miami, Toronto) take p
 | `api_calls` | `sgo_client` | budget guard, `usage` | one billable request and its object count |
 | `events` | `ingest` | everything game-scoped | one game at one snapshot |
 | `event_players` | `ingest` | `project` | one rostered player and injury status |
-| `odds_snapshots` | `ingest` | `consensus` | one book's over/under on one player at one checkpoint |
+| `odds_snapshots` | `ingest` | `consensus` | one book's over/under on one player and stat at one checkpoint |
 | `books_seen` | `ingest` | `books`, allowlist audit | one book seen on one call, with its role |
-| `projections` | `project`, cron (`--with-projections`) | `signals`, `venues`, `grade` | one player's mean and SD under one scenario, before tip |
+| `projections` | `project`, cron (`--with-projections`) | `signals`, `venues`, `grade` | one player's mean and SD for one stat under one scenario, before tip (NULL mean: that stat had no inputs) |
 | `signals` | `signals` | `watchlist`, `grade`, `report` | one model-vs-books comparison: a `paper` lean or `abstain` with a reason (never actionable) |
-| `venue_snapshots` | `venues` (cron, `venues`, `board`) | `grade` (venue close for CLV) | one venue market's bid, ask and sizes at one checkpoint; refused at or after tip |
-| `venue_signals` | `venues` via `decision` | `board`, `tickets`, `watchlist`, `grade` | one contract side's decision and reason, with fair prices, EV, max price, size and a config hash; refused at or after tip |
+| `venue_snapshots` | `venues` (cron, `venues`, `board`) | `grade` (venue close for CLV) | one venue market's bid, ask and sizes at one checkpoint, with its stat; refused at or after tip |
+| `venue_signals` | `venues` via `decision` | `board`, `tickets`, `watchlist`, `grade` | one contract side's decision and reason, with its stat, fair prices, EV, max price, size and a config hash; refused at or after tip |
 | `tickets` | `fill` | `grade` | one fill entered by hand on a venue |
 | `venue_settlements` | `grade` | `grade` | a market's settlement: 1, 0, or a fair price |
-| `results` | `grade` | `grade`, `report` | one player's actual points plus the closing consensus |
+| `results` | `grade` | `grade`, `report` | one player's actual points, rebounds and assists plus the closing points consensus |
 
-Every timestamp is UTC. `--now` (simulated time) is refused on the default database, so the real log can't be back-dated.
+The `stat` column on odds, projections, signals and venue rows was added to existing tables in place; rows logged before it are NULL there, and every read treats NULL as points. Every timestamp is UTC. `--now` (simulated time) is refused on the default database, so the real log can't be back-dated.

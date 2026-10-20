@@ -1,12 +1,18 @@
-"""Per-player market consensus built only from allowlisted reference books.
+"""Per-player, per-stat market consensus built only from allowlisted reference books.
 
 1. Per book: pair the over and under at its main line and remove the vig
    (power by default; multiplicative stored alongside for comparison).
 2. Books post different lines (24.5 vs 25.5), so compare implied means: back
-   out the mean m with P(X > line) = p_over for X ~ N(m, max(4, 0.30 m)).
+   out the mean m with P(X > line) = p_over under the stat's distribution
+   (distributions.py: points N(m, max(4, 0.30 m)); rebounds and assists a
+   negative binomial with Var = phi * m).
 3. Consensus mean = weighted median of implied means (Pinnacle 2x). P(over)
-   for any line comes from N(mean, max(4, 0.30 mean)).
+   for any line comes from the same distribution at that mean.
 4. Abstain if fewer than MIN_PRICED_BOOKS books, or any quote used is stale.
+
+Each stat is its own consensus: rows are filtered to one stat (a NULL stat, from
+rows logged before rebounds and assists were stored, is points), so a rebounds
+quote can never move a points consensus. Every caller gets points by default.
 """
 from __future__ import annotations
 
@@ -16,10 +22,9 @@ from datetime import datetime
 
 import pandas as pd
 
-from . import config
+from . import config, distributions
 from .config import MODEL, ModelParams, book_role
-from .odds_math import (american_to_prob, devig, implied_mean, overround,
-                        p_over_normal, points_sd)
+from .odds_math import american_to_prob, devig, overround
 from .storage import Storage
 
 
@@ -49,6 +54,7 @@ class Consensus:
     abstain_reason: str | None = None
     notes: list[str] = field(default_factory=list)
     params: ModelParams = MODEL
+    stat: str = "points"
 
     @property
     def n_books(self) -> int:
@@ -56,12 +62,12 @@ class Consensus:
 
     @property
     def sd(self) -> float | None:
-        return points_sd(self.mean, self.params) if self.mean is not None else None
+        return distributions.sd(self.stat, self.mean, self.params) if self.mean is not None else None
 
     def p_over_at(self, line: float) -> float | None:
         if self.mean is None:
             return None
-        return p_over_normal(self.mean, line, params=self.params)
+        return distributions.p_over(self.stat, self.mean, line, self.params)
 
     def book_list(self) -> str:
         return ",".join(b.book for b in self.books)
@@ -95,11 +101,14 @@ def build_consensus(rows: pd.DataFrame, as_of: datetime, *, event_id: str, playe
                     weights: dict[str, float] | None = None,
                     min_books: int = config.MIN_PRICED_BOOKS,
                     max_age_min: float = config.MAX_QUOTE_AGE_MIN,
-                    params: ModelParams = MODEL) -> Consensus:
-    """`rows`: one snapshot's odds_snapshots rows for one player."""
+                    params: ModelParams = MODEL, stat: str = "points") -> Consensus:
+    """`rows`: one snapshot's odds_snapshots rows for one player. Rows of other stats are
+    dropped here too (defense in depth: callers already pass one stat)."""
     weights = config.BOOK_WEIGHTS if weights is None else weights
     out = Consensus(event_id=event_id, player_id=player_id, as_of=as_of,
-                    snapshot_ts=snapshot_ts, mean=None, line=None, p_over=None, params=params)
+                    snapshot_ts=snapshot_ts, mean=None, line=None, p_over=None, params=params,
+                    stat=distributions.check_stat(stat))
+    rows = only_stat(rows, stat)
     usable = rows[rows.book.map(lambda b: book_role(b) == "reference")
                   & rows.available.fillna(False).astype(bool)
                   & rows.is_main_line.fillna(True).astype(bool)
@@ -128,7 +137,7 @@ def build_consensus(rows: pd.DataFrame, as_of: datetime, *, event_id: str, playe
         out.books.append(BookView(
             book=book, line=float(o.line), over_odds=float(o.odds_american),
             under_odds=float(u.odds_american), p_over=p_over, p_over_mult=p_mult,
-            implied_mean=implied_mean(float(o.line), p_over, params),
+            implied_mean=distributions.implied_mean(stat, float(o.line), p_over, params),
             weight=float(weights.get(book, config.DEFAULT_BOOK_WEIGHT)),
             age_min=max(ages) if ages else None))
 
@@ -152,6 +161,13 @@ def build_consensus(rows: pd.DataFrame, as_of: datetime, *, event_id: str, playe
     return out
 
 
+def only_stat(rows: pd.DataFrame, stat: str) -> pd.DataFrame:
+    """Rows of one stat. A missing or NULL stat (rows logged before rebounds and assists) is points."""
+    if rows.empty or "stat" not in rows.columns:
+        return rows if stat == "points" else rows.iloc[0:0]
+    return rows[rows.stat.fillna("points") == stat]
+
+
 # --- Storage helpers -------------------------------------------------------------
 def latest_snapshot_rows(storage: Storage, event_id: str, *, before: datetime | None = None,
                          tag: str | None = None) -> tuple[datetime | None, pd.DataFrame]:
@@ -172,18 +188,23 @@ def latest_snapshot_rows(storage: Storage, event_id: str, *, before: datetime | 
 
 
 def consensus_by_player(storage: Storage, event_id: str, as_of: datetime, *,
-                        before: datetime | None = None, tag: str | None = None) -> dict[str, Consensus]:
+                        before: datetime | None = None, tag: str | None = None,
+                        stat: str = "points") -> dict[str, Consensus]:
+    """player_id -> consensus for one stat (points unless asked) from the event's latest snapshot."""
     snapshot_ts, rows = latest_snapshot_rows(storage, event_id, before=before, tag=tag)
+    rows = only_stat(rows, distributions.check_stat(stat))
     if rows.empty:
         return {}
-    return {pid: build_consensus(grp, as_of, event_id=event_id, player_id=pid, snapshot_ts=snapshot_ts)
+    return {pid: build_consensus(grp, as_of, event_id=event_id, player_id=pid, snapshot_ts=snapshot_ts, stat=stat)
             for pid, grp in rows.groupby("player_id")}
 
 
-def sgo_target_quotes(storage: Storage, event_id: str, before: datetime | None = None) -> pd.DataFrame:
+def sgo_target_quotes(storage: Storage, event_id: str, before: datetime | None = None,
+                      stat: str = "points") -> pd.DataFrame:
     """Prediction-market quotes as SportsGameOdds carries them (role 'target'), if a plan ever
     returns any. Prices Rohan can act on come from the venues' own APIs (venues.py)."""
     _, rows = latest_snapshot_rows(storage, event_id, before=before)
+    rows = only_stat(rows, stat)
     if rows.empty:
         return rows
     return rows[(rows.book_role == "target") & rows.available.fillna(False).astype(bool)

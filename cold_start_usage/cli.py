@@ -159,8 +159,8 @@ def _snapshot_due(args, storage, now_fn, now) -> int:
             except Exception as exc:                 # one team's bad scenario file never stops the tick
                 print(f"Auto-projection skipped for {eid}: {type(exc).__name__}: {exc}")
         if done:
-            print(f"Auto-projected {done} game(s) with full_strength / auto rotations; "
-                  "`project --scenario` later replaces a team's run")
+            print(f"Auto-projected {done} game(s) (missing, an older model version, or a stat short; each team "
+                  "keeps its latest scenario, else full_strength); `project --scenario` later replaces a team's run")
     if args.with_signals:
         for tag in config.SIGNAL_TIMINGS:
             ids = {e for e, t in out["due"].items() if t == tag}
@@ -192,12 +192,13 @@ def cmd_snapshot(args, storage, now_fn) -> int:
     client = _client(storage, now_fn)
     d = args.date or et_date(now)
     out = snapshot_slate(client, storage, d, now)
-    print(f"Stored {out['events']} event(s), {out['odds_snapshots']} player-points quotes, "
-          f"{out['event_players']} roster rows for {d}")
+    print(f"Stored {out['events']} event(s), {out['odds_snapshots']} player-prop quotes "
+          f"({', '.join(config.STATS)}), {out['event_players']} roster rows for {d}")
     for n in out["notices"]:
         print(f"API notice: {n}")
     targets = storage.query("""SELECT book, count(DISTINCT player_id) AS players FROM odds_snapshots
-                               WHERE ts = ? AND book_role = 'target' GROUP BY book""", [now])
+                               WHERE ts = ? AND book_role = 'target' AND coalesce(stat, 'points') = 'points'
+                               GROUP BY book""", [now])
     for r in targets.itertuples():
         print(f"Prediction market posted: {r.book} has player points for {r.players} player(s)")
     print(_budget_line(storage, out["usage_before"], out["objects"]))
@@ -233,9 +234,10 @@ def cmd_project(args, storage, now_fn) -> int:
                              "side": sig["side"], "edge": sig["edge"], "decision": sig["decision"],
                              "reason": sig["reason"]})
     table = table.merge(pd.DataFrame(previews), on="player", how="left")
-    print(f"Logged projections at {now:%Y-%m-%d %H:%M} UTC (model {config.MODEL_VERSION})")
+    print(f"Logged projections at {now:%Y-%m-%d %H:%M} UTC (model {config.MODEL_VERSION}; points, "
+          "rebounds and assists; the sportsbook preview is points)")
     _print_table(table, ["team", "scenario", "player", "status", "min", "usg", "usg_proj", "ppg_25_26",
-                         "proj", "sd", "spc_old", "spc_new", "cons_line", "cons_mean", "side", "edge",
+                         "proj", "sd", "reb", "ast", "spc_old", "spc_new", "cons_line", "cons_mean", "side", "edge",
                          "decision", "reason"])
     return 0
 
@@ -285,6 +287,8 @@ def cmd_watchlist(args, storage, now_fn) -> int:
              "lean only says where to look; the venue columns show what Kalshi / Polymarket US list for the",
              "player and the logged decision. Only `tickets` are actionable. Research only.", ""]
     rows = []
+    if len(vs):
+        vs = vs[vs.stat.fillna("points") == "points"]                     # the leans are points
     for s in leans.itertuples():
         mine = vs[vs.player_id == s.player_id] if len(vs) else vs
         listed = "; ".join(f"{r.venue} {r.contract} {100 * r.ask:.0f}c: {r.decision}"
@@ -335,7 +339,7 @@ def cmd_grade(args, storage, now_fn) -> int:
 
 def _grade_venues(storage, d, now, offline: bool = False) -> None:
     """Kalshi / Polymarket US settlements (free public reads), then P&L at the venue's price."""
-    from .grade import fetch_venue_settlements, fills_graded, venue_graded, venue_summary
+    from .grade import fetch_venue_settlements, fills_graded, venue_graded, venue_summary, venue_summary_by_stat
     if not offline:
         import requests
 
@@ -345,11 +349,14 @@ def _grade_venues(storage, d, now, offline: bool = False) -> None:
                                     pm_us_settlement=lambda t: polymarket_us.settlement(t, session))
         print(f"Stored {n} venue settlement(s)")
     vg = venue_graded(storage, d, d)
-    print(f"Venue contracts {d} (first actionable decision per contract, paper):")
-    print("  " + ", ".join(f"{k}={v:.4f}" if isinstance(v, float) else f"{k}={v}"
-                           for k, v in venue_summary(vg).items()))
+    fmt = lambda summ: ", ".join(f"{k}={v:.4f}" if isinstance(v, float) else f"{k}={v}"  # noqa: E731
+                                 for k, v in summ.items())
+    print(f"Venue contracts {d} (first actionable decision per player-game and stat, paper):")
+    print("  all     : " + fmt(venue_summary(vg)))
+    for stat, summ in venue_summary_by_stat(vg).items():
+        print(f"  {stat:8s}: " + fmt(summ))
     if not vg.empty:
-        _print_table(vg, ["game", "venue", "player", "contract", "ask", "cost", "p_blend", "ev_blend",
+        _print_table(vg, ["game", "venue", "player", "stat", "contract", "ask", "cost", "p_blend", "ev_blend",
                           "result", "value", "pnl_per_contract", "close_mid", "clv_venue"])
     fills = fills_graded(storage)
     if not fills.empty:
@@ -468,10 +475,10 @@ def cmd_venues(args, storage, now_fn) -> int:
         return 0
     order = {"actionable": 0, "watch": 1, "abstain": 2, "reference": 3}
     show = df.assign(_o=df.decision.map(order)).sort_values(["_o", "ev_blend"], ascending=[True, False])
-    _print_table(show.head(args.top), ["game", "venue", "player", "contract", "ask", "ask_size", "p_market",
+    _print_table(show.head(args.top), ["game", "venue", "player", "stat", "contract", "ask", "ask_size", "p_market",
                                        "p_blend", "ev_market", "ev_blend", "max_price", "size_at_edge",
                                        "contracts", "decision", "reason"])
-    print(df.groupby(["venue", "decision"]).size().to_string())
+    print(df.assign(stat=df.stat.fillna("-")).groupby(["venue", "stat", "decision"]).size().to_string())
     config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     out = config.REPORTS_DIR / f"venues_{d}_{now:%H%M}.csv"
     df.to_csv(out, index=False)
@@ -538,8 +545,8 @@ def cmd_tickets(args, storage, now_fn) -> int:
             fair_c=(100 * act.p_blend).round(1), market_c=(100 * act.p_market).round(1),
             ev_pp=(100 * act.ev_blend).round(1),
             qty=act.contracts.where(act.contracts.notna(), act.size_at_edge))
-        cols = ["game", "tip_et", "cancel_by_et", "venue", "ticker", "player", "contract", "ask_c", "limit_c",
-                "qty", "fair_c", "market_c", "ev_pp", "stake_usd", "signal_id"]
+        cols = ["game", "tip_et", "cancel_by_et", "venue", "ticker", "player", "stat", "contract", "ask_c",
+                "limit_c", "qty", "fair_c", "market_c", "ev_pp", "stake_usd", "signal_id"]
         _print_table(t, cols)
         if t.stake_frac.isna().all():
             print(f"qty = contracts available at the edge; set {config.BANKROLL_ENV} (where the cron runs) for sized stakes.")
@@ -667,7 +674,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("usage", help="Show API object usage")
     p.add_argument("--measure", action="store_true", help="Call twice to measure the usage call's own cost")
     sub.add_parser("books", help="Discover which allowlisted books this key returns (1 object)")
-    p = sub.add_parser("snapshot", help="Snapshot player-points odds")
+    p = sub.add_parser("snapshot", help="Snapshot player points, rebounds and assists odds")
     g = p.add_mutually_exclusive_group()
     g.add_argument("--date", type=_parse_date, help="ET slate date (default today)")
     g.add_argument("--due", action="store_true", help="Cron mode: only events at a new checkpoint")
@@ -677,7 +684,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--with-venues", action="store_true",
                    help="With --due: read Kalshi / Polymarket US at t-6h, t-2h, t-60m, t-15m and t-5m, decide, log")
     p.add_argument("--with-projections", action="store_true",
-                   help="With --due: auto-log full_strength projections for due games that have none")
+                   help="With --due: auto-log projections for due games that have none current (missing, an "
+                        "older model version, or a stat short), keeping each team's latest scenario")
     p = sub.add_parser("project", help="Log projections for modeled teams on a date")
     p.add_argument("--date", type=_parse_date)
     p.add_argument("--scenario", action="append", help="TEAM=scenario, e.g. TOR=kawhi_out")

@@ -7,14 +7,15 @@ trading host api.polymarket.us is never called (hard rule 4).
 
 - Game events: /v1/events/slug/nba-{away}-{home}-{ET date}, with US team codes
   (ny, sa, gs, no, pho for NYK, SAS, GSW, NOP, PHX; others lower case).
-- Player props are "N+" ladders. Live WNBA Finals example: "Will Veronica
-  Burton record at least 10 points in Game 2: ATL vs GSV?", title "Veronica
-  Burton 10+ points", line 10 (= 10 or more), YES is the `long` side, and each
-  side carries the player's team abbreviation. Lines can be any integer, not
-  only multiples of 5. No NBA points props were listed for the opening slate
-  yet (props have appeared 1.5-4 days before tip); this reader picks them up
-  when they do, and an O/U X.5 line is handled too. Titles differ by sport, so
-  the numeric `line` and sportsMarketType are trusted over any text.
+- Player props are "N+" ladders, one sportsMarketType per stat
+  (config.PM_US_STAT_TYPES: basketball_player_points / _rebounds / _assists).
+  NBA wording: "Will Jaylen Brown record at least 10 total rebounds in ...?",
+  title "Jaylen Brown 10+ rebounds", line 10 (= 10 or more); points and assists
+  read the same way ("at least 30 points", "at least 5 assists"). YES is the
+  `long` side, and each side carries the player's team abbreviation. Lines can
+  be any integer (points step by 5, rebounds and assists by 1-2), and an O/U
+  X.5 line is handled too. The numeric `line` and sportsMarketType are trusted
+  over any text, and a stat word that disagrees with the type is a parse error.
 - The docs say slugs are not part of the public contract: games are found by
   slug first, then by teams and start date in the league's event list.
 - Book: /v1/markets/{slug}/book. `offers` are YES asks (ascending); a bid at p
@@ -30,18 +31,19 @@ from datetime import date
 import pandas as pd
 import requests
 
+from . import config
 from .players import name_key
 
 GATEWAY = "https://gateway.polymarket.us"
 HEADERS = {"User-Agent": "cold-start-usage-research/1.0"}
 VENUE = "polymarket_us"
 US_TEAM = {"NYK": "ny", "SAS": "sa", "GSW": "gs", "NOP": "no", "PHX": "pho"}
-POINTS_TYPES = {"basketball_player_points"}
-QUESTION_RE = re.compile(r"^Will (?P<name>.+?) (?:record|score)(?: at least| over)? (?P<n>\d+(?:\.\d+)?)\+? points",
-                         re.I)
-TITLE_RE = re.compile(r"^(?P<name>.+?):?\s+(?:(?:over|o)\s*)?(?P<n>\d+(?:\.\d+)?)\+?\s+points", re.I)
+STAT_WORD = r"(?:total\s+)?(?P<word>points?|rebounds?|assists?)\b"
+QUESTION_RE = re.compile(r"^Will (?P<name>.+?) (?:record|score)(?: at least| over)? (?P<n>\d+(?:\.\d+)?)\+? "
+                         + STAT_WORD, re.I)
+TITLE_RE = re.compile(r"^(?P<name>.+?):?\s+(?:(?:over|o)\s*)?(?P<n>\d+(?:\.\d+)?)\+?\s+" + STAT_WORD, re.I)
 FROM_US = {v: k for k, v in US_TEAM.items()}
-COLUMNS = ["venue", "ticker", "event_ticker", "player", "key", "team", "threshold", "line",
+COLUMNS = ["venue", "ticker", "event_ticker", "stat", "player", "key", "team", "threshold", "line",
            "yes_bid", "yes_ask", "no_bid", "no_ask", "yes_ask_size", "no_ask_size", "volume",
            "fee_rate", "tip", "parse_error"]
 
@@ -85,10 +87,13 @@ def _px(q) -> float | None:
     return None if q in (None, "") else float(q)
 
 
-def points_markets(event: dict) -> pd.DataFrame:
+def prop_markets(event: dict, stats: tuple[str, ...] = config.STATS) -> pd.DataFrame:
+    """One row per player-prop market of the given stats, with its stat from sportsMarketType.
+    Rows that can't be parsed are kept with `parse_error` set."""
     rows = []
     for m in event.get("markets") or []:
-        if m.get("sportsMarketType") not in POINTS_TYPES:
+        stat = config.PM_US_STAT_TYPES.get(m.get("sportsMarketType"))
+        if stat not in stats:
             continue
         question, title = (m.get("question") or "").strip(), (m.get("title") or "").strip()
         hit = QUESTION_RE.match(question) or TITLE_RE.match(title)
@@ -96,6 +101,8 @@ def points_markets(event: dict) -> pd.DataFrame:
         error = None
         if not hit:
             error = f"unparsed question {question!r}"
+        elif hit["word"].lower().rstrip("s") != stat.rstrip("s"):
+            error = f"question says {hit['word']!r} but sportsMarketType is {m.get('sportsMarketType')}"
         if line_raw is None:
             error = error or "no line"
             threshold, line = None, None
@@ -118,7 +125,7 @@ def points_markets(event: dict) -> pd.DataFrame:
         team = next((team_code((x.get("team") or {}).get("abbreviation")) for x in m.get("marketSides") or []
                      if x.get("long") and isinstance(x.get("team"), dict)), None)
         rows.append({
-            "venue": VENUE, "ticker": m.get("slug"), "event_ticker": event.get("slug"),
+            "venue": VENUE, "ticker": m.get("slug"), "event_ticker": event.get("slug"), "stat": stat,
             "player": name, "key": name_key(name) if name else None, "team": team,
             "threshold": threshold, "line": line, "yes_bid": bid, "yes_ask": ask,
             "no_bid": None if ask is None else round(1 - ask, 4), "no_ask": None if bid is None else round(1 - bid, 4),
@@ -128,6 +135,11 @@ def points_markets(event: dict) -> pd.DataFrame:
             "parse_error": error,
         })
     return pd.DataFrame(rows, columns=COLUMNS)
+
+
+def points_markets(event: dict) -> pd.DataFrame:
+    """Player points markets only (prop_markets for one stat)."""
+    return prop_markets(event, ("points",))
 
 
 def book_from_response(body: dict) -> dict[str, list[tuple[float, float]]]:

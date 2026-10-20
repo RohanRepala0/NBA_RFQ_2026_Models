@@ -1,5 +1,7 @@
 """Read-only international Polymarket (polymarket.com) NBA player points: REFERENCE ONLY.
 
+Points only (rows carry stat 'points'): it is a reference price, never actionable.
+
 The international exchange is close-only for US persons (docs.polymarket.com
 geoblock: "Users can close existing positions but cannot open new ones"), and
 every NBA points market there carries `restricted: true`. Rohan trades
@@ -33,7 +35,7 @@ POINTS_RE = re.compile(r"^(?P<name>.+?):\s*Points O/U\s*(?P<line>\d+(?:\.\d+)?)\
 KNOWN_FEE_TYPES = {"sports_fees_v3"}
 NICK = {abbr: nick.title() for nick, abbr in TEAM_NICKNAMES.items()}
 NICK.update({"POR": "Trail Blazers", "PHI": "76ers"})
-COLUMNS = ["venue", "ticker", "event_ticker", "player", "key", "team", "threshold", "line",
+COLUMNS = ["venue", "ticker", "event_ticker", "stat", "player", "key", "team", "threshold", "line",
            "yes_bid", "yes_ask", "no_bid", "no_ask", "yes_ask_size", "no_ask_size", "volume",
            "fee_rate", "token_yes", "token_no", "parse_error"]
 
@@ -92,6 +94,7 @@ def points_markets(event: dict) -> pd.DataFrame:
         bid, ask = _f(m.get("bestBid")), _f(m.get("bestAsk"))
         rows.append({
             "venue": VENUE, "ticker": m.get("slug") or str(m.get("id")), "event_ticker": event.get("slug"),
+            "stat": "points",
             "player": hit["name"].strip(), "key": name_key(hit["name"]), "team": None, "threshold": None,
             "line": float(hit["line"]), "yes_bid": bid, "yes_ask": ask,
             "no_bid": None if ask is None else round(1 - ask, 4), "no_ask": None if bid is None else round(1 - bid, 4),
