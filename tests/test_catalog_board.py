@@ -85,20 +85,35 @@ def test_live_catalog_files_are_consistent():
     assert c[c.player == "Klay Thompson"].team.iloc[0] == "MIA"           # manual override applied
 
 
-def test_board_waits_then_fills_in_when_lines_post(storage):
-    catalog = pd.DataFrame([{
-        "tier": "high", "situation": "arrival", "team": "MIA", "player": "Giannis Antetokounmpo",
-        "thesis": "New team (MIL -> MIA)", "proj": 32.0, "sd": 9.6, "ppg_2025_26": 27.6,
-        "usg_change": 1.2, "scenario_source": "reviewed"}])
+GIANNIS = {"tier": "high", "situation": "arrival", "team": "MIA", "player": "Giannis Antetokounmpo",
+           "thesis": "New team (MIL -> MIA)", "proj": 32.0, "sd": 9.6, "ppg_2025_26": 27.6,
+           "usg_change": 1.2, "scenario_source": "reviewed"}
+
+
+def test_board_waits_then_leans_but_never_ready_from_books_alone(storage):
+    catalog = pd.DataFrame([GIANNIS])
     waiting = build_board(catalog, storage, FETCHED)
     assert waiting.status.iloc[0] == "waiting for a line"
     assert waiting.fair_ladder.iloc[0].startswith("25+")          # Kalshi-style 5-point rungs
     snapshot_from_file(storage, events_response([synthetic_event()]), FETCHED)
     live = build_board(catalog, storage, FETCHED + timedelta(minutes=1))
-    row = live.iloc[0]
-    assert row.line == 29.5 and row.side == "over"
-    assert row.status.startswith("READY") and row.contract == "30+ YES" and row.max_cents > 0
-    assert "kalshi" in row.posted
+    status = live.status.iloc[0]
+    assert status.startswith("lean vs books: over 29.5") and status.endswith("(no venue price yet)")
+    assert not status.startswith("READY")                         # Rohan can't trade at the books
+
+
+def test_board_ready_only_from_a_logged_venue_decision(storage):
+    from cold_start_usage.pipeline import run_projections
+    from cold_start_usage.venues import Fetchers, scan
+    from tests.test_venues import kalshi_market
+    snapshot_from_file(storage, events_response([synthetic_event()]), FETCHED)
+    run_projections(storage, FETCHED.date(), FETCHED, {})
+    now = FETCHED + timedelta(minutes=1)
+    scan(storage, FETCHED.date(), now, Fetchers(kalshi_markets=lambda: [kalshi_market(
+        "MIAGANTETOKOUNMPO34", "Giannis Antetokounmpo", 30, 0.38, 0.40, 50, 50)]))
+    row = build_board(pd.DataFrame([GIANNIS]), storage, now).iloc[0]
+    assert row.status.startswith("READY (Kalshi): buy 30+ YES at or under")
+    assert row.venue == "kalshi" and row.contract == "30+ YES" and row.max_cents >= 40
 
 
 def test_rungs_follow_kalshi_five_point_ladders():
@@ -110,38 +125,32 @@ def test_rungs_follow_kalshi_five_point_ladders():
 KALSHI_MARKETS = [
     {"ticker": "KXNBAPTS-26OCT21MINMIA-MIAGANTETOKOUNMPO34-30", "event_ticker": "KXNBAPTS-26OCT21MINMIA",
      "title": "Giannis Antetokounmpo: 30+ points", "floor_strike": 29.5, "strike_type": "greater",
-     "yes_bid": 38, "yes_ask": 40, "no_bid": 59, "no_ask": 61, "volume": 250},
+     "yes_bid_dollars": "0.3800", "yes_ask_dollars": "0.4000", "no_bid_dollars": "0.6000",
+     "no_ask_dollars": "0.6200", "yes_ask_size_fp": "120.00", "yes_bid_size_fp": "45.50", "volume_fp": "250.00",
+     "occurrence_datetime": "2026-10-22T02:30:00Z"},
     {"ticker": "KXNBAPTS-26OCT21MINMIA-MIAGANTETOKOUNMPO34-35", "event_ticker": "KXNBAPTS-26OCT21MINMIA",
-     "title": "Giannis Antetokounmpo: 35+ points", "yes_bid_dollars": "0.2100", "yes_ask_dollars": "0.2300",
-     "no_bid_dollars": "0.7600", "no_ask_dollars": "0.7800"},
+     "title": "Giannis Antetokounmpo records 35+ points", "floor_strike": 34.5, "strike_type": "structured",
+     "yes_bid_dollars": "0.2100", "yes_ask_dollars": "0.2300", "no_bid_dollars": "0.7700", "no_ask_dollars": "0.7900",
+     "occurrence_datetime": "2026-10-22T02:30:00Z"},
     {"ticker": "KXNBAPTS-X", "event_ticker": "KXNBAPTS-X", "title": "Total team points 220+"},
 ]
 
 
-def test_kalshi_parse_handles_cents_and_dollars():
+def test_kalshi_parse_reads_dollars_sizes_and_keeps_bad_rows():
     from cold_start_usage.kalshi import parse_markets
     df = parse_markets(KALSHI_MARKETS)
-    assert list(df.threshold) == [30, 35] and set(df.player) == {"Giannis Antetokounmpo"}
-    assert df.yes_ask.tolist() == [40.0, 23.0] and df.no_ask.tolist() == [61.0, 78.0]
+    ok = df[df.parse_error.isna()]
+    assert list(ok.threshold) == [30, 35] and set(ok.player) == {"Giannis Antetokounmpo"}
+    assert ok.yes_ask.tolist() == [0.40, 0.23] and ok.no_ask.tolist() == [0.62, 0.79]
+    assert ok.team.tolist() == ["MIA", "MIA"] and ok.yes_ask_size.iloc[0] == 120.0
+    assert ok.no_ask_size.iloc[0] == 45.5 and ok.volume.iloc[0] == 250.0          # NO ask size = YES bid size
+    assert str(ok.tip_est.iloc[0]) == "2026-10-21 23:30:00"                          # occurrence - 3h
+    assert len(df) == 3 and df.parse_error.notna().sum() == 1                       # kept, not dropped
 
 
-def test_kalshi_best_trade_roi_after_fee():
-    from cold_start_usage.kalshi import best_trade, fee, parse_markets
-    df = parse_markets(KALSHI_MARKETS)
-    trade = best_trade({30: 0.52, 35: 0.25}, df, rate=0.07, min_edge=0.04)
-    cost = 0.40 + fee(0.40, 0.07)
-    assert trade["contract"] == "30+ YES" and trade["edge_pp"] == round(100 * (0.52 - cost), 1)
-    assert trade["roi"] == pytest.approx((0.52 - cost) / cost, abs=1e-3)
-    assert best_trade({30: 0.42, 35: 0.22}, df, rate=0.07, min_edge=0.04) is None   # nothing clears 4pp
-
-
-def test_board_marks_kalshi_value_ready(storage):
+def test_board_shows_kalshi_listings_without_calling_them_ready(storage):
     from cold_start_usage.kalshi import parse_markets
-    catalog = pd.DataFrame([{
-        "tier": "high", "situation": "arrival", "team": "MIA", "player": "Giannis Antetokounmpo",
-        "thesis": "New team (MIL -> MIA)", "proj": 32.0, "sd": 9.6, "ppg_2025_26": 27.6,
-        "usg_change": 1.2, "scenario_source": "reviewed"}])
-    board = build_board(catalog, storage, FETCHED, kalshi=parse_markets(KALSHI_MARKETS))
+    board = build_board(pd.DataFrame([GIANNIS]), storage, FETCHED, kalshi=parse_markets(KALSHI_MARKETS))
     row = board.iloc[0]
-    assert row.status.startswith("READY (Kalshi): buy 30+ YES @ 40c") and row.kalshi_roi > 0
-    assert "30+ 40c" in row.kalshi
+    assert row.status == "listed on Kalshi (no sportsbook consensus yet)"
+    assert row.kalshi.startswith("30+ 40c (fair ")

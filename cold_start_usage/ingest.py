@@ -1,4 +1,9 @@
-"""Turn allowlist-filtered SportsGameOdds events into table rows."""
+"""Turn allowlist-filtered SportsGameOdds events into table rows.
+
+Player props kept: full-game over/unders on config.STATS (points, rebounds,
+assists), one row per book and side with its stat. Combo markets
+(points+rebounds+assists and the like) are other statIDs and never match.
+"""
 from __future__ import annotations
 
 import json
@@ -11,21 +16,27 @@ from .config import book_role, is_allowed_book, team_abbr
 from .odds_math import parse_american
 from .storage import Storage, to_naive_utc
 
-POINTS_ODD_RE = re.compile(r"^points-(?P<player>.+_NBA)-game-ou-(?P<side>over|under)$")
+STAT_ODD_RE = re.compile(rf"^(?P<stat>{'|'.join(config.STATS)})-(?P<player>.+_NBA)-game-ou-(?P<side>over|under)$")
 TEAM_ENTITIES = {"home", "away", "all"}
+
+
+def player_stat_side(odd_id: str, odd: dict) -> tuple[str, str, str] | None:
+    """(player_id, stat, side) if this odd is a full-game player over/under on one of config.STATS."""
+    if odd.get("statID") is not None:
+        if (odd.get("statID") in config.STATS and odd.get("periodID") == "game"
+                and odd.get("betTypeID") == "ou" and odd.get("sideID") in ("over", "under")):
+            player = odd.get("playerID") or odd.get("statEntityID")
+            if player and player not in TEAM_ENTITIES:
+                return player, odd["statID"], odd["sideID"]
+        return None
+    m = STAT_ODD_RE.match(odd_id)
+    return (m["player"], m["stat"], m["side"]) if m else None
 
 
 def player_points_side(odd_id: str, odd: dict) -> tuple[str, str] | None:
     """(player_id, side) if this odd is a full-game player points over/under."""
-    if odd.get("statID") is not None:
-        if (odd.get("statID") == "points" and odd.get("periodID") == "game"
-                and odd.get("betTypeID") == "ou" and odd.get("sideID") in ("over", "under")):
-            player = odd.get("playerID") or odd.get("statEntityID")
-            if player and player not in TEAM_ENTITIES:
-                return player, odd["sideID"]
-        return None
-    m = POINTS_ODD_RE.match(odd_id)
-    return (m["player"], m["side"]) if m else None
+    hit = player_stat_side(odd_id, odd)
+    return (hit[0], hit[2]) if hit and hit[1] == "points" else None
 
 
 def _float(value) -> float | None:
@@ -71,16 +82,16 @@ def player_rows(event: dict, ts: datetime) -> list[dict]:
 def quote_rows(event: dict, ts: datetime, tag: str) -> list[dict]:
     rows = []
     for odd_id, odd in (event.get("odds") or {}).items():
-        hit = player_points_side(odd_id, odd)
+        hit = player_stat_side(odd_id, odd)
         if not hit:
             continue
-        player_id, side = hit
+        player_id, stat, side = hit
         for book, q in (odd.get("byBookmaker") or {}).items():
             if not is_allowed_book(book):      # defense in depth; the client already filtered
                 continue
             rows.append({
                 "ts": ts, "event_id": event["eventID"], "odd_id": odd_id,
-                "player_id": player_id, "side": side, "book": book.lower(),
+                "player_id": player_id, "stat": stat, "side": side, "book": book.lower(),
                 "book_role": book_role(book), "line": _float(q.get("overUnder")),
                 "odds_american": _price(q.get("odds")), "available": bool(q.get("available", False)),
                 "is_main_line": q.get("isMainLine", True) is not False,
@@ -90,6 +101,7 @@ def quote_rows(event: dict, ts: datetime, tag: str) -> list[dict]:
 
 
 def books_seen_rows(event: dict, ts: datetime) -> list[dict]:
+    """posts_player_points keeps its meaning: the book posted player points on this call."""
     books: dict[str, bool] = {}
     for odd_id, odd in (event.get("odds") or {}).items():
         points = player_points_side(odd_id, odd) is not None
@@ -100,17 +112,26 @@ def books_seen_rows(event: dict, ts: datetime) -> list[dict]:
              "posts_player_points": pts} for b, pts in sorted(books.items())]
 
 
+def player_stat_results(event: dict) -> dict[str, dict[str, float]]:
+    """player_id -> {stat: actual full-game value} for config.STATS, from
+    results.game.<playerID>.<stat> (fallback: the ended odd's score). Overtime counts."""
+    out: dict[str, dict[str, float]] = {}
+    for entity, stats in ((event.get("results") or {}).get("game") or {}).items():
+        if entity in TEAM_ENTITIES or not isinstance(stats, dict):
+            continue
+        for stat in config.STATS:
+            if stats.get(stat) is not None:
+                out.setdefault(entity, {})[stat] = float(stats[stat])
+    for odd_id, odd in (event.get("odds") or {}).items():
+        hit = player_stat_side(odd_id, odd)
+        if hit and hit[1] not in out.get(hit[0], {}) and odd.get("score") is not None and odd.get("ended"):
+            out.setdefault(hit[0], {})[hit[1]] = float(odd["score"])
+    return out
+
+
 def player_points_results(event: dict) -> dict[str, float]:
     """player_id -> actual full-game points, from results (fallback: the odd's score)."""
-    out: dict[str, float] = {}
-    for entity, stats in ((event.get("results") or {}).get("game") or {}).items():
-        if entity not in TEAM_ENTITIES and isinstance(stats, dict) and "points" in stats:
-            out[entity] = float(stats["points"])
-    for odd_id, odd in (event.get("odds") or {}).items():
-        hit = player_points_side(odd_id, odd)
-        if hit and hit[0] not in out and odd.get("score") is not None and odd.get("ended"):
-            out[hit[0]] = float(odd["score"])
-    return out
+    return {pid: s["points"] for pid, s in player_stat_results(event).items() if "points" in s}
 
 
 def store_snapshot(storage: Storage, events: list[dict], ts: datetime, tag: str | dict) -> dict:

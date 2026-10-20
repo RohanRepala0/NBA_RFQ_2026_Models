@@ -8,23 +8,23 @@ Start here: read this file, then `README.md` for how to run things. Ask Rohan be
 
 ## 1. Goal
 
-Player-prop markets on prediction markets (**Novig, Kalshi, Polymarket**) post late, or not at all, for many games. This project builds the price list in advance: by the time a venue lists "Giannis 30+ points", we already know what that contract is worth and the most it's worth paying.
+Rohan can only trade player props on two prediction markets: **Kalshi** and **Polymarket US**. Their props post late, or not at all, for many games. This project builds the price list in advance: by the time a venue lists "Giannis 30+ points" or "Bam 10+ rebounds", we already know what that contract is worth, the most it's worth paying after the venue's fee, and how many contracts to buy. The sportsbooks are the fair-value reference only; nothing is ever bet there.
 
-The project now covers the whole league: [`docs/CATALOG.md`](docs/CATALOG.md) lists 152 offseason role changes across 29 teams, tagged by usage tier and situation. [`docs/BOARD.md`](docs/BOARD.md) is the waiting list built from it. The two hand-reviewed case studies are this offseason's star trades:
+The project now covers the whole league, all 30 teams: [`docs/CATALOG.md`](docs/CATALOG.md) lists 162 offseason role changes, tagged by usage tier and situation. [`docs/BOARD.md`](docs/BOARD.md) is the waiting list built from it. The two hand-reviewed case studies are this offseason's star trades:
 - **Giannis Antetokounmpo to Miami.** Herro, Jaquez, Ware and Jakucionis went to Milwaukee, and Portis came with Giannis. This is a usage squeeze in Miami and vacated usage in Milwaukee.
 - **Kawhi Leonard to Toronto.** Ingram and Gradey Dick went to the Clippers. Kawhi's load management makes `kawhi_out` the key vacated-usage scenario.
 
 A **read-only research tool** that:
 
-1. Projects points for players whose role changed this offseason (new team, or new high-usage teammates).
-2. Compares each projection to a market consensus built from priced sportsbooks on our allowlist.
+1. Projects points, rebounds and assists for players whose role changed this offseason (new team, or new high-usage teammates).
+2. Compares each projection to a market consensus for the same stat, built from priced sportsbooks on our allowlist.
 3. Logs every projection and signal **before tip-off**.
-4. Turns each paper signal into a **watchlist** entry: the binary "N+ points" contract to wait for, our fair price, and a max price per venue after fees.
-5. Grades results afterward with closing-line value (CLV) and calibration.
+4. Reads every Kalshi and Polymarket US player points, rebounds and assists contract at fixed checkpoints and decides each one (`decision.py`), logging prices and decisions before tip. The actionable ones become **tickets**: venue, market, side, limit price, quantity, cancel-by.
+5. Grades results afterward at the venue's own settlement (P&L, venue CLV), plus model-vs-books CLV and calibration.
 
 Positions on prediction markets are entered by hand. The tool never connects to a venue account or places an order.
 
-**In scope for v1:** odds ingestion, consensus, the usage model with spacing context, signal log, watchlist, grading.
+**In scope for v1:** odds ingestion, consensus, the usage model with spacing context, signal log, venue decisions and tickets, grading, and the Kalshi archive download for backtesting.
 **Out of scope for v1:** rookie projection model, correlation/parlay pricer, live in-game data, any trading or order code.
 
 ---
@@ -37,7 +37,7 @@ Positions on prediction markets are entered by hand. The tool never connects to 
    - at write time, in `storage`, tested by `tests/test_book_allowlist.py`.
 2. **Do not use SportsGameOdds' precomputed consensus fields** (`fairOdds`, `bookOdds`, `fairOverUnder`, `bookOverUnder`, and their open/close variants). They are computed across every book SportsGameOdds carries, not our allowlist. The parser drops them.
 3. **No scraping of private or hidden endpoints.** Use the licensed SportsGameOdds API plus public stats sources, within their terms and rate limits.
-4. **No bet placement and no order code** (Novig, Kalshi, Polymarket, sportsbooks, anything). Data in, analysis out.
+4. **No bet placement and no order code** (Kalshi, Polymarket, sportsbooks, anything). Data in, analysis out. Venue modules make public GETs only; `tests/test_venue_ops.py` checks the source for order, portfolio and key usage.
 5. **Secrets:** the key comes from the env var `SPORTS_ODDS_API_KEY` (or a git-ignored `.env`). It is sent only as the `x-api-key` header and never printed or logged.
    - The key has been pasted into chat sessions. Regenerate it in the SportsGameOdds dashboard.
 6. **Log before outcome.** Every projection and signal gets a timestamp and is written before tip. Tables are append-only. Losing and abstained signals stay in the data.
@@ -49,20 +49,21 @@ Positions on prediction markets are entered by hand. The tool never connects to 
 | Path | What it is |
 |---|---|
 | `cold_start_usage/` | The v1 package (layout in section 5) |
-| `data/league_2025_26/*.csv` | All 30 teams' 2025-26 player lines from StatMuse team pages (usage, games, minutes, points, 3PA, 3P%, totals). Splits with 100+ minutes; every row is checked against its totals. |
-| `data/players_2025_26.csv` | Generated by `cli catalog`: one combined 2025-26 line per placed player, with source URL and SportsGameOdds playerID |
+| `data/league_2025_26/*.csv` | All 30 teams' 2025-26 player lines from StatMuse team pages (usage, games, minutes, points, 3PA, 3P%, totals), plus season totals `reb`, `ast`, `oreb`, `dreb` and their source page (`reb_ast_source`). Splits with 100+ minutes; every row is checked against its totals (and `reb` = `oreb` + `dreb`). PHI's file now has all 17 of its 100+ minute players. |
+| `data/players_2025_26.csv` | Generated by `cli catalog`: one combined 2025-26 line per placed player (`ppg`, `rpg`, `apg`: totals over games across a traded player's splits), with source URL and SportsGameOdds playerID |
 | `data/offseason_moves_2026.csv` | The NBA.com offseason tracker as data: every listed departure, with a note where sources conflict |
 | `data/roster_overrides_2026_27.csv` | Manual roster corrections. These win over every other source (e.g. Klay Thompson to MIA). |
-| `data/catalog/` | Catalog outputs: `players.csv`, `teams.csv`, `roster_conflicts.csv` |
-| `docs/` | `CATALOG.md` (generated), `BOARD.md` (the board snapshot), `VENUES.md` (which prediction markets expose prices, and the first scan), `SCALING.md` (free-plan limits and paid feed options) |
+| `data/catalog/` | Catalog outputs: `players.csv` (with `rpg_2025_26`, `apg_2025_26`, `reb_proj`, `ast_proj`), `teams.csv`, `roster_conflicts.csv` |
+| `docs/` | `CATALOG.md` (generated), `BOARD.md` (the board snapshot), `VENUES.md` (Kalshi and Polymarket US: access, fees, settlement, what was listed), `ARCHITECTURE.md` (diagrams), `SCALING.md` (free-plan limits and paid feed options) |
+| `data/history/` | Kalshi's archive of settled 2025-26 player-points markets with 1-minute candles, from `cli history` (git-ignored; the backtest input) |
 | `data/team_shooting_2025_26.csv` | All 30 teams' 2025-26 3PA per game and 3P% (the spacing reference) |
-| `data/rosters_2026_27_sgo.json` | 29 teams' 2026-27 rosters from SportsGameOdds `/players` (everyone except PHI) |
+| `data/rosters_2026_27_sgo.json` | 29 teams' 2026-27 rosters from SportsGameOdds `/players`. PHI wasn't pulled, so its players resolve through the moves file and last season's team, and map to playerIDs by name on each game's roster. |
 | `cold_start_usage/scenarios/{MIA,TOR}.csv` | Hand-reviewed minutes per scenario. MIA now includes Klay Thompson. **Rohan should review them.** |
-| `cold_start_usage/scenarios/auto/*.csv` | Automatic full-strength rotations for the other 27 teams (last season's minutes, top 10, rescaled to 240, 37-minute cap) |
+| `cold_start_usage/scenarios/auto/*.csv` | Automatic full-strength rotations for the other 28 teams (last season's minutes, top 10, rescaled to 240, 37-minute cap) |
 | `cold_start_usage/books.json` | Which allowlisted books this API key returns (from `cli books`) |
 | `v0/usage_model.py` | The original single-file model, kept as the reference implementation |
 | `examples/synthetic_*.json` | Made-up `/events` payloads (real matchup and IDs, invented odds) for dry runs |
-| `tests/` | 108 tests, all offline |
+| `tests/` | 174 tests, all offline |
 
 **Regression test** (`tests/test_v0_regression.py`): the package reproduces v0 to within 0.01 on frozen inputs in `tests/fixtures/regression/`, with spacing computed but switched off.
 
@@ -78,6 +79,7 @@ Positions on prediction markets are entered by hand. The tool never connects to 
 - **Miami:** SportsGameOdds still listed Klay Thompson with Dallas. Rohan confirmed he's on the Heat, so the override applies. Terry Rozier is on the roster but has no 2025-26 line, so he's left out of the scenarios.
 - **Toronto:** Markelle Fultz and Trayce Jackson-Davis have only small Toronto samples and are left out.
 - **Traded mid-season:** Nick Richards and Kyle Anderson use their combined (TOT) 2025-26 lines.
+- **Ronald Holland II:** the catalog's name bridge used to read "II" as his last name and matched him to Ron Harper Jr., so he got Harper's playerID and Harper's SportsGameOdds team (BOS). It now drops suffixes first and matches him to SportsGameOdds' "Ron Holland" (`RON_HOLLAND_1_NBA`, Detroit). No offseason move is listed for him, so he's back on DET's rotation and off BOS's. If he really is a Celtic, add him to `data/roster_overrides_2026_27.csv`. `players.map_players` now refuses an explicit ID that two players share and falls back to the name match.
 
 ---
 
@@ -92,33 +94,34 @@ Plan: 2,500 objects/month, 10 requests/minute, 9 bookmakers, no historical data,
 | Topic | Fact |
 |---|---|
 | Endpoint | `GET https://api.sportsgameodds.com/v2/events/`, header `x-api-key` |
-| Player points filter | `oddID=points-PLAYER_ID-game-ou-over` plus `includeOpposingOdds=true` |
+| Player props filter | `oddID=points-PLAYER_ID-game-ou-over,rebounds-PLAYER_ID-game-ou-over,assists-PLAYER_ID-game-ou-over` plus `includeOpposingOdds=true` (a comma list; checked live on BOS @ DET: 80 odds, 1 object). statIDs are `points`, `rebounds`, `assists`; combos such as `points+rebounds+assists` are other statIDs and aren't read. |
 | Book filter | `bookmakerID=<comma list>`. **Naming a book outside the plan returns HTTP 400, and the failed call is still billed.** So the filter uses the books discovered by `cli books`. |
-| This key's books | 9 total: BetMGM, Bovada, Caesars, DraftKings, ESPN Bet and William Hill (all allowlisted), plus 3 off-list books that are dropped and never named. Bovada, DraftKings and ESPN Bet post player points. There's no Pinnacle and **no Kalshi, Novig or Polymarket** on this plan. |
+| This key's books | 9 total: BetMGM, Bovada, Caesars, DraftKings, ESPN Bet and William Hill (all allowlisted), plus 3 off-list books that are dropped and never named. Bovada, Caesars, DraftKings and ESPN Bet posted player points, rebounds and assists for the opener (`books.json`, from Oct 16, still lists three for points). There's no Pinnacle and **no prediction markets** on this plan; Kalshi and Polymarket US prices come from their own public APIs. |
 | Billing | 1 object per event returned; empty and failed responses cost 1. `/account/usage` costs **0**. `/players` costs **1 object per player**. |
 | Roster gaps | Some veterans come back with no team (Curry, Butler, Horford), and some moves lag (Klay, plus 8 multi-step trades). So rosters resolve in this order: manual overrides, then NBA.com tracker, then SportsGameOdds, then last season's team (flagged). Conflicts are written to `data/catalog/roster_conflicts.csv`. |
 | Per-book quote | `odds.<oddID>.byBookmaker.<bookmakerID>`: `odds`, `overUnder`, `available`, `isMainLine`, `lastUpdatedAt` |
 | Staleness | On opening night's live BOS @ DET props, each book's quotes shared one refresh time about 10 minutes old, with none over 30. So `lastUpdatedAt` behaves like "last refreshed", and the 30-minute rule is safe as is. |
-| Results | `results.game.<playerID>.points`, with `odds.<oddID>.score` as a fallback. `status.finalized` marks final. |
+| Results | `results.game.<playerID>.points` (and `.rebounds`, `.assists`; overtime counts), with `odds.<oddID>.score` as a fallback. `status.finalized` marks final. The rebounds and assists keys follow the documented path but haven't been seen on a final game yet: check them after the opener. |
 | Usage | `rateLimits.per-month.current-entities` / `max-entities` (the prose docs call these `currentIntervalEntities` / `maxEntitiesPerInterval`, so the parser accepts both) |
 
 **Budget:** about 7 games a day. The slate fetch (7 objects) plus 4 checkpoints × 7 (28) is roughly 35/day, or about 1,050/month. Grading adds about 210/month. That totals roughly 1,260/month.
-- **October so far:** 779 objects used, 771 of them on the one-time roster pull for all 29 teams.
+- **October so far:** 784 objects used, 771 of them on the one-time roster pull for 29 teams (PHI wasn't pulled). Asking for rebounds and assists in the same calls adds nothing: billing is per event.
 - **Rest of October:** that leaves about 1,420 before the hard stop, against roughly 600 needed. Don't repeat the league-wide `/players` pull. Fix single players with `data/roster_overrides_2026_27.csv`, or rely on each event's player block, which is free.
 
-### 4a-2. Prediction-market prices (read-only, added at Rohan's request)
+### 4a-2. Prediction-market prices (read-only; Rohan trades Kalshi and Polymarket US only)
 
-Rohan asked to see venue prices for the catalog players, so two public market-data sources were added. Both are read-only, with no account and no order or portfolio endpoint:
-- **Kalshi** (`kalshi.py`): series `KXNBAPTS`, "N+ points" ladders in steps of 5.
-- **Polymarket** (`polymarket.py`): per-game events with a few "Player: Points O/U" markets, plus order-book depth.
+All three readers are public, keyless GETs with no account, order or portfolio endpoint:
+- **Kalshi** (`kalshi.py`): series `KXNBAPTS` ("N+ points" ladders in steps of 5), `KXNBAREB` and `KXNBAAST` (steps of 1-2), with order-book depth in batches of 100. The stat comes from the series; a title that names another stat is a parse error.
+- **Polymarket US** (`polymarket_us.py`, `gateway.polymarket.us`): the CFTC-regulated US exchange. Its player props are "N+" ladders; NBA points, rebounds and assists ladders appeared on Oct 19 for the opening games.
+- **polymarket.com** (`polymarket.py`): the international book. It's close-only for US persons, so it's logged as a reference price and never actionable.
 
-`cli venues` prices every outcome against both the consensus and the model, net of each venue's fee, and counts the size available at an edge. Novig, ProphetX and Sporttrade have no public API, and Smarkets refuses unauthenticated reads. Details and the first scan are in `docs/VENUES.md`.
+`cli venues` (and the cron's venue step) decides every contract side and logs it. Fees, settlement rules (including the fair-price settlement for players who don't play) and what was listed are in `docs/VENUES.md`.
 
 ### 4b. Player stats: decision still needed (see section 12)
 
 - **NBA.com / `nba_api`:** the stats "may not be used in connection with any gambling activity (including legal gambling activity)."
 - **Basketball-Reference:** Sports Reference's data-use policy says not to build tools or databases from scraped data without permission.
-- **What v1 uses:** hand lookups with a source URL on every row. All 30 teams' lines come from StatMuse team pages (v0's source too). Each of the 538 rows was checked against its season totals (points ÷ games, minutes ÷ games).
+- **What v1 uses:** hand lookups with a source URL on every row. All 30 teams' lines come from StatMuse team pages (v0's source too). Each of the 538 rows was checked against its season totals (points ÷ games, minutes ÷ games; rebounds = offensive + defensive).
 - **Rosters:** Basketball-Reference was suggested, but isn't used for the same reason: its terms bar using site data "to create any database". Confirmed corrections go in the overrides file instead.
 - **Options:**
   - (a) Keep doing hand lookups.
@@ -136,38 +139,52 @@ cold_start_usage/
   config.py        # allowlist + roles, budgets, thresholds, model params, venue fees
   sgo_client.py    # REST client: retries, 429 backoff, rate limiter, budget guard, parse-time allowlist filter
   odds_math.py     # American <-> probability, vig removal (multiplicative, power, Shin), normal points model
+  distributions.py # per-stat outcome model: points normal (unchanged), rebounds / assists negative binomial
   ingest.py        # events -> table rows; raw-response cache (already filtered)
-  consensus.py     # per-player consensus, line normalization, book weights, abstain rules
+  consensus.py     # per-player, per-stat consensus, line normalization, book weights, abstain rules
   players.py       # SportsGameOdds playerID <-> stats-row name mapping (+ overrides CSV)
-  usage_model.py   # generalized from v0, plus the spacing multiplier
+  usage_model.py   # generalized from v0, plus the spacing multiplier and the rebound / assist budgets
   spacing.py       # team spacing context (3-point volume and accuracy vs the league)
   fit.py           # fits eff_per_usg_point and spacing_coef from players who changed teams
   scenarios/       # per-team minutes scenarios (CSV), validated to sum to 240
   signals.py       # edge and abstain logic (incl. sanity cap)
-  watchlist.py     # prediction-market contracts, fair prices, max price after fees, ladders
+  watchlist.py     # "N+ points" contract math and ladders
   catalog.py       # league-wide role changes: roster precedence, no-moves counterfactual, usage tiers
-  board.py         # the pre-market waiting list: fair N+ ladders, READY vs sportsbooks / Kalshi
-  kalshi.py        # read-only Kalshi market data (series KXNBAPTS), fees, best rung
-  polymarket.py    # read-only Polymarket Gamma events and CLOB order books
-  venues.py        # venue prices vs consensus and model, with size at edge
+  board.py         # the pre-market waiting list: fair N+ ladders; READY only from a logged venue decision
+  fees.py          # each venue's taker fee per order, with its own rounding
+  decision.py      # THE decision path: market-leaning blend, robust pricing, gates, one pick per
+                   #   player-game and stat, capped quarter-Kelly sizing
+  kalshi.py        # read-only Kalshi market data (KXNBAPTS / REB / AST), order books in batches, 429 backoff
+  polymarket_us.py # read-only Polymarket US gateway: games, player props, books, settlements
+  polymarket.py    # read-only polymarket.com (reference price only: close-only for US persons)
+  venues.py        # the venue scan: read, map to game and roster, decide, log
+  kalshi_history.py# Kalshi's archive of settled markets + 1-minute candles (backtest input)
   schedule.py      # ET slate days, snapshot checkpoints, week of season
   pipeline.py      # snapshot / project / signals / results orchestration
   storage.py       # DuckDB, append-only tables, allowlist check on write
   grade.py         # CLV, hit rate, Brier, log loss, calibration, segments
   report.py        # weekly markdown report
   cli.py           # usage | books | snapshot | project | signals | watchlist | grade | report | fit
-                   # | catalog | board | kalshi | venues
+                   # | catalog | board | kalshi | venues | tickets | fill | history
 tests/
 ```
 
-**Tables** (UTC, append-only): `odds_snapshots`, `projections`, `signals`, `results`, plus `events`, `event_players` (roster and injury status), `venue_quotes` (prediction-market prices), `books_seen` and `api_calls` (the local object ledger). Columns are listed in `storage.SCHEMA`.
+**Tables** (UTC, append-only): `odds_snapshots`, `projections`, `signals`, `results`, plus `events`, `event_players` (roster and injury status), `books_seen` and `api_calls` (the local object ledger). `odds_snapshots`, `projections`, `signals`, `venue_snapshots` and `venue_signals` carry a `stat` column (`points`, `rebounds`, `assists`); rows logged before it existed have NULL there, and every read treats NULL as points. `results` has `actual_points`, `actual_rebounds` and `actual_assists`. The venue side adds four more:
+- `venue_snapshots`: every venue price read, refused at or after tip.
+- `venue_signals`: every decision, with its reason and a config hash, also refused at or after tip.
+- `tickets`: fills Rohan entered by hand.
+- `venue_settlements`.
+
+Schema changes are additive only: new columns are added to existing tables, and nothing is dropped. Columns are listed in `storage.SCHEMA`.
 
 ---
 
 ## 6. Consensus spec
 
+Each stat is its own consensus: a player's points, rebounds and assists quotes never mix. Every existing caller (board, watchlist, sportsbook signals, the results close) asks for points.
+
 1. **Remove the vig per book.** Pair each reference book's over and under at its main line. Power method by default; the multiplicative result is kept for comparison. Pairs are skipped (with a note) if one side is missing, the lines differ, the price is a `+100/+100` placeholder, or the overround falls outside 0.98–1.25.
-2. **Normalize different lines.** Back out each book's implied mean using a normal with SD = max(4, 0.30 × mean). The consensus mean is the weighted median. P(over) for any line comes from the consensus distribution.
+2. **Normalize different lines.** Back out each book's implied mean from the stat's distribution: for points a normal with SD = max(4, 0.30 × mean); for rebounds and assists a negative binomial with variance φ × mean (section 7). The consensus mean is the weighted median. P(over) for any line comes from the consensus distribution.
 3. **Weights.** Equal weights, with Pinnacle at 2x when it posts (it doesn't on this plan).
 4. **Abstain if** there are fewer than 2 priced reference books, or any quote used is older than 30 minutes.
 
@@ -203,13 +220,29 @@ Current readings:
 - **Then run:** `cli fit`. It fits the change in TS% against the change in usage and the change in spacing, with each player compared with himself. That also replaces the guessed `eff_per_usg_point = 0.004`.
 - **Why not their regression:** the cross-sectional regression in adjustedTrueShooting can't answer this, because across players it just learns that good shooters get the ball.
 
-**Team scope:** league-wide now, through the catalog (`catalog.py`). PHI is excluded by choice (`config.CATALOG_EXCLUDED_TEAMS`).
+**Rebounds and assists** (`usage_model.add_count_stats`) get a team budget of their own, with diminishing returns in place of an elasticity:
+
+```
+r_i     = rpg_i / mpg_i                     (last season's per-minute rate)
+D       = sum(r_i * min_new_i)              (the scenario's raw team demand)
+B       = 240 x league total / league minutes   (43.6 rebounds, 26.6 assists per team-game)
+k       = (B / D) ** rho                    (rho_reb 0.6, rho_ast 0.5)
+reb_new = r_i * min_new_i * k,   Var = phi * reb_new
+```
+
+- **B per minute, not per file.** Summing the files and dividing by 30 × 82 gives 43.0 / 26.2, low because splits under 100 minutes aren't in them. Per 240 player-minutes it's 43.6 / 26.6, against 43.8 / 26.7 in the league's own team totals.
+- **rho is a frozen prior, not a fit.** Lineup regressions find a team keeps about 0.3 of a player's above-average defensive rebounding and 0.7 of his offensive rebounding, about 0.4 weighted by volume, so rho = 1 − 0.4 = 0.6 for one total-rebound budget. Assists sit between the two, at 0.5 (weak evidence, range about 0.35-0.65). Splitting offensive and defensive boards (rho about 0.7 and 0.3) is the first refinement once grades exist.
+- **phi is frozen too** (`config.COUNT_DISPERSION`): rebounds 1.30 (2021-24 box scores give 1.26 around a 20-game mean; the opening ladders imply 1.42), with 1.50 as the fatter-tailed second model; assists 1.15 (box scores and ladders agree) and 1.30. Robust pricing takes the lower of the two, like the two SD models for points.
+- **Missing inputs** blank that stat only: a player without a rate still counts in D at the league rate (he takes minutes), and gets no projection.
+- Keep all of these until walk-forward grading of rebounds and assists has enough rows, then check rho out of sample on team-changers (regress the log team total on the log demand).
+
+**Team scope:** league-wide, all 30 teams, through the catalog (`catalog.py`). `config.CATALOG_EXCLUDED_TEAMS` still exists (empty) so a team can be parked again in one line.
 - **Measuring the offseason effect:** every team runs twice through the same automatic rotation, once on its 2026-27 roster and once with this summer's listed moves undone. The difference is the offseason effect, so the rotation method's own bias cancels.
 - **Situations:** *arrival*, *vacuum* (a team effect of −2% or more and a usage rise of at least 0.5 points), *squeeze* (the reverse) and *steady*.
 - **Tiers** (2025-26 usage): high is 25% or more, medium 18–25%, low under 18%.
 - **Model property:** the elasticity spreads a team's usage change almost evenly in points, so low-usage players get the largest *relative* change.
 
-**Scenarios:** `full_strength` plus one per key absence (MIA: `giannis_out`, `bam_out`; TOR: `kawhi_out`). Rohan picks one about 60 minutes before tip.
+**Scenarios:** `full_strength` plus one per key absence (MIA: `giannis_out`, `bam_out`; TOR: `kawhi_out`). Rohan picks one about 60 minutes before tip. A `project` run re-projects every modeled team on the date: a team named with `--scenario` runs that scenario, and every other team keeps the scenario of its latest logged run for the game (`full_strength` only when it has none). The cron's fill-in works the same way, and it re-runs any team whose latest run is from an older `MODEL_VERSION` or is missing a stat.
 
 **Known bias:**
 - **The model:** it treats the game as one usage pool, but coaches stagger stars, so stars keep more usage than it projects. The v2 fix is a lineup-level budget.
@@ -217,19 +250,34 @@ Current readings:
 
 ---
 
-## 8. Signals, watchlist and evaluation
+## 8. Signals, venue decisions and evaluation
 
-**Edge:** model P(side at the consensus line) minus consensus no-vig P(side). A row is `paper` when 4pp ≤ edge ≤ 15pp and the consensus didn't abstain. Anything else is `abstain` with a reason, and abstained rows are still graded.
+**Sportsbook signals (model quality track):** model P(side at the consensus line) minus the consensus no-vig P(side). A row is a `paper` lean when 4pp ≤ edge ≤ 15pp and the consensus didn't abstain; anything else is `abstain` with a reason. Abstained rows are still graded. Leans are never actionable, because Rohan can't trade at the books. `watchlist` shows each lean next to what the venues list.
 
-**Watchlist:** each paper signal maps to a binary contract: over 29.5 → "30+ points YES", under 29.5 → "30+ points NO". It shows:
-- the model's and the market's fair prices, in cents;
-- a max price per venue, which is the highest price c with `p − c − fee(c) ≥ 4pp`, where `fee(c) = 0.07 × c × (1 − c)`. That's Kalshi's general formula, used as a conservative placeholder for Novig and Polymarket;
-- an N+ ladder around the line;
-- a venue's posted price, if SportsGameOdds carries that venue. It doesn't on this plan, so you compare by hand.
+**Venue decisions (`decision.py`, the only path to "actionable").** Each player-game gets one distribution per stat that leans on the market:
+- The mean is the consensus mean + 0.20 × (model − consensus). The weight drops to 0, with a flag, when the model is more than 0.75 of the stat's SD from the market ("model +3.0 reb from market").
+- Each contract's probability is the lower of two models: for points the linear SD max(4, 0.3m) and a compound-Poisson SD, √(2.2m + (0.15m)²); for rebounds and assists a negative binomial at φ and at φ_alt.
+- Labels say the stat for rebounds and assists ("8+ REB YES", "over 7.5 REB"); points labels are unchanged ("25+ YES").
 
-**Timing:** log at 60 and 15 minutes before tip. `snapshot --due --with-signals` does both from cron.
+A Kalshi or Polymarket US contract is **actionable** only if all of these hold:
+- it's pre-tip, the player isn't listed out, and the consensus is fresh and not newer than the quote (a leak);
+- the rung isn't a tail (market P between 10% and 90%);
+- EV after the venue's fee (at a 10-contract order) is at least 4pp (+1pp with only 2 books);
+- the market-only EV is at least 0 (no model-only value);
+- the market-only EV is at most 15pp (above that: "check inputs");
+- at least 10 contracts are offered at or under the max price.
 
-**Grading:** CLV (in probability and in line points) against the T-15m close; hit rate, Brier and log loss vs the consensus baseline; 10-point calibration buckets; segments by team, timing, new team vs incumbent, and week of season. The weekly `report` adds CLV by week (the edge-decay chart).
+Questionable players and thin books are `watch`. There's one pick per player-game and stat; a stat already held gets no new pick. Contracts are sized at quarter Kelly and capped at 0.5% of bankroll per player-game across his stats (points and rebounds on one player ride on the same minutes), 1.5% per game and 3% per slate; the bankroll comes from `COLD_START_BANKROLL_USD`, and no stake is shown without it.
+
+**Tickets:** `tickets` lists the actionable decisions: venue, ticker or slug, side, limit price (the max price), quantity, and a cancel-by time 5 minutes before tip. `fill` records what was actually filled.
+
+**Timing:** the cron logs sportsbook signals at T-60m and T-15m, and venue decisions at T-6h, T-2h, T-60m, T-15m and T-5m (the venue close).
+
+**Grading:**
+- *Model vs books:* CLV (in probability and in line points) against the T-15m close; hit rate, Brier score and log loss against the consensus baseline; 10-point calibration buckets; segments.
+- *Venue:* each settlement is stored, and a player who doesn't play pays the venue's fair price. Paper P&L uses the first actionable decision per player-game and stat, reported overall and by stat; your fills use the price you paid. Venue CLV is the entry ask against the last pre-tip mid. Yield is shown only from 50 settled contracts.
+
+The weekly `report` adds CLV by week (the edge-decay chart).
 
 ---
 
@@ -239,20 +287,24 @@ Current readings:
 |---|---|---|
 | **Sat Oct 17** | **M1:** config, client with budget guard, allowlist test, usage check, book list, storage, odds math, first snapshot | Done. The key works, the books are discovered, and the first live snapshot (BOS @ DET) is stored. |
 | **Mon Oct 19** | **M2:** consensus, usage model for the case-study teams, `project` + `signals`, dry run | MIA and TOR done with spacing, and dry-run on a synthetic MIN @ MIA slate. The scenario minutes need Rohan's review. |
-| **Before Tue Oct 20** | **M3:** install the cron job (`snapshot --due --with-signals`, every 5 minutes) on Rohan's machine before Opening Night, so history starts with the first tip. It covers every game; projections and signals cover all 29 catalog teams. The MIA and TOR openers (both 7:30 PM ET, Oct 21) use the reviewed minutes. | Ready. Run `catalog` and `board --docs` first, then `grade` each morning. |
+| **Before Tue Oct 20** | **M3:** install the cron job (`snapshot --due --with-signals --with-venues --with-projections`, every 5 minutes) on Rohan's machine before Opening Night (first tip 3:00 PM ET), so history starts with the first tip. It covers every game; projections and venue decisions cover all 30 teams and three stats (the sportsbook signals stay points). The MIA and TOR openers (both 7:30 PM ET, Oct 21) use the reviewed minutes. | Ready. Kalshi and Polymarket US both list NBA points, rebounds and assists props (Polymarket US since Oct 19). Run `catalog` and `board --docs` first, `tickets` before each tip, and `grade` each morning. |
+| **Week 1** | **M3b:** backtests on Kalshi's 2025-26 archive (`cli history`). The strategies: venue vs consensus, longshot bias, ladder and cross-venue consistency, entry timing, the teammate-vacuum news signal, and limit vs market orders. | The archive download is running; the engine is next. |
 | **Week 2** | **M4:** weekly report; review auto minutes for the teams being acted on; fit `eff_per_usg_point` and `spacing_coef`; stats-source decision | `report`, `fit`, `catalog` and `board` are built. Data for the fits is still to be collected. |
 
 ---
 
 ## 10. Acceptance criteria
 
-`pytest` passes (108 tests), including:
+`pytest` passes (174 tests), including:
 - allowlist exclusion (storage, consensus, raw cache, stdout)
 - discovered-books request filter
 - v0 regression on MIA and TOR
 - spacing on vs off
 - recovering known coefficients in `fit`
-- Kalshi and Polymarket parsing, fee math, verdicts, and size at edge
+- Kalshi, Polymarket US and international parsing (live schemas), fees per venue with their rounding, and order-book depth
+- rebounds and assists: the negative binomial against a brute-force sum, points prices identical to the normal path, the team budgets (identity at rho = 1, the vacuum direction, missing inputs), ingest of a real multi-stat response, the points consensus unchanged by rebounds odds, stat-checked Kalshi and Polymarket US parsing, per-stat labels, gates and grouping, projection runs that keep their scenario, and the additive migration of an old database
+- every decision gate, the blend, robust pricing, one pick per player-game, and capped Kelly sizing
+- venue logging (two rows per market, nothing at or after tip, off-list venues refused), cron venue step independent of the sportsbook step, venue settlement and P&L including fair-price settlements, and a static check that no code path can place an order
 - roster precedence, the counterfactual offseason effect, the auto-rotation cap, and the board filling in once lines post
 - minutes-sum validation
 - vig-removal math (−110/−110 → 0.50/0.50 for all three methods)
@@ -262,7 +314,8 @@ Current readings:
 |---|---|
 | `python -m cold_start_usage.cli snapshot --date 2026-10-21` | Store snapshots with only allowlisted books and print objects used and remaining |
 | `python -m cold_start_usage.cli project --scenario TOR=kawhi_out` and `signals` | Print a per-player table: projection, spacing, consensus line, edge, decision, reason |
-| `python -m cold_start_usage.cli watchlist --date 2026-10-21` | Print and write the contracts to wait for, with max prices per venue |
+| `python -m cold_start_usage.cli venues --date 2026-10-21` | Read Kalshi and Polymarket US, decide and log every contract side |
+| `python -m cold_start_usage.cli tickets --date 2026-10-21` | Print and write the actionable limit-order tickets |
 | `python -m cold_start_usage.cli grade --date 2026-10-21` | Compute CLV, Brier score and log loss for that date |
 
 ---
@@ -270,18 +323,21 @@ Current readings:
 ## 11. Defaults already chosen (Rohan can override)
 
 - Python 3.11+, DuckDB, pandas, requests, pytest. Scheduling via local cron or launchd.
-- Markets: player points only in v1.
-- Venue fee rates in `config.VENUE_FEE_RATE`. Verify them per venue.
+- Markets: player points, rebounds and assists (full game, over/under and "N+" ladders). The sportsbook-line `signals` stay points-only.
+- Venue fees in `config.VENUE_FEES`. Kalshi is rounded up to the cent per order; accounts held directly with Kalshi may be charged on a $0.0001 grid. Check one real fill.
+- Decision gates and sizing in `config.py` ("Venues" and "Sizing"). They're frozen until about 800 graded rows exist, then tuned walk-forward only.
 
 ---
 
 ## 12. Ask Rohan before
 
-- Spending money or upgrading the SportsGameOdds plan. A higher tier may add Kalshi, Novig or Polymarket as books, which would fill the watchlist's "posted" column automatically.
+- Spending money or upgrading the SportsGameOdds plan
+- Setting or raising the bankroll and the sizing caps
+- Confirming in each app that NBA player props are tradable from his state (both venues have state restrictions that are changing)
 - Adding any market, venue, or data source not listed here (including reading a venue's own API directly)
 - Choosing the player-stats source (section 4b)
 - Changing scenario minutes he hasn't reviewed into the live log
-- Resolving the roster conflicts in `data/catalog/roster_conflicts.csv` (7 still open after Klay)
+- Resolving the roster conflicts in `data/catalog/roster_conflicts.csv` (8 still open after Klay), and confirming Ronald Holland II is on Detroit (section 3)
 - Moving to a paid or streaming odds feed (options in `docs/SCALING.md`)
 - Anything that touches trading, accounts, or order placement
 - Changing the hard rules in section 2

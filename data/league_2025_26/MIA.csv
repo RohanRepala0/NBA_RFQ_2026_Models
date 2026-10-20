@@ -1,15 +1,15 @@
-name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts
-Andrew Wiggins,MIA,19.7,68,30.3,15.4,4.9,41.4,2063,1045
-Norman Powell,MIA,27.1,58,29.6,21.7,7.1,38.0,1717,1261
-Bam Adebayo,MIA,24.9,73,32.4,20.1,5.5,31.8,2365,1468
-Tyler Herro,MIA,24.8,33,31.3,20.5,6.7,37.8,1033,677
-Davion Mitchell,MIA,13.7,70,28.6,9.3,3.3,39.5,2000,654
-Dru Smith,MIA,15.2,70,16.3,5.6,1.8,29.5,1141,395
-Nikola Jović,MIA,21.3,47,17.2,7.3,3.6,26.9,808,344
-Simone Fontecchio,MIA,19.7,70,16.8,8.5,4.7,37.5,1173,597
-Jaime Jaquez Jr.,MIA,22.4,75,28.3,15.4,2.4,31.7,2121,1152
-Kel'el Ware,MIA,18.1,77,22.1,11.1,3.0,39.5,1704,851
-Keshad Johnson,MIA,18.9,32,8.8,4.3,1.4,29.5,280,136
-Pelle Larsson,MIA,16.7,70,26.4,11.4,2.7,32.3,1849,800
-Kasparas Jakučionis,MIA,13.7,53,17.8,6.2,2.9,42.3,945,328
-Myron Gardner,MIA,15.0,45,9.1,3.6,1.4,40.6,411,163
+name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts,reb,ast,oreb,dreb,reb_ast_source
+Andrew Wiggins,MIA,19.7,68,30.3,15.4,4.9,41.4,2063,1045,329,182,115,214,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Norman Powell,MIA,27.1,58,29.6,21.7,7.1,38.0,1717,1261,203,143,22,181,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Bam Adebayo,MIA,24.9,73,32.4,20.1,5.5,31.8,2365,1468,732,232,149,583,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Tyler Herro,MIA,24.8,33,31.3,20.5,6.7,37.8,1033,677,158,136,14,144,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Davion Mitchell,MIA,13.7,70,28.6,9.3,3.3,39.5,2000,654,186,453,32,154,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Dru Smith,MIA,15.2,70,16.3,5.6,1.8,29.5,1141,395,173,180,62,111,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Nikola Jović,MIA,21.3,47,17.2,7.3,3.6,26.9,808,344,153,102,25,128,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Simone Fontecchio,MIA,19.7,70,16.8,8.5,4.7,37.5,1173,597,211,101,56,155,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Jaime Jaquez Jr.,MIA,22.4,75,28.3,15.4,2.4,31.7,2121,1152,375,352,96,279,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Kel'el Ware,MIA,18.1,77,22.1,11.1,3.0,39.5,1704,851,694,56,217,477,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Keshad Johnson,MIA,18.9,32,8.8,4.3,1.4,29.5,280,136,62,8,26,36,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Pelle Larsson,MIA,16.7,70,26.4,11.4,2.7,32.3,1849,800,244,236,69,175,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Kasparas Jakučionis,MIA,13.7,53,17.8,6.2,2.9,42.3,945,328,138,137,43,95,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26
+Myron Gardner,MIA,15.0,45,9.1,3.6,1.4,40.6,411,163,122,44,39,83,https://www.statmuse.com/nba/ask/heat-players-total-offensive-rebounds-2025-26

@@ -1,22 +1,22 @@
-name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts
-Michael Porter Jr.,BKN,30.5,52,32.5,24.2,9.3,36.3,"1,689","1,259"
-Nic Claxton,BKN,17.7,69,27.8,11.7,0.3,0.0,"1,920",810
-Terance Mann,BKN,13.6,63,24.3,7.2,2.4,36.4,"1,529",455
-Day'Ron Sharpe,BKN,19.8,62,18.7,8.7,0.6,23.1,"1,160",540
-Ziaire Williams,BKN,18.8,56,22.9,10.2,4.5,34.3,"1,281",573
-Cam Thomas,BKN,30.2,24,24.3,15.6,4.9,32.5,582,375
-Trevon Scott,BKN,13.6,6,30.3,8.0,3.2,31.6,182,48
-Ochai Agbaji,BKN,17.4,20,16.2,6.7,5.5,34.9,323,133
-Josh Minott,BKN,21.9,16,19.3,10.8,7.3,39.5,308,172
-Tyson Etienne,BKN,20.3,24,15.8,7.9,6.0,39.8,380,189
-Tyrese Martin,BKN,18.9,37,18.8,7.3,6.9,33.6,696,270
-E.J. Liddell,BKN,17.2,26,13.4,5.7,4.3,34.6,349,147
-Noah Clowney,BKN,20.3,66,27.0,12.3,9.6,32.9,"1,780",809
-Jalen Wilson,BKN,18.2,54,15.9,6.4,5.1,35.5,859,343
-Malachi Smith,BKN,14.2,15,23.9,8.3,6.6,43.5,359,124
-Nolan Traore,BKN,22.9,56,22.2,8.9,8.6,31.8,"1,243",499
-Danny Wolf,BKN,20.6,57,20.8,8.9,7.7,32.2,"1,187",508
-Egor Dëmin,BKN,18.9,52,25.2,10.3,8.6,38.5,"1,308",536
-Drake Powell,BKN,15.0,63,21.0,6.5,5.7,28.0,"1,320",408
-Ben Saraf,BKN,21.0,44,20.8,7.5,6.9,21.1,916,332
-Chaney Johnson,BKN,16.2,17,20.5,8.2,5.5,30.0,348,139
+name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts,reb,ast,oreb,dreb,reb_ast_source
+Michael Porter Jr.,BKN,30.5,52,32.5,24.2,9.3,36.3,"1,689","1,259",367,158,69,298,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Nic Claxton,BKN,17.7,69,27.8,11.7,0.3,0.0,"1,920",810,478,253,168,310,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Terance Mann,BKN,13.6,63,24.3,7.2,2.4,36.4,"1,529",455,200,190,70,130,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Day'Ron Sharpe,BKN,19.8,62,18.7,8.7,0.6,23.1,"1,160",540,413,145,171,242,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Ziaire Williams,BKN,18.8,56,22.9,10.2,4.5,34.3,"1,281",573,134,60,30,104,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Cam Thomas,BKN,30.2,24,24.3,15.6,4.9,32.5,582,375,43,74,9,34,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Trevon Scott,BKN,13.6,6,30.3,8.0,3.2,31.6,182,48,31,10,10,21,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Ochai Agbaji,BKN,17.4,20,16.2,6.7,5.5,34.9,323,133,46,17,13,33,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Josh Minott,BKN,21.9,16,19.3,10.8,7.3,39.5,308,172,40,13,8,32,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Tyson Etienne,BKN,20.3,24,15.8,7.9,6.0,39.8,380,189,27,40,5,22,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Tyrese Martin,BKN,18.9,37,18.8,7.3,6.9,33.6,696,270,106,69,32,74,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+E.J. Liddell,BKN,17.2,26,13.4,5.7,4.3,34.6,349,147,69,24,14,55,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Noah Clowney,BKN,20.3,66,27.0,12.3,9.6,32.9,"1,780",809,273,108,52,221,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Jalen Wilson,BKN,18.2,54,15.9,6.4,5.1,35.5,859,343,114,50,17,97,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Malachi Smith,BKN,14.2,15,23.9,8.3,6.6,43.5,359,124,51,49,12,39,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Nolan Traore,BKN,22.9,56,22.2,8.9,8.6,31.8,"1,243",499,99,213,14,85,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Danny Wolf,BKN,20.6,57,20.8,8.9,7.7,32.2,"1,187",508,281,127,57,224,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Egor Dëmin,BKN,18.9,52,25.2,10.3,8.6,38.5,"1,308",536,165,173,21,144,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Drake Powell,BKN,15.0,63,21.0,6.5,5.7,28.0,"1,320",408,111,91,21,90,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Ben Saraf,BKN,21.0,44,20.8,7.5,6.9,21.1,916,332,92,145,20,72,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26
+Chaney Johnson,BKN,16.2,17,20.5,8.2,5.5,30.0,348,139,79,36,33,46,https://www.statmuse.com/nba/ask/nets-players-total-offensive-rebounds-2025-26

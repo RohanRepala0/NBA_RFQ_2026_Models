@@ -1,15 +1,15 @@
-name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts
-Steven Adams,HOU,12.0,32,22.8,5.8,0.0,,730,187
-Kevin Durant,HOU,27.0,78,36.4,26.0,5.8,41.3,"2,840","2,026"
-Jeff Green,HOU,17.9,30,5.8,2.2,1.5,27.3,175,67
-Clint Capela,HOU,13.7,75,12.3,3.8,0.0,50.0,926,282
-Dorian Finney-Smith,HOU,10.8,37,16.8,3.3,2.7,27.0,620,123
-Josh Okogie,HOU,11.4,78,17.4,4.5,2.1,38.5,"1,354",353
-Aaron Holiday,HOU,16.6,57,13.7,5.5,3.0,39.4,781,312
-Jae'Sean Tate,HOU,13.5,46,8.8,2.8,0.7,31.3,405,129
-Alperen Şengün,HOU,26.5,72,33.3,20.4,1.8,30.5,"2,398","1,466"
-Jabari Smith Jr.,HOU,18.2,77,35.1,15.8,6.3,36.3,"2,705","1,215"
-Tari Eason,HOU,18.8,60,25.8,10.5,4.3,35.8,"1,549",627
-JD Davison,HOU,15.3,28,7.8,2.5,1.1,25.0,218,69
-Amen Thompson,HOU,20.0,79,37.4,18.3,1.5,21.6,"2,953","1,443"
-Reed Sheppard,HOU,21.8,82,26.2,13.5,7.0,39.4,"2,147","1,110"
+name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts,reb,ast,oreb,dreb,reb_ast_source
+Steven Adams,HOU,12.0,32,22.8,5.8,0.0,,730,187,276,48,145,131,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Kevin Durant,HOU,27.0,78,36.4,26.0,5.8,41.3,"2,840","2,026",426,372,41,385,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Jeff Green,HOU,17.9,30,5.8,2.2,1.5,27.3,175,67,25,8,7,18,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Clint Capela,HOU,13.7,75,12.3,3.8,0.0,50.0,926,282,345,50,160,185,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Dorian Finney-Smith,HOU,10.8,37,16.8,3.3,2.7,27.0,620,123,93,36,35,58,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Josh Okogie,HOU,11.4,78,17.4,4.5,2.1,38.5,"1,354",353,200,69,81,119,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Aaron Holiday,HOU,16.6,57,13.7,5.5,3.0,39.4,781,312,58,60,13,45,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Jae'Sean Tate,HOU,13.5,46,8.8,2.8,0.7,31.3,405,129,73,25,33,40,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Alperen Şengün,HOU,26.5,72,33.3,20.4,1.8,30.5,"2,398","1,466",640,445,215,425,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Jabari Smith Jr.,HOU,18.2,77,35.1,15.8,6.3,36.3,"2,705","1,215",529,143,108,421,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Tari Eason,HOU,18.8,60,25.8,10.5,4.3,35.8,"1,549",627,376,90,124,252,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+JD Davison,HOU,15.3,28,7.8,2.5,1.1,25.0,218,69,34,35,3,31,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Amen Thompson,HOU,20.0,79,37.4,18.3,1.5,21.6,"2,953","1,443",614,420,235,379,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26
+Reed Sheppard,HOU,21.8,82,26.2,13.5,7.0,39.4,"2,147","1,110",238,277,28,210,https://www.statmuse.com/nba/ask/rockets-players-total-offensive-rebounds-2025-26

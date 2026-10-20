@@ -1,0 +1,1435 @@
+{
+ "data": [
+  {
+   "eventID": "YcuJMzH3KxfKzxVKzSQs",
+   "leagueID": "NBA",
+   "odds": {
+    "assists-AUSAR_THOMPSON_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "+100",
+       "overUnder": "3.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "+106",
+       "overUnder": "3.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-104",
+       "overUnder": "3.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "+110",
+       "overUnder": "3.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Ausar Thompson Assists Over/Under",
+     "oddID": "assists-AUSAR_THOMPSON_1_NBA-game-ou-over",
+     "opposingOddID": "assists-AUSAR_THOMPSON_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "AUSAR_THOMPSON_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "AUSAR_THOMPSON_1_NBA",
+     "statID": "assists"
+    },
+    "assists-AUSAR_THOMPSON_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-130",
+       "overUnder": "3.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-141",
+       "overUnder": "3.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-129",
+       "overUnder": "3.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-145",
+       "overUnder": "3.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Ausar Thompson Assists Over/Under",
+     "oddID": "assists-AUSAR_THOMPSON_1_NBA-game-ou-under",
+     "opposingOddID": "assists-AUSAR_THOMPSON_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "AUSAR_THOMPSON_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "AUSAR_THOMPSON_1_NBA",
+     "statID": "assists"
+    },
+    "assists-CADE_CUNNINGHAM_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "+100",
+       "overUnder": "9.5"
+      },
+      "caesars": {
+       "available": false,
+       "lastUpdatedAt": "2026-10-19T17:29:00.454Z",
+       "odds": "-105",
+       "overUnder": "9.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "+105",
+       "overUnder": "9.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "+105",
+       "overUnder": "9.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Cade Cunningham Assists Over/Under",
+     "oddID": "assists-CADE_CUNNINGHAM_1_NBA-game-ou-over",
+     "opposingOddID": "assists-CADE_CUNNINGHAM_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "CADE_CUNNINGHAM_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "CADE_CUNNINGHAM_1_NBA",
+     "statID": "assists"
+    },
+    "assists-CADE_CUNNINGHAM_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-135",
+       "overUnder": "9.5"
+      },
+      "caesars": {
+       "available": false,
+       "lastUpdatedAt": "2026-10-19T17:29:00.454Z",
+       "odds": "-165",
+       "overUnder": "9.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-137",
+       "overUnder": "9.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-140",
+       "overUnder": "9.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Cade Cunningham Assists Over/Under",
+     "oddID": "assists-CADE_CUNNINGHAM_1_NBA-game-ou-under",
+     "opposingOddID": "assists-CADE_CUNNINGHAM_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "CADE_CUNNINGHAM_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "CADE_CUNNINGHAM_1_NBA",
+     "statID": "assists"
+    },
+    "assists-DANISS_JENKINS_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-120",
+       "overUnder": "3.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-115",
+       "overUnder": "3.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-116",
+       "overUnder": "3.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-120",
+       "overUnder": "3.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Daniss Jenkins Assists Over/Under",
+     "oddID": "assists-DANISS_JENKINS_1_NBA-game-ou-over",
+     "opposingOddID": "assists-DANISS_JENKINS_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "DANISS_JENKINS_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "DANISS_JENKINS_1_NBA",
+     "statID": "assists"
+    },
+    "assists-DANISS_JENKINS_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-110",
+       "overUnder": "3.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-115",
+       "overUnder": "3.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-111",
+       "overUnder": "3.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-110",
+       "overUnder": "3.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Daniss Jenkins Assists Over/Under",
+     "oddID": "assists-DANISS_JENKINS_1_NBA-game-ou-under",
+     "opposingOddID": "assists-DANISS_JENKINS_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "DANISS_JENKINS_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "DANISS_JENKINS_1_NBA",
+     "statID": "assists"
+    },
+    "assists-DERRICK_WHITE_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "+115",
+       "overUnder": "4.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "+112",
+       "overUnder": "4.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "+120",
+       "overUnder": "4.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "+115",
+       "overUnder": "4.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Derrick White Assists Over/Under",
+     "oddID": "assists-DERRICK_WHITE_1_NBA-game-ou-over",
+     "opposingOddID": "assists-DERRICK_WHITE_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "DERRICK_WHITE_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "DERRICK_WHITE_1_NBA",
+     "statID": "assists"
+    },
+    "assists-DERRICK_WHITE_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-160",
+       "overUnder": "4.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-150",
+       "overUnder": "4.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-160",
+       "overUnder": "4.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-150",
+       "overUnder": "4.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Derrick White Assists Over/Under",
+     "oddID": "assists-DERRICK_WHITE_1_NBA-game-ou-under",
+     "opposingOddID": "assists-DERRICK_WHITE_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "DERRICK_WHITE_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "DERRICK_WHITE_1_NBA",
+     "statID": "assists"
+    },
+    "assists-JOHN_COLLINS_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:29:00.454Z",
+       "odds": "+171",
+       "overUnder": "1.5"
+      },
+      "draftkings": {
+       "available": false,
+       "lastUpdatedAt": "2026-10-19T15:59:53.360Z",
+       "odds": "-230",
+       "overUnder": "0.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "John Collins Assists Over/Under",
+     "oddID": "assists-JOHN_COLLINS_1_NBA-game-ou-over",
+     "opposingOddID": "assists-JOHN_COLLINS_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "JOHN_COLLINS_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "JOHN_COLLINS_1_NBA",
+     "statID": "assists"
+    },
+    "assists-JOHN_COLLINS_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:29:00.454Z",
+       "odds": "-227",
+       "overUnder": "1.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "John Collins Assists Over/Under",
+     "oddID": "assists-JOHN_COLLINS_1_NBA-game-ou-under",
+     "opposingOddID": "assists-JOHN_COLLINS_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "JOHN_COLLINS_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "JOHN_COLLINS_1_NBA",
+     "statID": "assists"
+    },
+    "assists-MITCHELL_ROBINSON_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {},
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Mitchell Robinson Assists Over/Under",
+     "oddID": "assists-MITCHELL_ROBINSON_1_NBA-game-ou-over",
+     "opposingOddID": "assists-MITCHELL_ROBINSON_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "MITCHELL_ROBINSON_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "MITCHELL_ROBINSON_1_NBA",
+     "statID": "assists"
+    },
+    "assists-MITCHELL_ROBINSON_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {},
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Mitchell Robinson Assists Over/Under",
+     "oddID": "assists-MITCHELL_ROBINSON_1_NBA-game-ou-under",
+     "opposingOddID": "assists-MITCHELL_ROBINSON_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "MITCHELL_ROBINSON_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "MITCHELL_ROBINSON_1_NBA",
+     "statID": "assists"
+    },
+    "points-AUSAR_THOMPSON_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "+105",
+       "overUnder": "10.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-105",
+       "overUnder": "10.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "+103",
+       "overUnder": "10.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "+100",
+       "overUnder": "10.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Ausar Thompson Points Over/Under",
+     "oddID": "points-AUSAR_THOMPSON_1_NBA-game-ou-over",
+     "opposingOddID": "points-AUSAR_THOMPSON_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "AUSAR_THOMPSON_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "AUSAR_THOMPSON_1_NBA",
+     "statID": "points"
+    },
+    "points-AUSAR_THOMPSON_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-135",
+       "overUnder": "10.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-128",
+       "overUnder": "10.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-133",
+       "overUnder": "10.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-130",
+       "overUnder": "10.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Ausar Thompson Points Over/Under",
+     "oddID": "points-AUSAR_THOMPSON_1_NBA-game-ou-under",
+     "opposingOddID": "points-AUSAR_THOMPSON_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "AUSAR_THOMPSON_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "AUSAR_THOMPSON_1_NBA",
+     "statID": "points"
+    },
+    "points-CADE_CUNNINGHAM_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-125",
+       "overUnder": "23.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-125",
+       "overUnder": "23.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-119",
+       "overUnder": "23.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-120",
+       "overUnder": "23.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Cade Cunningham Points Over/Under",
+     "oddID": "points-CADE_CUNNINGHAM_1_NBA-game-ou-over",
+     "opposingOddID": "points-CADE_CUNNINGHAM_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "CADE_CUNNINGHAM_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "CADE_CUNNINGHAM_1_NBA",
+     "statID": "points"
+    },
+    "points-CADE_CUNNINGHAM_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-105",
+       "overUnder": "23.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-106",
+       "overUnder": "23.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-107",
+       "overUnder": "23.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-110",
+       "overUnder": "23.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Cade Cunningham Points Over/Under",
+     "oddID": "points-CADE_CUNNINGHAM_1_NBA-game-ou-under",
+     "opposingOddID": "points-CADE_CUNNINGHAM_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "CADE_CUNNINGHAM_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "CADE_CUNNINGHAM_1_NBA",
+     "statID": "points"
+    },
+    "points-DANISS_JENKINS_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-105",
+       "overUnder": "8.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-105",
+       "overUnder": "8.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "+100",
+       "overUnder": "8.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-105",
+       "overUnder": "8.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Daniss Jenkins Points Over/Under",
+     "oddID": "points-DANISS_JENKINS_1_NBA-game-ou-over",
+     "opposingOddID": "points-DANISS_JENKINS_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "DANISS_JENKINS_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "DANISS_JENKINS_1_NBA",
+     "statID": "points"
+    },
+    "points-DANISS_JENKINS_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-125",
+       "overUnder": "8.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-128",
+       "overUnder": "8.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-124",
+       "overUnder": "8.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-125",
+       "overUnder": "8.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Daniss Jenkins Points Over/Under",
+     "oddID": "points-DANISS_JENKINS_1_NBA-game-ou-under",
+     "opposingOddID": "points-DANISS_JENKINS_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "DANISS_JENKINS_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "DANISS_JENKINS_1_NBA",
+     "statID": "points"
+    },
+    "points-DERRICK_WHITE_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-110",
+       "overUnder": "15.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-127",
+       "overUnder": "15.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-111",
+       "overUnder": "15.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-110",
+       "overUnder": "15.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Derrick White Points Over/Under",
+     "oddID": "points-DERRICK_WHITE_1_NBA-game-ou-over",
+     "opposingOddID": "points-DERRICK_WHITE_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "DERRICK_WHITE_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "DERRICK_WHITE_1_NBA",
+     "statID": "points"
+    },
+    "points-DERRICK_WHITE_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-120",
+       "overUnder": "15.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-105",
+       "overUnder": "15.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-115",
+       "overUnder": "15.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-120",
+       "overUnder": "15.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Derrick White Points Over/Under",
+     "oddID": "points-DERRICK_WHITE_1_NBA-game-ou-under",
+     "opposingOddID": "points-DERRICK_WHITE_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "DERRICK_WHITE_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "DERRICK_WHITE_1_NBA",
+     "statID": "points"
+    },
+    "points-JOHN_COLLINS_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-105",
+       "overUnder": "12.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-108",
+       "overUnder": "12.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-106",
+       "overUnder": "12.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-110",
+       "overUnder": "12.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "John Collins Points Over/Under",
+     "oddID": "points-JOHN_COLLINS_1_NBA-game-ou-over",
+     "opposingOddID": "points-JOHN_COLLINS_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "JOHN_COLLINS_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "JOHN_COLLINS_1_NBA",
+     "statID": "points"
+    },
+    "points-JOHN_COLLINS_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-125",
+       "overUnder": "12.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-127",
+       "overUnder": "12.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-122",
+       "overUnder": "12.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-120",
+       "overUnder": "12.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "John Collins Points Over/Under",
+     "oddID": "points-JOHN_COLLINS_1_NBA-game-ou-under",
+     "opposingOddID": "points-JOHN_COLLINS_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "JOHN_COLLINS_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "JOHN_COLLINS_1_NBA",
+     "statID": "points"
+    },
+    "points-MITCHELL_ROBINSON_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-125",
+       "overUnder": "6.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-129",
+       "overUnder": "6.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-117",
+       "overUnder": "6.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-115",
+       "overUnder": "6.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Mitchell Robinson Points Over/Under",
+     "oddID": "points-MITCHELL_ROBINSON_1_NBA-game-ou-over",
+     "opposingOddID": "points-MITCHELL_ROBINSON_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "MITCHELL_ROBINSON_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "MITCHELL_ROBINSON_1_NBA",
+     "statID": "points"
+    },
+    "points-MITCHELL_ROBINSON_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-105",
+       "overUnder": "6.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-105",
+       "overUnder": "6.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-109",
+       "overUnder": "6.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-115",
+       "overUnder": "6.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Mitchell Robinson Points Over/Under",
+     "oddID": "points-MITCHELL_ROBINSON_1_NBA-game-ou-under",
+     "opposingOddID": "points-MITCHELL_ROBINSON_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "MITCHELL_ROBINSON_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "MITCHELL_ROBINSON_1_NBA",
+     "statID": "points"
+    },
+    "rebounds-AUSAR_THOMPSON_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-110",
+       "overUnder": "6.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-110",
+       "overUnder": "6.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-103",
+       "overUnder": "6.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-105",
+       "overUnder": "6.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Ausar Thompson Rebounds Over/Under",
+     "oddID": "rebounds-AUSAR_THOMPSON_1_NBA-game-ou-over",
+     "opposingOddID": "rebounds-AUSAR_THOMPSON_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "AUSAR_THOMPSON_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "AUSAR_THOMPSON_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-AUSAR_THOMPSON_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-125",
+       "overUnder": "6.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-121",
+       "overUnder": "6.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-127",
+       "overUnder": "6.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-125",
+       "overUnder": "6.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Ausar Thompson Rebounds Over/Under",
+     "oddID": "rebounds-AUSAR_THOMPSON_1_NBA-game-ou-under",
+     "opposingOddID": "rebounds-AUSAR_THOMPSON_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "AUSAR_THOMPSON_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "AUSAR_THOMPSON_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-CADE_CUNNINGHAM_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "+125",
+       "overUnder": "5.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "+116",
+       "overUnder": "5.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "+119",
+       "overUnder": "5.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "+120",
+       "overUnder": "5.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Cade Cunningham Rebounds Over/Under",
+     "oddID": "rebounds-CADE_CUNNINGHAM_1_NBA-game-ou-over",
+     "opposingOddID": "rebounds-CADE_CUNNINGHAM_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "CADE_CUNNINGHAM_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "CADE_CUNNINGHAM_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-CADE_CUNNINGHAM_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-165",
+       "overUnder": "5.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-154",
+       "overUnder": "5.5"
+      },
+      "draftkings": {
+       "available": false,
+       "lastUpdatedAt": "2026-10-19T17:06:12.036Z",
+       "odds": "-154",
+       "overUnder": "5.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-160",
+       "overUnder": "5.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Cade Cunningham Rebounds Over/Under",
+     "oddID": "rebounds-CADE_CUNNINGHAM_1_NBA-game-ou-under",
+     "opposingOddID": "rebounds-CADE_CUNNINGHAM_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "CADE_CUNNINGHAM_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "CADE_CUNNINGHAM_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-DANISS_JENKINS_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "+115",
+       "overUnder": "2.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "+102",
+       "overUnder": "2.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "+123",
+       "overUnder": "2.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "+120",
+       "overUnder": "2.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Daniss Jenkins Rebounds Over/Under",
+     "oddID": "rebounds-DANISS_JENKINS_1_NBA-game-ou-over",
+     "opposingOddID": "rebounds-DANISS_JENKINS_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "DANISS_JENKINS_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "DANISS_JENKINS_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-DANISS_JENKINS_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-160",
+       "overUnder": "2.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-160",
+       "overUnder": "2.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-160",
+       "overUnder": "2.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Daniss Jenkins Rebounds Over/Under",
+     "oddID": "rebounds-DANISS_JENKINS_1_NBA-game-ou-under",
+     "opposingOddID": "rebounds-DANISS_JENKINS_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "DANISS_JENKINS_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "DANISS_JENKINS_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-DERRICK_WHITE_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-135",
+       "overUnder": "3.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-127",
+       "overUnder": "3.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-139",
+       "overUnder": "3.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-125",
+       "overUnder": "3.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Derrick White Rebounds Over/Under",
+     "oddID": "rebounds-DERRICK_WHITE_1_NBA-game-ou-over",
+     "opposingOddID": "rebounds-DERRICK_WHITE_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "DERRICK_WHITE_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "DERRICK_WHITE_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-DERRICK_WHITE_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "+105",
+       "overUnder": "3.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-107",
+       "overUnder": "3.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "+104",
+       "overUnder": "3.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-105",
+       "overUnder": "3.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Derrick White Rebounds Over/Under",
+     "oddID": "rebounds-DERRICK_WHITE_1_NBA-game-ou-under",
+     "opposingOddID": "rebounds-DERRICK_WHITE_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "DERRICK_WHITE_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "DERRICK_WHITE_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-JOHN_COLLINS_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "+100",
+       "overUnder": "5.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "+105",
+       "overUnder": "5.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-102",
+       "overUnder": "5.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "+110",
+       "overUnder": "5.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "John Collins Rebounds Over/Under",
+     "oddID": "rebounds-JOHN_COLLINS_1_NBA-game-ou-over",
+     "opposingOddID": "rebounds-JOHN_COLLINS_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "JOHN_COLLINS_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "JOHN_COLLINS_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-JOHN_COLLINS_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-130",
+       "overUnder": "5.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-141",
+       "overUnder": "5.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-128",
+       "overUnder": "5.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-145",
+       "overUnder": "5.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "John Collins Rebounds Over/Under",
+     "oddID": "rebounds-JOHN_COLLINS_1_NBA-game-ou-under",
+     "opposingOddID": "rebounds-JOHN_COLLINS_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "JOHN_COLLINS_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "JOHN_COLLINS_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-MITCHELL_ROBINSON_1_NBA-game-ou-over": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "-130",
+       "overUnder": "7.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "-137",
+       "overUnder": "7.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-131",
+       "overUnder": "7.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "-130",
+       "overUnder": "7.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Mitchell Robinson Rebounds Over/Under",
+     "oddID": "rebounds-MITCHELL_ROBINSON_1_NBA-game-ou-over",
+     "opposingOddID": "rebounds-MITCHELL_ROBINSON_1_NBA-game-ou-under",
+     "periodID": "game",
+     "playerID": "MITCHELL_ROBINSON_1_NBA",
+     "sideID": "over",
+     "started": false,
+     "statEntityID": "MITCHELL_ROBINSON_1_NBA",
+     "statID": "rebounds"
+    },
+    "rebounds-MITCHELL_ROBINSON_1_NBA-game-ou-under": {
+     "betTypeID": "ou",
+     "byBookmaker": {
+      "bovada": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:31.443Z",
+       "odds": "+100",
+       "overUnder": "7.5"
+      },
+      "caesars": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:52.443Z",
+       "odds": "+103",
+       "overUnder": "7.5"
+      },
+      "draftkings": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:00.091Z",
+       "odds": "-101",
+       "overUnder": "7.5"
+      },
+      "espnbet": {
+       "available": true,
+       "lastUpdatedAt": "2026-10-19T17:28:51.544Z",
+       "odds": "+100",
+       "overUnder": "7.5"
+      }
+     },
+     "cancelled": false,
+     "ended": false,
+     "marketName": "Mitchell Robinson Rebounds Over/Under",
+     "oddID": "rebounds-MITCHELL_ROBINSON_1_NBA-game-ou-under",
+     "opposingOddID": "rebounds-MITCHELL_ROBINSON_1_NBA-game-ou-over",
+     "periodID": "game",
+     "playerID": "MITCHELL_ROBINSON_1_NBA",
+     "sideID": "under",
+     "started": false,
+     "statEntityID": "MITCHELL_ROBINSON_1_NBA",
+     "statID": "rebounds"
+    }
+   },
+   "players": {
+    "AUSAR_THOMPSON_1_NBA": {
+     "firstName": "Ausar",
+     "lastName": "Thompson",
+     "name": "Ausar Thompson",
+     "playerID": "AUSAR_THOMPSON_1_NBA",
+     "teamID": "DETROIT_PISTONS_NBA"
+    },
+    "CADE_CUNNINGHAM_1_NBA": {
+     "firstName": "Cade",
+     "lastName": "Cunningham",
+     "name": "Cade Cunningham",
+     "playerID": "CADE_CUNNINGHAM_1_NBA",
+     "teamID": "DETROIT_PISTONS_NBA"
+    },
+    "DANISS_JENKINS_1_NBA": {
+     "firstName": "Daniss",
+     "lastName": "Jenkins",
+     "name": "Daniss Jenkins",
+     "playerID": "DANISS_JENKINS_1_NBA",
+     "teamID": "DETROIT_PISTONS_NBA"
+    },
+    "DERRICK_WHITE_1_NBA": {
+     "firstName": "Derrick",
+     "lastName": "White",
+     "name": "Derrick White",
+     "playerID": "DERRICK_WHITE_1_NBA",
+     "teamID": "BOSTON_CELTICS_NBA"
+    },
+    "JOHN_COLLINS_1_NBA": {
+     "firstName": "John",
+     "lastName": "Collins",
+     "name": "John Collins",
+     "playerID": "JOHN_COLLINS_1_NBA",
+     "teamID": "DETROIT_PISTONS_NBA"
+    },
+    "MITCHELL_ROBINSON_1_NBA": {
+     "firstName": "Mitchell",
+     "lastName": "Robinson",
+     "name": "Mitchell Robinson",
+     "playerID": "MITCHELL_ROBINSON_1_NBA",
+     "teamID": "BOSTON_CELTICS_NBA"
+    }
+   },
+   "results": {},
+   "sportID": "BASKETBALL",
+   "status": {
+    "cancelled": false,
+    "ended": false,
+    "finalized": false,
+    "oddsAvailable": true,
+    "oddsPresent": true,
+    "started": false,
+    "startsAt": "2026-10-20T19:00:00.000Z"
+   },
+   "teams": {
+    "away": {
+     "names": {
+      "short": "BOS"
+     },
+     "teamID": "BOSTON_CELTICS_NBA"
+    },
+    "home": {
+     "names": {
+      "short": "DET"
+     },
+     "teamID": "DETROIT_PISTONS_NBA"
+    }
+   },
+   "type": "match"
+  }
+ ],
+ "success": true
+}

@@ -9,9 +9,8 @@ from cold_start_usage.cli import main
 from cold_start_usage.grade import graded_signals, summarize
 from cold_start_usage.pipeline import (fetch_results, run_projections, run_signals, snapshot_due,
                                      snapshot_from_file)
-from cold_start_usage.watchlist import watchlist_rows
 from cold_start_usage.report import build_report, write_report
-from cold_start_usage.consensus import venue_quotes
+from cold_start_usage.consensus import sgo_target_quotes
 from tests.conftest import FakeTransport
 from tests.fixtures.synthetic import EVENT_ID, FETCHED, TIP, events_response, synthetic_event
 
@@ -27,7 +26,8 @@ def test_full_dry_run(storage, make_client):
     t1 = FETCHED + timedelta(minutes=1)
     table, msgs = run_projections(storage, DAY, t1, {"MIA": "full_strength"})
     assert not [m for m in msgs if "match" in m]                      # every player mapped to an ID
-    assert storage.count("projections") == 11
+    assert storage.count("projections") == 11 * 3                     # one row per player and stat
+    assert storage.query("SELECT count(*) n FROM projections WHERE stat = 'points'").n.iloc[0] == 11
     assert table.spc_new.notna().all()                                # spacing reported
     sig, _ = run_signals(storage, DAY, t1 + timedelta(minutes=1))
     assert len(sig) == 11 and storage.count("signals") == 11
@@ -38,10 +38,8 @@ def test_full_dry_run(storage, make_client):
     assert set(sig.decision) <= {"paper", "abstain"}
     assert (sig.edge.dropna() >= 0).all()
 
-    venues = venue_quotes(storage, EVENT_ID)
-    assert set(venues.book) == {"kalshi"}
-    wl = watchlist_rows(sig, venues)
-    assert set(wl.player) == set(sig[sig.decision == "paper"].player_name)
+    # SportsGameOdds-carried venue prices keep the "target" role and never enter the consensus.
+    assert set(sgo_target_quotes(storage, EVENT_ID).book) == {"kalshi"}
 
     transport = FakeTransport(events=[events_response([synthetic_event(TIP + timedelta(hours=3), final=True)])])
     objects, n, _ = fetch_results(make_client(transport, storage=storage), storage, DAY, TIP + timedelta(hours=12))
@@ -90,7 +88,8 @@ def test_projection_rows_are_kept_when_rerun(storage):
     load_slate(storage)
     run_projections(storage, DAY, FETCHED, {"MIA": "full_strength"})
     run_projections(storage, DAY, FETCHED + timedelta(minutes=30), {"MIA": "giannis_out"})
-    df = storage.query("SELECT scenario, count(*) n FROM projections GROUP BY scenario ORDER BY scenario")
+    df = storage.query("SELECT scenario, count(*) n FROM projections WHERE stat = 'points' GROUP BY scenario "
+                       "ORDER BY scenario")
     assert dict(zip(df.scenario, df.n)) == {"full_strength": 11, "giannis_out": 10}
 
 
@@ -124,5 +123,5 @@ def test_due_with_signals_logs_at_checkpoint(storage, make_client, tmp_path, cap
     from cold_start_usage import cli
     args = cli.build_parser().parse_args(["snapshot", "--due", "--with-signals"])
     assert cli.cmd_snapshot(args, storage, lambda: TIP - timedelta(minutes=58)) == 0
-    assert "Signals at t-60m: 11 logged" in capsys.readouterr().out
+    assert "Sportsbook signals at t-60m: 11 logged" in capsys.readouterr().out
     assert set(storage.query("SELECT DISTINCT timing FROM signals").timing) == {"t-60m"}

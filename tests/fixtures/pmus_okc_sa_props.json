@@ -1,0 +1,313 @@
+{
+ "markets": [
+  {
+   "bestAskQuote": {
+    "currency": "USD",
+    "value": "0.9700"
+   },
+   "feeCoefficient": 0.0695,
+   "gameStartTime": "2026-10-21T01:30:00Z",
+   "line": 5,
+   "marketSides": [
+    {
+     "description": "Yes",
+     "long": true,
+     "team": {
+      "abbreviation": "okc"
+     }
+    },
+    {
+     "description": "No",
+     "long": false,
+     "team": {
+      "abbreviation": "okc"
+     }
+    }
+   ],
+   "question": "Will Ajay Mitchell record at least 5 assists in OKC Thunder vs. SA Spurs?",
+   "slug": "astatc-nba-okc-sa-2026-10-20-ast-ajamit-gte5",
+   "sportsMarketType": "basketball_player_assists",
+   "status": "MARKET_STATUS_OPEN",
+   "title": "Ajay Mitchell 5+ assists"
+  },
+  {
+   "bestAskQuote": {
+    "currency": "USD",
+    "value": "0.9700"
+   },
+   "feeCoefficient": 0.0695,
+   "gameStartTime": "2026-10-21T01:30:00Z",
+   "line": 10,
+   "marketSides": [
+    {
+     "description": "Yes",
+     "long": true,
+     "team": {
+      "abbreviation": "sa"
+     }
+    },
+    {
+     "description": "No",
+     "long": false,
+     "team": {
+      "abbreviation": "sa"
+     }
+    }
+   ],
+   "question": "Will De'Aaron Fox record at least 10 assists in OKC Thunder vs. SA Spurs?",
+   "slug": "astatc-nba-okc-sa-2026-10-20-ast-defox-gte10",
+   "sportsMarketType": "basketball_player_assists",
+   "status": "MARKET_STATUS_OPEN",
+   "title": "De'Aaron Fox 10+ assists"
+  },
+  {
+   "bestAskQuote": {
+    "currency": "USD",
+    "value": "0.9700"
+   },
+   "feeCoefficient": 0.0695,
+   "gameStartTime": "2026-10-21T01:30:00Z",
+   "line": 5,
+   "marketSides": [
+    {
+     "description": "Yes",
+     "long": true,
+     "team": {
+      "abbreviation": "sa"
+     }
+    },
+    {
+     "description": "No",
+     "long": false,
+     "team": {
+      "abbreviation": "sa"
+     }
+    }
+   ],
+   "question": "Will De'Aaron Fox record at least 5 assists in OKC Thunder vs. SA Spurs?",
+   "slug": "astatc-nba-okc-sa-2026-10-20-ast-defox-gte5",
+   "sportsMarketType": "basketball_player_assists",
+   "status": "MARKET_STATUS_OPEN",
+   "title": "De'Aaron Fox 5+ assists"
+  },
+  {
+   "bestAskQuote": {
+    "currency": "USD",
+    "value": "0.9700"
+   },
+   "feeCoefficient": 0.0695,
+   "gameStartTime": "2026-10-21T01:30:00Z",
+   "line": 5,
+   "marketSides": [
+    {
+     "description": "Yes",
+     "long": true,
+     "team": {
+      "abbreviation": "okc"
+     }
+    },
+    {
+     "description": "No",
+     "long": false,
+     "team": {
+      "abbreviation": "okc"
+     }
+    }
+   ],
+   "question": "Will Ajay Mitchell record at least 5 total rebounds in OKC Thunder vs. SA Spurs?",
+   "slug": "astatc-nba-okc-sa-2026-10-20-reb-ajamit-gte5",
+   "sportsMarketType": "basketball_player_rebounds",
+   "status": "MARKET_STATUS_OPEN",
+   "title": "Ajay Mitchell 5+ rebounds"
+  },
+  {
+   "bestAskQuote": {
+    "currency": "USD",
+    "value": "0.8900"
+   },
+   "feeCoefficient": 0.0695,
+   "gameStartTime": "2026-10-21T01:30:00Z",
+   "line": 1,
+   "marketSides": [
+    {
+     "description": "Yes",
+     "long": true,
+     "team": {
+      "abbreviation": "sa"
+     }
+    },
+    {
+     "description": "No",
+     "long": false,
+     "team": {
+      "abbreviation": "sa"
+     }
+    }
+   ],
+   "question": "Will Victor Wembanyama record at least 1 three-point field goals made in OKC Thunder vs. SA Spurs?",
+   "slug": "astatc-nba-okc-sa-2026-10-20-3pm-vicwem-gte1",
+   "sportsMarketType": "basketball_player_threes",
+   "status": "MARKET_STATUS_OPEN",
+   "title": "Victor Wembanyama 1+ three-pointers made"
+  },
+  {
+   "bestAskQuote": {
+    "currency": "USD",
+    "value": "0.8400"
+   },
+   "bestBidQuote": {
+    "currency": "USD",
+    "value": "0.7800"
+   },
+   "feeCoefficient": 0.0695,
+   "gameStartTime": "2026-10-21T01:30:00Z",
+   "line": 216.5,
+   "marketSides": [
+    {
+     "description": "Over",
+     "long": true,
+     "team": {
+      "abbreviation": null
+     }
+    },
+    {
+     "description": "Under",
+     "long": false,
+     "team": {
+      "abbreviation": null
+     }
+    }
+   ],
+   "question": "Will the total in OKC Thunder vs. SA Spurs be more than 216.5?",
+   "slug": "tsc-nba-okc-sa-2026-10-20-216pt5",
+   "sportsMarketType": "basketball_team_full_game_total",
+   "status": "MARKET_STATUS_OPEN",
+   "title": "Over 216.5 total points"
+  },
+  {
+   "bestAskQuote": {
+    "currency": "USD",
+    "value": "0.7300"
+   },
+   "feeCoefficient": 0.0695,
+   "gameStartTime": "2026-10-21T01:30:00Z",
+   "line": 10,
+   "marketSides": [
+    {
+     "description": "Yes",
+     "long": true,
+     "team": {
+      "abbreviation": "sa"
+     }
+    },
+    {
+     "description": "No",
+     "long": false,
+     "team": {
+      "abbreviation": "sa"
+     }
+    }
+   ],
+   "question": "Will Victor Wembanyama record at least 10 total rebounds in OKC Thunder vs. SA Spurs?",
+   "slug": "astatc-nba-okc-sa-2026-10-20-reb-vicwem-gte10",
+   "sportsMarketType": "basketball_player_rebounds",
+   "status": "MARKET_STATUS_OPEN",
+   "title": "Victor Wembanyama 10+ rebounds"
+  },
+  {
+   "bestAskQuote": {
+    "currency": "USD",
+    "value": "0.5400"
+   },
+   "bestBidQuote": {
+    "currency": "USD",
+    "value": "0.4900"
+   },
+   "feeCoefficient": 0.0695,
+   "gameStartTime": "2026-10-21T01:30:00Z",
+   "line": 12,
+   "marketSides": [
+    {
+     "description": "Yes",
+     "long": true,
+     "team": {
+      "abbreviation": "sa"
+     }
+    },
+    {
+     "description": "No",
+     "long": false,
+     "team": {
+      "abbreviation": "sa"
+     }
+    }
+   ],
+   "question": "Will Victor Wembanyama record at least 12 total rebounds in OKC Thunder vs. SA Spurs?",
+   "slug": "astatc-nba-okc-sa-2026-10-20-reb-vicwem-gte12",
+   "sportsMarketType": "basketball_player_rebounds",
+   "status": "MARKET_STATUS_OPEN",
+   "title": "Victor Wembanyama 12+ rebounds"
+  },
+  {
+   "bestAskQuote": {
+    "currency": "USD",
+    "value": "0.5200"
+   },
+   "bestBidQuote": {
+    "currency": "USD",
+    "value": "0.5000"
+   },
+   "feeCoefficient": 0.0695,
+   "gameStartTime": "2026-10-21T01:30:00Z",
+   "line": 30,
+   "marketSides": [
+    {
+     "description": "Yes",
+     "long": true,
+     "team": {
+      "abbreviation": "okc"
+     }
+    },
+    {
+     "description": "No",
+     "long": false,
+     "team": {
+      "abbreviation": "okc"
+     }
+    }
+   ],
+   "question": "Will Shai Gilgeous-Alexander record at least 30 points in OKC Thunder vs. SA Spurs?",
+   "slug": "astatc-nba-okc-sa-2026-10-20-pts-shaale-gte30",
+   "sportsMarketType": "basketball_player_points",
+   "status": "MARKET_STATUS_OPEN",
+   "title": "Shai Gilgeous-Alexander 30+ points"
+  },
+  {
+   "feeCoefficient": 0.0695,
+   "gameStartTime": "2026-10-21T01:30:00Z",
+   "line": 25,
+   "marketSides": [
+    {
+     "description": "Yes",
+     "long": true,
+     "team": {
+      "abbreviation": "okc"
+     }
+    },
+    {
+     "description": "No",
+     "long": false,
+     "team": {
+      "abbreviation": "okc"
+     }
+    }
+   ],
+   "question": "Will Shai Gilgeous-Alexander record at least 25 points in OKC Thunder vs. SA Spurs?",
+   "slug": "astatc-nba-okc-sa-2026-10-20-pts-shaale-gte25",
+   "sportsMarketType": "basketball_player_points",
+   "status": "MARKET_STATUS_OPEN",
+   "title": "Shai Gilgeous-Alexander 25+ points"
+  }
+ ],
+ "slug": "nba-okc-sa-2026-10-20"
+}

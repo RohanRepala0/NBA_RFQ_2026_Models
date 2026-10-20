@@ -1,471 +1,487 @@
-player,team_2025_26,team_2026_27,usg_pct,games,mpg,ppg,fg3a_pg,fg3_pct,verified,source,sgo_player_id
-Aaron Wiggins,OKC,ATL,19.9,65,21.75,9.4,4.2,35.6,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,AARON_WIGGINS_1_NBA
-Asa Newell,ATL,ATL,17.1,44,11.36,5.16,1.7,38.7,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,ASA_NEWELL_1_NBA
-CJ McCollum,TOT,ATL,25.71,76,29.79,18.74,6.73,37.4,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,CJ_MCCOLLUM_1_NBA
-Christian Koloko,TOT,ATL,11.49,25,14.04,2.92,0.38,11.1,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,CHRISTIAN_KOLOKO_1_NBA
-Corey Kispert,TOT,ATL,18.61,58,18.62,9.17,4.07,36.7,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,COREY_KISPERT_1_NBA
-Devin Carter,SAC,ATL,23.5,38,18.42,8.92,3.0,26.3,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DEVIN_CARTER_1_NBA
-Dorian Finney-Smith,HOU,ATL,10.8,37,16.76,3.32,2.7,27.0,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,DORIAN_FINNEYSMITH_1_NBA
-Dyson Daniels,ATL,ATL,16.0,76,33.16,11.86,1.5,18.8,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,DYSON_DANIELS_1_NBA
-Gabe Vincent,TOT,ATL,12.44,53,16.58,4.36,3.28,34.1,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,GABE_VINCENT_1_NBA
-Jalen Johnson,ATL,ATL,26.9,72,35.17,22.51,4.7,35.2,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,JALEN_JOHNSON_1_NBA
-Jalen Wilson,BKN,ATL,18.2,54,15.91,6.35,5.1,35.5,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,JALEN_WILSON_1_NBA
-Jock Landale,TOT,ATL,18.33,68,22.15,10.56,2.87,38.4,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,JOCK_LANDALE_1_NBA
-Keaton Wallace,ATL,ATL,16.2,53,10.11,3.51,1.9,37.3,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,KEATON_WALLACE_1_NBA
-Luguentz Dort,OKC,ATL,14.2,69,26.8,8.35,5.4,34.4,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,LUGUENTZ_DORT_1_NBA
-Mouhamed Gueye,ATL,ATL,12.4,77,15.31,4.44,1.7,30.8,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,MOUHAMED_GUEYE_1_NBA
-Nickeil Alexander-Walker,ATL,ATL,23.9,78,33.37,20.82,8.1,39.9,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,NICKEIL_ALEXANDERWALKER_1_NBA
-Onyeka Okongwu,ATL,ATL,19.5,74,31.04,15.18,5.2,37.6,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,ONYEKA_OKONGWU_1_NBA
-RayJ Dennis,IND,ATL,22.8,13,12.92,4.92,2.9,31.6,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,RAYJ_DENNIS_1_NBA
-Tony Bradley,IND,ATL,14.4,38,10.95,3.97,0.1,50.0,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,TONY_BRADLEY_1_NBA
-Ben Saraf,BKN,BKN,21.0,44,20.82,7.55,6.9,21.1,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,BEN_SARAF_1_NBA
-Chaney Johnson,BKN,BKN,16.2,17,20.47,8.18,5.5,30.0,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,
-Danny Wolf,BKN,BKN,20.6,57,20.82,8.91,7.7,32.2,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,DANIEL_WOLF_1_NBA
-Day'Ron Sharpe,BKN,BKN,19.8,62,18.71,8.71,0.6,23.1,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,DAYRON_SHARPE_1_NBA
-Drake Powell,BKN,BKN,15.0,63,20.95,6.48,5.7,28.0,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,
-E.J. Liddell,BKN,BKN,17.2,26,13.42,5.65,4.3,34.6,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,
-Egor Dëmin,BKN,BKN,18.9,52,25.15,10.31,8.6,38.5,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,EGOR_DEMIN_1_NBA
-Josh Minott,TOT,BKN,16.79,49,17.02,7.43,3.93,41.4,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,JOSH_MINOTT_1_NBA
-Julius Randle,MIN,BKN,26.4,79,33.04,21.1,4.4,31.5,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,JULIUS_RANDLE_1_NBA
-Keon Ellis,TOT,BKN,13.07,72,20.53,6.67,3.46,36.2,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,KEON_ELLIS_1_NBA
-Michael Porter Jr.,BKN,BKN,30.5,52,32.48,24.21,9.3,36.3,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,MICHAEL_PORTER_JR_1_NBA
-Moritz Wagner,ORL,BKN,24.2,36,11.86,6.86,1.9,31.4,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,MORITZ_WAGNER_1_NBA
-Noah Clowney,BKN,BKN,20.3,66,26.97,12.26,9.6,32.9,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,NOAH_CLOWNEY_1_NBA
-Nolan Traore,BKN,BKN,22.9,56,22.2,8.91,8.6,31.8,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,NOLAN_TRAORE_1_NBA
-Terance Mann,BKN,BKN,13.6,63,24.27,7.22,2.4,36.4,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,TERANCE_MANN_1_NBA
-Trevon Scott,BKN,BKN,13.6,6,30.33,8.0,3.2,31.6,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,
-Tyrese Martin,BKN,BKN,18.9,37,18.81,7.3,6.9,33.6,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,
-Tyson Etienne,BKN,BKN,20.3,24,15.83,7.88,6.0,39.8,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,TYSON_ETIENNE_1_NBA
-Amari Williams,BOS,BOS,11.0,22,6.64,1.36,0.0,,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,
-Baylor Scheierman,BOS,BOS,12.0,77,18.56,5.55,3.2,39.9,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,BAYLOR_SCHEIERMAN_1_NBA
-Derrick White,BOS,BOS,22.0,77,34.09,16.45,8.3,32.7,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,DERRICK_WHITE_1_NBA
-Hugo González,BOS,BOS,11.9,74,14.65,3.91,1.6,36.2,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,HUGO_GONZALEZ_1_NBA
-Jayson Tatum,BOS,BOS,30.0,16,32.62,21.75,8.9,32.9,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,JAYSON_TATUM_1_NBA
-Jordan Walsh,BOS,BOS,11.7,68,17.82,5.35,1.8,38.4,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,JORDAN_WALSH_1_NBA
-Luka Garza,BOS,BOS,17.6,69,16.2,8.07,1.8,43.3,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,LUKA_GARZA_1_NBA
-Mike Conley,MIN,BOS,11.5,54,18.35,4.54,3.1,33.7,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,MIKE_CONLEY_1_NBA
-Mitchell Robinson,NYK,BOS,10.6,60,19.58,5.67,0.0,,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,MITCHELL_ROBINSON_1_NBA
-Neemias Queta,BOS,BOS,14.6,76,25.34,10.21,0.1,12.5,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,NEEMIAS_QUETA_1_NBA
-Paul George,PHI,BOS,23.3,37,30.68,17.32,6.9,39.2,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,PAUL_GEORGE_1_NBA
-Payton Pritchard,BOS,BOS,21.5,79,32.35,17.03,7.1,37.7,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,PAYTON_PRITCHARD_1_NBA
-Ron Harper Jr.,BOS,BOS,16.4,29,10.97,4.24,2.8,35.0,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,RON_HARPER_JR_1_NBA
-Ronald Holland II,DET,BOS,18.9,78,19.88,8.21,2.5,25.3,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,RON_HARPER_JR_1_NBA
-Sam Hauser,BOS,BOS,14.6,78,24.79,9.22,6.5,39.3,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,SAM_HAUSER_1_NBA
-Brandon Miller,CHA,CHA,28.1,65,30.28,20.17,8.2,38.3,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,BRANDON_MILLER_1_NBA
-Coby White,TOT,CHA,28.63,50,24.98,17.36,6.36,36.1,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,COBY_WHITE_1_NBA
-Dennis Schröder,TOT,CHA,21.03,70,24.24,10.8,3.3,32.9,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DENNIS_SCHRODER_1_NBA
-Grant Williams,CHA,CHA,14.1,36,19.75,7.0,3.7,38.8,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,GRANT_WILLIAMS_1_NBA
-Grayson Allen,PHX,CHA,23.8,51,28.76,16.49,8.9,34.9,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,GRAYSON_ALLEN_1_NBA
-Kon Knueppel,CHA,CHA,22.3,81,31.49,18.49,7.9,42.5,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,KON_KNUEPPEL_1_NBA
-Liam McNeeley,CHA,CHA,14.3,31,11.87,4.26,1.9,40.0,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,LIAM_MCNEELEY_1_NBA
-Mason Plumlee,CHA,CHA,8.8,14,8.93,1.86,0.0,,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,
-Moussa Diabaté,CHA,CHA,11.4,73,26.01,7.88,0.0,,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,MOUSSA_DIABATE_1_NBA
-Naz Reid,MIN,CHA,22.2,77,26.06,13.58,5.8,36.2,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,NAZ_REID_1_NBA
-PJ Hall,CHA,CHA,17.2,12,15.58,6.08,0.2,100.0,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,PJ_HALL_1_NBA
-Pat Connaughton,CHA,CHA,14.9,42,7.07,2.62,1.2,40.4,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,PAT_CONNAUGHTON_1_NBA
-Rob Dillingham,TOT,CHA,23.24,65,14.92,6.29,2.01,31.5,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,ROB_DILLINGHAM_1_NBA
-Royce O'Neale,PHX,CHA,14.4,78,28.37,9.81,6.7,40.8,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,ROYCE_ONEALE_1_NBA
-Ryan Kalkbrenner,CHA,CHA,11.5,69,21.43,7.55,0.1,0.0,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,RYAN_KALKBRENNER_1_NBA
-Ryan Nembhard,DAL,CHA,17.6,60,19.52,6.62,2.3,35.6,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,RYAN_NEMBHARD_1_NBA
-Sion James,CHA,CHA,11.0,82,22.48,5.38,2.9,35.2,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,SION_JAMES_1_NBA
-Tidjane Salaün,CHA,CHA,14.9,37,15.54,6.0,2.2,43.4,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,TIDJANE_SALAUN_1_NBA
-Xavier Tillman,BOS,CHA,14.2,14,7.93,2.21,1.1,20.0,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,XAVIER_TILLMAN_1_NBA
-Buddy Hield,GSW,CHI,19.8,44,17.45,8.05,4.4,34.4,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,BUDDY_HIELD_1_NBA
-Isaac Okoro,CHI,CHI,13.6,63,26.9,9.27,3.5,33.0,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,ISAAC_OKORO_1_NBA
-Jalen Smith,CHI,CHI,19.0,53,20.66,10.21,4.2,37.3,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,JALEN_SMITH_1_NBA
-Josh Giddey,CHI,CHI,24.4,54,32.06,17.02,5.2,36.4,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,JOSH_GIDDEY_1_NBA
-Kennedy Chandler,UTA,CHI,20.7,11,32.27,15.0,3.5,39.5,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,KENNEDY_CHANDLER_1_NBA
-Leonard Miller,CHI,CHI,18.4,27,23.11,11.74,3.2,35.6,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,LEONARD_MILLER_1_NBA
-Mac McClung,CHI,CHI,22.3,8,12.62,6.0,2.5,25.0,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,MAC_MCCLUNG_1_NBA
-Matas Buzelis,CHI,CHI,22.7,77,29.19,16.26,6.4,34.9,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,MATAS_BUZELIS_1_NBA
-Nic Claxton,BKN,CHI,17.7,69,27.83,11.74,0.3,0.0,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,NIC_CLAXTON_1_NBA
-Norman Powell,MIA,CHI,27.1,58,29.6,21.74,7.1,38.0,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,NORMAN_POWELL_1_NBA
-Patrick Williams,CHI,CHI,16.6,72,20.47,7.01,3.8,34.7,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,PATRICK_WILLIAMS_1_NBA
-Tre Jones,CHI,CHI,19.2,65,26.95,14.06,2.0,31.5,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,TRE_JONES_1_NBA
-Zach Collins,CHI,CHI,18.7,10,18.4,9.7,2.1,42.9,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,ZACH_COLLINS_1_NBA
-Cam Whitmore,WAS,CLE,23.7,21,16.86,9.19,2.7,28.6,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,CAM_WHITMORE_1_NBA
-Craig Porter Jr.,CLE,CLE,12.3,64,17.94,4.52,1.5,35.5,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,CRAIG_PORTER_1_NBA
-Donovan Mitchell,CLE,CLE,32.1,70,33.46,27.89,8.8,36.4,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,DONOVAN_MITCHELL_1_NBA
-Evan Mobley,CLE,CLE,22.5,65,31.91,18.15,3.2,29.7,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,EVAN_MOBLEY_1_NBA
-James Harden,TOT,CLE,28.5,70,34.83,23.6,8.17,37.5,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,JAMES_HARDEN_1_NBA
-Jarrett Allen,CLE,CLE,19.8,56,27.12,15.36,0.2,10.0,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,JARRETT_ALLEN_1_NBA
-Jaylon Tyson,CLE,CLE,19.4,66,26.92,13.21,4.5,44.6,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,JAYLON_TYSON_1_NBA
-Lonzo Ball,CLE,CLE,13.8,35,20.8,4.57,4.2,27.2,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,
-Nae'Qwan Tomlin,CLE,CLE,15.5,64,15.69,5.84,1.8,23.5,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,NAEQWAN_TOMLIN_1_NBA
-Peyton Watson,DEN,CLE,20.5,54,29.59,14.61,3.6,41.1,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,PEYTON_WATSON_1_NBA
-Sam Merrill,CLE,CLE,17.1,52,26.48,12.75,7.2,42.1,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,SAM_MERRILL_1_NBA
-Thomas Bryant,CLE,CLE,18.6,60,12.2,6.17,2.2,35.9,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,THOMAS_BRYANT_1_NBA
-Tyrese Proctor,CLE,CLE,22.0,50,10.9,5.44,2.6,35.1,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,TYRESE_PROCTOR_1_NBA
-Caleb Martin,DAL,DAL,12.5,58,14.76,3.91,1.0,35.1,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,CALEB_MARTIN_1_NBA
-Cooper Flagg,DAL,DAL,26.9,70,33.49,21.04,3.5,29.5,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,C_FLAGG_1_NBA
-Daniel Gafford,DAL,DAL,15.7,55,21.73,9.53,0.0,,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,DANIEL_GAFFORD_1_NBA
-Dereck Lively II,DAL,DAL,11.7,7,16.43,4.29,0.0,,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,DERECK_LIVELY_II_1_NBA
-Dwight Powell,DAL,DAL,8.7,63,14.35,3.33,0.1,28.6,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,
-Jett Howard,ORL,DAL,17.3,55,12.64,5.47,2.6,37.2,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JETT_HOWARD_1_NBA
-John Poulakidas,DAL,DAL,16.3,13,19.46,8.85,5.9,40.3,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,
-Marcus Sasser,DET,DAL,19.8,38,12.03,5.18,2.8,41.5,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,MARCUS_SASSER_1_NBA
-Max Christie,DAL,DAL,16.5,77,29.14,12.27,5.8,40.4,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,MAX_CHRISTIE_1_NBA
-Miles Kelly,DAL,DAL,15.9,14,9.57,3.07,2.4,30.3,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,
-Moussa Cisse,DAL,DAL,14.1,38,13.95,4.47,0.0,,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,MOUSSA_CISSE_1_NBA
-Naji Marshall,DAL,DAL,20.5,74,29.51,15.24,2.9,29.1,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,NAJI_MARSHALL_1_NBA
-P.J. Washington,DAL,DAL,20.1,56,31.0,14.16,4.2,32.5,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,PJ_WASHINGTON_JR_1_NBA
-Santi Aldama,MEM,DAL,20.2,43,27.86,14.0,4.7,35.0,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,SANTI_ALDAMA_1_NBA
-Tyler Smith,DAL,DAL,14.9,12,13.83,4.67,2.9,28.6,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,
-Zaccharie Risacher,ATL,DAL,17.6,67,22.43,9.57,3.9,36.8,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,ZACCHARIE_RISACHER_1_NBA
-Aaron Gordon,DEN,DEN,21.8,36,27.92,16.17,4.4,38.9,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,AARON_GORDON_1_NBA
-Bruce Brown,DEN,DEN,14.5,82,24.37,7.91,1.8,38.5,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,
-Cameron Johnson,DEN,DEN,15.1,54,30.5,12.22,4.7,43.0,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,CAMERON_JOHNSON_1_NBA
-Christian Braun,DEN,DEN,14.8,44,31.8,11.95,3.3,30.1,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,CHRISTIAN_BRAUN_1_NBA
-DaRon Holmes II,DEN,DEN,16.4,25,8.4,3.72,1.8,44.4,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,DARON_HOLMES_II_1_NBA
-DeJon Jarreau,MEM,DEN,21.4,11,21.0,8.0,2.7,13.3,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,DEJON_JARREAU_1_NBA
-DeMar DeRozan,SAC,DEN,22.7,77,31.25,18.43,1.9,32.0,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DEMAR_DEROZAN_1_NBA
-Jalen Pickett,DEN,DEN,14.9,50,16.14,5.2,2.5,38.6,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,JALEN_PICKETT_1_NBA
-Jamal Murray,DEN,DEN,27.9,75,35.36,25.4,7.5,43.5,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,JAMAL_MURRAY_1_NBA
-Jonas Valančiūnas,DEN,DEN,26.0,65,13.4,8.72,0.4,30.8,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,
-Julian Strawther,DEN,DEN,19.5,57,15.11,7.25,2.6,38.7,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,JULIAN_STRAWTHER_1_NBA
-KJ Simpson,CHA,DEN,22.8,14,15.93,6.0,2.8,30.8,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,KJ_SIMPSON_1_NBA
-Marvin Bagley III,TOT,DEN,18.55,60,20.02,10.45,0.87,46.2,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,MARVIN_BAGLEY_III_1_NBA
-Nikola Jokić,DEN,DEN,30.3,65,34.85,27.68,4.5,38.0,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,NIKOLA_JOKIC_1_NBA
-Spencer Jones,DEN,DEN,9.7,64,22.14,5.5,2.3,39.6,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,SPENCER_JONES_1_NBA
-Tyus Jones,TOT,DEN,10.3,56,15.84,3.12,2.14,28.1,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,TYUS_JONES_1_NBA
-Zeke Nnaji,DEN,DEN,13.7,52,12.04,3.65,1.0,25.9,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,ZEKE_NNAJI_1_NBA
-Ausar Thompson,DET,DET,16.9,73,25.97,9.88,0.3,25.0,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,AUSAR_THOMPSON_1_NBA
-Cade Cunningham,DET,DET,30.5,64,33.94,23.92,5.7,34.2,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,CADE_CUNNINGHAM_1_NBA
-Chaz Lanier,DET,DET,15.1,34,7.71,2.35,2.0,28.4,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,CHAZ_LANIER_1_NBA
-Daniss Jenkins,DET,DET,21.6,72,20.21,9.32,2.7,37.4,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,DANISS_JENKINS_1_NBA
-Duncan Robinson,DET,DET,15.8,77,27.44,12.19,7.0,41.0,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,DUNCAN_ROBINSON_1_NBA
-Gary Harris,MIL,DET,8.5,48,13.77,2.67,1.4,41.2,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,GARY_HARRIS_1_NBA
-Isaiah Joe,OKC,DET,18.5,71,21.23,11.06,6.0,42.3,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,ISAIAH_JOE_1_NBA
-Jaden Ivey,TOT,DET,19.76,37,18.11,8.54,3.61,37.3,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,JADEN_IVEY_1_NBA
-Jalen Duren,DET,DET,23.5,70,28.23,19.5,0.0,,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,JALEN_DUREN_1_NBA
-Javonte Green,DET,DET,14.8,82,17.63,6.94,3.0,38.1,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,JAVONTE_GREEN_1_NBA
-John Collins,LAC,DET,19.5,69,27.13,13.55,3.2,40.6,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,JOHN_COLLINS_1_NBA
-Kevin Huerter,TOT,DET,18.9,69,22.45,10.04,4.74,30.8,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,KEVIN_HUERTER_1_NBA
-Paul Reed,DET,DET,20.5,65,13.86,7.75,0.6,32.5,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,PAUL_REED_1_NBA
-Taurean Prince,MIL,DET,16.3,26,23.5,9.19,5.4,43.6,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,TAUREAN_PRINCE_1_NBA
-Tolu Smith,DET,DET,16.8,15,9.13,3.73,0.0,,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,TOLU_SMITH_1_NBA
-Al Horford,GSW,GSW,16.6,45,21.53,8.27,4.6,36.1,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
-Brandin Podziemski,GSW,GSW,20.1,82,28.45,13.82,5.0,37.1,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,BRANDIN_PODZIEMSKI_1_NBA
-Brandon Williams,DAL,GSW,24.9,66,22.17,13.02,2.3,23.2,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,BRANDON_WILLIAMS_1_NBA
-Charles Bassey,GSW,GSW,17.2,5,20.0,10.6,0.0,,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,CHARLES_BASSEY_1_NBA
-Dalen Terry,TOT,GSW,14.82,48,11.48,3.67,1.4,36.5,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,DALEN_TERRY_1_NBA
-De'Anthony Melton,GSW,GSW,25.4,49,22.96,12.29,5.0,29.4,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
-Draymond Green,GSW,GSW,16.2,68,27.49,8.38,4.6,32.6,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,DRAYMOND_GREEN_1_NBA
-Gary Payton II,GSW,GSW,18.5,73,15.64,7.49,1.7,29.1,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,GARY_PAYTON_II_1_NBA
-Gui Santos,GSW,GSW,18.7,68,20.51,9.19,3.3,35.1,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,GUI_SANTOS_1_NBA
-Jimmy Butler III,GSW,GSW,23.1,38,31.11,20.0,2.2,37.6,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
-LJ Cryer,GSW,GSW,20.3,18,16.22,8.22,5.2,39.4,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,LJ_CRYER_1_NBA
-Malevy Leons,GSW,GSW,14.4,25,11.04,3.32,0.6,25.0,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,MALEVY_LEONS_1_NBA
-Moses Moody,GSW,GSW,18.3,60,25.67,12.13,6.3,40.1,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,MOSES_MOODY_1_NBA
-Nate Williams,GSW,GSW,19.5,14,17.07,8.0,2.1,43.3,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
-Seth Curry,GSW,GSW,18.0,10,13.3,7.1,2.5,48.0,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
-Stephen Curry,GSW,GSW,32.5,43,30.91,26.56,11.3,39.3,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
-Will Richard,GSW,GSW,13.1,69,19.96,6.39,3.1,33.5,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,WILL_RICHARD_1_NBA
-Ömer Yurtseven,GSW,GSW,17.4,9,11.56,3.78,0.4,0.0,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,OMER_YURTSEVEN_1_NBA
-Aaron Holiday,HOU,HOU,16.6,57,13.7,5.47,3.0,39.4,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,AARON_HOLIDAY_1_NBA
-Alperen Şengün,HOU,HOU,26.5,72,33.31,20.36,1.8,30.5,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,ALPEREN_SENGUN_1_NBA
-Amen Thompson,HOU,HOU,20.0,79,37.38,18.27,1.5,21.6,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,AMEN_THOMPSON_1_NBA
-Bogdan Bogdanović,LAC,HOU,18.7,23,19.65,7.43,4.1,34.7,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,BOGDAN_BOGDANOVIC_1_NBA
-Clint Capela,HOU,HOU,13.7,75,12.35,3.76,0.0,,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,CLINT_CAPELA_1_NBA
-Jabari Smith Jr.,HOU,HOU,18.2,77,35.13,15.78,6.3,36.3,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,JABARI_SMITH_1_NBA
-Jae'Sean Tate,HOU,HOU,13.5,46,8.8,2.8,0.7,31.3,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,JAESEAN_TATE_1_NBA
-Jeff Green,HOU,HOU,17.9,30,5.83,2.23,1.5,27.3,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,
-Julian Phillips,CHI,HOU,12.5,35,9.54,2.83,1.4,32.7,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,JULIAN_PHILLIPS_1_NBA
-Kevin Durant,HOU,HOU,27.0,78,36.41,25.97,5.8,41.3,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,KEVIN_DURANT_1_NBA
-Marcus Smart,LAL,HOU,15.5,62,28.53,9.34,4.7,33.1,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,MARCUS_SMART_1_NBA
-Reed Sheppard,HOU,HOU,21.8,82,26.18,13.54,7.0,39.4,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,REED_SHEPPARD_1_NBA
-Steven Adams,HOU,HOU,12.0,32,22.81,5.84,0.0,,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,STEVEN_ADAMS_1_NBA
-Tari Eason,HOU,HOU,18.8,60,25.82,10.45,4.3,35.8,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,TARI_EASON_1_NBA
-Aaron Nesmith,IND,IND,19.9,45,29.67,13.8,6.2,37.9,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,AARON_NESMITH_1_NBA
-Andrew Nembhard,IND,IND,23.6,57,31.33,16.95,5.2,36.1,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,ANDREW_NEMBHARD_1_NBA
-Ben Sheppard,IND,IND,13.8,65,21.38,7.06,3.6,36.2,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,BEN_SHEPPARD_1_NBA
-Ivica Zubac,TOT,IND,19.25,48,30.12,14.1,0.0,,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,IVICA_ZUBAC_1_NBA
-Jalen Slawson,IND,IND,13.9,13,23.92,7.31,3.1,37.5,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,JALEN_SLAWSON_1_NBA
-Jarace Walker,IND,IND,20.7,76,25.7,11.63,4.7,37.4,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,JARACE_WALKER_1_NBA
-Jay Huff,IND,IND,18.1,82,20.96,9.55,4.5,31.9,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,JAY_HUFF_1_NBA
-Jeremiah Robinson-Earl,IND,IND,14.1,17,17.65,4.65,1.9,24.2,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,
-Johnny Furphy,IND,IND,12.8,35,18.37,5.14,2.0,32.4,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,JOHNNY_FURPHY_1_NBA
-Kelly Oubre Jr.,PHI,IND,18.2,50,31.48,14.1,4.8,36.0,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,KELLY_OUBRE_JR_1_NBA
-Kobe Brown,TOT,IND,15.7,61,15.79,5.79,2.24,37.5,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,KOBE_BROWN_1_NBA
-Larry Nance Jr.,CLE,IND,14.1,35,12.83,3.74,1.8,33.3,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,LARRY_NANCE_JR_1_NBA
-Obi Toppin,IND,IND,24.8,24,17.67,11.62,4.4,35.2,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,OBI_TOPPIN_1_NBA
-Pascal Siakam,IND,IND,30.1,62,33.18,23.95,4.7,35.8,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,PASCAL_SIAKAM_1_NBA
-Quenton Jackson,IND,IND,20.9,49,18.31,9.14,2.4,35.6,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,QUENTON_JACKSON_1_NBA
-T.J. McConnell,IND,IND,23.4,56,17.2,9.38,0.9,32.0,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,TJ_MCCONNELL_1_NBA
-Bradley Beal,LAC,LAC,22.3,6,20.17,8.17,3.2,36.8,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,BRADLEY_BEAL_1_NBA
-Brandon Ingram,TOR,LAC,26.9,77,33.82,21.49,4.6,38.2,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,BRANDON_INGRAM_1_NBA
-Brook Lopez,LAC,LAC,17.3,75,21.8,8.45,4.2,36.0,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,BROOK_LOPEZ_1_NBA
-Cam Christie,LAC,LAC,16.9,55,8.73,2.84,0.9,24.5,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,CAM_CHRISTIE_1_NBA
-Chris Paul,LAC,LAC,14.3,16,14.25,2.94,1.9,33.3,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,CHRIS_PAUL_1_NBA
-Darius Garland,TOT,LAC,27.48,45,29.87,18.78,6.85,39.7,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,DARIUS_GARLAND_1_NBA
-Derrick Jones Jr.,LAC,LAC,15.1,50,27.0,10.08,3.1,35.9,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,DERRICK_JONES_JR_1_NBA
-Gradey Dick,TOR,LAC,18.7,76,14.04,5.99,2.4,30.1,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,GRADEY_DICK_1_NBA
-Isaiah Jackson,TOT,LAC,16.08,55,16.51,6.73,0.03,0.0,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,ISAIAH_JACKSON_1_NBA
-Jordan Miller,LAC,LAC,18.0,60,22.08,9.97,1.8,34.5,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,JORDAN_MILLER_1_NBA
-Kobe Sanders,LAC,LAC,16.3,68,19.87,7.28,2.9,40.8,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,KOBE_SANDERS_1_NBA
-Kris Dunn,LAC,LAC,12.4,82,27.2,7.27,2.6,37.4,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,KRIS_DUNN_1_NBA
-Max Strus,CLE,LAC,17.5,12,24.0,11.17,6.8,40.2,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,MAX_STRUS_1_NBA
-Nicolas Batum,LAC,LAC,9.7,74,17.5,3.96,3.1,40.4,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,
-Rui Hachimura,LAL,LAC,15.3,68,28.34,11.47,3.9,44.3,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,RUI_HACHIMURA_1_NBA
-Yanic Konan Niederhäuser,LAC,LAC,15.6,41,10.34,4.29,0.1,20.0,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,YANIC_KONAN_NIEDERHAUSER_1_NBA
-Adou Thiero,LAL,LAL,14.5,25,5.96,1.88,0.1,33.3,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,ADOU_THIERO_1_NBA
-Austin Reaves,LAL,LAL,26.6,51,34.55,23.27,6.4,36.0,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,AUSTIN_REAVES_1_NBA
-Bronny James,LAL,LAL,16.8,42,8.93,2.9,1.4,38.6,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,BRONNY_JAMES_1_NBA
-Collin Sexton,TOT,LAL,25.87,68,23.74,15.44,4.15,40.1,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,COLLIN_SEXTON_1_NBA
-Dalton Knecht,LAL,LAL,17.8,54,10.24,4.22,2.1,34.2,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,DALTON_KNECHT_1_NBA
-Drew Timme,LAL,LAL,15.5,27,8.7,3.41,0.9,44.0,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,
-Jaden Hardy,TOT,LAL,24.45,57,15.75,9.18,4.57,39.7,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,JADEN_HARDY_1_NBA
-Jake LaRavia,LAL,LAL,14.4,82,25.13,8.22,3.0,32.1,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,JAKE_LARAVIA_1_NBA
-Jarred Vanderbilt,LAL,LAL,12.5,65,17.35,4.43,1.5,29.3,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,JARRED_VANDERBILT_1_NBA
-Kevon Looney,NOP,LAL,10.0,21,14.67,2.81,0.6,15.4,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,KEVON_LOONEY_1_NBA
-Luka Dončić,LAL,LAL,38.0,64,35.77,33.48,10.8,36.6,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,LUKA_DONCIC_1_NBA
-Matisse Thybulle,POR,LAL,14.7,30,16.0,5.8,3.1,39.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,MATISSE_THYBULLE_1_NBA
-Maxi Kleber,LAL,LAL,9.6,43,10.72,2.0,0.6,23.1,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,
-Nick Smith Jr.,LAL,LAL,22.1,30,12.5,6.17,2.9,39.5,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,
-Quentin Grimes,PHI,LAL,19.0,75,29.41,13.41,5.1,33.4,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,QUENTIN_GRIMES_1_NBA
-Sandro Mamukelashvili,TOR,LAL,18.8,80,21.89,11.16,3.7,38.9,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,SANDRO_MAMUKELASHVILI_1_NBA
-Walker Kessler,UTA,LAL,16.4,5,30.8,14.4,1.6,75.0,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,WALKER_KESSLER_1_NBA
-Ziaire Williams,BKN,LAL,18.8,56,22.88,10.23,4.5,34.3,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,ZIAIRE_WILLIAMS_1_NBA
-Cam Spencer,MEM,MEM,17.2,72,23.81,11.08,4.5,44.9,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,CAM_SPENCER_1_NBA
-D'Angelo Russell,DAL,MEM,26.0,26,19.04,10.15,4.3,29.5,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,DANGELO_RUSSELL_1_NBA
-Dariq Whitehead,MEM,MEM,24.2,6,30.5,16.33,10.0,31.7,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,DARIQ_WHITEHEAD_1_NBA
-GG Jackson,MEM,MEM,23.5,55,21.42,12.47,3.5,33.2,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,GG_JACKSON_1_NBA
-Isaiah Stewart,DET,MEM,16.6,58,22.71,10.02,2.1,33.3,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,ISAIAH_STEWART_1_NBA
-Jaylen Wells,MEM,MEM,19.3,69,26.39,12.54,5.3,35.3,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,JAYLEN_WELLS_1_NBA
-Jerami Grant,POR,MEM,23.7,57,29.74,18.6,6.1,38.9,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,JERAMI_GRANT_1_NBA
-Jordan Hawkins,NOP,MEM,18.3,51,13.57,5.06,2.6,34.8,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,JORDAN_HAWKINS_1_NBA
-Kris Murray,POR,MEM,10.6,57,23.39,5.81,2.1,27.9,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,KRIS_MURRAY_1_NBA
-Lucas Williamson,MEM,MEM,16.5,7,32.0,10.43,7.6,28.3,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,LUCAS_WILLIAMSON_1_NBA
-Micah Peavy,NOP,MEM,14.1,61,14.97,4.3,1.8,25.9,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,MICAH_PEAVY_1_NBA
-Olivier-Maxence Prosper,MEM,MEM,18.9,53,18.57,10.0,2.8,40.5,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,OLIVIERMAXENCE_PROSPER_1_NBA
-Quinten Post,GSW,MEM,18.9,67,17.3,7.66,4.1,33.6,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,Q_POST_1_NBA
-Scotty Pippen Jr.,MEM,MEM,26.1,10,21.2,11.4,3.2,31.3,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,SCOTTY_PIPPEN_JR_1_NBA
-Taylor Hendricks,TOT,MEM,16.19,59,18.95,7.42,3.11,34.2,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,TAYLOR_HENDRICKS_1_NBA
-Ty Jerome,MEM,MEM,32.7,15,22.6,19.67,6.7,42.0,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,TY_JEROME_1_NBA
-Walter Clayton Jr.,UTA,MEM,17.3,45,18.02,6.8,3.2,30.8,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,WALTER_CLAYTON_1_NBA
-Zach Edey,MEM,MEM,20.2,11,25.82,13.64,0.5,20.0,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,ZACH_EDEY_1_NBA
-Andrew Wiggins,MIA,MIA,19.7,68,30.34,15.37,4.9,41.4,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,ANDREW_WIGGINS_1_NBA
-Bam Adebayo,MIA,MIA,24.9,73,32.4,20.11,5.5,31.8,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,BAM_ADEBAYO_1_NBA
-Bobby Portis,MIL,MIA,23.2,67,24.16,13.66,4.4,45.6,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,BOBBY_PORTIS_1_NBA
-Davion Mitchell,MIA,MIA,13.7,70,28.57,9.34,3.3,39.5,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,DAVION_MITCHELL_1_NBA
-Dru Smith,MIA,MIA,15.2,70,16.3,5.64,1.8,29.5,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,DRU_SMITH_1_NBA
-Ethan Thompson,IND,MIA,15.7,32,20.41,6.97,3.6,32.8,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,ETHAN_THOMPSON_1_NBA
-Giannis Antetokounmpo,MIL,MIA,36.6,36,28.86,27.58,1.3,33.3,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,GIANNIS_ANTETOKOUNMPO_1_NBA
-Keshad Johnson,MIA,MIA,18.9,32,8.75,4.25,1.4,29.5,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,KESHAD_JOHNSON_1_NBA
-Klay Thompson,DAL,MIA,22.8,69,21.7,11.74,7.6,38.3,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,KLAY_THOMPSON_1_NBA
-Myron Gardner,MIA,MIA,15.0,45,9.13,3.62,1.4,40.6,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,MYRON_GARDNER_1_NBA
-Nick Richards,TOT,MIA,18.13,48,14.6,5.75,0.38,27.8,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,NICK_RICHARDS_1_NBA
-Nikola Jović,MIA,MIA,21.3,47,17.19,7.32,3.6,26.9,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,NIKOLA_JOVIC_1_NBA
-Pelle Larsson,MIA,MIA,16.7,70,26.41,11.43,2.7,32.3,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,PELLE_LARSSON_1_NBA
-Simone Fontecchio,MIA,MIA,19.7,70,16.76,8.53,4.7,37.5,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,SIMONE_FONTECCHIO_1_NBA
-Tim Hardaway Jr.,DEN,MIA,18.5,80,26.59,13.49,6.9,40.7,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,TIM_HARDAWAY_JR_1_NBA
-AJ Green,MIL,MIL,14.1,78,29.1,10.37,7.1,41.9,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,AJ_GREEN_1_NBA
-Andre Jackson Jr.,MIL,MIL,17.7,48,8.5,2.35,1.3,25.0,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,ANDRE_JACKSON_JR_1_NBA
-Cam Thomas,TOT,MIL,30.23,42,20.98,13.5,4.0,31.0,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,CAM_THOMAS_1_NBA
-Caris LeVert,DET,MIL,18.4,60,19.23,7.38,3.0,33.3,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,CARIS_LEVERT_1_NBA
-Cole Anthony,MIL,MIL,25.9,35,15.06,6.69,2.1,30.6,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,COLE_ANTHONY_1_NBA
-Cormac Ryan,MIL,MIL,21.2,11,24.64,14.27,5.4,45.8,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,CORMAC_RYAN_1_NBA
-Gary Trent Jr.,MIL,MIL,17.3,65,21.18,8.14,5.3,36.0,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,GARY_TRENT_JR_1_NBA
-Jaime Jaquez Jr.,MIA,MIL,22.4,75,28.28,15.36,2.4,31.7,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,JAIME_JAQUEZ_JR_1_NBA
-Jericho Sims,MIL,MIL,9.7,67,19.67,4.99,0.0,,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,JERICHO_SIMS_1_NBA
-Kasparas Jakučionis,MIA,MIL,13.7,53,17.83,6.19,2.9,42.3,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,KASPARAS_JAKUCIONIS_1_NBA
-Kel'el Ware,MIA,MIL,18.1,77,22.13,11.05,3.0,39.5,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,KELEL_WARE_1_NBA
-Kevin Porter Jr.,MIL,MIL,24.2,38,33.18,17.39,3.8,32.2,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,KEVIN_PORTER_1_NBA
-Kyle Kuzma,MIL,MIL,21.7,69,26.17,12.99,3.5,34.7,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,KYLE_KUZMA_1_NBA
-Luke Travers,CLE,MIL,17.5,12,8.58,2.33,1.3,6.3,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,LUKE_TRAVERS_1_NBA
-Myles Turner,MIL,MIL,18.6,71,26.93,11.92,5.4,38.3,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,MYLES_TURNER_1_NBA
-Ousmane Dieng,TOT,MIL,19.76,57,19.28,7.56,3.22,34.1,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,OUSMANE_DIENG_1_NBA
-Pete Nance,MIL,MIL,13.5,47,15.68,5.4,2.5,42.0,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,PETE_NANCE_1_NBA
-Ryan Rollins,MIL,MIL,24.2,74,32.11,17.31,6.1,40.6,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,RYAN_ROLLINS_1_NBA
-Thanasis Antetokounmpo,MIL,MIL,16.2,34,4.35,1.38,0.1,0.0,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,THANASIS_ANTETOKOUNMPO_1_NBA
-Tyler Herro,MIA,MIL,24.8,33,31.3,20.52,6.7,37.8,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,TYLER_HERRO_1_NBA
-Anthony Edwards,MIN,MIN,31.4,61,35.03,28.8,8.4,39.9,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,ANTHONY_EDWARDS_1_NBA
-Ayo Dosunmu,TOT,MIN,20.17,69,27.26,14.81,4.06,44.0,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,AYO_DOSUNMU_1_NBA
-Bones Hyland,MIN,MIN,20.6,71,16.58,8.51,4.2,38.8,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,BONES_HYLAND_1_NBA
-Cody Williams,UTA,MIN,16.0,67,24.34,8.78,2.0,21.4,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,CODY_WILLIAMS_1_NBA
-Donte DiVincenzo,MIN,MIN,17.0,82,30.41,12.2,7.9,37.9,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,DONTE_DIVINCENZO_1_NBA
-Jaden McDaniels,MIN,MIN,18.6,73,31.73,14.85,3.4,41.2,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,JADEN_MCDANIELS_1_NBA
-Jaylen Clark,MIN,MIN,13.3,68,13.06,4.04,1.5,32.7,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,JAYLEN_CLARK_1_NBA
-Joan Beringer,MIN,MIN,16.8,40,7.85,3.9,0.0,,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,JOAN_BERINGER_1_NBA
-Joe Ingles,MIN,MIN,11.6,27,5.67,1.52,0.6,43.8,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,JOE_INGLES_1_NBA
-Jonathan Kuminga,TOT,MIN,23.26,36,23.06,12.17,2.97,33.3,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,JONATHAN_KUMINGA_1_NBA
-LaMelo Ball,CHA,MIN,32.1,72,28.01,20.07,10.3,36.8,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,LAMELO_BALL_1_NBA
-Rudy Gobert,MIN,MIN,12.8,76,31.32,10.91,0.1,0.0,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,RUDY_GOBERT_1_NBA
-Terrence Shannon Jr.,MIN,MIN,17.6,43,12.51,5.6,1.8,40.8,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,TERRENCE_SHANNON_1_NBA
-AJ Johnson,TOT,NOP,20.59,48,9.46,3.33,1.19,21.0,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,AJ_JOHNSON_1_NBA
-Bennedict Mathurin,TOT,NOP,25.12,54,30.0,17.57,4.44,31.5,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,BENNEDICT_MATHURIN_1_NBA
-Bryce McGowens,NOP,NOP,13.9,42,20.95,8.1,2.2,40.9,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,BRYCE_MCGOWENS_1_NBA
-DeAndre Jordan,NOP,NOP,10.1,12,16.58,4.42,0.0,,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,DEANDRE_JORDAN_1_NBA
-Dejounte Murray,NOP,NOP,26.7,14,27.79,16.71,4.4,30.6,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,DEJOUNTE_MURRAY_1_NBA
-Derik Queen,NOP,NOP,21.8,81,24.98,11.7,1.1,26.1,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,DERIK_QUEEN_1_NBA
-Herbert Jones,NOP,NOP,15.2,56,28.36,8.86,4.6,30.9,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,HERBERT_JONES_1_NBA
-Jeremiah Fears,NOP,NOP,25.5,82,25.76,14.26,3.7,33.0,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,JEREMIAH_FEARS_1_NBA
-Jordan Poole,NOP,NOP,25.2,39,23.92,13.44,7.4,33.3,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,JORDAN_POOLE_1_NBA
-Karlo Matković,NOP,NOP,13.2,62,14.71,5.68,1.5,42.2,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,KARLO_MATKOVIC_1_NBA
-Kobe Bufkin,LAL,NOP,22.2,16,7.44,2.88,1.6,19.2,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,KOBE_BUFKIN_1_NBA
-Saddiq Bey,NOP,NOP,21.6,72,31.19,17.65,5.7,36.7,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,SADDIQ_BEY_1_NBA
-Trendon Watford,PHI,NOP,17.9,53,16.3,6.53,0.9,20.0,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,TRENDON_WATFORD_1_NBA
-Trey Murphy III,NOP,NOP,22.8,66,35.47,21.52,8.6,37.9,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,TREY_MURPHY_III_1_NBA
-Yves Missi,NOP,NOP,12.6,66,19.65,5.71,0.0,,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,YVES_MISSI_1_NBA
-Zion Williamson,NOP,NOP,25.5,62,29.69,21.0,0.1,25.0,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,ZION_WILLIAMSON_1_NBA
-Andre Drummond,PHI,NYK,14.9,63,19.54,6.4,1.4,35.6,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,ANDRE_DRUMMOND_1_NBA
-Drew Eubanks,SAC,NYK,16.2,42,13.14,5.21,0.2,14.3,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DREW_EUBANKS_1_NBA
-Garrison Mathews,IND,NYK,14.0,15,13.07,5.2,3.1,37.0,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,GARRISON_MATHEWS_1_NBA
-Jalen Brunson,NYK,NYK,30.3,74,35.0,26.04,7.1,36.9,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,JALEN_BRUNSON_1_NBA
-John Konchar,TOT,NYK,9.37,56,19.91,4.43,1.76,28.3,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,JOHN_KONCHAR_1_NBA
-Jordan Clarkson,NYK,NYK,21.2,72,17.76,8.64,3.0,32.7,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,JORDAN_CLARKSON_1_NBA
-Jose Alvarado,TOT,NYK,16.87,69,19.86,7.39,4.17,35.2,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,JOSE_ALVARADO_1_NBA
-Josh Hart,NYK,NYK,16.7,66,30.21,12.0,3.7,41.3,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,JOSH_HART_1_NBA
-Karl-Anthony Towns,NYK,NYK,25.8,75,30.96,20.05,4.1,36.8,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,KARLANTHONY_TOWNS_1_NBA
-Kevin McCullar Jr.,NYK,NYK,17.0,21,7.38,2.38,1.1,33.3,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,KEVIN_MCCULLAR_1_NBA
-Landry Shamet,NYK,NYK,15.7,51,22.96,9.31,5.2,39.2,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,LANDRY_SHAMET_1_NBA
-Mikal Bridges,NYK,NYK,17.4,82,32.83,14.4,5.1,37.1,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,MIKAL_BRIDGES_1_NBA
-Miles McBride,NYK,NYK,18.2,41,26.34,11.98,6.6,41.3,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,MILES_MCBRIDE_1_NBA
-Mohamed Diawara,NYK,NYK,17.2,69,9.19,3.57,1.9,36.9,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,MOHAMED_DIAWARA_1_NBA
-OG Anunoby,NYK,NYK,19.7,67,33.19,16.69,6.1,38.6,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,OG_ANUNOBY_1_NBA
-Pacôme Dadiet,NYK,NYK,17.6,29,4.69,1.66,1.1,21.9,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,PACOME_DADIET_1_NBA
-Tyler Kolek,NYK,NYK,18.5,62,11.73,4.42,1.8,38.6,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,TYLER_KOLEK_1_NBA
-Ajay Mitchell,OKC,OKC,21.8,57,25.84,13.58,3.1,34.7,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,AJAY_MITCHELL_1_NBA
-Alex Caruso,OKC,OKC,15.8,56,18.21,6.21,3.2,29.3,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,ALEX_CARUSO_1_NBA
-Brooks Barnhizer,OKC,OKC,10.7,40,8.7,1.7,0.6,29.2,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,BROOKS_BARNHIZER_1_NBA
-Cason Wallace,OKC,OKC,14.6,77,26.57,8.57,3.7,35.1,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,CASON_WALLACE_1_NBA
-Chet Holmgren,OKC,OKC,21.8,69,28.94,17.12,3.5,36.2,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,CHET_HOLMGREN_1_NBA
-Isaiah Hartenstein,OKC,OKC,16.1,47,24.19,9.19,0.1,0.0,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,ISAIAH_HARTENSTEIN_1_NBA
-Jalen Williams,OKC,OKC,26.1,33,28.36,17.06,2.3,29.9,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,JALEN_WILLIAMS_1_NBA
-Jared McCain,TOT,OKC,20.79,67,17.31,8.33,3.83,38.5,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,JARED_MCCAIN_1_NBA
-Jaylin Williams,OKC,OKC,15.6,65,19.65,7.22,3.9,38.3,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,JAYLIN_WILLIAMS_1_NBA
-Kenrich Williams,OKC,OKC,18.4,56,15.27,6.48,2.3,38.8,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,KENRICH_WILLIAMS_1_NBA
-Nikola Topić,OKC,OKC,21.3,10,16.0,5.2,1.5,40.0,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,NIKOLA_TOPIC_1_NBA
-Shai Gilgeous-Alexander,OKC,OKC,33.2,68,33.22,31.13,4.4,38.6,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,SHAI_GILGEOUSALEXANDER_1_NBA
-Anthony Black,ORL,ORL,22.2,64,29.84,14.98,4.7,33.3,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,ANTHONY_BLACK_1_NBA
-Desmond Bane,ORL,ORL,23.3,82,33.61,20.09,5.2,39.1,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,DESMOND_BANE_1_NBA
-Franz Wagner,ORL,ORL,26.9,34,29.97,20.56,4.1,34.5,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,FRANZ_WAGNER_1_NBA
-Goga Bitadze,ORL,ORL,13.5,64,15.19,5.86,0.2,18.2,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,GOGA_BITADZE_1_NBA
-Hunter Tyson,DEN,ORL,16.8,21,7.71,2.19,1.6,21.2,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,HUNTER_TYSON_1_NBA
-JD Davison,HOU,ORL,15.3,28,7.79,2.46,1.1,25.0,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,JD_DAVISON_1_NBA
-Jalen Suggs,ORL,ORL,23.0,57,27.61,13.79,6.3,33.9,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JALEN_SUGGS_1_NBA
-Jamal Cain,ORL,ORL,16.6,40,12.15,5.38,1.8,38.4,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JAMAL_CAIN_1_NBA
-Jase Richardson,ORL,ORL,16.8,54,10.87,4.43,1.5,35.4,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JASE_RICHARDSON_1_NBA
-Jevon Carter,TOT,ORL,17.17,53,16.36,6.4,4.08,36.3,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JEVON_CARTER_1_NBA
-Jonathan Isaac,ORL,ORL,12.3,52,10.02,2.58,0.7,18.4,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JONATHAN_ISAAC_1_NBA
-Malaki Branham,WAS,ORL,18.3,28,9.82,4.57,1.3,37.8,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,MALAKI_BRANHAM_1_NBA
-Nikola Vučević,TOT,ORL,21.41,64,28.41,15.08,4.2,36.9,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,NIKOLA_VUCEVIC_1_NBA
-Noah Penda,ORL,ORL,14.9,59,12.83,3.85,1.6,32.3,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,NOAH_PENDA_1_NBA
-Paolo Banchero,ORL,ORL,27.4,72,34.75,22.21,3.8,30.5,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,PAOLO_BANCHERO_1_NBA
-Tristan da Silva,ORL,ORL,16.3,77,24.66,9.9,4.2,37.4,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,TRISTAN_DA_SILVA_1_NBA
-Wendell Carter Jr.,ORL,ORL,15.6,78,29.33,11.82,2.9,31.9,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,WENDELL_CARTER_JR_1_NBA
-Collin Gillespie,PHX,PHX,18.8,80,28.52,12.65,7.2,40.1,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,COLLIN_GILLESPIE_1_NBA
-Devin Booker,PHX,PHX,32.0,64,33.53,26.06,5.8,33.0,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,DEVIN_BOOKER_1_NBA
-Dillon Brooks,PHX,PHX,28.6,56,30.39,20.2,6.6,34.4,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,DILLON_BROOKS_1_NBA
-Isaiah Livers,PHX,PHX,10.0,36,9.64,1.81,1.1,30.0,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,ISAIAH_LIVERS_1_NBA
-Jalen Green,PHX,PHX,31.9,32,25.88,17.75,7.1,31.3,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,JALEN_GREEN_1_NBA
-Jamaree Bouyea,PHX,PHX,18.6,46,14.0,5.72,1.7,29.5,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,JAMAREE_BOUYEA_1_NBA
-Jordan Goodwin,PHX,PHX,17.6,70,22.46,8.7,4.3,37.1,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,JORDAN_GOODWIN_1_NBA
-Khaman Maluach,PHX,PHX,14.8,46,8.93,3.02,0.5,23.8,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,KHAMAN_MALUACH_1_NBA
-Luke Kennard,TOT,PHX,13.53,78,21.55,8.36,3.12,47.8,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,LUKE_KENNARD_1_NBA
-Mark Williams,PHX,PHX,17.3,60,23.6,11.67,0.0,,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,MARK_WILLIAMS_1_NBA
-Miles Bridges,CHA,PHX,22.3,77,31.0,17.06,5.8,33.3,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,MILES_BRIDGES_1_NBA
-Nigel Hayes-Davis,PHX,PHX,12.2,27,7.22,1.26,0.6,12.5,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,
-Oso Ighodaro,PHX,PHX,12.1,82,22.05,6.48,0.0,,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,OSO_IGHODARO_1_NBA
-Pat Spencer,GSW,PHX,18.9,66,18.62,7.21,2.5,35.7,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,PAT_SPENCER_1_NBA
-Rasheer Fleming,PHX,PHX,16.4,55,12.24,4.33,2.4,34.6,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,RASHEER_FLEMING_1_NBA
-Ryan Dunn,PHX,PHX,13.8,70,19.36,5.81,2.4,33.1,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,RYAN_DUNN_1_NBA
-Blake Wesley,POR,POR,19.7,31,11.65,4.77,1.2,27.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,
-Branden Carlson,OKC,POR,19.0,42,11.62,5.76,2.0,36.0,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,BRANDEN_CARLSON_1_NBA
-Caleb Love,POR,POR,23.1,49,20.67,10.39,6.0,31.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,
-Chris Youngblood,OKC,POR,16.6,32,5.44,2.03,1.6,31.4,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,CHRIS_YOUNGBLOOD_1_NBA
-Deni Avdija,POR,POR,29.1,66,33.32,24.21,6.0,31.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,DENI_AVDIJA_1_NBA
-Donovan Clingan,POR,POR,16.8,77,27.19,12.13,3.2,34.1,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,DONOVAN_CLINGAN_1_NBA
-Duop Reath,POR,POR,13.3,32,8.06,2.94,1.7,41.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,DUOP_REATH_1_NBA
-Ja Morant,MEM,POR,32.4,20,28.45,19.45,4.3,23.5,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,JA_MORANT_1_NBA
-Jeremy Sochan,TOT,POR,14.63,44,10.66,3.59,1.05,24.5,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,JEREMY_SOCHAN_1_NBA
-Jrue Holiday,POR,POR,23.6,53,29.43,16.32,6.8,37.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,JRUE_HOLIDAY_1_NBA
-Micah Potter,IND,POR,17.9,47,19.32,9.74,3.6,42.3,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,MICAH_POTTER_1_NBA
-Robert Williams III,POR,POR,13.1,59,17.08,6.73,0.4,39.1,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,ROBERT_WILLIAMS_III_1_NBA
-Scoot Henderson,POR,POR,24.9,30,24.93,14.23,5.4,35.2,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,SCOOT_HENDERSON_1_NBA
-Shaedon Sharpe,POR,POR,30.5,50,29.42,20.84,6.1,33.7,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,SHAEDON_SHARPE_1_NBA
-Sidy Cissoko,POR,POR,12.6,75,19.13,5.11,2.6,29.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,SIDY_CISSOKO_1_NBA
-Toumani Camara,POR,POR,16.4,82,33.3,13.41,7.2,37.0,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,TOUMANI_CAMARA_1_NBA
-Vít Krejčí,TOT,POR,14.69,65,21.42,8.46,5.05,39.0,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,VIT_KREJCI_1_NBA
-Yang Hansen,POR,POR,19.9,43,6.98,2.21,1.0,11.9,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,HANSEN_YANG_1_NBA
-Daeqwon Plowden,SAC,SAC,16.5,32,26.38,10.75,5.8,33.3,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DAEQWON_PLOWDEN_1_NBA
-De'Andre Hunter,CLE,SAC,22.9,43,26.16,13.95,5.5,30.8,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,DEANDRE_HUNTER_1_NBA
-Domantas Sabonis,SAC,SAC,23.0,19,29.68,15.84,1.4,18.5,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DOMANTAS_SABONIS_1_NBA
-Doug McDermott,SAC,SAC,15.2,29,15.14,5.66,4.2,39.0,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,
-Dylan Cardwell,SAC,SAC,11.3,44,20.61,5.41,0.1,50.0,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DYLAN_CARDWELL_1_NBA
-Jonathan Mogbo,TOR,SAC,11.1,40,6.22,1.52,0.0,,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,JONATHAN_MOGBO_1_NBA
-Keegan Murray,SAC,SAC,18.7,23,34.48,13.96,4.9,27.7,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,KEEGAN_MURRAY_1_NBA
-Killian Hayes,SAC,SAC,18.7,23,17.65,5.52,2.7,27.0,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,
-Malik Monk,SAC,SAC,24.1,62,22.0,12.45,5.1,39.5,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,MALIK_MONK_1_NBA
-Maxime Raynaud,SAC,SAC,18.2,74,26.54,12.46,1.0,32.4,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,MAXIME_RAYNAUD_1_NBA
-Nique Clifford,SAC,SAC,17.1,75,25.09,8.6,3.1,33.3,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,NIQUE_CLIFFORD_1_NBA
-Precious Achiuwa,SAC,SAC,17.6,73,23.9,10.08,1.3,27.8,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,PRECIOUS_ACHIUWA_1_NBA
-Russell Westbrook,SAC,SAC,25.9,64,28.95,15.17,5.9,33.8,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,RUSSELL_WESTBROOK_1_NBA
-Zach LaVine,SAC,SAC,23.7,39,31.38,19.18,6.5,39.0,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,ZACH_LAVINE_1_NBA
-Bismack Biyombo,SAS,SAS,7.8,25,5.64,0.92,0.0,,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,
-Carter Bryant,SAS,SAS,16.4,71,11.52,4.2,2.2,33.5,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,CARTER_BRYANT_1_NBA
-De'Aaron Fox,SAS,SAS,25.0,72,30.99,18.56,5.5,33.2,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,DEAARON_FOX_1_NBA
-Devin Vassell,SAS,SAS,18.0,67,30.51,13.91,6.4,38.4,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,DEVIN_VASSELL_1_NBA
-Dylan Harper,SAS,SAS,21.9,69,22.58,11.78,2.6,34.3,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,DYLAN_HARPER_1_NBA
-Harrison Barnes,SAS,SAS,14.7,77,25.79,9.94,4.6,38.8,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,HARRISON_BARNES_1_NBA
-Jordan McLaughlin,SAS,SAS,14.6,44,6.41,2.02,0.9,42.5,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,JORDAN_MCLAUGHLIN_1_NBA
-Julian Champagnie,SAS,SAS,15.2,82,27.63,11.11,6.2,38.1,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,JULIAN_CHAMPAGNIE_1_NBA
-Keldon Johnson,SAS,SAS,21.0,82,23.3,13.18,3.3,36.3,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,KELDON_JOHNSON_1_NBA
-Kelly Olynyk,SAS,SAS,16.0,42,8.57,3.17,1.1,25.5,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,KELLY_OLYNYK_1_NBA
-Lindy Waters III,SAS,SAS,14.4,40,7.12,2.38,2.0,34.2,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,
-Luke Kornet,SAS,SAS,10.3,68,21.03,6.53,0.0,,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,LUKE_KORNET_1_NBA
-Stephon Castle,SAS,SAS,24.8,68,29.97,16.66,3.6,33.2,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,STEPHON_CASTLE_1_NBA
-Tobias Harris,DET,SAS,18.9,63,27.71,13.27,3.5,36.8,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,TOBIAS_HARRIS_1_NBA
-Victor Wembanyama,SAS,SAS,32.2,64,29.16,25.0,5.5,34.9,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,VICTOR_WEMBANYAMA_1_NBA
-A.J. Lawson,TOR,TOR,17.5,24,9.42,4.21,1.9,42.2,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,
-Alijah Martin,TOR,TOR,19.4,23,6.35,2.22,0.9,19.0,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,ALIJAH_MARTIN_1_NBA
-Collin Murray-Boyles,TOR,TOR,15.4,57,21.86,8.49,0.9,34.0,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,COLLIN_MURRAYBOYLES_1_NBA
-Immanuel Quickley,TOR,TOR,21.1,70,31.87,16.43,6.8,37.4,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,IMMANUEL_QUICKLEY_1_NBA
-Ja'Kobe Walter,TOR,TOR,14.0,72,20.47,7.51,3.7,40.9,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,JAKOBE_WALTER_1_NBA
-Jakob Poeltl,TOR,TOR,15.3,46,24.98,10.72,0.0,,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,JAKOB_POELTL_1_NBA
-Jamal Shead,TOR,TOR,15.5,82,22.59,6.65,3.2,32.1,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,JAMAL_SHEAD_1_NBA
-Jamison Battle,TOR,TOR,14.2,61,8.48,3.15,1.4,41.2,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,JAMISON_BATTLE_1_NBA
-Kawhi Leonard,LAC,TOR,33.4,65,32.08,27.89,6.8,38.7,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,KAWHI_LEONARD_1_NBA
-Kyle Anderson,TOT,TOR,13.13,39,19.59,5.87,0.3,30.8,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,KYLE_ANDERSON_1_NBA
-Malachi Smith,BKN,TOR,14.2,15,23.93,8.27,6.6,43.5,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,MALACHI_SMITH_1_NBA
-RJ Barrett,TOR,TOR,25.7,57,30.28,19.26,5.0,33.9,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,RJ_BARRETT_1_NBA
-Scottie Barnes,TOR,TOR,23.4,80,33.51,18.1,2.8,30.4,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,SCOTTIE_BARNES_1_NBA
-Trayce Jackson-Davis,GSW,TOR,14.7,36,11.42,4.17,0.0,,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,TRAYCE_JACKSONDAVIS_1_NBA
-Ace Bailey,UTA,UTA,21.6,72,27.61,13.79,5.5,34.4,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,AIRIOUS_BAILEY_1_NBA
-Andersson Garcia,UTA,UTA,9.7,5,33.8,5.2,2.6,7.7,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,ANDERSSON_GARCIA_1_NBA
-Bez Mbeng,UTA,UTA,11.1,15,32.8,8.13,2.1,19.4,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,BEZ_MBENG_1_NBA
-Blake Hinson,UTA,UTA,18.4,14,20.36,11.93,5.6,46.8,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,
-Brice Sensabaugh,UTA,UTA,25.0,75,23.49,14.88,5.9,36.7,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,BRICE_SENSABAUGH_1_NBA
-Elijah Harkless,UTA,UTA,16.2,26,20.96,6.85,3.4,23.9,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,
-Isaiah Collier,UTA,UTA,20.4,59,25.71,11.66,1.7,27.0,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,ISAIAH_COLLIER_1_NBA
-Jaren Jackson Jr.,MEM,UTA,25.6,45,30.71,19.2,4.9,35.9,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,JAREN_JACKSON_JR_1_NBA
-Jaxson Hayes,LAL,UTA,12.9,66,18.29,7.53,0.0,,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,JAXSON_HAYES_1_NBA
-Josh Green,CHA,UTA,10.7,58,15.66,4.29,2.4,42.0,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,JOSH_GREEN_1_NBA
-Josh Okogie,HOU,UTA,11.4,78,17.36,4.53,2.1,38.5,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,JOSH_OKOGIE_1_NBA
-Jusuf Nurkić,UTA,UTA,19.3,41,26.41,10.9,1.7,35.2,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,JUSUF_NURKIC_1_NBA
-Kevin Love,UTA,UTA,16.7,37,16.57,6.7,3.8,37.3,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,KEVIN_LOVE_1_NBA
-Keyonte George,UTA,UTA,27.8,54,33.07,23.61,6.7,37.1,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,KEYONTE_GEORGE_1_NBA
-Kyle Filipowski,UTA,UTA,19.9,77,23.39,11.42,3.0,32.5,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,KYLE_FILIPOWSKI_1_NBA
-Lauri Markkanen,UTA,UTA,28.0,42,34.36,26.74,7.7,35.5,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,LAURI_MARKKANEN_1_NBA
-Oscar Tshiebwe,UTA,UTA,17.2,27,16.59,7.81,0.0,,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,OSCAR_TSHIEBWE_1_NBA
-Svi Mykhailiuk,UTA,UTA,14.9,50,23.12,9.38,4.8,40.8,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,SVI_MYKHAILIUK_1_NBA
-Trey Alexander,NOP,UTA,15.9,9,12.33,5.22,1.3,50.0,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,TREY_ALEXANDER_1_NBA
-Vince Williams Jr.,MEM,UTA,19.7,34,21.65,8.0,4.7,30.8,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,VINCE_WILLIAMS_JR_1_NBA
-Alex Sarr,WAS,WAS,25.7,48,27.19,16.31,3.1,33.3,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,ALEXANDRE_SARR_1_NBA
-Alondes Williams,WAS,WAS,14.3,4,25.25,11.0,3.5,35.7,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,ALONDES_WILLIAMS_1_NBA
-Anthony Davis,DAL,WAS,27.5,20,31.3,20.35,1.9,27.0,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,ANTHONY_DAVIS_1_NBA
-Anthony Gill,WAS,WAS,11.9,55,17.29,5.84,0.9,35.4,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,ANTHONY_GILL_1_NBA
-Bilal Coulibaly,WAS,WAS,19.9,56,26.21,11.73,3.6,31.9,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,BILAL_COULIBALY_1_NBA
-Bub Carrington,WAS,WAS,18.1,82,27.7,10.71,5.0,40.8,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,BUB_CARRINGTON_1_NBA
-Deandre Ayton,LAL,WAS,16.7,72,27.19,12.46,0.0,,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,DEANDRE_AYTON_1_NBA
-Jamir Watkins,WAS,WAS,15.0,50,20.64,7.36,3.2,29.7,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,JAMIR_WATKINS_1_NBA
-Justin Champagnie,WAS,WAS,16.7,69,19.96,8.65,2.4,31.9,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,JUSTIN_CHAMPAGNIE_1_NBA
-Khris Middleton,TOT,WAS,20.58,63,22.84,10.16,2.95,36.0,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,KHRIS_MIDDLETON_1_NBA
-Kyshawn George,WAS,WAS,22.8,48,28.98,14.79,5.4,38.1,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,KYSHAWN_GEORGE_1_NBA
-Leaky Black,WAS,WAS,11.7,15,28.87,7.07,3.7,34.5,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,LEAKY_BLACK_1_NBA
-Sharife Cooper,WAS,WAS,20.0,41,17.07,8.12,1.9,38.2,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,SHARIFE_COOPER_1_NBA
-Trae Young,TOT,WAS,27.85,15,25.6,17.93,5.33,33.8,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,TRAE_YOUNG_1_NBA
-Tre Johnson,WAS,WAS,22.6,60,24.05,12.22,5.4,35.8,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,TRE_JOHNSON_1_NBA
-Tre Mann,CHA,WAS,23.4,53,12.62,5.49,5.7,32.3,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,TRE_MANN_1_NBA
-Tristan Vukcevic,WAS,WAS,26.6,49,13.69,9.0,2.9,34.7,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,T_VUKCEVIC_1_NBA
-Will Riley,WAS,WAS,20.2,74,22.07,10.32,3.3,31.6,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,WILL_RILEY_1_NBA
+player,team_2025_26,team_2026_27,usg_pct,games,mpg,ppg,rpg,apg,fg3a_pg,fg3_pct,verified,source,sgo_player_id
+Aaron Wiggins,OKC,ATL,19.9,65,21.75,9.4,3.06,1.68,4.2,35.6,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,AARON_WIGGINS_1_NBA
+Asa Newell,ATL,ATL,17.1,44,11.36,5.16,2.18,0.59,1.7,38.7,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,ASA_NEWELL_1_NBA
+CJ McCollum,TOT,ATL,25.71,76,29.79,18.74,3.32,3.86,6.73,37.4,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,CJ_MCCOLLUM_1_NBA
+Christian Koloko,TOT,ATL,11.49,25,14.04,2.92,3.2,0.72,0.38,11.1,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,CHRISTIAN_KOLOKO_1_NBA
+Corey Kispert,TOT,ATL,18.61,58,18.62,9.17,2.28,1.59,4.07,36.7,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,COREY_KISPERT_1_NBA
+Devin Carter,SAC,ATL,23.5,38,18.42,8.92,3.29,2.66,3.0,26.3,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DEVIN_CARTER_1_NBA
+Dorian Finney-Smith,HOU,ATL,10.8,37,16.76,3.32,2.51,0.97,2.7,27.0,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,DORIAN_FINNEYSMITH_1_NBA
+Dyson Daniels,ATL,ATL,16.0,76,33.16,11.86,6.84,5.91,1.5,18.8,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,DYSON_DANIELS_1_NBA
+Gabe Vincent,TOT,ATL,12.44,53,16.58,4.36,1.02,1.43,3.28,34.1,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,GABE_VINCENT_1_NBA
+Jalen Johnson,ATL,ATL,26.9,72,35.17,22.51,10.28,7.86,4.7,35.2,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,JALEN_JOHNSON_1_NBA
+Jalen Wilson,BKN,ATL,18.2,54,15.91,6.35,2.11,0.93,5.1,35.5,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,JALEN_WILSON_1_NBA
+Jock Landale,TOT,ATL,18.33,68,22.15,10.56,5.69,1.69,2.87,38.4,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,JOCK_LANDALE_1_NBA
+Keaton Wallace,ATL,ATL,16.2,53,10.11,3.51,1.06,1.77,1.9,37.3,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,KEATON_WALLACE_1_NBA
+Luguentz Dort,OKC,ATL,14.2,69,26.8,8.35,3.55,1.23,5.4,34.4,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,LUGUENTZ_DORT_1_NBA
+Mouhamed Gueye,ATL,ATL,12.4,77,15.31,4.44,3.57,0.9,1.7,30.8,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,MOUHAMED_GUEYE_1_NBA
+Nickeil Alexander-Walker,ATL,ATL,23.9,78,33.37,20.82,3.44,3.67,8.1,39.9,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,NICKEIL_ALEXANDERWALKER_1_NBA
+Onyeka Okongwu,ATL,ATL,19.5,74,31.04,15.18,7.59,3.12,5.2,37.6,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,ONYEKA_OKONGWU_1_NBA
+RayJ Dennis,IND,ATL,22.8,13,12.92,4.92,1.62,2.0,2.9,31.6,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,RAYJ_DENNIS_1_NBA
+Tony Bradley,IND,ATL,14.4,38,10.95,3.97,2.82,0.53,0.1,50.0,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,TONY_BRADLEY_1_NBA
+Ben Saraf,BKN,BKN,21.0,44,20.82,7.55,2.09,3.3,6.9,21.1,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,BEN_SARAF_1_NBA
+Chaney Johnson,BKN,BKN,16.2,17,20.47,8.18,4.65,2.12,5.5,30.0,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,
+Danny Wolf,BKN,BKN,20.6,57,20.82,8.91,4.93,2.23,7.7,32.2,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,DANIEL_WOLF_1_NBA
+Day'Ron Sharpe,BKN,BKN,19.8,62,18.71,8.71,6.66,2.34,0.6,23.1,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,DAYRON_SHARPE_1_NBA
+Drake Powell,BKN,BKN,15.0,63,20.95,6.48,1.76,1.44,5.7,28.0,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,
+E.J. Liddell,BKN,BKN,17.2,26,13.42,5.65,2.65,0.92,4.3,34.6,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,
+Egor Dëmin,BKN,BKN,18.9,52,25.15,10.31,3.17,3.33,8.6,38.5,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,EGOR_DEMIN_1_NBA
+Josh Minott,TOT,BKN,16.79,49,17.02,7.43,3.22,0.94,3.93,41.4,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,JOSH_MINOTT_1_NBA
+Julius Randle,MIN,BKN,26.4,79,33.04,21.1,6.73,5.04,4.4,31.5,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,JULIUS_RANDLE_1_NBA
+Keon Ellis,TOT,BKN,13.07,72,20.53,6.67,1.88,1.0,3.46,36.2,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,KEON_ELLIS_1_NBA
+Michael Porter Jr.,BKN,BKN,30.5,52,32.48,24.21,7.06,3.04,9.3,36.3,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,MICHAEL_PORTER_JR_1_NBA
+Moritz Wagner,ORL,BKN,24.2,36,11.86,6.86,3.19,0.75,1.9,31.4,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,MORITZ_WAGNER_1_NBA
+Noah Clowney,BKN,BKN,20.3,66,26.97,12.26,4.14,1.64,9.6,32.9,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,NOAH_CLOWNEY_1_NBA
+Nolan Traore,BKN,BKN,22.9,56,22.2,8.91,1.77,3.8,8.6,31.8,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,NOLAN_TRAORE_1_NBA
+Terance Mann,BKN,BKN,13.6,63,24.27,7.22,3.17,3.02,2.4,36.4,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,TERANCE_MANN_1_NBA
+Trevon Scott,BKN,BKN,13.6,6,30.33,8.0,5.17,1.67,3.2,31.6,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,
+Tyrese Martin,BKN,BKN,18.9,37,18.81,7.3,2.86,1.86,6.9,33.6,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,
+Tyson Etienne,BKN,BKN,20.3,24,15.83,7.88,1.12,1.67,6.0,39.8,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,TYSON_ETIENNE_1_NBA
+Amari Williams,BOS,BOS,11.0,22,6.64,1.36,1.82,0.45,0.0,,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,
+Baylor Scheierman,BOS,BOS,12.0,77,18.56,5.55,3.49,1.51,3.2,39.9,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,BAYLOR_SCHEIERMAN_1_NBA
+Derrick White,BOS,BOS,22.0,77,34.09,16.45,4.4,5.38,8.3,32.7,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,DERRICK_WHITE_1_NBA
+Hugo González,BOS,BOS,11.9,74,14.65,3.91,3.32,0.54,1.6,36.2,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,HUGO_GONZALEZ_1_NBA
+Jayson Tatum,BOS,BOS,30.0,16,32.62,21.75,10.0,5.31,8.9,32.9,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,JAYSON_TATUM_1_NBA
+Jordan Walsh,BOS,BOS,11.7,68,17.82,5.35,4.0,0.79,1.8,38.4,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,JORDAN_WALSH_1_NBA
+Luka Garza,BOS,BOS,17.6,69,16.2,8.07,4.07,0.96,1.8,43.3,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,LUKA_GARZA_1_NBA
+Mike Conley,MIN,BOS,11.5,54,18.35,4.54,1.72,2.91,3.1,33.7,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,MIKE_CONLEY_1_NBA
+Mitchell Robinson,NYK,BOS,10.6,60,19.58,5.67,8.75,0.87,0.0,,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,MITCHELL_ROBINSON_1_NBA
+Neemias Queta,BOS,BOS,14.6,76,25.34,10.21,8.37,1.66,0.1,12.5,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,NEEMIAS_QUETA_1_NBA
+Paul George,PHI,BOS,23.3,37,30.68,17.32,5.3,3.59,6.9,39.2,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,PAUL_GEORGE_1_NBA
+Payton Pritchard,BOS,BOS,21.5,79,32.35,17.03,3.95,5.16,7.1,37.7,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,PAYTON_PRITCHARD_1_NBA
+Ron Harper Jr.,BOS,BOS,16.4,29,10.97,4.24,1.66,0.76,2.8,35.0,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,RON_HARPER_JR_1_NBA
+Sam Hauser,BOS,BOS,14.6,78,24.79,9.22,3.85,1.46,6.5,39.3,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,SAM_HAUSER_1_NBA
+Brandon Miller,CHA,CHA,28.1,65,30.28,20.17,4.91,3.34,8.2,38.3,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,BRANDON_MILLER_1_NBA
+Coby White,TOT,CHA,28.63,50,24.98,17.36,3.4,4.0,6.36,36.1,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,COBY_WHITE_1_NBA
+Dennis Schröder,TOT,CHA,21.03,70,24.24,10.8,2.71,4.87,3.3,32.9,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DENNIS_SCHRODER_1_NBA
+Grant Williams,CHA,CHA,14.1,36,19.75,7.0,3.94,1.56,3.7,38.8,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,GRANT_WILLIAMS_1_NBA
+Grayson Allen,PHX,CHA,23.8,51,28.76,16.49,3.04,3.82,8.9,34.9,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,GRAYSON_ALLEN_1_NBA
+Kon Knueppel,CHA,CHA,22.3,81,31.49,18.49,5.33,3.38,7.9,42.5,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,KON_KNUEPPEL_1_NBA
+Liam McNeeley,CHA,CHA,14.3,31,11.87,4.26,2.35,0.77,1.9,40.0,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,LIAM_MCNEELEY_1_NBA
+Mason Plumlee,CHA,CHA,8.8,14,8.93,1.86,2.86,1.14,0.0,,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,
+Moussa Diabaté,CHA,CHA,11.4,73,26.01,7.88,8.7,1.93,0.0,,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,MOUSSA_DIABATE_1_NBA
+Naz Reid,MIN,CHA,22.2,77,26.06,13.58,6.19,2.21,5.8,36.2,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,NAZ_REID_1_NBA
+PJ Hall,CHA,CHA,17.2,12,15.58,6.08,5.5,0.67,0.2,100.0,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,PJ_HALL_1_NBA
+Pat Connaughton,CHA,CHA,14.9,42,7.07,2.62,1.45,0.43,1.2,40.4,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,PAT_CONNAUGHTON_1_NBA
+Rob Dillingham,TOT,CHA,23.24,65,14.92,6.29,2.02,2.2,2.01,31.5,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,ROB_DILLINGHAM_1_NBA
+Royce O'Neale,PHX,CHA,14.4,78,28.37,9.81,4.77,2.67,6.7,40.8,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,ROYCE_ONEALE_1_NBA
+Ryan Kalkbrenner,CHA,CHA,11.5,69,21.43,7.55,5.46,0.78,0.1,0.0,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,RYAN_KALKBRENNER_1_NBA
+Ryan Nembhard,DAL,CHA,17.6,60,19.52,6.62,2.22,5.27,2.3,35.6,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,RYAN_NEMBHARD_1_NBA
+Sion James,CHA,CHA,11.0,82,22.48,5.38,3.5,1.99,2.9,35.2,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,SION_JAMES_1_NBA
+Tidjane Salaün,CHA,CHA,14.9,37,15.54,6.0,4.03,0.73,2.2,43.4,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,TIDJANE_SALAUN_1_NBA
+Xavier Tillman,BOS,CHA,14.2,14,7.93,2.21,1.79,0.36,1.1,20.0,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,XAVIER_TILLMAN_1_NBA
+Buddy Hield,GSW,CHI,19.8,44,17.45,8.05,2.45,1.5,4.4,34.4,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,BUDDY_HIELD_1_NBA
+Isaac Okoro,CHI,CHI,13.6,63,26.9,9.27,2.75,1.59,3.5,33.0,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,ISAAC_OKORO_1_NBA
+Jalen Smith,CHI,CHI,19.0,53,20.66,10.21,6.7,1.23,4.2,37.3,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,JALEN_SMITH_1_NBA
+Josh Giddey,CHI,CHI,24.4,54,32.06,17.02,8.3,9.15,5.2,36.4,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,JOSH_GIDDEY_1_NBA
+Kennedy Chandler,UTA,CHI,20.7,11,32.27,15.0,3.36,6.73,3.5,39.5,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,KENNEDY_CHANDLER_1_NBA
+Leonard Miller,CHI,CHI,18.4,27,23.11,11.74,5.78,1.3,3.2,35.6,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,LEONARD_MILLER_1_NBA
+Mac McClung,CHI,CHI,22.3,8,12.62,6.0,0.75,1.12,2.5,25.0,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,MAC_MCCLUNG_1_NBA
+Matas Buzelis,CHI,CHI,22.7,77,29.19,16.26,5.82,2.05,6.4,34.9,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,MATAS_BUZELIS_1_NBA
+Nic Claxton,BKN,CHI,17.7,69,27.83,11.74,6.93,3.67,0.3,0.0,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,NIC_CLAXTON_1_NBA
+Norman Powell,MIA,CHI,27.1,58,29.6,21.74,3.5,2.47,7.1,38.0,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,NORMAN_POWELL_1_NBA
+Patrick Williams,CHI,CHI,16.6,72,20.47,7.01,2.99,1.46,3.8,34.7,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,PATRICK_WILLIAMS_1_NBA
+Tre Jones,CHI,CHI,19.2,65,26.95,14.06,3.14,5.38,2.0,31.5,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,TRE_JONES_1_NBA
+Zach Collins,CHI,CHI,18.7,10,18.4,9.7,5.6,1.5,2.1,42.9,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,ZACH_COLLINS_1_NBA
+Cam Whitmore,WAS,CLE,23.7,21,16.86,9.19,2.76,0.71,2.7,28.6,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,CAM_WHITMORE_1_NBA
+Craig Porter Jr.,CLE,CLE,12.3,64,17.94,4.52,3.44,3.2,1.5,35.5,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,CRAIG_PORTER_1_NBA
+Donovan Mitchell,CLE,CLE,32.1,70,33.46,27.89,4.51,5.69,8.8,36.4,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,DONOVAN_MITCHELL_1_NBA
+Evan Mobley,CLE,CLE,22.5,65,31.91,18.15,9.02,3.6,3.2,29.7,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,EVAN_MOBLEY_1_NBA
+James Harden,TOT,CLE,28.5,70,34.83,23.6,4.8,7.96,8.17,37.5,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,JAMES_HARDEN_1_NBA
+Jarrett Allen,CLE,CLE,19.8,56,27.12,15.36,8.5,1.79,0.2,10.0,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,JARRETT_ALLEN_1_NBA
+Jaylon Tyson,CLE,CLE,19.4,66,26.92,13.21,5.12,2.23,4.5,44.6,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,JAYLON_TYSON_1_NBA
+Lonzo Ball,CLE,CLE,13.8,35,20.8,4.57,4.0,3.89,4.2,27.2,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,
+Nae'Qwan Tomlin,CLE,CLE,15.5,64,15.69,5.84,2.91,0.83,1.8,23.5,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,NAEQWAN_TOMLIN_1_NBA
+Peyton Watson,DEN,CLE,20.5,54,29.59,14.61,4.89,2.06,3.6,41.1,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,PEYTON_WATSON_1_NBA
+Sam Merrill,CLE,CLE,17.1,52,26.48,12.75,2.56,2.4,7.2,42.1,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,SAM_MERRILL_1_NBA
+Thomas Bryant,CLE,CLE,18.6,60,12.2,6.17,3.42,0.55,2.2,35.9,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,THOMAS_BRYANT_1_NBA
+Tyrese Proctor,CLE,CLE,22.0,50,10.9,5.44,1.28,1.48,2.6,35.1,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,TYRESE_PROCTOR_1_NBA
+Caleb Martin,DAL,DAL,12.5,58,14.76,3.91,2.47,1.4,1.0,35.1,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,CALEB_MARTIN_1_NBA
+Cooper Flagg,DAL,DAL,26.9,70,33.49,21.04,6.66,4.51,3.5,29.5,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,C_FLAGG_1_NBA
+Daniel Gafford,DAL,DAL,15.7,55,21.73,9.53,6.87,1.05,0.0,,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,DANIEL_GAFFORD_1_NBA
+Dereck Lively II,DAL,DAL,11.7,7,16.43,4.29,5.29,1.86,0.0,,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,DERECK_LIVELY_II_1_NBA
+Dwight Powell,DAL,DAL,8.7,63,14.35,3.33,4.08,1.08,0.1,28.6,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,
+Jett Howard,ORL,DAL,17.3,55,12.64,5.47,1.58,0.82,2.6,37.2,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JETT_HOWARD_1_NBA
+John Poulakidas,DAL,DAL,16.3,13,19.46,8.85,2.31,0.85,5.9,40.3,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,
+Marcus Sasser,DET,DAL,19.8,38,12.03,5.18,1.03,1.97,2.8,41.5,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,MARCUS_SASSER_1_NBA
+Max Christie,DAL,DAL,16.5,77,29.14,12.27,3.23,1.96,5.8,40.4,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,MAX_CHRISTIE_1_NBA
+Miles Kelly,DAL,DAL,15.9,14,9.57,3.07,1.71,0.86,2.4,30.3,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,
+Moussa Cisse,DAL,DAL,14.1,38,13.95,4.47,5.68,0.24,0.0,,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,MOUSSA_CISSE_1_NBA
+Naji Marshall,DAL,DAL,20.5,74,29.51,15.24,4.7,3.26,2.9,29.1,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,NAJI_MARSHALL_1_NBA
+P.J. Washington,DAL,DAL,20.1,56,31.0,14.16,7.04,1.75,4.2,32.5,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,PJ_WASHINGTON_JR_1_NBA
+Santi Aldama,MEM,DAL,20.2,43,27.86,14.0,6.67,2.93,4.7,35.0,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,SANTI_ALDAMA_1_NBA
+Tyler Smith,DAL,DAL,14.9,12,13.83,4.67,2.75,0.42,2.9,28.6,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,
+Zaccharie Risacher,ATL,DAL,17.6,67,22.43,9.57,3.84,1.13,3.9,36.8,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26,ZACCHARIE_RISACHER_1_NBA
+Aaron Gordon,DEN,DEN,21.8,36,27.92,16.17,5.81,2.67,4.4,38.9,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,AARON_GORDON_1_NBA
+Bruce Brown,DEN,DEN,14.5,82,24.37,7.91,3.88,2.12,1.8,38.5,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,
+Cameron Johnson,DEN,DEN,15.1,54,30.5,12.22,3.81,2.44,4.7,43.0,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,CAMERON_JOHNSON_1_NBA
+Christian Braun,DEN,DEN,14.8,44,31.8,11.95,4.8,2.73,3.3,30.1,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,CHRISTIAN_BRAUN_1_NBA
+DaRon Holmes II,DEN,DEN,16.4,25,8.4,3.72,1.4,0.64,1.8,44.4,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,DARON_HOLMES_II_1_NBA
+DeJon Jarreau,MEM,DEN,21.4,11,21.0,8.0,4.64,3.27,2.7,13.3,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,DEJON_JARREAU_1_NBA
+DeMar DeRozan,SAC,DEN,22.7,77,31.25,18.43,2.94,4.1,1.9,32.0,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DEMAR_DEROZAN_1_NBA
+Jalen Pickett,DEN,DEN,14.9,50,16.14,5.2,2.28,2.3,2.5,38.6,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,JALEN_PICKETT_1_NBA
+Jamal Murray,DEN,DEN,27.9,75,35.36,25.4,4.4,7.13,7.5,43.5,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,JAMAL_MURRAY_1_NBA
+Jonas Valančiūnas,DEN,DEN,26.0,65,13.4,8.72,5.06,1.2,0.4,30.8,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,
+Julian Strawther,DEN,DEN,19.5,57,15.11,7.25,2.0,1.07,2.6,38.7,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,JULIAN_STRAWTHER_1_NBA
+KJ Simpson,CHA,DEN,22.8,14,15.93,6.0,2.07,2.5,2.8,30.8,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,KJ_SIMPSON_1_NBA
+Marvin Bagley III,TOT,DEN,18.55,60,20.02,10.45,6.1,1.42,0.87,46.2,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,MARVIN_BAGLEY_III_1_NBA
+Nikola Jokić,DEN,DEN,30.3,65,34.85,27.68,12.86,10.72,4.5,38.0,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,NIKOLA_JOKIC_1_NBA
+Spencer Jones,DEN,DEN,9.7,64,22.14,5.5,3.27,0.8,2.3,39.6,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,SPENCER_JONES_1_NBA
+Tyus Jones,TOT,DEN,10.3,56,15.84,3.12,1.11,2.61,2.14,28.1,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,TYUS_JONES_1_NBA
+Zeke Nnaji,DEN,DEN,13.7,52,12.04,3.65,2.62,0.56,1.0,25.9,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,ZEKE_NNAJI_1_NBA
+Ausar Thompson,DET,DET,16.9,73,25.97,9.88,5.73,3.12,0.3,25.0,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,AUSAR_THOMPSON_1_NBA
+Cade Cunningham,DET,DET,30.5,64,33.94,23.92,5.55,9.91,5.7,34.2,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,CADE_CUNNINGHAM_1_NBA
+Chaz Lanier,DET,DET,15.1,34,7.71,2.35,0.68,0.5,2.0,28.4,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,CHAZ_LANIER_1_NBA
+Daniss Jenkins,DET,DET,21.6,72,20.21,9.32,2.31,3.86,2.7,37.4,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,DANISS_JENKINS_1_NBA
+Duncan Robinson,DET,DET,15.8,77,27.44,12.19,2.66,2.06,7.0,41.0,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,DUNCAN_ROBINSON_1_NBA
+Gary Harris,MIL,DET,8.5,48,13.77,2.67,1.27,1.06,1.4,41.2,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,GARY_HARRIS_1_NBA
+Isaiah Joe,OKC,DET,18.5,71,21.23,11.06,2.55,1.32,6.0,42.3,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,ISAIAH_JOE_1_NBA
+Jaden Ivey,TOT,DET,19.76,37,18.11,8.54,2.46,1.84,3.61,37.3,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,JADEN_IVEY_1_NBA
+Jalen Duren,DET,DET,23.5,70,28.23,19.5,10.53,1.97,0.0,,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,JALEN_DUREN_1_NBA
+Javonte Green,DET,DET,14.8,82,17.63,6.94,2.8,0.68,3.0,38.1,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,JAVONTE_GREEN_1_NBA
+John Collins,LAC,DET,19.5,69,27.13,13.55,5.32,1.01,3.2,40.6,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,JOHN_COLLINS_1_NBA
+Kevin Huerter,TOT,DET,18.9,69,22.45,10.04,3.48,2.58,4.74,30.8,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,KEVIN_HUERTER_1_NBA
+Paul Reed,DET,DET,20.5,65,13.86,7.75,4.52,1.23,0.6,32.5,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,PAUL_REED_1_NBA
+Ronald Holland II,DET,DET,18.9,78,19.88,8.21,4.04,1.22,2.5,25.3,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,RON_HOLLAND_1_NBA
+Taurean Prince,MIL,DET,16.3,26,23.5,9.19,3.12,1.77,5.4,43.6,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,TAUREAN_PRINCE_1_NBA
+Tolu Smith,DET,DET,16.8,15,9.13,3.73,3.27,0.87,0.0,,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,TOLU_SMITH_1_NBA
+Al Horford,GSW,GSW,16.6,45,21.53,8.27,4.87,2.58,4.6,36.1,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
+Brandin Podziemski,GSW,GSW,20.1,82,28.45,13.82,5.11,3.71,5.0,37.1,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,BRANDIN_PODZIEMSKI_1_NBA
+Brandon Williams,DAL,GSW,24.9,66,22.17,13.02,2.89,3.88,2.3,23.2,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,BRANDON_WILLIAMS_1_NBA
+Charles Bassey,GSW,GSW,17.2,5,20.0,10.6,7.2,1.0,0.0,,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,CHARLES_BASSEY_1_NBA
+Dalen Terry,TOT,GSW,14.82,48,11.48,3.67,1.79,1.38,1.4,36.5,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,DALEN_TERRY_1_NBA
+De'Anthony Melton,GSW,GSW,25.4,49,22.96,12.29,3.22,2.55,5.0,29.4,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
+Draymond Green,GSW,GSW,16.2,68,27.49,8.38,5.51,5.53,4.6,32.6,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,DRAYMOND_GREEN_1_NBA
+Gary Payton II,GSW,GSW,18.5,73,15.64,7.49,3.63,1.68,1.7,29.1,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,GARY_PAYTON_II_1_NBA
+Gui Santos,GSW,GSW,18.7,68,20.51,9.19,3.91,2.34,3.3,35.1,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,GUI_SANTOS_1_NBA
+Jimmy Butler III,GSW,GSW,23.1,38,31.11,20.0,5.55,4.87,2.2,37.6,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
+LJ Cryer,GSW,GSW,20.3,18,16.22,8.22,1.56,1.0,5.2,39.4,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,LJ_CRYER_1_NBA
+Malevy Leons,GSW,GSW,14.4,25,11.04,3.32,2.12,0.92,0.6,25.0,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,MALEVY_LEONS_1_NBA
+Moses Moody,GSW,GSW,18.3,60,25.67,12.13,3.33,1.63,6.3,40.1,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,MOSES_MOODY_1_NBA
+Nate Williams,GSW,GSW,19.5,14,17.07,8.0,2.14,1.0,2.1,43.3,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
+Seth Curry,GSW,GSW,18.0,10,13.3,7.1,1.2,1.0,2.5,48.0,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
+Stephen Curry,GSW,GSW,32.5,43,30.91,26.56,3.58,4.72,11.3,39.3,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,
+Will Richard,GSW,GSW,13.1,69,19.96,6.39,2.49,1.35,3.1,33.5,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,WILL_RICHARD_1_NBA
+Ömer Yurtseven,GSW,GSW,17.4,9,11.56,3.78,3.33,0.89,0.4,0.0,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,OMER_YURTSEVEN_1_NBA
+Aaron Holiday,HOU,HOU,16.6,57,13.7,5.47,1.02,1.05,3.0,39.4,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,AARON_HOLIDAY_1_NBA
+Alperen Şengün,HOU,HOU,26.5,72,33.31,20.36,8.89,6.18,1.8,30.5,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,ALPEREN_SENGUN_1_NBA
+Amen Thompson,HOU,HOU,20.0,79,37.38,18.27,7.77,5.32,1.5,21.6,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,AMEN_THOMPSON_1_NBA
+Bogdan Bogdanović,LAC,HOU,18.7,23,19.65,7.43,2.57,2.22,4.1,34.7,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,BOGDAN_BOGDANOVIC_1_NBA
+Clint Capela,HOU,HOU,13.7,75,12.35,3.76,4.6,0.67,0.0,,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,CLINT_CAPELA_1_NBA
+Jabari Smith Jr.,HOU,HOU,18.2,77,35.13,15.78,6.87,1.86,6.3,36.3,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,JABARI_SMITH_1_NBA
+Jae'Sean Tate,HOU,HOU,13.5,46,8.8,2.8,1.59,0.54,0.7,31.3,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,JAESEAN_TATE_1_NBA
+Jeff Green,HOU,HOU,17.9,30,5.83,2.23,0.83,0.27,1.5,27.3,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,
+Julian Phillips,CHI,HOU,12.5,35,9.54,2.83,1.26,0.2,1.4,32.7,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26,JULIAN_PHILLIPS_1_NBA
+Kevin Durant,HOU,HOU,27.0,78,36.41,25.97,5.46,4.77,5.8,41.3,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,KEVIN_DURANT_1_NBA
+Marcus Smart,LAL,HOU,15.5,62,28.53,9.34,2.77,2.98,4.7,33.1,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,MARCUS_SMART_1_NBA
+Reed Sheppard,HOU,HOU,21.8,82,26.18,13.54,2.9,3.38,7.0,39.4,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,REED_SHEPPARD_1_NBA
+Steven Adams,HOU,HOU,12.0,32,22.81,5.84,8.62,1.5,0.0,,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,STEVEN_ADAMS_1_NBA
+Tari Eason,HOU,HOU,18.8,60,25.82,10.45,6.27,1.5,4.3,35.8,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,TARI_EASON_1_NBA
+Aaron Nesmith,IND,IND,19.9,45,29.67,13.8,4.16,1.91,6.2,37.9,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,AARON_NESMITH_1_NBA
+Andrew Nembhard,IND,IND,23.6,57,31.33,16.95,2.81,7.67,5.2,36.1,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,ANDREW_NEMBHARD_1_NBA
+Ben Sheppard,IND,IND,13.8,65,21.38,7.06,3.0,1.75,3.6,36.2,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,BEN_SHEPPARD_1_NBA
+Ivica Zubac,TOT,IND,19.25,48,30.12,14.1,10.6,2.19,0.0,,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,IVICA_ZUBAC_1_NBA
+Jalen Slawson,IND,IND,13.9,13,23.92,7.31,4.38,2.77,3.1,37.5,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,JALEN_SLAWSON_1_NBA
+Jarace Walker,IND,IND,20.7,76,25.7,11.63,5.14,2.53,4.7,37.4,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,JARACE_WALKER_1_NBA
+Jay Huff,IND,IND,18.1,82,20.96,9.55,3.95,1.48,4.5,31.9,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,JAY_HUFF_1_NBA
+Jeremiah Robinson-Earl,IND,IND,14.1,17,17.65,4.65,5.18,0.71,1.9,24.2,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,
+Johnny Furphy,IND,IND,12.8,35,18.37,5.14,4.37,1.17,2.0,32.4,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,JOHNNY_FURPHY_1_NBA
+Kelly Oubre Jr.,PHI,IND,18.2,50,31.48,14.1,5.04,1.6,4.8,36.0,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,KELLY_OUBRE_JR_1_NBA
+Kobe Brown,TOT,IND,15.7,61,15.79,5.79,3.03,1.31,2.24,37.5,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,KOBE_BROWN_1_NBA
+Larry Nance Jr.,CLE,IND,14.1,35,12.83,3.74,2.66,0.97,1.8,33.3,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,LARRY_NANCE_JR_1_NBA
+Obi Toppin,IND,IND,24.8,24,17.67,11.62,4.42,2.29,4.4,35.2,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,OBI_TOPPIN_1_NBA
+Pascal Siakam,IND,IND,30.1,62,33.18,23.95,6.63,3.81,4.7,35.8,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,PASCAL_SIAKAM_1_NBA
+Quenton Jackson,IND,IND,20.9,49,18.31,9.14,2.33,2.86,2.4,35.6,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,QUENTON_JACKSON_1_NBA
+T.J. McConnell,IND,IND,23.4,56,17.2,9.38,2.21,5.12,0.9,32.0,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,TJ_MCCONNELL_1_NBA
+Bradley Beal,LAC,LAC,22.3,6,20.17,8.17,0.83,1.67,3.2,36.8,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,BRADLEY_BEAL_1_NBA
+Brandon Ingram,TOR,LAC,26.9,77,33.82,21.49,5.58,3.69,4.6,38.2,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,BRANDON_INGRAM_1_NBA
+Brook Lopez,LAC,LAC,17.3,75,21.8,8.45,3.64,1.29,4.2,36.0,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,BROOK_LOPEZ_1_NBA
+Cam Christie,LAC,LAC,16.9,55,8.73,2.84,1.42,0.56,0.9,24.5,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,CAM_CHRISTIE_1_NBA
+Chris Paul,LAC,LAC,14.3,16,14.25,2.94,1.75,3.31,1.9,33.3,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,CHRIS_PAUL_1_NBA
+Darius Garland,TOT,LAC,27.48,45,29.87,18.78,2.38,6.69,6.85,39.7,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,DARIUS_GARLAND_1_NBA
+Derrick Jones Jr.,LAC,LAC,15.1,50,27.0,10.08,3.46,1.38,3.1,35.9,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,DERRICK_JONES_JR_1_NBA
+Gradey Dick,TOR,LAC,18.7,76,14.04,5.99,1.93,0.67,2.4,30.1,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,GRADEY_DICK_1_NBA
+Isaiah Jackson,TOT,LAC,16.08,55,16.51,6.73,5.27,0.95,0.03,0.0,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,ISAIAH_JACKSON_1_NBA
+Jordan Miller,LAC,LAC,18.0,60,22.08,9.97,3.03,2.27,1.8,34.5,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,JORDAN_MILLER_1_NBA
+Kobe Sanders,LAC,LAC,16.3,68,19.87,7.28,2.25,1.6,2.9,40.8,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,KOBE_SANDERS_1_NBA
+Kris Dunn,LAC,LAC,12.4,82,27.2,7.27,3.3,3.6,2.6,37.4,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,KRIS_DUNN_1_NBA
+Max Strus,CLE,LAC,17.5,12,24.0,11.17,5.42,2.0,6.8,40.2,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,MAX_STRUS_1_NBA
+Nicolas Batum,LAC,LAC,9.7,74,17.5,3.96,2.49,0.86,3.1,40.4,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,
+Rui Hachimura,LAL,LAC,15.3,68,28.34,11.47,3.32,0.84,3.9,44.3,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,RUI_HACHIMURA_1_NBA
+Yanic Konan Niederhäuser,LAC,LAC,15.6,41,10.34,4.29,2.85,0.29,0.1,20.0,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,YANIC_KONAN_NIEDERHAUSER_1_NBA
+Adou Thiero,LAL,LAL,14.5,25,5.96,1.88,1.12,0.4,0.1,33.3,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,ADOU_THIERO_1_NBA
+Austin Reaves,LAL,LAL,26.6,51,34.55,23.27,4.71,5.49,6.4,36.0,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,AUSTIN_REAVES_1_NBA
+Bronny James,LAL,LAL,16.8,42,8.93,2.9,0.55,1.21,1.4,38.6,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,BRONNY_JAMES_1_NBA
+Collin Sexton,TOT,LAL,25.87,68,23.74,15.44,2.28,3.28,4.15,40.1,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,COLLIN_SEXTON_1_NBA
+Dalton Knecht,LAL,LAL,17.8,54,10.24,4.22,1.39,0.39,2.1,34.2,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,DALTON_KNECHT_1_NBA
+Drew Timme,LAL,LAL,15.5,27,8.7,3.41,1.22,0.85,0.9,44.0,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,
+Jaden Hardy,TOT,LAL,24.45,57,15.75,9.18,1.51,1.02,4.57,39.7,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,JADEN_HARDY_1_NBA
+Jake LaRavia,LAL,LAL,14.4,82,25.13,8.22,3.98,1.77,3.0,32.1,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,JAKE_LARAVIA_1_NBA
+Jarred Vanderbilt,LAL,LAL,12.5,65,17.35,4.43,4.49,1.29,1.5,29.3,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,JARRED_VANDERBILT_1_NBA
+Kevon Looney,NOP,LAL,10.0,21,14.67,2.81,5.62,1.62,0.6,15.4,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,KEVON_LOONEY_1_NBA
+Luka Dončić,LAL,LAL,38.0,64,35.77,33.48,7.73,8.28,10.8,36.6,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,LUKA_DONCIC_1_NBA
+Matisse Thybulle,POR,LAL,14.7,30,16.0,5.8,1.97,0.9,3.1,39.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,MATISSE_THYBULLE_1_NBA
+Maxi Kleber,LAL,LAL,9.6,43,10.72,2.0,1.95,0.63,0.6,23.1,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,
+Nick Smith Jr.,LAL,LAL,22.1,30,12.5,6.17,0.77,1.03,2.9,39.5,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,
+Quentin Grimes,PHI,LAL,19.0,75,29.41,13.41,3.64,3.25,5.1,33.4,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,QUENTIN_GRIMES_1_NBA
+Sandro Mamukelashvili,TOR,LAL,18.8,80,21.89,11.16,4.94,1.89,3.7,38.9,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,SANDRO_MAMUKELASHVILI_1_NBA
+Walker Kessler,UTA,LAL,16.4,5,30.8,14.4,10.8,3.0,1.6,75.0,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,WALKER_KESSLER_1_NBA
+Ziaire Williams,BKN,LAL,18.8,56,22.88,10.23,2.39,1.07,4.5,34.3,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,ZIAIRE_WILLIAMS_1_NBA
+Cam Spencer,MEM,MEM,17.2,72,23.81,11.08,2.54,5.56,4.5,44.9,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,CAM_SPENCER_1_NBA
+D'Angelo Russell,DAL,MEM,26.0,26,19.04,10.15,2.35,4.0,4.3,29.5,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,DANGELO_RUSSELL_1_NBA
+Dariq Whitehead,MEM,MEM,24.2,6,30.5,16.33,4.0,1.5,10.0,31.7,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,DARIQ_WHITEHEAD_1_NBA
+GG Jackson,MEM,MEM,23.5,55,21.42,12.47,4.27,1.47,3.5,33.2,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,GG_JACKSON_1_NBA
+Isaiah Stewart,DET,MEM,16.6,58,22.71,10.02,5.0,1.14,2.1,33.3,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,ISAIAH_STEWART_1_NBA
+Jaylen Wells,MEM,MEM,19.3,69,26.39,12.54,3.19,1.61,5.3,35.3,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,JAYLEN_WELLS_1_NBA
+Jerami Grant,POR,MEM,23.7,57,29.74,18.6,3.47,2.14,6.1,38.9,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,JERAMI_GRANT_1_NBA
+Jordan Hawkins,NOP,MEM,18.3,51,13.57,5.06,1.73,0.82,2.6,34.8,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,JORDAN_HAWKINS_1_NBA
+Kris Murray,POR,MEM,10.6,57,23.39,5.81,3.61,1.42,2.1,27.9,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,KRIS_MURRAY_1_NBA
+Lucas Williamson,MEM,MEM,16.5,7,32.0,10.43,5.43,2.57,7.6,28.3,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,LUCAS_WILLIAMSON_1_NBA
+Micah Peavy,NOP,MEM,14.1,61,14.97,4.3,1.92,1.0,1.8,25.9,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,MICAH_PEAVY_1_NBA
+Olivier-Maxence Prosper,MEM,MEM,18.9,53,18.57,10.0,3.53,0.96,2.8,40.5,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,OLIVIERMAXENCE_PROSPER_1_NBA
+Quinten Post,GSW,MEM,18.9,67,17.3,7.66,4.01,1.4,4.1,33.6,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,Q_POST_1_NBA
+Scotty Pippen Jr.,MEM,MEM,26.1,10,21.2,11.4,2.2,4.7,3.2,31.3,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,SCOTTY_PIPPEN_JR_1_NBA
+Taylor Hendricks,TOT,MEM,16.19,59,18.95,7.42,3.75,0.93,3.11,34.2,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,TAYLOR_HENDRICKS_1_NBA
+Ty Jerome,MEM,MEM,32.7,15,22.6,19.67,2.8,5.67,6.7,42.0,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,TY_JEROME_1_NBA
+Walter Clayton Jr.,UTA,MEM,17.3,45,18.02,6.8,1.96,3.18,3.2,30.8,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,WALTER_CLAYTON_1_NBA
+Zach Edey,MEM,MEM,20.2,11,25.82,13.64,11.09,1.09,0.5,20.0,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,ZACH_EDEY_1_NBA
+Andrew Wiggins,MIA,MIA,19.7,68,30.34,15.37,4.84,2.68,4.9,41.4,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,ANDREW_WIGGINS_1_NBA
+Bam Adebayo,MIA,MIA,24.9,73,32.4,20.11,10.03,3.18,5.5,31.8,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,BAM_ADEBAYO_1_NBA
+Bobby Portis,MIL,MIA,23.2,67,24.16,13.66,6.39,1.57,4.4,45.6,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,BOBBY_PORTIS_1_NBA
+Davion Mitchell,MIA,MIA,13.7,70,28.57,9.34,2.66,6.47,3.3,39.5,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,DAVION_MITCHELL_1_NBA
+Dru Smith,MIA,MIA,15.2,70,16.3,5.64,2.47,2.57,1.8,29.5,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,DRU_SMITH_1_NBA
+Ethan Thompson,IND,MIA,15.7,32,20.41,6.97,2.16,1.78,3.6,32.8,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,ETHAN_THOMPSON_1_NBA
+Giannis Antetokounmpo,MIL,MIA,36.6,36,28.86,27.58,9.78,5.44,1.3,33.3,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,GIANNIS_ANTETOKOUNMPO_1_NBA
+Keshad Johnson,MIA,MIA,18.9,32,8.75,4.25,1.94,0.25,1.4,29.5,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,KESHAD_JOHNSON_1_NBA
+Klay Thompson,DAL,MIA,22.8,69,21.7,11.74,2.07,1.39,7.6,38.3,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,KLAY_THOMPSON_1_NBA
+Myron Gardner,MIA,MIA,15.0,45,9.13,3.62,2.71,0.98,1.4,40.6,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,MYRON_GARDNER_1_NBA
+Nick Richards,TOT,MIA,18.13,48,14.6,5.75,5.06,0.33,0.38,27.8,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,NICK_RICHARDS_1_NBA
+Nikola Jović,MIA,MIA,21.3,47,17.19,7.32,3.26,2.17,3.6,26.9,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,NIKOLA_JOVIC_1_NBA
+Pelle Larsson,MIA,MIA,16.7,70,26.41,11.43,3.49,3.37,2.7,32.3,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,PELLE_LARSSON_1_NBA
+Simone Fontecchio,MIA,MIA,19.7,70,16.76,8.53,3.01,1.44,4.7,37.5,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,SIMONE_FONTECCHIO_1_NBA
+Tim Hardaway Jr.,DEN,MIA,18.5,80,26.59,13.49,2.58,1.35,6.9,40.7,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,TIM_HARDAWAY_JR_1_NBA
+AJ Green,MIL,MIL,14.1,78,29.1,10.37,2.73,1.95,7.1,41.9,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,AJ_GREEN_1_NBA
+Andre Jackson Jr.,MIL,MIL,17.7,48,8.5,2.35,1.5,0.9,1.3,25.0,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,ANDRE_JACKSON_JR_1_NBA
+Cam Thomas,TOT,MIL,30.23,42,20.98,13.5,1.69,2.57,4.0,31.0,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,CAM_THOMAS_1_NBA
+Caris LeVert,DET,MIL,18.4,60,19.23,7.38,1.95,2.65,3.0,33.3,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,CARIS_LEVERT_1_NBA
+Cole Anthony,MIL,MIL,25.9,35,15.06,6.69,2.49,3.46,2.1,30.6,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,COLE_ANTHONY_1_NBA
+Cormac Ryan,MIL,MIL,21.2,11,24.64,14.27,2.55,1.73,5.4,45.8,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,CORMAC_RYAN_1_NBA
+Gary Trent Jr.,MIL,MIL,17.3,65,21.18,8.14,1.03,1.22,5.3,36.0,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,GARY_TRENT_JR_1_NBA
+Jaime Jaquez Jr.,MIA,MIL,22.4,75,28.28,15.36,5.0,4.69,2.4,31.7,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,JAIME_JAQUEZ_JR_1_NBA
+Jericho Sims,MIL,MIL,9.7,67,19.67,4.99,5.52,1.55,0.0,,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,JERICHO_SIMS_1_NBA
+Kasparas Jakučionis,MIA,MIL,13.7,53,17.83,6.19,2.6,2.58,2.9,42.3,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,KASPARAS_JAKUCIONIS_1_NBA
+Kel'el Ware,MIA,MIL,18.1,77,22.13,11.05,9.01,0.73,3.0,39.5,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,KELEL_WARE_1_NBA
+Kevin Porter Jr.,MIL,MIL,24.2,38,33.18,17.39,5.21,7.37,3.8,32.2,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,KEVIN_PORTER_1_NBA
+Kyle Kuzma,MIL,MIL,21.7,69,26.17,12.99,4.54,2.67,3.5,34.7,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,KYLE_KUZMA_1_NBA
+Luke Travers,CLE,MIL,17.5,12,8.58,2.33,2.0,0.75,1.3,6.3,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,LUKE_TRAVERS_1_NBA
+Myles Turner,MIL,MIL,18.6,71,26.93,11.92,5.32,1.45,5.4,38.3,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,MYLES_TURNER_1_NBA
+Ousmane Dieng,TOT,MIL,19.76,57,19.28,7.56,3.16,2.39,3.22,34.1,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,OUSMANE_DIENG_1_NBA
+Pete Nance,MIL,MIL,13.5,47,15.68,5.4,2.66,1.02,2.5,42.0,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,PETE_NANCE_1_NBA
+Ryan Rollins,MIL,MIL,24.2,74,32.11,17.31,4.57,5.59,6.1,40.6,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,RYAN_ROLLINS_1_NBA
+Thanasis Antetokounmpo,MIL,MIL,16.2,34,4.35,1.38,0.88,0.44,0.1,0.0,yes,https://www.statmuse.com/nba/ask/bucks-players-usage-rate-2025-26,THANASIS_ANTETOKOUNMPO_1_NBA
+Tyler Herro,MIA,MIL,24.8,33,31.3,20.52,4.79,4.12,6.7,37.8,yes,https://www.statmuse.com/nba/ask/heat-players-usage-rate-2025-26,TYLER_HERRO_1_NBA
+Anthony Edwards,MIN,MIN,31.4,61,35.03,28.8,4.95,3.7,8.4,39.9,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,ANTHONY_EDWARDS_1_NBA
+Ayo Dosunmu,TOT,MIN,20.17,69,27.26,14.81,3.43,3.61,4.06,44.0,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,AYO_DOSUNMU_1_NBA
+Bones Hyland,MIN,MIN,20.6,71,16.58,8.51,1.79,2.65,4.2,38.8,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,BONES_HYLAND_1_NBA
+Cody Williams,UTA,MIN,16.0,67,24.34,8.78,2.96,2.04,2.0,21.4,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,CODY_WILLIAMS_1_NBA
+Donte DiVincenzo,MIN,MIN,17.0,82,30.41,12.2,4.1,3.82,7.9,37.9,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,DONTE_DIVINCENZO_1_NBA
+Jaden McDaniels,MIN,MIN,18.6,73,31.73,14.85,4.25,2.73,3.4,41.2,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,JADEN_MCDANIELS_1_NBA
+Jaylen Clark,MIN,MIN,13.3,68,13.06,4.04,1.76,0.63,1.5,32.7,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,JAYLEN_CLARK_1_NBA
+Joan Beringer,MIN,MIN,16.8,40,7.85,3.9,2.3,0.3,0.0,,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,JOAN_BERINGER_1_NBA
+Joe Ingles,MIN,MIN,11.6,27,5.67,1.52,0.7,1.26,0.6,43.8,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,JOE_INGLES_1_NBA
+Jonathan Kuminga,TOT,MIN,23.26,36,23.06,12.17,5.61,2.31,2.97,33.3,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,JONATHAN_KUMINGA_1_NBA
+LaMelo Ball,CHA,MIN,32.1,72,28.01,20.07,4.82,7.14,10.3,36.8,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,LAMELO_BALL_1_NBA
+Rudy Gobert,MIN,MIN,12.8,76,31.32,10.91,11.47,1.68,0.1,0.0,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,RUDY_GOBERT_1_NBA
+Terrence Shannon Jr.,MIN,MIN,17.6,43,12.51,5.6,1.14,0.88,1.8,40.8,yes,https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,TERRENCE_SHANNON_1_NBA
+AJ Johnson,TOT,NOP,20.59,48,9.46,3.33,1.15,0.98,1.19,21.0,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,AJ_JOHNSON_1_NBA
+Bennedict Mathurin,TOT,NOP,25.12,54,30.0,17.57,5.43,2.39,4.44,31.5,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,BENNEDICT_MATHURIN_1_NBA
+Bryce McGowens,NOP,NOP,13.9,42,20.95,8.1,2.1,1.48,2.2,40.9,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,BRYCE_MCGOWENS_1_NBA
+DeAndre Jordan,NOP,NOP,10.1,12,16.58,4.42,6.33,0.92,0.0,,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,DEANDRE_JORDAN_1_NBA
+Dejounte Murray,NOP,NOP,26.7,14,27.79,16.71,5.36,6.36,4.4,30.6,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,DEJOUNTE_MURRAY_1_NBA
+Derik Queen,NOP,NOP,21.8,81,24.98,11.7,7.06,3.68,1.1,26.1,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,DERIK_QUEEN_1_NBA
+Herbert Jones,NOP,NOP,15.2,56,28.36,8.86,3.39,2.77,4.6,30.9,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,HERBERT_JONES_1_NBA
+Jeremiah Fears,NOP,NOP,25.5,82,25.76,14.26,3.66,3.4,3.7,33.0,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,JEREMIAH_FEARS_1_NBA
+Jordan Poole,NOP,NOP,25.2,39,23.92,13.44,1.97,3.05,7.4,33.3,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,JORDAN_POOLE_1_NBA
+Karlo Matković,NOP,NOP,13.2,62,14.71,5.68,3.69,0.81,1.5,42.2,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,KARLO_MATKOVIC_1_NBA
+Kobe Bufkin,LAL,NOP,22.2,16,7.44,2.88,0.81,0.62,1.6,19.2,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,KOBE_BUFKIN_1_NBA
+Saddiq Bey,NOP,NOP,21.6,72,31.19,17.65,5.56,2.53,5.7,36.7,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,SADDIQ_BEY_1_NBA
+Trendon Watford,PHI,NOP,17.9,53,16.3,6.53,3.3,2.49,0.9,20.0,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,TRENDON_WATFORD_1_NBA
+Trey Murphy III,NOP,NOP,22.8,66,35.47,21.52,5.71,3.79,8.6,37.9,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,TREY_MURPHY_III_1_NBA
+Yves Missi,NOP,NOP,12.6,66,19.65,5.71,5.83,1.27,0.0,,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,YVES_MISSI_1_NBA
+Zion Williamson,NOP,NOP,25.5,62,29.69,21.0,5.69,3.21,0.1,25.0,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,ZION_WILLIAMSON_1_NBA
+Andre Drummond,PHI,NYK,14.9,63,19.54,6.4,8.44,1.27,1.4,35.6,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,ANDRE_DRUMMOND_1_NBA
+Drew Eubanks,SAC,NYK,16.2,42,13.14,5.21,3.02,0.45,0.2,14.3,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DREW_EUBANKS_1_NBA
+Garrison Mathews,IND,NYK,14.0,15,13.07,5.2,1.13,0.67,3.1,37.0,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,GARRISON_MATHEWS_1_NBA
+Jalen Brunson,NYK,NYK,30.3,74,35.0,26.04,3.34,6.8,7.1,36.9,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,JALEN_BRUNSON_1_NBA
+John Konchar,TOT,NYK,9.37,56,19.91,4.43,4.29,2.11,1.76,28.3,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,JOHN_KONCHAR_1_NBA
+Jordan Clarkson,NYK,NYK,21.2,72,17.76,8.64,1.76,1.33,3.0,32.7,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,JORDAN_CLARKSON_1_NBA
+Jose Alvarado,TOT,NYK,16.87,69,19.86,7.39,2.48,3.39,4.17,35.2,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,JOSE_ALVARADO_1_NBA
+Josh Hart,NYK,NYK,16.7,66,30.21,12.0,7.36,4.8,3.7,41.3,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,JOSH_HART_1_NBA
+Karl-Anthony Towns,NYK,NYK,25.8,75,30.96,20.05,11.85,3.01,4.1,36.8,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,KARLANTHONY_TOWNS_1_NBA
+Kevin McCullar Jr.,NYK,NYK,17.0,21,7.38,2.38,1.33,0.95,1.1,33.3,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,KEVIN_MCCULLAR_1_NBA
+Landry Shamet,NYK,NYK,15.7,51,22.96,9.31,1.8,1.41,5.2,39.2,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,LANDRY_SHAMET_1_NBA
+Mikal Bridges,NYK,NYK,17.4,82,32.83,14.4,3.8,3.71,5.1,37.1,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,MIKAL_BRIDGES_1_NBA
+Miles McBride,NYK,NYK,18.2,41,26.34,11.98,2.44,2.59,6.6,41.3,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,MILES_MCBRIDE_1_NBA
+Mohamed Diawara,NYK,NYK,17.2,69,9.19,3.57,1.36,0.77,1.9,36.9,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,MOHAMED_DIAWARA_1_NBA
+OG Anunoby,NYK,NYK,19.7,67,33.19,16.69,5.24,2.16,6.1,38.6,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,OG_ANUNOBY_1_NBA
+Pacôme Dadiet,NYK,NYK,17.6,29,4.69,1.66,0.93,0.41,1.1,21.9,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,PACOME_DADIET_1_NBA
+Tyler Kolek,NYK,NYK,18.5,62,11.73,4.42,1.58,2.74,1.8,38.6,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,TYLER_KOLEK_1_NBA
+Ajay Mitchell,OKC,OKC,21.8,57,25.84,13.58,3.33,3.61,3.1,34.7,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,AJAY_MITCHELL_1_NBA
+Alex Caruso,OKC,OKC,15.8,56,18.21,6.21,2.77,1.96,3.2,29.3,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,ALEX_CARUSO_1_NBA
+Brooks Barnhizer,OKC,OKC,10.7,40,8.7,1.7,1.95,0.55,0.6,29.2,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,BROOKS_BARNHIZER_1_NBA
+Cason Wallace,OKC,OKC,14.6,77,26.57,8.57,3.09,2.6,3.7,35.1,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,CASON_WALLACE_1_NBA
+Chet Holmgren,OKC,OKC,21.8,69,28.94,17.12,8.91,1.67,3.5,36.2,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,CHET_HOLMGREN_1_NBA
+Isaiah Hartenstein,OKC,OKC,16.1,47,24.19,9.19,9.43,3.53,0.1,0.0,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,ISAIAH_HARTENSTEIN_1_NBA
+Jalen Williams,OKC,OKC,26.1,33,28.36,17.06,4.61,5.48,2.3,29.9,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,JALEN_WILLIAMS_1_NBA
+Jared McCain,TOT,OKC,20.79,67,17.31,8.33,2.04,1.34,3.83,38.5,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,JARED_MCCAIN_1_NBA
+Jaylin Williams,OKC,OKC,15.6,65,19.65,7.22,5.51,2.43,3.9,38.3,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,JAYLIN_WILLIAMS_1_NBA
+Kenrich Williams,OKC,OKC,18.4,56,15.27,6.48,3.34,1.41,2.3,38.8,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,KENRICH_WILLIAMS_1_NBA
+Nikola Topić,OKC,OKC,21.3,10,16.0,5.2,1.9,4.4,1.5,40.0,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,NIKOLA_TOPIC_1_NBA
+Shai Gilgeous-Alexander,OKC,OKC,33.2,68,33.22,31.13,4.29,6.59,4.4,38.6,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,SHAI_GILGEOUSALEXANDER_1_NBA
+Anthony Black,ORL,ORL,22.2,64,29.84,14.98,3.81,3.69,4.7,33.3,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,ANTHONY_BLACK_1_NBA
+Desmond Bane,ORL,ORL,23.3,82,33.61,20.09,4.12,4.12,5.2,39.1,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,DESMOND_BANE_1_NBA
+Franz Wagner,ORL,ORL,26.9,34,29.97,20.56,5.21,3.32,4.1,34.5,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,FRANZ_WAGNER_1_NBA
+Goga Bitadze,ORL,ORL,13.5,64,15.19,5.86,5.0,1.31,0.2,18.2,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,GOGA_BITADZE_1_NBA
+Hunter Tyson,DEN,ORL,16.8,21,7.71,2.19,1.71,0.81,1.6,21.2,yes,https://www.statmuse.com/nba/ask/nuggets-players-usage-rate-2025-26,HUNTER_TYSON_1_NBA
+JD Davison,HOU,ORL,15.3,28,7.79,2.46,1.21,1.25,1.1,25.0,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,JD_DAVISON_1_NBA
+Jalen Suggs,ORL,ORL,23.0,57,27.61,13.79,3.86,5.47,6.3,33.9,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JALEN_SUGGS_1_NBA
+Jamal Cain,ORL,ORL,16.6,40,12.15,5.38,1.95,0.72,1.8,38.4,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JAMAL_CAIN_1_NBA
+Jase Richardson,ORL,ORL,16.8,54,10.87,4.43,1.17,1.07,1.5,35.4,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JASE_RICHARDSON_1_NBA
+Jevon Carter,TOT,ORL,17.17,53,16.36,6.4,1.68,1.64,4.08,36.3,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JEVON_CARTER_1_NBA
+Jonathan Isaac,ORL,ORL,12.3,52,10.02,2.58,2.54,0.42,0.7,18.4,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,JONATHAN_ISAAC_1_NBA
+Malaki Branham,WAS,ORL,18.3,28,9.82,4.57,1.57,0.82,1.3,37.8,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,MALAKI_BRANHAM_1_NBA
+Nikola Vučević,TOT,ORL,21.41,64,28.41,15.08,8.39,3.33,4.2,36.9,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,NIKOLA_VUCEVIC_1_NBA
+Noah Penda,ORL,ORL,14.9,59,12.83,3.85,3.17,1.19,1.6,32.3,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,NOAH_PENDA_1_NBA
+Paolo Banchero,ORL,ORL,27.4,72,34.75,22.21,8.39,5.18,3.8,30.5,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,PAOLO_BANCHERO_1_NBA
+Tristan da Silva,ORL,ORL,16.3,77,24.66,9.9,3.69,1.61,4.2,37.4,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,TRISTAN_DA_SILVA_1_NBA
+Wendell Carter Jr.,ORL,ORL,15.6,78,29.33,11.82,7.4,1.97,2.9,31.9,yes,https://www.statmuse.com/nba/ask/magic-players-usage-rate-2025-26,WENDELL_CARTER_JR_1_NBA
+Adem Bona,PHI,PHI,11.1,71,17.38,4.85,4.32,0.45,0.1,33.3,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,
+Anfernee Simons,TOT,PHI,23.68,55,24.95,14.27,2.45,2.44,6.87,38.5,yes,https://www.statmuse.com/nba/ask/bulls-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,
+Ariel Hukporti,NYK,PHI,10.9,54,9.22,2.17,2.94,0.54,0.1,25.0,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26,
+Cameron Payne,PHI,PHI,19.2,22,17.0,7.41,2.0,2.64,4.4,33.0,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,
+Dean Wade,CLE,PHI,10.0,59,22.34,5.8,4.19,1.49,3.3,36.2,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,
+Dominick Barlow,PHI,PHI,12.8,71,23.79,7.68,4.79,1.23,1.2,25.6,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,
+Jabari Walker,PHI,PHI,14.9,64,11.91,4.31,3.0,0.53,1.5,33.7,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,
+Jaylen Brown,BOS,PHI,36.1,71,34.41,28.7,6.93,5.13,5.7,34.7,yes,https://www.statmuse.com/nba/ask/celtics-players-usage-rate-2025-26,
+Joel Embiid,PHI,PHI,33.3,38,31.61,26.87,7.71,3.95,4.2,33.3,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,
+Justin Edwards,PHI,PHI,16.2,64,15.27,6.03,1.47,1.25,2.8,37.2,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,
+Kentavious Caldwell-Pope,MEM,PHI,17.7,51,21.33,8.39,2.45,2.73,3.4,31.6,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,KENTAVIOUS_CALDWELLPOPE_1_NBA
+Kyle Lowry,PHI,PHI,11.3,14,8.43,1.21,0.64,0.79,1.8,16.0,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,
+LeBron James,LAL,PHI,27.2,60,33.15,20.93,6.07,7.2,4.1,31.7,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,
+MarJon Beauchamp,PHI,PHI,21.0,14,14.0,6.79,2.29,1.07,3.4,34.0,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,
+Tyrese Maxey,PHI,PHI,29.4,70,38.01,28.29,4.14,6.59,8.6,36.7,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,
+VJ Edgecombe,PHI,PHI,20.1,75,34.97,15.99,5.64,4.2,5.6,35.4,yes,https://www.statmuse.com/nba/ask/76ers-players-usage-rate-2025-26,
+Collin Gillespie,PHX,PHX,18.8,80,28.52,12.65,4.09,4.64,7.2,40.1,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,COLLIN_GILLESPIE_1_NBA
+Devin Booker,PHX,PHX,32.0,64,33.53,26.06,3.88,6.03,5.8,33.0,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,DEVIN_BOOKER_1_NBA
+Dillon Brooks,PHX,PHX,28.6,56,30.39,20.2,3.62,1.77,6.6,34.4,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,DILLON_BROOKS_1_NBA
+Isaiah Livers,PHX,PHX,10.0,36,9.64,1.81,1.69,0.58,1.1,30.0,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,ISAIAH_LIVERS_1_NBA
+Jalen Green,PHX,PHX,31.9,32,25.88,17.75,3.62,2.84,7.1,31.3,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,JALEN_GREEN_1_NBA
+Jamaree Bouyea,PHX,PHX,18.6,46,14.0,5.72,1.78,1.78,1.7,29.5,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,JAMAREE_BOUYEA_1_NBA
+Jordan Goodwin,PHX,PHX,17.6,70,22.46,8.7,4.87,2.16,4.3,37.1,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,JORDAN_GOODWIN_1_NBA
+Khaman Maluach,PHX,PHX,14.8,46,8.93,3.02,2.89,0.13,0.5,23.8,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,KHAMAN_MALUACH_1_NBA
+Luke Kennard,TOT,PHX,13.53,78,21.55,8.36,2.33,2.23,3.12,47.8,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,LUKE_KENNARD_1_NBA
+Mark Williams,PHX,PHX,17.3,60,23.6,11.67,7.95,0.97,0.0,,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,MARK_WILLIAMS_1_NBA
+Miles Bridges,CHA,PHX,22.3,77,31.0,17.06,5.84,3.19,5.8,33.3,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,MILES_BRIDGES_1_NBA
+Nigel Hayes-Davis,PHX,PHX,12.2,27,7.22,1.26,1.22,0.26,0.6,12.5,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,
+Oso Ighodaro,PHX,PHX,12.1,82,22.05,6.48,5.1,2.26,0.0,,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,OSO_IGHODARO_1_NBA
+Pat Spencer,GSW,PHX,18.9,66,18.62,7.21,2.39,3.52,2.5,35.7,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,PAT_SPENCER_1_NBA
+Rasheer Fleming,PHX,PHX,16.4,55,12.24,4.33,2.25,0.29,2.4,34.6,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,RASHEER_FLEMING_1_NBA
+Ryan Dunn,PHX,PHX,13.8,70,19.36,5.81,4.24,1.46,2.4,33.1,yes,https://www.statmuse.com/nba/ask/suns-players-usage-rate-2025-26,RYAN_DUNN_1_NBA
+Blake Wesley,POR,POR,19.7,31,11.65,4.77,1.26,2.0,1.2,27.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,
+Branden Carlson,OKC,POR,19.0,42,11.62,5.76,2.95,0.69,2.0,36.0,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,BRANDEN_CARLSON_1_NBA
+Caleb Love,POR,POR,23.1,49,20.67,10.39,2.33,2.51,6.0,31.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,
+Chris Youngblood,OKC,POR,16.6,32,5.44,2.03,0.88,0.34,1.6,31.4,yes,https://www.statmuse.com/nba/ask/thunder-players-usage-rate-2025-26,CHRIS_YOUNGBLOOD_1_NBA
+Deni Avdija,POR,POR,29.1,66,33.32,24.21,6.88,6.7,6.0,31.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,DENI_AVDIJA_1_NBA
+Donovan Clingan,POR,POR,16.8,77,27.19,12.13,11.58,2.1,3.2,34.1,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,DONOVAN_CLINGAN_1_NBA
+Duop Reath,POR,POR,13.3,32,8.06,2.94,1.19,0.31,1.7,41.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,DUOP_REATH_1_NBA
+Ja Morant,MEM,POR,32.4,20,28.45,19.45,3.25,8.05,4.3,23.5,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,JA_MORANT_1_NBA
+Jeremy Sochan,TOT,POR,14.63,44,10.66,3.59,2.43,0.91,1.05,24.5,yes,https://www.statmuse.com/nba/ask/knicks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,JEREMY_SOCHAN_1_NBA
+Jrue Holiday,POR,POR,23.6,53,29.43,16.32,4.62,6.08,6.8,37.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,JRUE_HOLIDAY_1_NBA
+Micah Potter,IND,POR,17.9,47,19.32,9.74,4.96,1.47,3.6,42.3,yes,https://www.statmuse.com/nba/ask/indiana-pacers-usage-rate-2025-26,MICAH_POTTER_1_NBA
+Robert Williams III,POR,POR,13.1,59,17.08,6.73,7.03,1.02,0.4,39.1,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,ROBERT_WILLIAMS_III_1_NBA
+Scoot Henderson,POR,POR,24.9,30,24.93,14.23,2.67,3.73,5.4,35.2,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,SCOOT_HENDERSON_1_NBA
+Shaedon Sharpe,POR,POR,30.5,50,29.42,20.84,4.34,2.64,6.1,33.7,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,SHAEDON_SHARPE_1_NBA
+Sidy Cissoko,POR,POR,12.6,75,19.13,5.11,2.21,1.47,2.6,29.8,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,SIDY_CISSOKO_1_NBA
+Toumani Camara,POR,POR,16.4,82,33.3,13.41,5.13,2.45,7.2,37.0,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,TOUMANI_CAMARA_1_NBA
+Vít Krejčí,TOT,POR,14.69,65,21.42,8.46,2.28,1.54,5.05,39.0,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,VIT_KREJCI_1_NBA
+Yang Hansen,POR,POR,19.9,43,6.98,2.21,1.53,0.51,1.0,11.9,yes,https://www.statmuse.com/nba/ask/portland-trail-blazers-usage-rate-2025-26,HANSEN_YANG_1_NBA
+Daeqwon Plowden,SAC,SAC,16.5,32,26.38,10.75,3.03,1.28,5.8,33.3,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DAEQWON_PLOWDEN_1_NBA
+De'Andre Hunter,CLE,SAC,22.9,43,26.16,13.95,4.23,2.07,5.5,30.8,yes,https://www.statmuse.com/nba/ask/cavaliers-players-usage-rate-2025-26,DEANDRE_HUNTER_1_NBA
+Domantas Sabonis,SAC,SAC,23.0,19,29.68,15.84,11.37,4.11,1.4,18.5,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DOMANTAS_SABONIS_1_NBA
+Doug McDermott,SAC,SAC,15.2,29,15.14,5.66,1.28,0.76,4.2,39.0,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,
+Dylan Cardwell,SAC,SAC,11.3,44,20.61,5.41,7.55,1.41,0.1,50.0,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,DYLAN_CARDWELL_1_NBA
+Jonathan Mogbo,TOR,SAC,11.1,40,6.22,1.52,1.7,0.62,0.0,,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,JONATHAN_MOGBO_1_NBA
+Keegan Murray,SAC,SAC,18.7,23,34.48,13.96,5.74,1.65,4.9,27.7,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,KEEGAN_MURRAY_1_NBA
+Killian Hayes,SAC,SAC,18.7,23,17.65,5.52,2.35,3.52,2.7,27.0,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,
+Malik Monk,SAC,SAC,24.1,62,22.0,12.45,1.89,2.98,5.1,39.5,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,MALIK_MONK_1_NBA
+Maxime Raynaud,SAC,SAC,18.2,74,26.54,12.46,7.51,1.35,1.0,32.4,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,MAXIME_RAYNAUD_1_NBA
+Nique Clifford,SAC,SAC,17.1,75,25.09,8.6,3.76,2.39,3.1,33.3,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,NIQUE_CLIFFORD_1_NBA
+Precious Achiuwa,SAC,SAC,17.6,73,23.9,10.08,6.74,1.38,1.3,27.8,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,PRECIOUS_ACHIUWA_1_NBA
+Russell Westbrook,SAC,SAC,25.9,64,28.95,15.17,5.44,6.66,5.9,33.8,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,RUSSELL_WESTBROOK_1_NBA
+Zach LaVine,SAC,SAC,23.7,39,31.38,19.18,2.77,2.28,6.5,39.0,yes,https://www.statmuse.com/nba/ask/kings-players-usage-rate-2025-26,ZACH_LAVINE_1_NBA
+Bismack Biyombo,SAS,SAS,7.8,25,5.64,0.92,1.04,0.2,0.0,,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,
+Carter Bryant,SAS,SAS,16.4,71,11.52,4.2,2.51,0.66,2.2,33.5,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,CARTER_BRYANT_1_NBA
+De'Aaron Fox,SAS,SAS,25.0,72,30.99,18.56,3.75,6.18,5.5,33.2,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,DEAARON_FOX_1_NBA
+Devin Vassell,SAS,SAS,18.0,67,30.51,13.91,4.01,2.49,6.4,38.4,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,DEVIN_VASSELL_1_NBA
+Dylan Harper,SAS,SAS,21.9,69,22.58,11.78,3.39,3.86,2.6,34.3,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,DYLAN_HARPER_1_NBA
+Harrison Barnes,SAS,SAS,14.7,77,25.79,9.94,2.77,1.92,4.6,38.8,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,HARRISON_BARNES_1_NBA
+Jordan McLaughlin,SAS,SAS,14.6,44,6.41,2.02,0.73,0.86,0.9,42.5,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,JORDAN_MCLAUGHLIN_1_NBA
+Julian Champagnie,SAS,SAS,15.2,82,27.63,11.11,5.77,1.55,6.2,38.1,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,JULIAN_CHAMPAGNIE_1_NBA
+Keldon Johnson,SAS,SAS,21.0,82,23.3,13.18,5.37,1.35,3.3,36.3,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,KELDON_JOHNSON_1_NBA
+Kelly Olynyk,SAS,SAS,16.0,42,8.57,3.17,1.81,1.17,1.1,25.5,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,KELLY_OLYNYK_1_NBA
+Lindy Waters III,SAS,SAS,14.4,40,7.12,2.38,0.72,0.47,2.0,34.2,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,
+Luke Kornet,SAS,SAS,10.3,68,21.03,6.53,6.09,1.85,0.0,,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,LUKE_KORNET_1_NBA
+Stephon Castle,SAS,SAS,24.8,68,29.97,16.66,5.32,7.38,3.6,33.2,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,STEPHON_CASTLE_1_NBA
+Tobias Harris,DET,SAS,18.9,63,27.71,13.27,5.13,2.49,3.5,36.8,yes,https://www.statmuse.com/nba/ask/pistons-players-usage-rate-2025-26,TOBIAS_HARRIS_1_NBA
+Victor Wembanyama,SAS,SAS,32.2,64,29.16,25.0,11.5,3.11,5.5,34.9,yes,https://www.statmuse.com/nba/ask/spurs-players-usage-rate-2025-26,VICTOR_WEMBANYAMA_1_NBA
+A.J. Lawson,TOR,TOR,17.5,24,9.42,4.21,1.79,0.29,1.9,42.2,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,
+Alijah Martin,TOR,TOR,19.4,23,6.35,2.22,0.91,0.52,0.9,19.0,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,ALIJAH_MARTIN_1_NBA
+Collin Murray-Boyles,TOR,TOR,15.4,57,21.86,8.49,5.0,1.86,0.9,34.0,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,COLLIN_MURRAYBOYLES_1_NBA
+Immanuel Quickley,TOR,TOR,21.1,70,31.87,16.43,4.03,5.93,6.8,37.4,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,IMMANUEL_QUICKLEY_1_NBA
+Ja'Kobe Walter,TOR,TOR,14.0,72,20.47,7.51,2.57,1.19,3.7,40.9,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,JAKOBE_WALTER_1_NBA
+Jakob Poeltl,TOR,TOR,15.3,46,24.98,10.72,7.02,2.02,0.0,,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,JAKOB_POELTL_1_NBA
+Jamal Shead,TOR,TOR,15.5,82,22.59,6.65,1.74,5.41,3.2,32.1,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,JAMAL_SHEAD_1_NBA
+Jamison Battle,TOR,TOR,14.2,61,8.48,3.15,1.46,0.39,1.4,41.2,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,JAMISON_BATTLE_1_NBA
+Kawhi Leonard,LAC,TOR,33.4,65,32.08,27.89,6.35,3.6,6.8,38.7,yes,https://www.statmuse.com/nba/ask/clippers-players-usage-rate-2025-26,KAWHI_LEONARD_1_NBA
+Kyle Anderson,TOT,TOR,13.13,39,19.59,5.87,3.49,3.15,0.3,30.8,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/minnesota-timberwolves-usage-rate-2025-26,KYLE_ANDERSON_1_NBA
+Malachi Smith,BKN,TOR,14.2,15,23.93,8.27,3.4,3.27,6.6,43.5,yes,https://www.statmuse.com/nba/ask/nets-players-usage-rate-2025-26,MALACHI_SMITH_1_NBA
+RJ Barrett,TOR,TOR,25.7,57,30.28,19.26,5.26,3.32,5.0,33.9,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,RJ_BARRETT_1_NBA
+Scottie Barnes,TOR,TOR,23.4,80,33.51,18.1,7.5,5.92,2.8,30.4,yes,https://www.statmuse.com/nba/ask/raptors-players-usage-rate-2025-26,SCOTTIE_BARNES_1_NBA
+Trayce Jackson-Davis,GSW,TOR,14.7,36,11.42,4.17,3.11,0.89,0.0,,yes,https://www.statmuse.com/nba/ask/warriors-players-usage-rate-2025-26,TRAYCE_JACKSONDAVIS_1_NBA
+Ace Bailey,UTA,UTA,21.6,72,27.61,13.79,4.19,1.82,5.5,34.4,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,AIRIOUS_BAILEY_1_NBA
+Andersson Garcia,UTA,UTA,9.7,5,33.8,5.2,8.4,2.8,2.6,7.7,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,ANDERSSON_GARCIA_1_NBA
+Bez Mbeng,UTA,UTA,11.1,15,32.8,8.13,3.8,4.13,2.1,19.4,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,BEZ_MBENG_1_NBA
+Blake Hinson,UTA,UTA,18.4,14,20.36,11.93,2.36,1.14,5.6,46.8,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,
+Brice Sensabaugh,UTA,UTA,25.0,75,23.49,14.88,3.08,1.91,5.9,36.7,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,BRICE_SENSABAUGH_1_NBA
+Elijah Harkless,UTA,UTA,16.2,26,20.96,6.85,2.04,2.88,3.4,23.9,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,
+Isaiah Collier,UTA,UTA,20.4,59,25.71,11.66,2.54,7.17,1.7,27.0,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,ISAIAH_COLLIER_1_NBA
+Jaren Jackson Jr.,MEM,UTA,25.6,45,30.71,19.2,5.76,1.91,4.9,35.9,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,JAREN_JACKSON_JR_1_NBA
+Jaxson Hayes,LAL,UTA,12.9,66,18.29,7.53,4.11,0.89,0.0,,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,JAXSON_HAYES_1_NBA
+Josh Green,CHA,UTA,10.7,58,15.66,4.29,1.76,0.81,2.4,42.0,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,JOSH_GREEN_1_NBA
+Josh Okogie,HOU,UTA,11.4,78,17.36,4.53,2.56,0.88,2.1,38.5,yes,https://www.statmuse.com/nba/ask/rockets-players-usage-rate-2025-26,JOSH_OKOGIE_1_NBA
+Jusuf Nurkić,UTA,UTA,19.3,41,26.41,10.9,10.37,4.78,1.7,35.2,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,JUSUF_NURKIC_1_NBA
+Kevin Love,UTA,UTA,16.7,37,16.57,6.7,5.81,1.81,3.8,37.3,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,KEVIN_LOVE_1_NBA
+Keyonte George,UTA,UTA,27.8,54,33.07,23.61,3.69,6.15,6.7,37.1,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,KEYONTE_GEORGE_1_NBA
+Kyle Filipowski,UTA,UTA,19.9,77,23.39,11.42,7.17,2.57,3.0,32.5,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,KYLE_FILIPOWSKI_1_NBA
+Lauri Markkanen,UTA,UTA,28.0,42,34.36,26.74,6.88,2.12,7.7,35.5,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,LAURI_MARKKANEN_1_NBA
+Oscar Tshiebwe,UTA,UTA,17.2,27,16.59,7.81,6.63,1.19,0.0,,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,OSCAR_TSHIEBWE_1_NBA
+Svi Mykhailiuk,UTA,UTA,14.9,50,23.12,9.38,2.48,1.86,4.8,40.8,yes,https://www.statmuse.com/nba/ask/jazz-players-usage-rate-2025-26,SVI_MYKHAILIUK_1_NBA
+Trey Alexander,NOP,UTA,15.9,9,12.33,5.22,1.22,1.0,1.3,50.0,yes,https://www.statmuse.com/nba/ask/pelicans-players-usage-rate-2025-26,TREY_ALEXANDER_1_NBA
+Vince Williams Jr.,MEM,UTA,19.7,34,21.65,8.0,4.0,4.41,4.7,30.8,yes,https://www.statmuse.com/nba/ask/grizzlies-players-usage-rate-2025-26,VINCE_WILLIAMS_JR_1_NBA
+Alex Sarr,WAS,WAS,25.7,48,27.19,16.31,7.4,2.71,3.1,33.3,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,ALEXANDRE_SARR_1_NBA
+Alondes Williams,WAS,WAS,14.3,4,25.25,11.0,6.25,3.0,3.5,35.7,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,ALONDES_WILLIAMS_1_NBA
+Anthony Davis,DAL,WAS,27.5,20,31.3,20.35,11.05,2.8,1.9,27.0,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26,ANTHONY_DAVIS_1_NBA
+Anthony Gill,WAS,WAS,11.9,55,17.29,5.84,2.87,1.25,0.9,35.4,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,ANTHONY_GILL_1_NBA
+Bilal Coulibaly,WAS,WAS,19.9,56,26.21,11.73,4.34,2.59,3.6,31.9,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,BILAL_COULIBALY_1_NBA
+Bub Carrington,WAS,WAS,18.1,82,27.7,10.71,3.37,4.65,5.0,40.8,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,BUB_CARRINGTON_1_NBA
+Deandre Ayton,LAL,WAS,16.7,72,27.19,12.46,7.99,0.82,0.0,,yes,https://www.statmuse.com/nba/ask/lakers-players-usage-rate-2025-26,DEANDRE_AYTON_1_NBA
+Jamir Watkins,WAS,WAS,15.0,50,20.64,7.36,3.88,1.34,3.2,29.7,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,JAMIR_WATKINS_1_NBA
+Justin Champagnie,WAS,WAS,16.7,69,19.96,8.65,5.57,1.22,2.4,31.9,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,JUSTIN_CHAMPAGNIE_1_NBA
+Khris Middleton,TOT,WAS,20.58,63,22.84,10.16,3.67,2.79,2.95,36.0,yes,https://www.statmuse.com/nba/ask/mavericks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,KHRIS_MIDDLETON_1_NBA
+Kyshawn George,WAS,WAS,22.8,48,28.98,14.79,5.1,4.46,5.4,38.1,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,KYSHAWN_GEORGE_1_NBA
+Leaky Black,WAS,WAS,11.7,15,28.87,7.07,5.0,1.47,3.7,34.5,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,LEAKY_BLACK_1_NBA
+Sharife Cooper,WAS,WAS,20.0,41,17.07,8.12,2.1,3.02,1.9,38.2,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,SHARIFE_COOPER_1_NBA
+Trae Young,TOT,WAS,27.85,15,25.6,17.93,2.0,8.0,5.33,33.8,yes,https://www.statmuse.com/nba/ask/hawks-players-usage-rate-2025-26 + https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,TRAE_YOUNG_1_NBA
+Tre Johnson,WAS,WAS,22.6,60,24.05,12.22,2.83,2.03,5.4,35.8,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,TRE_JOHNSON_1_NBA
+Tre Mann,CHA,WAS,23.4,53,12.62,5.49,1.74,1.62,5.7,32.3,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,TRE_MANN_1_NBA
+Tristan Vukcevic,WAS,WAS,26.6,49,13.69,9.0,3.0,1.12,2.9,34.7,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,T_VUKCEVIC_1_NBA
+Will Riley,WAS,WAS,20.2,74,22.07,10.32,2.86,1.97,3.3,31.6,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,WILL_RILEY_1_NBA

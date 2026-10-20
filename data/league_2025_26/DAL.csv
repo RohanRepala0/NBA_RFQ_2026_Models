@@ -1,23 +1,23 @@
-name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts
-Anthony Davis,DAL,27.5,20,31.3,20.4,1.9,27.0,626,407
-Khris Middleton,DAL,21.9,29,21.1,10.0,3.0,39.1,612,289
-Klay Thompson,DAL,22.8,69,21.7,11.7,7.6,38.3,"1,497",810
-Dwight Powell,DAL,8.7,63,14.3,3.3,0.1,28.6,904,210
-D'Angelo Russell,DAL,26.0,26,19.0,10.2,4.3,29.5,495,264
-Tyus Jones,DAL,12.6,8,16.6,3.9,2.4,21.1,133,31
-Marvin Bagley III,DAL,18.0,22,21.4,11.0,1.5,48.5,470,242
-P.J. Washington,DAL,20.1,56,31.0,14.2,4.2,32.5,"1,736",793
-Daniel Gafford,DAL,15.7,55,21.7,9.5,0.0,,"1,195",524
-Caleb Martin,DAL,12.5,58,14.8,3.9,1.0,35.1,856,227
-Naji Marshall,DAL,20.5,74,29.5,15.2,2.9,29.1,"2,184","1,128"
-Brandon Williams,DAL,24.9,66,22.2,13.0,2.3,23.2,"1,463",859
-Max Christie,DAL,16.5,77,29.1,12.3,5.8,40.4,"2,244",945
-Jaden Hardy,DAL,23.4,34,12.6,6.9,3.6,37.1,428,233
-Dereck Lively II,DAL,11.7,7,16.4,4.3,0.0,,115,30
-AJ Johnson,DAL,20.4,23,10.4,3.9,1.4,15.6,240,90
-Tyler Smith,DAL,14.9,12,13.8,4.7,2.9,28.6,166,56
-Cooper Flagg,DAL,26.9,70,33.5,21.0,3.5,29.5,"2,344","1,473"
-Miles Kelly,DAL,15.9,14,9.6,3.1,2.4,30.3,134,43
-Ryan Nembhard,DAL,17.6,60,19.5,6.6,2.3,35.6,"1,171",397
-Moussa Cisse,DAL,14.1,38,13.9,4.5,0.0,,530,170
-John Poulakidas,DAL,16.3,13,19.5,8.8,5.9,40.3,253,115
+name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts,reb,ast,oreb,dreb,reb_ast_source
+Anthony Davis,DAL,27.5,20,31.3,20.4,1.9,27.0,626,407,221,56,62,159,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Khris Middleton,DAL,21.9,29,21.1,10.0,3.0,39.1,612,289,97,65,21,76,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Klay Thompson,DAL,22.8,69,21.7,11.7,7.6,38.3,"1,497",810,143,96,18,125,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Dwight Powell,DAL,8.7,63,14.3,3.3,0.1,28.6,904,210,257,68,96,161,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+D'Angelo Russell,DAL,26.0,26,19.0,10.2,4.3,29.5,495,264,61,104,8,53,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Tyus Jones,DAL,12.6,8,16.6,3.9,2.4,21.1,133,31,9,30,1,8,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Marvin Bagley III,DAL,18.0,22,21.4,11.0,1.5,48.5,470,242,150,29,53,97,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+P.J. Washington,DAL,20.1,56,31.0,14.2,4.2,32.5,"1,736",793,394,98,84,310,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Daniel Gafford,DAL,15.7,55,21.7,9.5,0.0,,"1,195",524,378,58,138,240,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Caleb Martin,DAL,12.5,58,14.8,3.9,1.0,35.1,856,227,143,81,28,115,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Naji Marshall,DAL,20.5,74,29.5,15.2,2.9,29.1,"2,184","1,128",348,241,65,283,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Brandon Williams,DAL,24.9,66,22.2,13.0,2.3,23.2,"1,463",859,191,256,30,161,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Max Christie,DAL,16.5,77,29.1,12.3,5.8,40.4,"2,244",945,249,151,15,234,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Jaden Hardy,DAL,23.4,34,12.6,6.9,3.6,37.1,428,233,47,29,11,36,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Dereck Lively II,DAL,11.7,7,16.4,4.3,0.0,,115,30,37,13,14,23,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+AJ Johnson,DAL,20.4,23,10.4,3.9,1.4,15.6,240,90,24,25,6,18,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Tyler Smith,DAL,14.9,12,13.8,4.7,2.9,28.6,166,56,33,5,12,21,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Cooper Flagg,DAL,26.9,70,33.5,21.0,3.5,29.5,"2,344","1,473",466,316,86,380,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Miles Kelly,DAL,15.9,14,9.6,3.1,2.4,30.3,134,43,24,12,5,19,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Ryan Nembhard,DAL,17.6,60,19.5,6.6,2.3,35.6,"1,171",397,133,316,13,120,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+Moussa Cisse,DAL,14.1,38,13.9,4.5,0.0,,530,170,216,9,89,127,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26
+John Poulakidas,DAL,16.3,13,19.5,8.8,5.9,40.3,253,115,30,11,4,26,https://www.statmuse.com/nba/ask/mavericks-players-total-offensive-rebounds-2025-26

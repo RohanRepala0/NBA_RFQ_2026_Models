@@ -1,18 +1,18 @@
-name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts
-DeAndre Jordan,NOP,10.1,12,16.6,4.4,0.0,,199,53
-Kevon Looney,NOP,10.0,21,14.7,2.8,0.6,15.4,308,59
-Dejounte Murray,NOP,26.7,14,27.8,16.7,4.4,30.6,389,234
-Zion Williamson,NOP,25.5,62,29.7,21.0,0.1,25.0,"1,841","1,302"
-Jordan Poole,NOP,25.2,39,23.9,13.4,7.4,33.3,933,524
-Saddiq Bey,NOP,21.6,72,31.2,17.7,5.7,36.7,"2,246","1,271"
-Trey Murphy III,NOP,22.8,66,35.5,21.5,8.6,37.9,"2,341","1,420"
-Herbert Jones,NOP,15.2,56,28.4,8.9,4.6,30.9,"1,588",496
-Jose Alvarado,NOP,15.8,41,21.9,7.9,4.7,36.3,896,324
-Bryce McGowens,NOP,13.9,42,21.0,8.1,2.2,40.9,880,340
-Jordan Hawkins,NOP,18.3,51,13.6,5.1,2.6,34.8,692,258
-Yves Missi,NOP,12.6,66,19.7,5.7,0.0,0.0,"1,297",377
-Trey Alexander,NOP,15.9,9,12.3,5.2,1.3,50.0,111,47
-Karlo Matković,NOP,13.2,62,14.7,5.7,1.5,42.2,912,352
-Jeremiah Fears,NOP,25.5,82,25.8,14.3,3.7,33.0,"2,112","1,169"
-Derik Queen,NOP,21.8,81,25.0,11.7,1.1,26.1,"2,023",948
-Micah Peavy,NOP,14.1,61,15.0,4.3,1.8,25.9,913,262
+name,team,usg,gp,mpg,ppg,fg3a,fg3pct,min,pts,reb,ast,oreb,dreb,reb_ast_source
+DeAndre Jordan,NOP,10.1,12,16.6,4.4,0.0,,199,53,76,11,26,50,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Kevon Looney,NOP,10.0,21,14.7,2.8,0.6,15.4,308,59,118,34,48,70,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Dejounte Murray,NOP,26.7,14,27.8,16.7,4.4,30.6,389,234,75,89,4,71,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Zion Williamson,NOP,25.5,62,29.7,21.0,0.1,25.0,"1,841","1,302",353,199,125,228,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Jordan Poole,NOP,25.2,39,23.9,13.4,7.4,33.3,933,524,77,119,9,68,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Saddiq Bey,NOP,21.6,72,31.2,17.7,5.7,36.7,"2,246","1,271",400,182,121,279,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Trey Murphy III,NOP,22.8,66,35.5,21.5,8.6,37.9,"2,341","1,420",377,250,63,314,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Herbert Jones,NOP,15.2,56,28.4,8.9,4.6,30.9,"1,588",496,190,155,47,143,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Jose Alvarado,NOP,15.8,41,21.9,7.9,4.7,36.3,896,324,114,128,16,98,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Bryce McGowens,NOP,13.9,42,21.0,8.1,2.2,40.9,880,340,88,62,12,76,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Jordan Hawkins,NOP,18.3,51,13.6,5.1,2.6,34.8,692,258,88,42,20,68,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Yves Missi,NOP,12.6,66,19.7,5.7,0.0,0.0,"1,297",377,385,84,183,202,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Trey Alexander,NOP,15.9,9,12.3,5.2,1.3,50.0,111,47,11,9,1,10,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Karlo Matković,NOP,13.2,62,14.7,5.7,1.5,42.2,912,352,229,50,72,157,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Jeremiah Fears,NOP,25.5,82,25.8,14.3,3.7,33.0,"2,112","1,169",300,279,60,240,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Derik Queen,NOP,21.8,81,25.0,11.7,1.1,26.1,"2,023",948,572,298,136,436,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26
+Micah Peavy,NOP,14.1,61,15.0,4.3,1.8,25.9,913,262,117,61,46,71,https://www.statmuse.com/nba/ask/pelicans-players-total-offensive-rebounds-2025-26

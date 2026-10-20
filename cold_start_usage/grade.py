@@ -118,3 +118,123 @@ def by_segment(df: pd.DataFrame, col: str) -> pd.DataFrame:
         rows.append({col: "unknown" if pd.isna(key) else key, **{k: s.get(k) for k in ("signals", "graded", "hit_rate", "avg_clv_p",
                                                         "brier_model", "brier_market")}})
     return pd.DataFrame(rows)
+
+
+# --- Venue grading: what Kalshi and Polymarket US actually pay ---------------------------
+# A contract pays its settlement value: 1 or 0, or, for a player who never takes
+# the court, a fair price the venue sets (Kalshi "scalar", Polymarket US LFMP).
+# NO pays 1 - value. Paper P&L takes the first actionable decision per player-game
+# and stat at its logged all-in cost (points, rebounds and assists are graded
+# apart); fills use what Rohan actually paid.
+
+def fetch_venue_settlements(storage: Storage, start: date, end: date, now,
+                            kalshi_market=None, pm_us_settlement=None) -> int:
+    """Store settlements for every venue contract logged for games in [start, end]."""
+    lo, _ = et_day_bounds(start)
+    _, hi = et_day_bounds(end)
+    want = storage.query("""
+        SELECT DISTINCT venue, ticker FROM venue_signals WHERE tip_ts >= ? AND tip_ts < ?
+          AND venue IN ('kalshi', 'polymarket_us') AND ticker IS NOT NULL
+        UNION SELECT DISTINCT t.venue, t.ticker FROM tickets t""", [lo, hi])
+    have = set(map(tuple, storage.query("SELECT DISTINCT venue, ticker FROM venue_settlements")
+                   [["venue", "ticker"]].itertuples(index=False)))
+    rows = []
+    for v, t in want.itertuples(index=False):
+        if (v, t) in have:
+            continue
+        try:
+            if v == "kalshi" and kalshi_market is not None:
+                m = kalshi_market(t) or {}
+                result = m.get("result")
+                if result in ("yes", "no", "scalar") and m.get("status") in ("finalized", "settled", "determined"):
+                    value = {"yes": 1.0, "no": 0.0}.get(result)
+                    if value is None and m.get("settlement_value_dollars") not in (None, ""):
+                        value = float(m["settlement_value_dollars"])
+                    if value is None:
+                        continue                      # fair price not published yet: fetch again next run
+                    rows.append({"ts": now, "venue": v, "ticker": t, "result": result, "settlement_value": value,
+                                 "settled_ts": m.get("settlement_ts")})
+            elif v == "polymarket_us" and pm_us_settlement is not None:
+                value = pm_us_settlement(t)
+                if value is not None:
+                    rows.append({"ts": now, "venue": v, "ticker": t, "settlement_value": value,
+                                 "result": {1.0: "yes", 0.0: "no"}.get(value, "scalar")})
+        except Exception:                             # one failed read never loses the others
+            continue
+    return storage.append("venue_settlements", rows)
+
+
+def _settled(storage: Storage) -> pd.DataFrame:
+    return storage.query("""
+        SELECT * EXCLUDE (rn) FROM (
+          SELECT *, row_number() OVER (PARTITION BY venue, ticker ORDER BY ts DESC) rn FROM venue_settlements)
+        WHERE rn = 1""")
+
+
+def venue_graded(storage: Storage, start: date, end: date) -> pd.DataFrame:
+    """First actionable decision per player-game and stat, with settlement, P&L per contract and venue CLV."""
+    lo, _ = et_day_bounds(start)
+    _, hi = et_day_bounds(end)
+    # One paper bet per player-game and stat: the first time it was actionable, on whatever contract that was.
+    sig = storage.query("""
+        SELECT * EXCLUDE (rn) FROM (
+          SELECT * REPLACE (coalesce(stat, 'points') AS stat),
+                 row_number() OVER (PARTITION BY coalesce(event_id, event_ticker), coalesce(player_id, player),
+                                                 coalesce(stat, 'points')
+                                    ORDER BY ts, ev_blend DESC) rn
+          FROM venue_signals WHERE decision = 'actionable' AND tip_ts >= ? AND tip_ts < ?) WHERE rn = 1""",
+                        [lo, hi])
+    if sig.empty:
+        return sig
+    # The close is the last two-sided book before tip (an empty side reads as 0 / 1, not a price).
+    close = storage.query("""
+        SELECT * EXCLUDE (rn) FROM (
+          SELECT venue, ticker, yes_bid, yes_ask,
+                 row_number() OVER (PARTITION BY venue, ticker ORDER BY ts DESC) rn
+          FROM venue_snapshots WHERE ts < tip_ts AND yes_bid > 0 AND yes_ask < 1) WHERE rn = 1""")
+    df = sig.merge(_settled(storage)[["venue", "ticker", "result", "settlement_value"]],
+                   on=["venue", "ticker"], how="left").merge(close, on=["venue", "ticker"], how="left")
+    yes_value = df.settlement_value
+    df["value"] = yes_value.where(df.side == "YES", 1 - yes_value)
+    df["pnl_per_contract"] = df.value - df.cost
+    mid_yes = (df.yes_bid + df.yes_ask) / 2
+    df["close_mid"] = mid_yes.where(df.side == "YES", 1 - mid_yes)
+    df["clv_venue"] = df.close_mid - df.ask
+    df["game_date"] = df.tip_ts.map(et_date)
+    return df
+
+
+def fills_graded(storage: Storage) -> pd.DataFrame:
+    """Rohan's fills at the price he paid; a fill replaced by a correction is left out."""
+    t = storage.query("SELECT * FROM tickets")
+    if t.empty:
+        return t
+    t = t[~t.fill_id.isin(set(t.replaces.dropna()))]
+    df = t.merge(_settled(storage)[["venue", "ticker", "result", "settlement_value"]],
+                 on=["venue", "ticker"], how="left")
+    value = df.settlement_value.where(df.side == "YES", 1 - df.settlement_value)
+    df["pnl"] = df.contracts * (value - df.price) - df.fees.fillna(0.0)
+    return df
+
+
+def venue_summary(df: pd.DataFrame, min_n: int = 50) -> dict:
+    """Yield and hit rate are shown only with at least `min_n` settled contracts."""
+    if df.empty:
+        return {"actionable": 0}
+    s = df[df.value.notna()]
+    binary = s[s.result.isin(["yes", "no"])]
+    out = {"actionable": len(df), "settled": len(s), "fair_price_settlements": int((s.result == "scalar").sum()),
+           "avg_ev_logged": float(df.ev_blend.mean()),
+           "avg_clv_venue": float(df.clv_venue.dropna().mean()) if df.clv_venue.notna().any() else None}
+    if len(s) >= min_n:
+        out.update(yield_per_contract=float(s.pnl_per_contract.sum() / s.cost.sum()),
+                   hit_rate=float((binary.value == 1).mean()) if len(binary) else None)
+    return out
+
+
+def venue_summary_by_stat(df: pd.DataFrame, min_n: int = 50) -> dict[str, dict]:
+    """venue_summary for each stat on its own (a NULL stat is points)."""
+    if df.empty:
+        return {}
+    stats = df.stat.fillna("points") if "stat" in df else pd.Series("points", index=df.index)
+    return {stat: venue_summary(df[stats == stat], min_n) for stat in sorted(set(stats))}

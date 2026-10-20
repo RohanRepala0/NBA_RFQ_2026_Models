@@ -19,7 +19,8 @@ Where each player is in 2026-27, in order of precedence:
 4. his only 2025-26 team, flagged "assumed"
 
 2025-26 lines come from data/league_2025_26/*.csv (StatMuse team pages,
-splits with >= 100 minutes, each row checked against its season totals).
+splits with >= 100 minutes, each row checked against its season totals; season
+rebound and assist totals from the same team pages).
 Teams with a reviewed minutes file in cold_start_usage/scenarios/ use it;
 every other team gets an automatic full-strength rotation from last season's
 minutes, written to cold_start_usage/scenarios/auto/.
@@ -82,7 +83,13 @@ def load_league_splits(folder: Path | None = None) -> pd.DataFrame:
 
 
 def combine_lines(splits: pd.DataFrame) -> pd.DataFrame:
-    """One 2025-26 line per player across team splits (traded players)."""
+    """One 2025-26 line per player across team splits (traded players). rpg / apg are season
+    totals over games across the splits, NaN when any split lacks the totals."""
+    def per_game(g: pd.DataFrame, col: str) -> float:
+        if col not in g.columns or g[col].isna().any():
+            return float("nan")
+        return round(float(g[col].sum() / g.gp.sum()), 2)
+
     def agg(g: pd.DataFrame) -> pd.Series:
         att = g.fg3a * g.gp
         pct = (att * g.fg3pct.fillna(0)).sum() / att.sum() if att.sum() > 0 else float("nan")
@@ -94,6 +101,7 @@ def combine_lines(splits: pd.DataFrame) -> pd.DataFrame:
             "games": int(g.gp.sum()), "min_total": float(g["min"].sum()),
             "mpg": round(float(g["min"].sum() / g.gp.sum()), 2),
             "ppg": round(float(g.pts.sum() / g.gp.sum()), 2),
+            "rpg": per_game(g, "reb"), "apg": per_game(g, "ast"),
             "fg3a_pg": round(float(att.sum() / g.gp.sum()), 2),
             "fg3_pct": round(pct, 1) if not math.isnan(pct) else float("nan"),
             "source": " + ".join(sorted(set(g.source))),
@@ -123,8 +131,10 @@ def fuzzy_join_keys(keys: pd.Series, candidates: pd.Series) -> dict[str, str]:
     """Map each unmatched key to a candidate key with the same last name and a
     compatible first name (nickname table or shared first 3 letters), if unique."""
     def split(k_name: str) -> tuple[str, str]:
-        parts = str(k_name).split()
-        return (parts[0].lower(), parts[-1].lower()) if len(parts) > 1 else ("", str(k_name).lower())
+        # Drop suffixes first: "Ronald Holland II" is (ronald, holland), not a last name "II"
+        # that every "Jr." / "II" shares (that once bridged him to Ron Harper Jr.).
+        parts = [t for t in str(k_name).split() if name_key(t)]
+        return (parts[0].lower(), parts[-1].lower()) if len(parts) > 1 else ("", " ".join(parts).lower())
     out = {}
     cand = pd.DataFrame({"name": candidates})
     cand["first"], cand["last"] = zip(*cand.name.map(split))
@@ -204,20 +214,15 @@ def auto_minutes(team_players: pd.DataFrame, n: int = 10, cap: float = 37.0, sta
 
 
 def players_table(resolved: pd.DataFrame, curated: pd.DataFrame | None = None) -> pd.DataFrame:
-    """Model input table (usage_model.PLAYER_COLUMNS + shooting + sgo id) for every placed player."""
+    """Model input table (usage_model.PLAYER_COLUMNS + rpg / apg + shooting + sgo id) for every placed player."""
     df = resolved[resolved.team_2026_27.notna()].copy()
-    out = pd.DataFrame({
-        "player": df.name, "team_2025_26": df.team_2025_26, "team_2026_27": df.team_2026_27,
-        "usg_pct": df.usg_pct, "games": df.games, "mpg": df.mpg, "ppg": df.ppg,
-        "fg3a_pg": df.fg3a_pg, "fg3_pct": df.fg3_pct, "verified": "yes", "source": df.source,
-        "sgo_player_id": df.player_id,
-    })
+    out = _model_table(df, "team_2026_27")
     if curated is not None and len(curated):
         cur = curated.set_index("player")
         keep = out[~out.player.isin(cur.index)]
         cur = curated.copy()
         cur["team_2026_27"] = cur.player.map(dict(zip(out.player, out.team_2026_27))).fillna(cur.team_2026_27)
-        out = pd.concat([keep, cur[out.columns]], ignore_index=True)
+        out = pd.concat([keep, cur.reindex(columns=out.columns)], ignore_index=True)
     return out.sort_values(["team_2026_27", "player"]).reset_index(drop=True)
 
 
@@ -247,9 +252,11 @@ def prior_teams(resolved: pd.DataFrame, splits: pd.DataFrame, moves: pd.DataFram
 
 
 def _model_table(df: pd.DataFrame, team_col: str) -> pd.DataFrame:
+    nan = pd.Series(float("nan"), index=df.index)
     return pd.DataFrame({
         "player": df.name, "team_2025_26": df.team_2025_26, "team_2026_27": df[team_col],
         "usg_pct": df.usg_pct, "games": df.games, "mpg": df.mpg, "ppg": df.ppg,
+        "rpg": df.get("rpg", nan), "apg": df.get("apg", nan),
         "fg3a_pg": df.fg3a_pg, "fg3_pct": df.fg3_pct, "verified": "yes", "source": df.source,
         "sgo_player_id": df.player_id,
     })
@@ -343,8 +350,10 @@ def build_catalog(players: pd.DataFrame, resolved: pd.DataFrame, splits: pd.Data
                 "usg_2025_26": r.usg_pct, "usg_proj": round(r.usg_proj, 2),
                 "usg_change": None if math.isnan(d_usg) else round(d_usg, 2),
                 "mpg_2025_26": r.mpg, "proj_mpg": r.proj_mpg, "ppg_2025_26": r.ppg,
+                "rpg_2025_26": _num(getattr(r, "rpg", None)), "apg_2025_26": _num(getattr(r, "apg", None)),
                 "proj": None if pd.isna(r.ppg_proj) else round(float(r.ppg_proj), 2),
                 "sd": None if pd.isna(r.sd_proj) else round(float(r.sd_proj), 2),
+                "reb_proj": _num(r.reb_proj), "ast_proj": _num(r.ast_proj),
                 "spacing_old": None if pd.isna(r.spacing_old) else round(float(r.spacing_old), 1),
                 "spacing_new": None if pd.isna(r.spacing_new) else round(float(r.spacing_new), 1),
                 "team_offseason_effect_pct": round(effect, 1), "scenario_source": scen_source,
@@ -352,6 +361,10 @@ def build_catalog(players: pd.DataFrame, resolved: pd.DataFrame, splits: pd.Data
     cat = pd.DataFrame(rows)
     cat["thesis"] = cat.apply(lambda r: thesis(r, teams), axis=1)
     return cat, pd.DataFrame(teams)
+
+
+def _num(x) -> float | None:
+    return None if x is None or pd.isna(x) else round(float(x), 2)
 
 
 def thesis(r, teams: list[dict]) -> str:

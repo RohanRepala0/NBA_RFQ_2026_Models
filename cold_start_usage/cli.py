@@ -1,5 +1,5 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
-catalog | board | kalshi | venues.
+catalog | board | kalshi | venues | tickets | fill | history | backtest.
 
     python -m cold_start_usage.cli snapshot --date 2026-10-21
     python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
@@ -7,7 +7,8 @@ catalog | board | kalshi | venues.
     python -m cold_start_usage.cli watchlist --date 2026-10-21
     python -m cold_start_usage.cli grade --date 2026-10-21
 
-Research only: nothing here places, sizes or routes an order anywhere.
+Research only: `tickets` suggests a limit price and size to enter by hand; nothing here
+places or routes an order anywhere.
 """
 from __future__ import annotations
 
@@ -21,17 +22,16 @@ from pathlib import Path
 import pandas as pd
 
 from . import config
-from .consensus import consensus_by_player, venue_quotes
+from .consensus import consensus_by_player
 from .grade import calibration, graded_signals, summarize
 from .ingest import player_points_side
-from .pipeline import (events_on, fetch_results, ledger_for, run_projections, run_signals,
-                       snapshot_due, snapshot_from_file, snapshot_slate)
+from .pipeline import (events_on, events_without_projections, fetch_results, ledger_for, run_projections,
+                       run_signals, snapshot_due, snapshot_from_file, snapshot_slate, venue_due_plan)
 from .report import write_report
 from .schedule import et_date, iso_z
 from .sgo_client import SGOClient, SGOError
 from .signals import make_signal
 from .storage import Storage, to_naive_utc, utcnow
-from .watchlist import ladder, watchlist_rows
 
 pd.set_option("display.width", 200)
 pd.set_option("display.max_columns", 30)
@@ -131,6 +131,55 @@ def cmd_books(args, storage, now_fn) -> int:
     return 0
 
 
+def _snapshot_due(args, storage, now_fn, now) -> int:
+    """Cron tick. The SportsGameOdds step and the venue step are independent: a budget
+    stop or a missing key never blocks the free venue reads, and the other way round."""
+    out = {"due": {}}
+    try:
+        out = snapshot_due(_client(storage, now_fn), storage, now)
+        if out["slate"]:
+            print(f"Slate {et_date(now)}: {out['slate']['events']} event(s) stored")
+        print("Due: " + (", ".join(f"{e}={t}" for e, t in sorted(out["due"].items())) or "nothing due"))
+        usage = out.get("usage_before") or (out["slate"] or {}).get("usage_before")
+        if usage is None:
+            print(f"No API call this run. Local ledger: {storage.objects_used_this_month()} objects this month")
+        else:
+            print(_budget_line(storage, usage, out["objects"]))
+    except SGOError as exc:
+        print(f"SportsGameOdds step skipped: {exc}")
+    venue_plan = venue_due_plan(storage, now) if args.with_venues else {}
+    if args.with_projections:
+        due_ids = set(out["due"]) | set(venue_plan)
+        missing = events_without_projections(storage, due_ids)
+        done = 0
+        for eid in sorted(missing):
+            try:
+                run_projections(storage, et_date(now), now, {}, event_ids={eid})
+                done += 1
+            except Exception as exc:                 # one team's bad scenario file never stops the tick
+                print(f"Auto-projection skipped for {eid}: {type(exc).__name__}: {exc}")
+        if done:
+            print(f"Auto-projected {done} game(s) (missing, an older model version, or a stat short; each team "
+                  "keeps its latest scenario, else full_strength); `project --scenario` later replaces a team's run")
+    if args.with_signals:
+        for tag in config.SIGNAL_TIMINGS:
+            ids = {e for e, t in out["due"].items() if t == tag}
+            if ids:
+                df, msgs = run_signals(storage, et_date(now), now, timing=tag, event_ids=ids)
+                for m in msgs:
+                    print(f"note: {m}")
+                n_lean = int((df.decision == "paper").sum()) if not df.empty else 0
+                print(f"Sportsbook signals at {tag}: {len(df)} logged ({n_lean} leans)"
+                      + ("" if len(df) else " - no projections logged for these events yet"))
+    for tag in sorted(set(venue_plan.values()), key=lambda t: -config.VENUE_OFFSETS_MIN[t]):
+        ids = {e for e, t in venue_plan.items() if t == tag}
+        try:
+            _venue_scan(storage, now, tag=tag, event_ids=ids, simulated=args.now is not None)
+        except Exception as exc:
+            print(f"Venue step at {tag} failed: {type(exc).__name__}: {exc}")
+    return 0
+
+
 def cmd_snapshot(args, storage, now_fn) -> int:
     now = now_fn()
     if args.from_file:
@@ -138,36 +187,18 @@ def cmd_snapshot(args, storage, now_fn) -> int:
         print(f"Loaded {out['events']} event(s) from file: {out['odds_snapshots']} quotes, "
               f"tags {sorted(set(out['tags'].values()))} (0 API objects)")
         return 0
-    client = _client(storage, now_fn)
     if args.due:
-        out = snapshot_due(client, storage, now)
-        if out["slate"]:
-            print(f"Slate {et_date(now)}: {out['slate']['events']} event(s) stored")
-        print("Due: " + (", ".join(f"{e}={t}" for e, t in sorted(out["due"].items())) or "nothing due"))
-        if args.with_signals:
-            for tag in config.SIGNAL_TIMINGS:
-                ids = {e for e, t in out["due"].items() if t == tag}
-                if ids:
-                    df, msgs = run_signals(storage, et_date(now), now, timing=tag, event_ids=ids)
-                    for m in msgs:
-                        print(f"note: {m}")
-                    n_paper = int((df.decision == "paper").sum()) if not df.empty else 0
-                    print(f"Signals at {tag}: {len(df)} logged ({n_paper} paper)"
-                          + ("" if len(df) else " - no projections logged for these events yet"))
-        usage = out.get("usage_before") or (out["slate"] or {}).get("usage_before")
-        if usage is None:
-            print(f"No API call this run. Local ledger: {storage.objects_used_this_month()} objects this month")
-        else:
-            print(_budget_line(storage, usage, out["objects"]))
-        return 0
+        return _snapshot_due(args, storage, now_fn, now)
+    client = _client(storage, now_fn)
     d = args.date or et_date(now)
     out = snapshot_slate(client, storage, d, now)
-    print(f"Stored {out['events']} event(s), {out['odds_snapshots']} player-points quotes, "
-          f"{out['event_players']} roster rows for {d}")
+    print(f"Stored {out['events']} event(s), {out['odds_snapshots']} player-prop quotes "
+          f"({', '.join(config.STATS)}), {out['event_players']} roster rows for {d}")
     for n in out["notices"]:
         print(f"API notice: {n}")
     targets = storage.query("""SELECT book, count(DISTINCT player_id) AS players FROM odds_snapshots
-                               WHERE ts = ? AND book_role = 'target' GROUP BY book""", [now])
+                               WHERE ts = ? AND book_role = 'target' AND coalesce(stat, 'points') = 'points'
+                               GROUP BY book""", [now])
     for r in targets.itertuples():
         print(f"Prediction market posted: {r.book} has player points for {r.players} player(s)")
     print(_budget_line(storage, out["usage_before"], out["objects"]))
@@ -203,9 +234,10 @@ def cmd_project(args, storage, now_fn) -> int:
                              "side": sig["side"], "edge": sig["edge"], "decision": sig["decision"],
                              "reason": sig["reason"]})
     table = table.merge(pd.DataFrame(previews), on="player", how="left")
-    print(f"Logged projections at {now:%Y-%m-%d %H:%M} UTC (model {config.MODEL_VERSION})")
+    print(f"Logged projections at {now:%Y-%m-%d %H:%M} UTC (model {config.MODEL_VERSION}; points, "
+          "rebounds and assists; the sportsbook preview is points)")
     _print_table(table, ["team", "scenario", "player", "status", "min", "usg", "usg_proj", "ppg_25_26",
-                         "proj", "sd", "spc_old", "spc_new", "cons_line", "cons_mean", "side", "edge",
+                         "proj", "sd", "reb", "ast", "spc_old", "spc_new", "cons_line", "cons_mean", "side", "edge",
                          "decision", "reason"])
     return 0
 
@@ -239,38 +271,41 @@ def latest_signals(storage: Storage, d: date, now: datetime) -> pd.DataFrame:
 
 
 def cmd_watchlist(args, storage, now_fn) -> int:
+    """Sportsbook leans (model vs books at the books' line) next to what the venues list.
+    A lean is never a recommendation: only `tickets` are actionable."""
+    from .venues import latest_venue_signals
     now = now_fn()
     d = args.date or et_date(now)
     sig = latest_signals(storage, d, now)
     if sig.empty:
         print("No signals logged for this date yet.")
         return 1
-    venues = pd.concat([venue_quotes(storage, e, before=now) for e in sig.event_id.unique()],
-                       ignore_index=True)
-    wl = watchlist_rows(sig, venues)
-    lines = [f"# Prediction-market watchlist: {d}", "",
-             f"Built {now:%Y-%m-%d %H:%M} UTC from the latest logged signals. "
-             f"Max price leaves {100 * config.EDGE_THRESHOLD:.0f}pp of edge after the taker fee "
-             f"({', '.join(f'{v} {r:g}' for v, r in sorted(config.VENUE_FEE_RATE.items()))} x P x (1-P); "
-             "verify fees per venue). Research only.", ""]
+    leans = sig[sig.decision == "paper"]
+    vs = latest_venue_signals(storage, now)
+    lines = [f"# Leans vs the books: {d}", "",
+             "Model vs the sportsbook consensus at the books' own line. Rohan can't trade at the books, so a",
+             "lean only says where to look; the venue columns show what Kalshi / Polymarket US list for the",
+             "player and the logged decision. Only `tickets` are actionable. Research only.", ""]
+    rows = []
+    if len(vs):
+        vs = vs[vs.stat.fillna("points") == "points"]                     # the leans are points
+    for s in leans.itertuples():
+        mine = vs[vs.player_id == s.player_id] if len(vs) else vs
+        listed = "; ".join(f"{r.venue} {r.contract} {100 * r.ask:.0f}c: {r.decision}"
+                           for r in mine.sort_values("ev_blend", ascending=False).head(3).itertuples()
+                           if isinstance(r.contract, str) and r.ask is not None and not pd.isna(r.ask))
+        rows.append({"player": s.player_name, "team": s.team, "lean": f"{s.side} {s.line:g}",
+                     "edge_pp": round(100 * s.edge, 1), "proj": round(s.model_mean, 1),
+                     "books": round(s.consensus_mean, 1), "venues": listed or "no venue listing"})
+    wl = pd.DataFrame(rows)
     if wl.empty:
-        print("No paper signals: nothing to wait for on this slate.")
-        lines.append("No paper signals on this slate.")
+        print("No leans on this slate.")
+        lines.append("No leans on this slate.")
     else:
-        cols = ["player", "team", "book_side", "contract", "model_cents", "market_cents", "edge_pp"] + \
-               [f"max_{v}" for v in sorted(config.TARGET_VENUES)] + ["posted"]
-        _print_table(wl, cols)
+        _print_table(wl)
+        cols = list(wl.columns)
         lines += ["| " + " | ".join(cols) + " |", "|" + "---|" * len(cols)]
-        lines += ["| " + " | ".join("" if pd.isna(v) else str(v) for v in r) + " |"
-                  for r in wl[cols].itertuples(index=False)]
-        lines += ["", "## Ladders (fair YES price in cents for 'N+ points')", ""]
-        for r in sig[sig.decision == "paper"].itertuples():
-            lad = ladder(r.model_mean, r.consensus_mean, r.line)
-            lines += [f"**{r.player_name}** ({r.team}), book line {r.line:g}, model {r.model_mean:.1f} "
-                      f"vs market {r.consensus_mean:.1f}", "",
-                      "| " + " | ".join(lad.columns) + " |", "|" + "---|" * len(lad.columns)]
-            lines += ["| " + " | ".join(str(v) for v in x) + " |" for x in lad.itertuples(index=False)]
-            lines.append("")
+        lines += ["| " + " | ".join(str(v) for v in r) + " |" for r in wl.itertuples(index=False)]
     config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     path = config.REPORTS_DIR / f"watchlist_{d}.md"
     path.write_text("\n".join(lines) + "\n")
@@ -281,23 +316,51 @@ def cmd_watchlist(args, storage, now_fn) -> int:
 def cmd_grade(args, storage, now_fn) -> int:
     now = now_fn()
     d = args.date
-    if not args.offline:
+    if not args.offline and not args.venues_only:
         objects, n, messages = fetch_results(_client(storage, now_fn), storage, d, now)
         for m in messages:
             print(f"note: {m}")
         print(f"Stored {n} result row(s) ({objects} API objects)")
-    df = graded_signals(storage, d, d)
-    s_all, s_paper = summarize(df), summarize(df[df.decision == "paper"]) if not df.empty else {}
-    print(f"Grade {d}:")
-    for label, s in (("all", s_all), ("paper", s_paper)):
-        print(f"  {label:5s}: " + ", ".join(f"{k}={v:.4f}" if isinstance(v, float) else f"{k}={v}"
-                                          for k, v in s.items()))
-    if not df.empty:
-        _print_table(df, ["player_name", "timing", "side", "line", "model_p", "consensus_p", "edge",
-                          "decision", "actual_points", "outcome", "close_consensus_line", "clv_p", "clv_line"])
-        print("Calibration:")
-        _print_table(calibration(df))
+    if not args.venues_only:
+        df = graded_signals(storage, d, d)
+        s_all, s_lean = summarize(df), summarize(df[df.decision == "paper"]) if not df.empty else {}
+        print(f"Model vs books {d} (sportsbook line):")
+        for label, s in (("all", s_all), ("leans", s_lean)):
+            print(f"  {label:5s}: " + ", ".join(f"{k}={v:.4f}" if isinstance(v, float) else f"{k}={v}"
+                                              for k, v in s.items()))
+        if not df.empty:
+            _print_table(df, ["player_name", "timing", "side", "line", "model_p", "consensus_p", "edge",
+                              "decision", "actual_points", "outcome", "close_consensus_line", "clv_p", "clv_line"])
+            print("Calibration:")
+            _print_table(calibration(df))
+    _grade_venues(storage, d, now, offline=args.offline)
     return 0
+
+
+def _grade_venues(storage, d, now, offline: bool = False) -> None:
+    """Kalshi / Polymarket US settlements (free public reads), then P&L at the venue's price."""
+    from .grade import fetch_venue_settlements, fills_graded, venue_graded, venue_summary, venue_summary_by_stat
+    if not offline:
+        import requests
+
+        from . import kalshi, polymarket_us
+        reader, session = kalshi.KalshiReader(), requests.Session()
+        n = fetch_venue_settlements(storage, d, d, now, kalshi_market=reader.market,
+                                    pm_us_settlement=lambda t: polymarket_us.settlement(t, session))
+        print(f"Stored {n} venue settlement(s)")
+    vg = venue_graded(storage, d, d)
+    fmt = lambda summ: ", ".join(f"{k}={v:.4f}" if isinstance(v, float) else f"{k}={v}"  # noqa: E731
+                                 for k, v in summ.items())
+    print(f"Venue contracts {d} (first actionable decision per player-game and stat, paper):")
+    print("  all     : " + fmt(venue_summary(vg)))
+    for stat, summ in venue_summary_by_stat(vg).items():
+        print(f"  {stat:8s}: " + fmt(summ))
+    if not vg.empty:
+        _print_table(vg, ["game", "venue", "player", "stat", "contract", "ask", "cost", "p_blend", "ev_blend",
+                          "result", "value", "pnl_per_contract", "close_mid", "clv_venue"])
+    fills = fills_graded(storage)
+    if not fills.empty:
+        print(f"Your fills: {len(fills)}, settled {int(fills.pnl.notna().sum())}, P&L ${fills.pnl.sum():.2f}")
 
 
 def cmd_fit(args, storage, now_fn) -> int:
@@ -355,80 +418,76 @@ def cmd_catalog(args, storage, now_fn) -> int:
     return 0
 
 
-def _kalshi_markets(storage, now) -> pd.DataFrame | None:
-    """Open Kalshi player-points markets (public, read-only), stored as venue quotes."""
+def _kalshi_markets(now) -> pd.DataFrame | None:
+    """Open Kalshi player-points markets (public, read-only), parsed; None if unreachable."""
     from . import kalshi
     try:
         df = kalshi.parse_markets(kalshi.fetch_open_markets())
     except Exception as exc:                       # network trouble never blocks the board
         print(f"Kalshi check skipped: {type(exc).__name__}")
         return None
-    if len(df):
-        storage.append("venue_quotes", df.drop(columns=["key", "volume"]).assign(ts=now, venue="kalshi"))
-    print(f"Kalshi: {len(df)} open player-points markets across {df.event_ticker.nunique() if len(df) else 0} games")
+    bad = int(df.parse_error.notna().sum()) if len(df) else 0
+    print(f"Kalshi: {len(df)} open player-points markets across {df.event_ticker.nunique() if len(df) else 0} games"
+          + (f" ({bad} unparsed: check the format)" if bad else ""))
+    return df
+
+
+def _venue_scan(storage, now, d=None, tag="adhoc", event_ids=None, quiet=False, simulated=False) -> pd.DataFrame:
+    """Read the venues for un-tipped games on the stored slate, decide, and log (free reads)."""
+    from .venues import live_fetchers, scan
+    if simulated:
+        print("Venue reads skipped: live prices can't be logged at a simulated --now time")
+        return pd.DataFrame()
+    f = live_fetchers()
+    df = scan(storage, d or et_date(now), now, f, tag=tag, event_ids=event_ids, bankroll=config.bankroll_usd())
+    for e in f.errors:
+        print(f"venue note: {e}")
+    if not quiet:
+        n_act = int((df.decision == "actionable").sum()) if len(df) else 0
+        print(f"Venues ({tag}): {len(df)} contract sides logged, {n_act} actionable")
     return df
 
 
 def cmd_kalshi(args, storage, now_fn) -> int:
-    """Read-only check of Kalshi's NBA player-points markets against the catalog."""
+    """Read-only: Kalshi listings for catalog players, with our fair price next to each ask."""
     from .board import build_board
-    df = _kalshi_markets(storage, now_fn())
+    df = _kalshi_markets(now_fn())
     if df is None or df.empty:
-        print("No open Kalshi player-points markets yet. The board prices them as soon as they list.")
+        print("No open Kalshi player-points markets yet. The board shows them as soon as they list.")
         return 0
     catalog = pd.read_csv(config.DATA_DIR / "catalog" / "players.csv")
     board = build_board(catalog, storage, now_fn(), kalshi=df)
     listed = board[board.kalshi != ""]
-    print(f"{len(listed)} catalog players have Kalshi ladders; "
-          f"{listed.status.str.startswith('READY (Kalshi)').sum()} clear the 4pp bar after fees")
-    _print_table(listed.sort_values("kalshi_roi", ascending=False, na_position="last"),
-                 ["team", "player", "situation", "proj", "kalshi", "status"])
+    print(f"{len(listed)} catalog players have Kalshi ladders (decisions come from `venues` / the cron scan)")
+    _print_table(listed, ["team", "player", "situation", "proj", "kalshi", "status"])
     return 0
 
 
 def cmd_venues(args, storage, now_fn) -> int:
-    """Read-only scan of Polymarket and Kalshi player-points prices for a slate."""
-    import requests
-    from . import kalshi, polymarket
-    from .venues import scan
+    """Read Kalshi + Polymarket US (and the international book as a reference) for a slate,
+    decide every contract side, and log it before tip."""
     now = now_fn()
     d = args.date or et_date(now)
-    session = requests.Session()
-
-    def pm_fetch(away, home, day):
-        try:
-            ev = polymarket.find_game(away, home, day, session)
-            return None if ev is None else polymarket.points_markets(ev)
-        except Exception as exc:
-            print(f"Polymarket {away} @ {home} skipped: {type(exc).__name__}")
-            return None
-
-    def book_fetch(token):
-        try:
-            return polymarket.asks(token, session)
-        except Exception:
-            return []
-
-    kq = _kalshi_markets(storage, now)
-    df = scan(storage, d, now, polymarket_fetch=pm_fetch, kalshi_quotes=kq, book_fetch=book_fetch)
+    df = _venue_scan(storage, now, d, simulated=args.now is not None)
     if df.empty:
-        print(f"No prediction-market player-points prices found for {d} (run `snapshot --date {d}` first "
-              "so the slate and consensus are stored).")
+        print(f"No venue prices mapped for {d}: the slate must be stored first (the cron's daily slate fetch, "
+              "or `snapshot --date`), and the venues must list the games.")
         return 0
-    stored = df.assign(ts=now)
-    print(f"{len(df)} priced outcomes on {df.game.nunique()} game(s) across {df.venue.nunique()} venue(s)")
-    _print_table(df.sort_values(["verdict", "edge_vs_market_pp"], ascending=[True, False]),
-                 ["game", "venue", "player", "contract", "ask_cents", "fee_cents", "fair_market", "fair_model",
-                  "edge_vs_market_pp", "edge_vs_model_pp", "roi", "size_at_edge", "verdict"])
+    order = {"actionable": 0, "watch": 1, "abstain": 2, "reference": 3}
+    show = df.assign(_o=df.decision.map(order)).sort_values(["_o", "ev_blend"], ascending=[True, False])
+    _print_table(show.head(args.top), ["game", "venue", "player", "stat", "contract", "ask", "ask_size", "p_market",
+                                       "p_blend", "ev_market", "ev_blend", "max_price", "size_at_edge",
+                                       "contracts", "decision", "reason"])
+    print(df.assign(stat=df.stat.fillna("-")).groupby(["venue", "stat", "decision"]).size().to_string())
     config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-    out = config.REPORTS_DIR / f"venues_{d}.csv"
-    stored.to_csv(out, index=False)
-    print(f"Wrote {out}")
+    out = config.REPORTS_DIR / f"venues_{d}_{now:%H%M}.csv"
+    df.to_csv(out, index=False)
+    print(f"Logged to venue_signals; export {out}")
     return 0
 
 
 def cmd_board(args, storage, now_fn) -> int:
-    """The waiting list: catalog situations plus whatever markets have posted."""
+    """The waiting list: catalog situations plus whatever the venues have listed and decided."""
     from . import catalog as cat
     from .board import board_markdown, build_board
     path = config.DATA_DIR / "catalog" / "players.csv"
@@ -437,7 +496,9 @@ def cmd_board(args, storage, now_fn) -> int:
         return 1
     catalog = pd.read_csv(path)
     now = now_fn()
-    kalshi_df = None if args.no_kalshi else _kalshi_markets(storage, now)
+    if not args.no_scan and not events_on(storage, et_date(now)).empty:
+        _venue_scan(storage, now, simulated=args.now is not None)
+    kalshi_df = None if args.no_kalshi else _kalshi_markets(now)
     board = build_board(catalog, storage, now, kalshi=kalshi_df)
     md = board_markdown(board, cat.summary(catalog), now)
     config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -448,10 +509,97 @@ def cmd_board(args, storage, now_fn) -> int:
         (config.REPO_DIR / "docs" / "BOARD.md").write_text(md)
     ready = board.status.str.startswith("READY").sum() if not board.empty else 0
     waiting = board.status.eq("waiting for a line").sum() if not board.empty else 0
-    print(f"{len(board)} situations on the board: {waiting} waiting for a line, {ready} ready")
+    print(f"{len(board)} situations on the board: {waiting} waiting for a line, {ready} READY on a venue")
     _print_table(board.head(args.top), ["tier", "situation", "team", "player", "proj", "ppg_2025_26",
                                         "usg_change", "fair_ladder", "status"])
     print(f"Wrote {out}")
+    return 0
+
+
+def cmd_tickets(args, storage, now_fn) -> int:
+    """Order tickets to enter by hand: actionable decisions from a fresh venue read, pre-cancel-by."""
+    from .venues import latest_venue_signals
+    now = now_fn()
+    d = args.date or et_date(now)
+    if not args.no_scan and d == et_date(now) and not events_on(storage, d).empty:
+        _venue_scan(storage, now, d, quiet=True, simulated=args.now is not None)
+    vs = latest_venue_signals(storage, now)
+    if len(vs):
+        cancel_by = pd.to_datetime(vs.tip_ts) - pd.Timedelta(minutes=config.TICKET_CANCEL_BEFORE_TIP_MIN)
+        vs = vs[(vs.tip_ts.map(et_date) == d) & (cancel_by > pd.Timestamp(now))]
+    act = vs[vs.decision == "actionable"].sort_values("ev_blend", ascending=False) if len(vs) else vs
+    lines = [f"# Tickets: {d}", "", "Enter by hand as limit orders. Limit = the max price that still leaves the edge "
+             "after the venue fee (and never above what the books alone say it's worth); cancel anything "
+             "unfilled by the cancel-by time. Log fills with `fill --signal-id ...`. Only decisions from a venue "
+             f"read in the last {config.VENUE_SIGNAL_MAX_AGE_MIN} minutes are listed. Research only: nothing here "
+             "places an order.", ""]
+    if act.empty:
+        print(f"No actionable venue contracts for {d} as of {now:%H:%M} UTC.")
+        lines.append("Nothing actionable.")
+    else:
+        to_et = lambda x: pd.Timestamp(x).tz_localize("UTC").tz_convert(config.ET).strftime("%H:%M")  # noqa: E731
+        t = act.assign(
+            tip_et=act.tip_ts.map(to_et),
+            cancel_by_et=(pd.to_datetime(act.tip_ts) - pd.Timedelta(minutes=config.TICKET_CANCEL_BEFORE_TIP_MIN)).map(to_et),
+            limit_c=(100 * act.max_price).round(0), ask_c=(100 * act.ask).round(0),
+            fair_c=(100 * act.p_blend).round(1), market_c=(100 * act.p_market).round(1),
+            ev_pp=(100 * act.ev_blend).round(1),
+            qty=act.contracts.where(act.contracts.notna(), act.size_at_edge))
+        cols = ["game", "tip_et", "cancel_by_et", "venue", "ticker", "player", "stat", "contract", "ask_c",
+                "limit_c", "qty", "fair_c", "market_c", "ev_pp", "stake_usd", "signal_id"]
+        _print_table(t, cols)
+        if t.stake_frac.isna().all():
+            print(f"qty = contracts available at the edge; set {config.BANKROLL_ENV} (where the cron runs) for sized stakes.")
+        lines += ["| " + " | ".join(cols) + " |", "|" + "---|" * len(cols)]
+        lines += ["| " + " | ".join("" if pd.isna(v) else str(v) for v in r) + " |" for r in t[cols].itertuples(index=False)]
+    config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    path = config.REPORTS_DIR / f"tickets_{d}.md"
+    path.write_text("\n".join(lines) + "\n")
+    print(f"Wrote {path}")
+    return 0
+
+
+def cmd_fill(args, storage, now_fn) -> int:
+    """Record a fill Rohan entered by hand on a venue. Append-only: a correction is a new row with
+    --replaces <fill_id>, and grading then uses the correction only."""
+    import hashlib
+    now = now_fn()
+    venue, ticker, side = args.venue, args.ticker, (args.side or "").upper() or None
+    if args.signal_id:
+        sig = storage.query("SELECT venue, ticker, side FROM venue_signals WHERE signal_id = ? LIMIT 1", [args.signal_id])
+        if sig.empty:
+            print(f"No logged signal {args.signal_id}")
+            return 2
+        venue, ticker, side = sig.iloc[0]
+    if not (venue and ticker and side in ("YES", "NO")):
+        print("Give --signal-id, or --venue, --ticker and --side YES|NO")
+        return 2
+    if not 0 < args.price < 1:
+        print(f"--price is in dollars between 0 and 1 (e.g. 0.41 for 41c), got {args.price}")
+        return 2
+    if args.contracts <= 0:
+        print("--contracts must be positive")
+        return 2
+    known = storage.query("SELECT count(*) AS n FROM venue_snapshots WHERE venue = ? AND ticker = ?", [venue, ticker])
+    if int(known.n.iloc[0]) == 0:
+        print(f"{venue} {ticker} was never read by the venue scan: check the ticker (nothing logged)")
+        return 2
+    if args.replaces:
+        prev = storage.query("SELECT count(*) AS n FROM tickets WHERE fill_id = ?", [args.replaces])
+        if int(prev.n.iloc[0]) == 0:
+            print(f"No fill {args.replaces} to replace")
+            return 2
+    from .fees import fee_total
+    fees = args.fees if args.fees is not None else fee_total(venue, args.contracts, args.price)
+    filled_at = to_naive_utc(args.filled_at) if args.filled_at else now
+    fill_id = hashlib.blake2s(f"{now.isoformat()}|{venue}|{ticker}|{side}|{args.contracts}|{args.price}".encode(),
+                              digest_size=6).hexdigest()
+    storage.append("tickets", [{"ts": now, "filled_at": filled_at, "venue": venue, "ticker": ticker, "side": side,
+                                "contracts": args.contracts, "price": args.price, "fees": fees,
+                                "signal_id": args.signal_id, "note": args.note, "fill_id": fill_id,
+                                "replaces": args.replaces}])
+    print(f"Logged fill {fill_id}: {venue} {ticker} {side} {args.contracts:g} @ {100 * args.price:.0f}c, fees ${fees:.2f}"
+          + (f" (replaces {args.replaces})" if args.replaces else ""))
     return 0
 
 
@@ -464,10 +612,58 @@ def cmd_report(args, storage, now_fn) -> int:
     return 0
 
 
+def cmd_history(args, storage, now_fn) -> int:
+    """Download Kalshi's public archive of settled player-prop markets for backtesting."""
+    from .kalshi_history import HistoryStore, download
+    store = HistoryStore(args.history_db)
+    try:
+        out = download(args.series, store=store, limit=args.limit, refresh_markets=not args.no_refresh)
+    finally:
+        store.close()
+    print(f"{out['markets']} archive markets; {out['fetched_requests']} candle requests this run")
+    return 0
+
+
+def cmd_backtest(args, storage, now_fn) -> int:
+    """Walk-forward backtests of every strategy on Kalshi's 2025-26 archive (read-only)."""
+    from .backtest import Tape, monthly_folds, report, walk_forward
+    from .strategies import default_suite
+    path = Path(args.history_db) if args.history_db else None
+    tape = Tape(path)
+    if tape.markets.empty:
+        print("No archive yet: run `history` first.")
+        return 1
+    folds = monthly_folds(tape.markets.game_date)
+    if not args.reveal_holdout:                       # the holdout stays sealed until strategies are frozen
+        folds = [f for f in folds if not f.holdout]
+    print(f"{len(tape.markets):,} markets, {tape.markets.game.nunique():,} games; folds: "
+          + ", ".join(f.name for f in folds))
+    results = {}
+    for st in default_suite():
+        if args.only and not any(k.lower() in st.name.lower() for k in args.only):
+            continue
+        bets = walk_forward(tape, st, folds)
+        bets.attrs["executable_by_hand"] = st.executable_by_hand
+        results[st.name] = bets
+        print(f"  {st.name}: {int(bets.filled.sum()) if len(bets) else 0} fills")
+    md = report(results, tape)
+    config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    out = config.REPORTS_DIR / "backtest.md"
+    out.write_text(md)
+    nonempty = [b for b in results.values() if len(b)]
+    if nonempty:
+        pd.concat(nonempty, ignore_index=True).to_csv(config.REPORTS_DIR / "backtest_bets.csv", index=False)
+    if args.docs:
+        (config.REPO_DIR / "docs" / "BACKTEST.md").write_text(md)
+    print(md)
+    return 0
+
+
 COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "project": cmd_project,
             "signals": cmd_signals, "watchlist": cmd_watchlist, "grade": cmd_grade, "report": cmd_report,
             "fit": cmd_fit, "catalog": cmd_catalog, "board": cmd_board, "kalshi": cmd_kalshi,
-            "venues": cmd_venues}
+            "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
+            "backtest": cmd_backtest}
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -478,32 +674,66 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("usage", help="Show API object usage")
     p.add_argument("--measure", action="store_true", help="Call twice to measure the usage call's own cost")
     sub.add_parser("books", help="Discover which allowlisted books this key returns (1 object)")
-    p = sub.add_parser("snapshot", help="Snapshot player-points odds")
+    p = sub.add_parser("snapshot", help="Snapshot player points, rebounds and assists odds")
     g = p.add_mutually_exclusive_group()
     g.add_argument("--date", type=_parse_date, help="ET slate date (default today)")
     g.add_argument("--due", action="store_true", help="Cron mode: only events at a new checkpoint")
     g.add_argument("--from-file", help="Ingest a saved /events response (no API call)")
     p.add_argument("--with-signals", action="store_true",
-                   help="With --due: log signals for events that just hit t-60m / t-15m")
+                   help="With --due: log sportsbook signals for events that just hit t-60m / t-15m")
+    p.add_argument("--with-venues", action="store_true",
+                   help="With --due: read Kalshi / Polymarket US at t-6h, t-2h, t-60m, t-15m and t-5m, decide, log")
+    p.add_argument("--with-projections", action="store_true",
+                   help="With --due: auto-log projections for due games that have none current (missing, an "
+                        "older model version, or a stat short), keeping each team's latest scenario")
     p = sub.add_parser("project", help="Log projections for modeled teams on a date")
     p.add_argument("--date", type=_parse_date)
     p.add_argument("--scenario", action="append", help="TEAM=scenario, e.g. TOR=kawhi_out")
     p = sub.add_parser("signals", help="Log signals vs the latest consensus")
     p.add_argument("--date", type=_parse_date)
     p.add_argument("--timing", choices=list(config.SIGNAL_TIMINGS) + ["early", "adhoc"])
-    p = sub.add_parser("watchlist", help="Prediction-market max prices for paper signals")
+    p = sub.add_parser("watchlist", help="Sportsbook leans next to what the venues list (not actionable)")
     p.add_argument("--date", type=_parse_date)
     p = sub.add_parser("grade", help="Fetch results and grade a date")
     p.add_argument("--date", type=_parse_date, required=True)
-    p.add_argument("--offline", action="store_true", help="Use stored results only")
+    p.add_argument("--offline", action="store_true", help="Use stored results and settlements only")
+    p.add_argument("--venues-only", action="store_true",
+                   help="Skip the metered SportsGameOdds results call; grade venue contracts only")
     sub.add_parser("catalog", help="Rebuild the league-wide role-change catalog (no API calls)")
     p = sub.add_parser("board", help="Pre-market board: situations waiting on prediction markets")
     p.add_argument("--top", type=int, default=25, help="Rows to print (the file has them all)")
     p.add_argument("--docs", action="store_true", help="Also refresh the committed docs/BOARD.md snapshot")
-    p.add_argument("--no-kalshi", action="store_true", help="Skip the read-only Kalshi market check")
-    sub.add_parser("kalshi", help="Read-only: Kalshi NBA player-points prices vs our fair values")
-    p = sub.add_parser("venues", help="Read-only: Polymarket + Kalshi player-points prices vs consensus and model")
+    p.add_argument("--no-kalshi", action="store_true", help="Skip the read-only Kalshi listings")
+    p.add_argument("--no-scan", action="store_true", help="Don't read and log venue decisions first")
+    sub.add_parser("kalshi", help="Read-only: Kalshi listings for catalog players vs our fair values")
+    p = sub.add_parser("venues", help="Read Kalshi + Polymarket US for a slate, decide every contract, log it")
     p.add_argument("--date", type=_parse_date)
+    p.add_argument("--top", type=int, default=30)
+    p = sub.add_parser("tickets", help="Actionable venue contracts as limit-order tickets to enter by hand")
+    p.add_argument("--date", type=_parse_date)
+    p.add_argument("--no-scan", action="store_true", help="Don't read the venues first (list the last read only)")
+    p = sub.add_parser("fill", help="Record a fill you entered by hand (append-only)")
+    p.add_argument("--signal-id")
+    p.add_argument("--venue", choices=list(config.ACTIONABLE_VENUES))
+    p.add_argument("--ticker")
+    p.add_argument("--side", choices=["YES", "NO", "yes", "no"])
+    p.add_argument("--contracts", type=float, required=True)
+    p.add_argument("--price", type=float, required=True, help="Average price in dollars, e.g. 0.61")
+    p.add_argument("--fees", type=float, help="Fees paid in dollars (default: the venue formula)")
+    p.add_argument("--filled-at", help="UTC time of the fill (default now)")
+    p.add_argument("--note")
+    p.add_argument("--replaces", help="fill_id of an earlier fill this one corrects")
+    p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")
+    p.add_argument("--series", default="KXNBAPTS")
+    p.add_argument("--limit", type=int, help="Markets to fetch this run (default: all remaining)")
+    p.add_argument("--history-db", help="Research cache path (default data/history/kalshi_history.duckdb)")
+    p.add_argument("--no-refresh", action="store_true", help="Reuse the stored market list")
+    p = sub.add_parser("backtest", help="Walk-forward backtests on the Kalshi archive (run `history` first)")
+    p.add_argument("--history-db", help="Research cache path (default data/history/kalshi_history.duckdb)")
+    p.add_argument("--only", nargs="*", help="Run only strategies whose name contains one of these words")
+    p.add_argument("--docs", action="store_true", help="Also write docs/BACKTEST.md")
+    p.add_argument("--reveal-holdout", action="store_true",
+                   help="Also score the holdout (April on). Do this once, after strategies and parameters are frozen")
     p = sub.add_parser("fit", help="Fit eff_per_usg_point and spacing_coef from team-changers")
     p.add_argument("--input", required=True, help="CSV of player-season pairs (see cold_start_usage/fit.py)")
     p.add_argument("--teams-old", help="Team shooting table for the earlier season")
@@ -525,6 +755,8 @@ def main(argv: list[str] | None = None) -> int:
         now_fn = lambda: fixed  # noqa: E731
     else:
         now_fn = utcnow
+    if args.command in ("history", "backtest"):     # the research cache: don't hold the decision log open
+        return COMMANDS[args.command](args, None, now_fn)
     with Storage(args.db) as storage:
         try:
             return COMMANDS[args.command](args, storage, now_fn)
