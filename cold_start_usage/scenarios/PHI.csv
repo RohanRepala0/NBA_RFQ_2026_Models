@@ -1,0 +1,21 @@
+scenario,player,proj_mpg
+full_strength,Tyrese Maxey,37.0
+full_strength,VJ Edgecombe,35.0
+full_strength,Jaylen Brown,34.4
+full_strength,LeBron James,33.2
+full_strength,Joel Embiid,31.6
+full_strength,Anfernee Simons,15.6
+full_strength,Dominick Barlow,14.9
+full_strength,Dean Wade,14.0
+full_strength,Kentavious Caldwell-Pope,13.4
+full_strength,Adem Bona,10.9
+barlow_out,Tyrese Maxey,37.0
+barlow_out,VJ Edgecombe,35.0
+barlow_out,Jaylen Brown,34.4
+barlow_out,LeBron James,33.2
+barlow_out,Joel Embiid,31.6
+barlow_out,Dean Wade,18.9
+barlow_out,Anfernee Simons,15.6
+barlow_out,Kentavious Caldwell-Pope,13.4
+barlow_out,Adem Bona,10.9
+barlow_out,Jabari Walker,10.0
