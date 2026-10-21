@@ -1,11 +1,12 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
-catalog | board | kalshi | venues | tickets | fill | history | backtest.
+catalog | board | kalshi | venues | tickets | fill | journal | history | backtest.
 
     python -m cold_start_usage.cli snapshot --date 2026-10-21
     python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
     python -m cold_start_usage.cli signals --date 2026-10-21
     python -m cold_start_usage.cli watchlist --date 2026-10-21
     python -m cold_start_usage.cli grade --date 2026-10-21
+    python -m cold_start_usage.cli journal --date 2026-10-21
 
 Research only: `tickets` suggests a limit price and size to enter by hand; nothing here
 places or routes an order anywhere.
@@ -360,7 +361,12 @@ def _grade_venues(storage, d, now, offline: bool = False) -> None:
                           "result", "value", "pnl_per_contract", "close_mid", "clv_venue"])
     fills = fills_graded(storage)
     if not fills.empty:
-        print(f"Your fills: {len(fills)}, settled {int(fills.pnl.notna().sum())}, P&L ${fills.pnl.sum():.2f}")
+        from .journal import FILL_KINDS, fills_journal
+        fj = fills_journal(storage)
+        cur = fj[fj.status == "current"]
+        kinds = "; ".join(f"{k} {int((cur.kind == k).sum())}: ${cur[cur.kind == k].pnl_usd.sum():.2f}"
+                          for k in FILL_KINDS if (cur.kind == k).any())
+        print(f"Your fills: {len(fills)}, settled {int(fills.pnl.notna().sum())}, P&L ${fills.pnl.sum():.2f} ({kinds})")
 
 
 def cmd_fit(args, storage, now_fn) -> int:
@@ -589,6 +595,9 @@ def cmd_fill(args, storage, now_fn) -> int:
         if int(prev.n.iloc[0]) == 0:
             print(f"No fill {args.replaces} to replace")
             return 2
+    note = args.note
+    if args.paper and not (note or "").strip().lower().startswith("paper"):
+        note = f"paper: {note}" if note else "paper"
     from .fees import fee_total
     fees = args.fees if args.fees is not None else fee_total(venue, args.contracts, args.price)
     filled_at = to_naive_utc(args.filled_at) if args.filled_at else now
@@ -596,10 +605,25 @@ def cmd_fill(args, storage, now_fn) -> int:
                               digest_size=6).hexdigest()
     storage.append("tickets", [{"ts": now, "filled_at": filled_at, "venue": venue, "ticker": ticker, "side": side,
                                 "contracts": args.contracts, "price": args.price, "fees": fees,
-                                "signal_id": args.signal_id, "note": args.note, "fill_id": fill_id,
+                                "signal_id": args.signal_id, "note": note, "fill_id": fill_id,
                                 "replaces": args.replaces}])
     print(f"Logged fill {fill_id}: {venue} {ticker} {side} {args.contracts:g} @ {100 * args.price:.0f}c, fees ${fees:.2f}"
-          + (f" (replaces {args.replaces})" if args.replaces else ""))
+          + (" (paper)" if args.paper else "") + (f" (replaces {args.replaces})" if args.replaces else ""))
+    return 0
+
+
+def cmd_journal(args, storage, now_fn) -> int:
+    """Rebuild the committed bet journal (bets/) from the log. Reads only; no API calls."""
+    from .journal import write_journal
+    out = Path(args.out) if args.out else config.BETS_DIR
+    res = write_journal(storage, out, None if args.all or not args.date else [args.date])
+    for d in res["skipped"]:
+        print(f"No venue decisions or fills logged for {d}: no day folder written")
+    days = ", ".join(map(str, res["days"])) or "none"
+    print(f"Journal in {res['out']}: {res['tickets']} ticket(s) ({res['pending']} pending), {res['fills']} fill(s); "
+          f"days: {days}; {len(res['written'])} file(s) changed")
+    if res["pending"]:
+        print("Pending tickets settle via `grade --date YYYY-MM-DD` (venue settlements); then rerun journal.")
     return 0
 
 
@@ -663,6 +687,7 @@ COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "p
             "signals": cmd_signals, "watchlist": cmd_watchlist, "grade": cmd_grade, "report": cmd_report,
             "fit": cmd_fit, "catalog": cmd_catalog, "board": cmd_board, "kalshi": cmd_kalshi,
             "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
+            "journal": cmd_journal,
             "backtest": cmd_backtest}
 
 
@@ -722,7 +747,14 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--fees", type=float, help="Fees paid in dollars (default: the venue formula)")
     p.add_argument("--filled-at", help="UTC time of the fill (default now)")
     p.add_argument("--note")
+    p.add_argument("--paper", action="store_true",
+                   help="A paper fill (no money): writes note 'paper' (combines with --note)")
     p.add_argument("--replaces", help="fill_id of an earlier fill this one corrects")
+    p = sub.add_parser("journal", help="Rebuild the committed bet journal in bets/ (reads the log; no API calls)")
+    g = p.add_mutually_exclusive_group()
+    g.add_argument("--date", type=_parse_date, help="Rebuild one ET day's folder (ledger and fills are always full)")
+    g.add_argument("--all", action="store_true", help="Rebuild every day with a venue decision or fill (the default)")
+    p.add_argument("--out", help="Output folder (default: the repo's bets/)")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")
     p.add_argument("--series", default="KXNBAPTS")
     p.add_argument("--limit", type=int, help="Markets to fetch this run (default: all remaining)")

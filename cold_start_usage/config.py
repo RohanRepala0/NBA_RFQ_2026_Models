@@ -18,6 +18,7 @@ REPO_DIR = PACKAGE_DIR.parent
 DATA_DIR = REPO_DIR / "data"
 RAW_DIR = DATA_DIR / "raw"                      # allowlist-filtered API responses
 REPORTS_DIR = REPO_DIR / "reports"
+BETS_DIR = REPO_DIR / "bets"                    # the committed bet journal (`cli journal`)
 SCENARIOS_DIR = PACKAGE_DIR / "scenarios"
 PLAYERS_CSV = DATA_DIR / "players_2025_26.csv"
 TEAM_SHOOTING_CSV = DATA_DIR / "team_shooting_2025_26.csv"   # spacing context

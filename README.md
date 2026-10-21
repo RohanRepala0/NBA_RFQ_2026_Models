@@ -14,7 +14,7 @@ Research only: this tool doesn't connect to any venue account and doesn't place 
 pip install -r requirements.txt          # Python 3.11+
 export SPORTS_ODDS_API_KEY=...           # or put it in .env (git-ignored); never commit it
 export COLD_START_BANKROLL_USD=1000     # optional: turns on suggested contract counts (never read from any account)
-python -m pytest -q                      # 174 offline tests
+python -m pytest -q                      # 181 offline tests
 ```
 
 ## Opening Night plan: cron goes live before Tue 10/20
@@ -47,11 +47,19 @@ python -m cold_start_usage.cli tickets               # reads the venues now, the
                                                      # side, limit price, quantity, cancel-by (only reads from the last 20 min)
 # enter the tickets by hand as limit orders, then record what you got (a typo? log the right one with --replaces):
 python -m cold_start_usage.cli fill --signal-id <id> --contracts 10 --price 0.41
+python -m cold_start_usage.cli fill --signal-id <id> --contracts 10 --price 0.41 --paper   # tracked, no money
 python -m cold_start_usage.cli board                 # the waiting list: READY only when a venue price clears the bar
 python -m cold_start_usage.cli watchlist             # sportsbook leans next to what the venues list (not actionable)
 ```
 
-The next morning: `grade --date YYYY-MM-DD` (venue settlements, P&L at the price paid, venue CLV; add `--venues-only` to skip the metered results call), and weekly: `report`.
+The next morning, settle and then journal the day, and commit `bets/`:
+
+```bash
+python -m cold_start_usage.cli grade --date 2026-10-20     # venue settlements, P&L at the price paid, venue CLV
+python -m cold_start_usage.cli journal --date 2026-10-20   # bets/: ledger, fills, the day's tickets/results/summary
+```
+
+Add `--venues-only` to `grade` to skip the metered SportsGameOdds results call (model-vs-books grading). `journal` makes no API calls and only reads the log (anything `grade` hasn't settled reads `pending`); `journal --all` rebuilds every day. A fill logged with `--paper` (or a note starting `paper`) is journaled as paper, one with a note starting `discretionary` (or logged by `--ticker` on a contract the scan never made actionable) as discretionary, anything else as real; see [`bets/README.md`](bets/README.md). Weekly: `report`.
 
 Teams without hand-reviewed minutes use the catalog's automatic rotation (`cold_start_usage/scenarios/auto/`). Copy one up to `cold_start_usage/scenarios/` and edit it to make it reviewed.
 
@@ -126,6 +134,7 @@ It's one pick per player-game and stat, sized at quarter Kelly, capped at 0.5% o
 |---|---|
 | `cold_start_usage/` | The package (module map in `HANDOFF.md` section 5) |
 | `data/` | Inputs, the catalog outputs and the roster sources. The DuckDB file and raw cache are git-ignored. |
+| `bets/` | The bet journal, committed: every ticket, fill and result by day (`cli journal`; see [`bets/README.md`](bets/README.md)) |
 | `docs/` | Architecture diagrams, catalog, board snapshot, venue and scaling notes |
 | `v0/` | The reference implementation |
 | `examples/` | Synthetic payloads |

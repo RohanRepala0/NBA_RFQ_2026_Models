@@ -163,16 +163,17 @@ cold_start_usage/
   pipeline.py      # snapshot / project / signals / results orchestration
   storage.py       # DuckDB, append-only tables, allowlist check on write
   grade.py         # CLV, hit rate, Brier, log loss, calibration, segments
+  journal.py       # bets/: the committed ledger, fills and per-day tickets / results / summary (reads only)
   report.py        # weekly markdown report
   cli.py           # usage | books | snapshot | project | signals | watchlist | grade | report | fit
-                   # | catalog | board | kalshi | venues | tickets | fill | history
+                   # | catalog | board | kalshi | venues | tickets | fill | journal | history | backtest
 tests/
 ```
 
 **Tables** (UTC, append-only): `odds_snapshots`, `projections`, `signals`, `results`, plus `events`, `event_players` (roster and injury status), `books_seen` and `api_calls` (the local object ledger). `odds_snapshots`, `projections`, `signals`, `venue_snapshots` and `venue_signals` carry a `stat` column (`points`, `rebounds`, `assists`); rows logged before it existed have NULL there, and every read treats NULL as points. `results` has `actual_points`, `actual_rebounds` and `actual_assists`. The venue side adds four more:
 - `venue_snapshots`: every venue price read, refused at or after tip.
 - `venue_signals`: every decision, with its reason and a config hash, also refused at or after tip.
-- `tickets`: fills Rohan entered by hand.
+- `tickets`: fills Rohan entered by hand (`fill`; `--paper` writes note `paper`).
 - `venue_settlements`.
 
 Schema changes are additive only: new columns are added to existing tables, and nothing is dropped. Columns are listed in `storage.SCHEMA`.
@@ -269,7 +270,9 @@ A Kalshi or Polymarket US contract is **actionable** only if all of these hold:
 
 Questionable players and thin books are `watch`. There's one pick per player-game and stat; a stat already held gets no new pick. Contracts are sized at quarter Kelly and capped at 0.5% of bankroll per player-game across his stats (points and rebounds on one player ride on the same minutes), 1.5% per game and 3% per slate; the bankroll comes from `COLD_START_BANKROLL_USD`, and no stake is shown without it.
 
-**Tickets:** `tickets` lists the actionable decisions: venue, ticker or slug, side, limit price (the max price), quantity, and a cancel-by time 5 minutes before tip. `fill` records what was actually filled.
+**Tickets:** `tickets` lists the actionable decisions: venue, ticker or slug, side, limit price (the max price), quantity, and a cancel-by time 5 minutes before tip. `fill` records what was actually filled; `fill --paper` records a paper fill (no money), which still counts toward the caps and blocks a new pick on that stat, like a real one.
+
+**Journal:** `journal` rebuilds `bets/` from the log, which is git-ignored, so the record lives in git: `ledger.csv` (one row per ticket, i.e. the first actionable decision per player-game and stat, graded with `grade.venue_graded`), `fills.csv` (every fill, with a replaced one marked superseded, and its kind: paper, real or discretionary), and per ET slate `days/YYYY-MM-DD/` with `tickets.csv` (every actionable row at every checkpoint, repeats flagged), `results.csv` and `summary.md`. It reads only and makes no API calls, so run `grade` first. The output is deterministic, so a rebuild with nothing new changes no file. Columns and conventions: [`bets/README.md`](bets/README.md).
 
 **Timing:** the cron logs sportsbook signals at T-60m and T-15m, and venue decisions at T-6h, T-2h, T-60m, T-15m and T-5m (the venue close).
 

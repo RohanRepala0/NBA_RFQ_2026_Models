@@ -60,10 +60,11 @@ class FakeTransport:
 
 @pytest.fixture(autouse=True)
 def _isolated_output_dirs(tmp_path, monkeypatch):
-    """Tests never write into the repo's data/ or reports/ folders."""
+    """Tests never write into the repo's data/, reports/ or bets/ folders."""
     from cold_start_usage import config
     monkeypatch.setattr(config, "RAW_DIR", tmp_path / "raw")
     monkeypatch.setattr(config, "REPORTS_DIR", tmp_path / "reports")
+    monkeypatch.setattr(config, "BETS_DIR", tmp_path / "bets")
     monkeypatch.setattr(config, "BOOKS_FILE", tmp_path / "books.json")   # undiscovered by default
     # Pin model inputs to frozen copies so editing live data/ or scenarios/ never moves a test.
     frozen = Path(__file__).resolve().parent / "fixtures" / "regression"
