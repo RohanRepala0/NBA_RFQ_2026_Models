@@ -291,11 +291,14 @@ def report(results: dict[str, pd.DataFrame], tape: Tape) -> str:
     lines = ["# Backtest: Kalshi NBA player points, 2025-26", "",
              f"Archive: {len(m):,} settled `KXNBAPTS` markets with candles across {m.game.nunique():,} games, "
              f"{m.game_date.min()} to {m.game_date.max()} (`cli history`; `cli backtest --docs` rebuilds this page).", ""]
-    if len(m) < tape.archive_markets:
+    if m.game.nunique() < tape.archive_games:
         lines += [f"**Partial archive: {len(m):,} of {tape.archive_markets:,} markets ({100 * len(m) / tape.archive_markets:.0f}%), "
                   f"{m.game.nunique():,} of {tape.archive_games:,} games.** The download fetches whole games in random order "
                   "(after November and part of December, which came first), so this is a season-wide sample, but a small "
                   "one. Treat every number here as preliminary.", ""]
+    elif len(m) < tape.archive_markets:
+        lines += [f"Every game is in. {tape.archive_markets - len(m):,} of {tape.archive_markets:,} markets have no "
+                  "candles (they never traded) and are left out.", ""]
     lines += [
              "**How it's scored.**",
              "- Fills:",
