@@ -130,9 +130,24 @@ def game_quotes(ev, fetchers: Fetchers, kalshi_df: pd.DataFrame | None, kalshi_t
     return pd.concat(parts, ignore_index=True) if parts else pd.DataFrame()
 
 
-def prior_exposure(storage: Storage, d: date, now: datetime, scanning: set[str], bankroll: float | None) -> Exposure:
-    """What's already committed on this ET slate: Rohan's fills, plus the live picks of earlier
-    scans for games not being rescanned now (a rescanned game's old picks are superseded)."""
+def issued_tickets(storage: Storage, d: date, now: datetime) -> pd.DataFrame:
+    """Every ticket already sent on this ET slate by `now`: the first actionable decision per
+    player-game and stat (the journal's ticket), however old, tipped or not."""
+    df = storage.query("""
+        SELECT * FROM (
+          SELECT *, row_number() OVER (
+                   PARTITION BY coalesce(event_id, event_ticker), coalesce(player_id, player), coalesce(stat, 'points')
+                   ORDER BY ts, ev_blend DESC, signal_id) AS rn
+          FROM venue_signals WHERE decision = 'actionable' AND stake_usd IS NOT NULL
+                                   AND tip_ts IS NOT NULL AND ts <= ?)
+        WHERE rn = 1""", [now])
+    return df[df.tip_ts.map(et_date) == d] if len(df) else df
+
+
+def prior_exposure(storage: Storage, d: date, now: datetime, bankroll: float | None) -> Exposure:
+    """What's already committed on this ET slate: Rohan's fills, plus every ticket already sent
+    (`issued_tickets`), so a later scan can't stack new stakes past the caps. A rescan's pick on
+    a player-stat that already has a ticket replaces it (see size_positions)."""
     out = Exposure()
     fills = fills_with_games(storage)
     if len(fills):
@@ -146,17 +161,17 @@ def prior_exposure(storage: Storage, d: date, now: datetime, scanning: set[str],
                 out.group[(r.event_id, r.player_id)] = out.group.get((r.event_id, r.player_id), 0.0) + frac
                 out.slate += frac
     if bankroll:
-        live = latest_venue_signals(storage, now)
-        live = live[(live.decision == "actionable") & ~live.event_id.isin(scanning)] if len(live) else live
-        if len(live):
-            live = live[live.tip_ts.map(et_date) == d]
-            for r in live.itertuples():
-                stat = "points" if pd.isna(r.stat) else r.stat
-                if (r.event_id, r.player_id, stat) in out.filled or pd.isna(r.stake_usd):
-                    continue
-                frac = r.stake_usd / bankroll
-                out.game[r.event_id] = out.game.get(r.event_id, 0.0) + frac
-                out.slate += frac
+        for r in issued_tickets(storage, d, now).itertuples():
+            game = r.event_ticker if pd.isna(r.event_id) else r.event_id
+            player = r.player if pd.isna(r.player_id) else r.player_id
+            key = (game, player, "points" if pd.isna(r.stat) else r.stat)
+            if key in out.filled:
+                continue
+            frac = r.stake_usd / bankroll
+            out.issued[key] = frac
+            out.game[game] = out.game.get(game, 0.0) + frac
+            out.group[(game, player)] = out.group.get((game, player), 0.0) + frac
+            out.slate += frac
     return out
 
 
@@ -186,7 +201,7 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
             kalshi_df = parse_markets(raw)
         except Exception as exc:
             fetchers.errors.append(f"kalshi markets: {type(exc).__name__}: {exc}")
-    out, scanned = [], set()
+    out = []
     for ev in events_on(storage, d).itertuples():
         if event_ids is not None and ev.event_id not in event_ids:
             continue
@@ -204,7 +219,6 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
             if log and snaps:
                 storage.append("venue_snapshots", snaps)
             continue
-        scanned.add(ev.event_id)
         roster = _roster(storage, ev.event_id)
         by_key, dupes = roster_keys(roster)
         cons = {stat: consensus_by_player(storage, ev.event_id, as_of=now, before=now, stat=stat)
@@ -260,7 +274,7 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
     df = pd.DataFrame(out)
     if df.empty:
         return df
-    prior = prior_exposure(storage, d, now, scanned, bankroll)
+    prior = prior_exposure(storage, d, now, bankroll)
     df = size_positions(pick_per_group(df, prior.filled), bankroll, prior)
     if log:
         storage.append("venue_signals", df)

@@ -268,7 +268,7 @@ A Kalshi or Polymarket US contract is **actionable** only if all of these hold:
 - the market-only EV is at most 15pp (above that: "check inputs");
 - at least 10 contracts are offered at or under the max price.
 
-Questionable players and thin books are `watch`. There's one pick per player-game and stat; a stat already held gets no new pick. Contracts are sized at quarter Kelly and capped at 0.5% of bankroll per player-game across his stats (points and rebounds on one player ride on the same minutes), 1.5% per game and 3% per slate; the bankroll comes from `COLD_START_BANKROLL_USD`, and no stake is shown without it.
+Questionable players and thin books are `watch`. There's one pick per player-game and stat; a stat already held gets no new pick. Contracts are sized at quarter Kelly and capped at 0.5% of bankroll per player-game across his stats (points and rebounds on one player ride on the same minutes), 1.5% per game and 3% per slate; the bankroll comes from `COLD_START_BANKROLL_USD`, and no stake is shown without it. The caps count every ticket already sent on the slate (the journal's first actionable decision per player-game and stat), however old: a later pick on the same player-stat replaces that ticket instead of stacking on it. Until Oct 25 they only counted picks from the last 20 minutes, so a full slate could size past them ($434 of tickets that night against a $150 cap).
 
 **Tickets:** `tickets` lists the actionable decisions: venue, ticker or slug, side, limit price (the max price), quantity, and a cancel-by time 5 minutes before tip. `fill` records what was actually filled; `fill --paper` records a paper fill (no money), which still counts toward the caps and blocks a new pick on that stat, like a real one.
 
@@ -328,7 +328,8 @@ The weekly `report` adds CLV by week (the edge-decay chart).
 - Python 3.11+, DuckDB, pandas, requests, pytest. Scheduling via local cron or launchd.
 - Markets: player points, rebounds and assists (full game, over/under and "N+" ladders). The sportsbook-line `signals` stay points-only.
 - Venue fees in `config.VENUE_FEES`. Kalshi is rounded up to the cent per order; accounts held directly with Kalshi may be charged on a $0.0001 grid. Check one real fill.
-- Decision gates and sizing in `config.py` ("Venues" and "Sizing"). They're frozen until about 800 graded rows exist, then tuned walk-forward only.
+- Decision gates and sizing in `config.py` ("Venues" and "Sizing"). They're frozen until about 800 graded rows exist, then tuned walk-forward only. One exception, Rohan's call after Oct 25: rebounds need 2pp more edge (`STAT_EXTRA_EDGE`), because they were the only stat whose closing line ran against us (-2.0c over their first 14 tickets). Revisit at 50 rebound tickets.
+- Rotations vs rosters: `roster --date D` reads each un-tipped team's ESPN roster page and lists players in its minutes who aren't on the team; `--apply` writes `<scenario>_roster` into the reviewed file and re-projects. Run it after the slate is stored and before injury scenarios, and build those from the `_roster` rotation. On Oct 26 it found 16 such players in the full-strength minutes (Kevin Porter Jr. MIL, Bez Mbeng UTA, Russell Westbrook SAC, Leaky Black WAS, D'Angelo Russell MEM, and 11 more): the auto minutes come from `data/players_2025_26.csv`'s 2026-27 teams, which need the same correction.
 
 ---
 

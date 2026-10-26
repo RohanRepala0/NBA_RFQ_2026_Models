@@ -1,5 +1,5 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
-catalog | board | kalshi | venues | tickets | fill | journal | history | backtest.
+catalog | board | kalshi | venues | tickets | fill | journal | roster | history | backtest.
 
     python -m cold_start_usage.cli snapshot --date 2026-10-21
     python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
@@ -683,11 +683,65 @@ def cmd_backtest(args, storage, now_fn) -> int:
     return 0
 
 
+def cmd_roster(args, storage, now_fn) -> int:
+    """Check each un-tipped team's minutes against its ESPN roster page (one public read per team);
+    --apply writes a rotation without the missing players and re-projects with it."""
+    import time
+
+    from . import rosters
+    from .pipeline import latest_scenarios
+    from .usage_model import modeled_teams
+    now = now_fn()
+    d = args.date or et_date(now)
+    ev = events_on(storage, d)
+    ev = ev[pd.to_datetime(ev.starts_at) > pd.Timestamp(now)] if len(ev) else ev
+    if ev.empty:
+        print(f"No un-tipped games stored for {d}: run `snapshot --date {d}` first.")
+        return 1
+    modeled, teams = set(modeled_teams()), {}
+    for e in ev.itertuples():
+        used = latest_scenarios(storage, e.event_id, now)
+        for team in (e.away_abbr, e.home_abbr):
+            if team in modeled:
+                teams[team] = used.get(team, "full_strength")
+    found, off, notes = rosters.check_teams(teams, fetch=rosters.fetch_roster_page,
+                                            save_dir=config.DATA_DIR / "rosters" / d.isoformat(),
+                                            sleep=time.sleep)
+    for n in notes:
+        print(f"note: {n}")
+    if off.empty:
+        print(f"All {len(found)} rotations checked match their ESPN rosters ({d}).")
+        return 0
+    print(f"In the minutes but not on the team's ESPN roster ({d}):")
+    _print_table(off, ["team", "scenario", "player", "proj_mpg"])
+    if not args.apply:
+        print("Run with --apply to write rotations without them and re-project.")
+        return 0
+    choice = {}
+    for team, grp in off.groupby("team"):
+        base = grp.scenario.iloc[0]
+        try:
+            rows = rosters.scenario_without(team, base, f"{base}_roster", grp.player.tolist(), roster=found[team])
+        except ValueError as exc:
+            print(f"note: {exc}")
+            continue
+        choice[team] = f"{base}_roster"
+        print(f"{team}: wrote {base}_roster to scenarios/{team}.csv: "
+              + ", ".join(f"{r.player} {r.proj_mpg:g}" for r in rows.itertuples()))
+    if choice:
+        table, messages = run_projections(storage, d, now, choice)
+        for m in messages:
+            print(f"note: {m}")
+        print(f"Re-projected {', '.join(sorted(choice))} ({len(table)} rows). The minutes are mechanical: review "
+              "them, then commit the scenario files.")
+    return 0
+
+
 COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "project": cmd_project,
             "signals": cmd_signals, "watchlist": cmd_watchlist, "grade": cmd_grade, "report": cmd_report,
             "fit": cmd_fit, "catalog": cmd_catalog, "board": cmd_board, "kalshi": cmd_kalshi,
             "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
-            "journal": cmd_journal,
+            "journal": cmd_journal, "roster": cmd_roster,
             "backtest": cmd_backtest}
 
 
@@ -755,6 +809,10 @@ def build_parser() -> argparse.ArgumentParser:
     g.add_argument("--date", type=_parse_date, help="Rebuild one ET day's folder (ledger and fills are always full)")
     g.add_argument("--all", action="store_true", help="Rebuild every day with a venue decision or fill (the default)")
     p.add_argument("--out", help="Output folder (default: the repo's bets/)")
+    p = sub.add_parser("roster", help="Check each team's minutes against its ESPN roster (one read per team)")
+    p.add_argument("--date", type=_parse_date)
+    p.add_argument("--apply", action="store_true",
+                   help="Write a rotation without the missing players (TEAM.csv) and re-project with it")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")
     p.add_argument("--series", default="KXNBAPTS")
     p.add_argument("--limit", type=int, help="Markets to fetch this run (default: all remaining)")

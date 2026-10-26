@@ -35,6 +35,7 @@ Before the first game day:
 python -m cold_start_usage.cli usage                 # objects used / left (this call is free)
 python -m cold_start_usage.cli catalog               # rebuild the league-wide catalog (no API calls)
 python -m cold_start_usage.cli board --docs          # refresh the waiting list
+python -m cold_start_usage.cli roster --date 2026-10-26 --apply   # minutes vs ESPN rosters; writes and projects fixes
 ```
 
 On each game day:
@@ -106,7 +107,7 @@ A Kalshi rung or Polymarket US market is then actionable only if all of these ho
 3. The edge after the venue's fee is at least 4pp (5pp with only 2 books), the sportsbook market alone isn't against it, and it's below the 15pp "check inputs" cap.
 4. At least 10 contracts are offered at or under the max price.
 
-It's one pick per player-game and stat, sized at quarter Kelly, capped at 0.5% of bankroll per player-game (a player's points and rebounds picks share it, since both ride on his minutes), 1.5% per game and 3% per slate while ungraded. The caps count your logged fills and the live picks from earlier scans, so following every ticket can't stack past them, and a stat you already hold on a player-game gets no new pick. Each contract's cost is walked up the order book (average price plus the fee at the real order size). The limit price never exceeds what the sportsbook market alone says the contract is worth. Questionable players and thin books show as `watch`.
+It's one pick per player-game and stat, sized at quarter Kelly, capped at 0.5% of bankroll per player-game (a player's points and rebounds picks share it, since both ride on his minutes), 1.5% per game and 3% per slate while ungraded. The caps count your logged fills and every ticket already sent on the slate, however old, so following every ticket can't stack past them; a later pick on a player-stat that already has a ticket replaces it rather than adding to it, and a stat you already hold on a player-game gets no new pick. Rebounds need 2pp more edge than points and assists (`STAT_EXTRA_EDGE` in `config.py`). Each contract's cost is walked up the order book (average price plus the fee at the real order size). The limit price never exceeds what the sportsbook market alone says the contract is worth. Questionable players and thin books show as `watch`.
 
 ## Rules the code enforces
 

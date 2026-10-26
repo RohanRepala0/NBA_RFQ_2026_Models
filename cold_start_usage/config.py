@@ -149,6 +149,9 @@ VENUE_FEES = {
 }
 VENUE_MIN_EDGE = {"kalshi": 0.04, "polymarket_us": 0.04}   # expected value per $1 contract, after fees
 THIN_CONSENSUS_EXTRA_EDGE = 0.01         # +1pp when only 2 books make the consensus
+# Extra edge by stat, on top of the venue's. Rohan's call after Oct 25: rebounds were the only stat
+# whose closing line ran against us (-2.0c over its first 14 tickets). Revisit at 50 rebound tickets.
+STAT_EXTRA_EDGE = {"rebounds": 0.02}
 MIN_SIZE_AT_EDGE = {"kalshi": 10, "polymarket_us": 10}     # contracts available at or under the max price
 PLANNED_CONTRACTS = 10                   # order size used to price fees before sizing
 TAIL_P = (0.10, 0.90)                    # market P outside this: the rung is too far from the books' line

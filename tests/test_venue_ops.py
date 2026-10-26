@@ -14,7 +14,7 @@ from cold_start_usage.grade import fetch_venue_settlements, fills_graded, venue_
 from cold_start_usage.kalshi_history import HistoryStore, candle_rows, download, market_row
 from cold_start_usage.pipeline import run_projections, snapshot_from_file
 from cold_start_usage.storage import OffListBookError, Storage
-from cold_start_usage.venues import Fetchers, scan
+from cold_start_usage.venues import Fetchers, prior_exposure, scan
 from tests.fixtures.synthetic import FETCHED, TIP, events_response, synthetic_event
 from tests.test_venues import kalshi_market
 
@@ -58,6 +58,26 @@ def test_fills_are_graded_at_the_price_paid(storage, capsys):
     storage.append("venue_settlements", [{"venue": "kalshi", "ticker": ticker, "result": "no", "settlement_value": 0.0}])
     f = fills_graded(storage)
     assert f.pnl.iloc[0] == pytest.approx(-4.17)
+
+
+def test_an_old_ticket_still_counts_and_a_rescan_replaces_it(storage):
+    snapshot_from_file(storage, events_response([synthetic_event()]), FETCHED)
+    run_projections(storage, DAY, FETCHED, {})
+    m = kalshi_market("MIAGANTETOKOUNMPO34", "Giannis Antetokounmpo", 30, 0.38, 0.40, 50, 50)
+    f = Fetchers(kalshi_markets=lambda: [m])
+    first = scan(storage, DAY, FETCHED + timedelta(minutes=1), f, tag="t-60m", bankroll=1000.0)
+    t1 = first[first.decision == "actionable"].iloc[0]
+    frac = t1.stake_usd / 1000
+    # 24 minutes later the decision is past the 20-minute freshness window, but the ticket was sent.
+    later = FETCHED + timedelta(minutes=25)
+    prior = prior_exposure(storage, DAY, later, 1000.0)
+    key = (t1.event_id, t1.player_id, "points")
+    assert prior.issued == {key: pytest.approx(frac)}
+    assert prior.slate == pytest.approx(frac) and prior.group[key[:2]] == pytest.approx(frac)
+    # Rescanning the same game re-sizes his pick in place of that ticket, not on top of it.
+    again = scan(storage, DAY, later, f, tag="t-15m", bankroll=1000.0)
+    t2 = again[again.decision == "actionable"].iloc[0]
+    assert t2.player_id == t1.player_id and t2.stake_usd == pytest.approx(t1.stake_usd)
 
 
 def test_tickets_list_only_actionable_pre_tip(storage, capsys):

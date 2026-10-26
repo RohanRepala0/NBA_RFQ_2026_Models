@@ -235,6 +235,14 @@ def test_rebound_contracts_are_priced_off_the_count_distribution():
         "no consensus")
 
 
+def test_rebounds_need_two_more_points_of_edge():
+    from cold_start_usage.decision import tau_for
+    assert tau_for("kalshi", 5, "points") == tau_for("kalshi", 5, "assists") == pytest.approx(0.04)
+    assert tau_for("kalshi", 5, "rebounds") == pytest.approx(0.06)
+    assert tau_for("polymarket_us", 2, "rebounds") == pytest.approx(0.07)          # plus the thin-consensus 1pp
+    assert evaluate_contract(quote(0.40), "YES", rctx(model_mean=9.5))["tau"] == pytest.approx(0.06)
+
+
 def act(player, stat, contract, ev, ask, ladder):
     return {"event_id": "E", "player_id": player, "event_ticker": "K", "player": player, "venue": "kalshi",
             "stat": stat, "contract": contract, "decision": "actionable", "ev_blend": ev, "p_blend": ask + ev + 0.02,
@@ -265,6 +273,17 @@ def test_a_pick_blocked_by_the_shared_player_cap_names_that_cap():
     assert out.decision.iloc[0] == "watch" and "per-player cap" in out.reason.iloc[0]
     full = size_positions(pd.DataFrame([row]), 1000.0, Exposure(slate=0.03))
     assert "game or slate cap" in full.reason.iloc[0]
+
+
+def test_a_repeat_replaces_its_ticket_while_his_other_stats_share_what_is_left():
+    from cold_start_usage.decision import Exposure
+    # An earlier scan's rebounds ticket took 0.4% of his 0.5% player-game cap.
+    used = Exposure(slate=0.004, game={"E": 0.004}, group={("E", "P"): 0.004},
+                    issued={("E", "P", "rebounds"): 0.004})
+    reb = size_positions(pd.DataFrame([act("P", "rebounds", "8+ REB YES", 0.07, 0.40, "0.40:500")]), 1000.0, used)
+    assert reb.decision.iloc[0] == "actionable" and 4.0 < reb.stake_usd.iloc[0] <= 5.0 + 1e-9   # replaces it
+    pts = size_positions(pd.DataFrame([act("P", "points", "20+ YES", 0.08, 0.49, "0.49:500")]), 1000.0, used)
+    assert (pts.stake_usd.iloc[0] or 0.0) <= 1.0 + 1e-9                                        # only 0.1% left
 
 
 # --- projection runs ---------------------------------------------------------------------------------
