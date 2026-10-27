@@ -740,7 +740,14 @@ def cmd_roster(args, storage, now_fn) -> int:
 
 def cmd_boxscores(args, storage, now_fn) -> int:
     """Box scores stored per date; --from-raw first backfills them from saved results files."""
-    from .boxscores import backfill_from_raw, coverage
+    from .boxscores import backfill_from_raw, coverage, fetch_box_scores
+    if args.date:
+        if args.date >= et_date(now_fn()):
+            print(f"{args.date} isn't over yet: fetch a past date (today's games come with tomorrow's `grade`)")
+            return 1
+        c = fetch_box_scores(_client(storage, now_fn), storage, args.date, now_fn())
+        print(f"{args.date}: {c['events']} game(s) returned, {c['final']} final; stored {c['games']} game(s), "
+              f"{c['players']} player row(s) ({c['objects']} API objects)")
     if args.from_raw:
         c = backfill_from_raw(storage, now_fn(), Path(args.dir) if args.dir else None)
         print(f"Read {c['files']} results file(s): stored {c['games']} game(s), {c['players']} player row(s); "
@@ -857,8 +864,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--date", type=_parse_date)
     p.add_argument("--apply", action="store_true",
                    help="Write a rotation without the missing players (TEAM.csv) and re-project with it")
-    p = sub.add_parser("boxscores", help="Box scores per date (no API calls); --from-raw backfills saved results")
+    p = sub.add_parser("boxscores", help="Box scores per date; --from-raw backfills saved results (free), "
+                                          "--date fetches a past night (1 object a game)")
     p.add_argument("--from-raw", action="store_true", help="Store box scores from every saved results file first")
+    p.add_argument("--date", type=_parse_date, help="Fetch and store a past ET date's box scores (1 object a game)")
     p.add_argument("--dir", help="Raw folder (default data/raw)")
     p = sub.add_parser("evaluate", help="Walk-forward: season vs rolling projections vs the books (no API calls)")
     p.add_argument("--since", type=_parse_date, default=config.SEASON_OPENER,

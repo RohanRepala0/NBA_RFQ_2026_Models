@@ -160,6 +160,26 @@ def store_box_scores(storage: Storage, events: list[dict], now: datetime, source
     return counts
 
 
+MAX_GAMES_PER_DATE = 16                # an NBA date has at most 15 games: the object cap per fetch
+
+
+def fetch_box_scores(client, storage: Storage, d, now: datetime, raw_dir: Path | None = None) -> dict:
+    """A past ET date's games through /events (one object a game, the same filters as `grade`),
+    saved as a results file and stored: for nights `grade` never fetched, and last season's."""
+    from .ingest import save_raw
+    from .schedule import et_day_bounds, iso_z
+    start, end = et_day_bounds(d)
+    params = {"leagueID": config.LEAGUE_ID, "startsAfter": iso_z(start), "startsBefore": iso_z(end),
+              "oddID": config.STATS_ODD_FILTER, "includeOpposingOdds": "true",
+              "bookmakerID": config.request_bookmaker_filter()}
+    result = client.events(params, max_objects=MAX_GAMES_PER_DATE, note=f"boxscores:{d.isoformat()}")
+    final = [e for e in result.events if (e.get("status") or {}).get("finalized")]
+    if final:
+        save_raw(final, now, f"results_{d.isoformat()}", raw_dir)
+    return {"objects": result.objects, "events": len(result.events), "final": len(final),
+            **store_box_scores(storage, final, now)}
+
+
 def results_files(raw_dir: Path | None = None) -> list[Path]:
     return sorted((raw_dir or config.RAW_DIR).glob("*/*results*.json"))
 

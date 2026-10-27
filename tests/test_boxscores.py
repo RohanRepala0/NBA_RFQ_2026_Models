@@ -116,3 +116,26 @@ def test_one_mis_tagged_player_does_not_invent_an_overtime(game):
                  and (game["results"]["game"].get(pid) or {}).get("secondsPlayed"))
     game["players"][moved]["teamID"] = away          # one side now lists more than 240 minutes
     assert overtimes(game) == 0
+
+
+def test_fetching_a_past_night_saves_a_results_file_and_stores_its_finals(game, tmp_path):
+    from datetime import date
+    from types import SimpleNamespace
+
+    from cold_start_usage.boxscores import MAX_GAMES_PER_DATE, fetch_box_scores
+    pending = copy.deepcopy(game)
+    pending["eventID"], pending["status"]["finalized"] = "pending", False
+    calls = []
+
+    class Client:
+        def events(self, params, max_objects=None, note=""):
+            calls.append((params, max_objects, note))
+            return SimpleNamespace(events=[game, pending], objects=2)
+    with Storage(":memory:") as s:
+        c = fetch_box_scores(Client(), s, date(2026, 10, 26), NOW, raw_dir=tmp_path)
+        assert c["objects"] == 2 and c["final"] == 1 and c["games"] == 1
+        params, cap, note = calls[0]
+        assert cap == MAX_GAMES_PER_DATE and note == "boxscores:2026-10-26" and "oddsAvailable" not in params
+        assert params["startsAfter"].startswith("2026-10-26T04:00")          # midnight ET (EDT)
+        saved = list(tmp_path.glob("*/*results_2026-10-26.json"))
+        assert len(saved) == 1 and backfill_from_raw(s, NOW, tmp_path)["games"] == 0

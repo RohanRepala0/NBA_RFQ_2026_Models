@@ -118,5 +118,6 @@ Stage 1 against the books' closing mean, on games after the training window.
 - Only players with props are listed in results, so a rotation's last man can be missing from the
   box scores (his minutes still count in the team's). A results call without the props filter may
   list everyone: worth one object to check.
-- Results for two early nights were never fetched; one object a game backfills them.
+- Results for two early nights were never fetched: `boxscores --date D` backfills a past night (one
+  object a game, the same filters as `grade`); it is also the path for last season's history.
 - The prior for steals, blocks and turnovers is the league rate (last season's table lacks them).
