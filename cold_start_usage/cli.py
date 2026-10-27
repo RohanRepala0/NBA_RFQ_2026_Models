@@ -755,15 +755,17 @@ def cmd_boxscores(args, storage, now_fn) -> int:
 
 def cmd_evaluate(args, storage, now_fn) -> int:
     """Walk-forward: season vs rolling projections vs the books' close, against box scores."""
-    from .evaluation import by_date, markdown, summarize, walk_forward
+    from .evaluation import by_date, markdown, walk_forward, windows
     df = walk_forward(storage, args.since, args.until)
     if df.empty:
         print("Nothing to evaluate: run `boxscores --from-raw` (or `grade`) first.")
         return 1
-    summary, dates = summarize(df), by_date(df)
-    for name in ("accuracy", "minutes", "extra"):
-        print(f"{name}:")
-        _print_table(summary[name].round(3))
+    parts, dates = windows(df), by_date(df)
+    for label, summary in parts:
+        print(f"== {label}")
+        for name in ("accuracy", "minutes", "extra"):
+            print(f"{name}:")
+            _print_table(summary[name].round(3))
     print("points MAE by date:")
     _print_table(dates.round(3))
     if args.csv:
@@ -771,7 +773,7 @@ def cmd_evaluate(args, storage, now_fn) -> int:
         print(f"Wrote {args.csv}")
     if args.docs:
         path = config.REPO_DIR / "docs" / "MODEL_V2_EVAL.md"
-        path.write_text(markdown(summary, dates.round(3), args.since, args.until))
+        path.write_text(markdown(parts, dates.round(3), args.since, args.until))
         print(f"Wrote {path}")
     return 0
 

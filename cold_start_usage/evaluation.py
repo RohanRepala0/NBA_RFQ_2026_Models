@@ -61,21 +61,30 @@ def walk_forward(storage: Storage, since: date, until: date | None = None) -> pd
             season_min = logged.groupby("player_id").proj_mpg.first()
             names = logged.groupby("player_id").player_name.first()
             cons = {s: close_consensus(storage, ev.event_id, starts, stat=s)[0] for s in config.STATS}
-            for pid in sorted(set(actual.index) & (set(roll.index) | set(season.index))):
-                a = actual.loc[pid]
+            listed = set(storage.query("SELECT player_id FROM box_scores WHERE event_id = ?", [ev.event_id]).player_id)
+            teams_of = {**logged.groupby("player_id").team.first().to_dict(), **roll.team.to_dict()}
+            # Every player a source projected, played or not: a projected player who sat is a minutes
+            # miss (0 minutes; his props void, so he has no stat rows to score).
+            for pid in sorted(set(roll.index) | set(season.index)):
+                played = pid in actual.index
+                a = actual.loc[pid] if played else None
                 for stat, col in BOX_COL.items():
                     c = cons.get(stat, {}).get(pid)
                     ok = c is not None and c.mean is not None and c.n_books >= config.MIN_PRICED_BOOKS
                     out.append({
                         "event_id": ev.event_id, "et_date": d, "player_id": pid,
-                        "player": names.get(pid, a.player_name), "team": a.team, "stat": stat,
+                        "player": names.get(pid) or (roll.at[pid, "player"] if pid in roll.index else pid),
+                        "team": teams_of.get(pid), "stat": stat,
                         "season": season.at[pid, stat] if pid in season.index and stat in season.columns else np.nan,
                         "rolling": roll.at[pid, PRINTED_COL[stat]] if pid in roll.index else np.nan,
                         "books": c.mean if ok else np.nan, "line": c.line if ok else np.nan,
-                        "p_books": c.p_over if ok else np.nan, "actual": a[col],
+                        "p_books": c.p_over if ok else np.nan, "actual": a[col] if played else np.nan,
                         "season_min": season_min.get(pid, np.nan),
                         "rolling_min": roll.at[pid, "min"] if pid in roll.index else np.nan,
-                        "actual_min": a.minutes, "role": roll.at[pid, "role"] if pid in roll.index else None,
+                        # Not listed in the results: no props posted, so almost surely no minutes
+                        # (the listed players cover 95-100% of team minutes).
+                        "actual_min": a.minutes if played else 0.0, "played": played, "listed": pid in listed,
+                        "role": roll.at[pid, "role"] if pid in roll.index else None,
                         "in_season_rotation": pid in season.index})
     df = pd.DataFrame(out)
     for col in ("season", "rolling", "books", "line", "p_books", "actual", "season_min", "rolling_min", "actual_min"):
@@ -91,10 +100,11 @@ def _p(stat: str, mean, line) -> float:
 
 
 def summarize(df: pd.DataFrame) -> dict[str, pd.DataFrame]:
-    """'accuracy': per stat on the player-games every source covers; 'minutes'; 'extra'."""
+    """'accuracy': per stat on the played player-games every source covers; 'minutes' (on every
+    projected player, and on those who played); 'extra'."""
     acc = []
     for stat in config.STATS:
-        part = df[(df.stat == stat)].dropna(subset=["season", "rolling", "books", "actual"])
+        part = df[(df.stat == stat) & df.played].dropna(subset=["season", "rolling", "books", "actual"])
         if part.empty:
             continue
         row = {"stat": stat, "n": len(part)}
@@ -109,17 +119,21 @@ def summarize(df: pd.DataFrame) -> dict[str, pd.DataFrame]:
             row[f"brier_{src}"] = float(np.mean((p - y) ** 2)) if len(lined) else np.nan
         row["brier_books"] = float(np.mean((lined.p_books - y) ** 2)) if len(lined) else np.nan
         acc.append(row)
-    mins = df[df.stat == "points"].dropna(subset=["season_min", "rolling_min", "actual_min"])
-    minutes = pd.DataFrame([{"n": len(mins),
-                             **{f"{k}_{src}": f(mins[f"{src}_min"] - mins.actual_min)
-                                for src in ("season", "rolling")
-                                for k, f in (("mae", lambda e: e.abs().mean()), ("bias", lambda e: e.mean()))}}])
-    deep = df[(df.stat == "points") & ~df.in_season_rotation].dropna(subset=["rolling_min", "actual_min"])
-    minutes["n_beyond_rotation"] = len(deep)
-    minutes["rolling_bias_beyond_rotation"] = (deep.rolling_min - deep.actual_min).mean() if len(deep) else np.nan
+    pts = df[df.stat == "points"]
+    rows = []
+    for label, part in (("all projected (a player who sat: 0)", pts), ("played only", pts[pts.played])):
+        both = part.dropna(subset=["season_min", "rolling_min", "actual_min"])
+        deep = part[~part.in_season_rotation].dropna(subset=["rolling_min", "actual_min"])
+        rows.append({"players": label, "n": len(both),
+                     **{f"{k}_{src}": f(both[f"{src}_min"] - both.actual_min)
+                        for src in ("season", "rolling")
+                        for k, f in (("mae", lambda e: e.abs().mean()), ("bias", lambda e: e.mean()))},
+                     "n_beyond_rotation": len(deep),
+                     "rolling_bias_beyond_rotation": (deep.rolling_min - deep.actual_min).mean() if len(deep) else np.nan})
+    minutes = pd.DataFrame(rows)
     extra = []
     for stat in config.EXTRA_STATS:
-        part = df[df.stat == stat].dropna(subset=["rolling", "actual"])
+        part = df[(df.stat == stat) & df.played].dropna(subset=["rolling", "actual"])
         if len(part):
             err = part["rolling"] - part.actual
             extra.append({"stat": stat, "n": len(part), "mae_rolling": err.abs().mean(), "bias_rolling": err.mean(),
@@ -129,14 +143,27 @@ def summarize(df: pd.DataFrame) -> dict[str, pd.DataFrame]:
 
 def by_date(df: pd.DataFrame) -> pd.DataFrame:
     """Points MAE per ET date on the common player-games (rolling only differs once there's history)."""
-    part = df[df.stat == "points"].dropna(subset=["season", "rolling", "books", "actual"])
+    part = df[(df.stat == "points") & df.played].dropna(subset=["season", "rolling", "books", "actual"])
     g = part.assign(e_s=(part.season - part.actual).abs(), e_r=(part["rolling"] - part.actual).abs(),
                     e_b=(part.books - part.actual).abs())
     return g.groupby("et_date").agg(n=("e_s", "size"), mae_season=("e_s", "mean"), mae_rolling=("e_r", "mean"),
                                     mae_books=("e_b", "mean")).reset_index()
 
 
-def markdown(summary: dict[str, pd.DataFrame], dates: pd.DataFrame, since: date, until: date | None) -> str:
+def windows(df: pd.DataFrame) -> list[tuple[str, dict[str, pd.DataFrame]]]:
+    """Summaries out of sample (on or after config.ROLLING_FROZEN_AT) and in-sample (before it):
+    only the first counts toward promotion."""
+    cut = config.ROLLING_FROZEN_AT
+    out = []
+    for label, part in ((f"Out of sample (from {cut})", df[df.et_date >= cut]),
+                        (f"In-sample (before {cut}: these nights shaped the rolling settings)", df[df.et_date < cut])):
+        if len(part) and part.played.any():
+            out.append((label, summarize(part)))
+    return out
+
+
+def markdown(parts: list[tuple[str, dict[str, pd.DataFrame]]], dates: pd.DataFrame, since: date,
+             until: date | None) -> str:
     def table(df: pd.DataFrame) -> list[str]:
         if df.empty:
             return ["(none)"]
@@ -149,13 +176,15 @@ def markdown(summary: dict[str, pd.DataFrame], dates: pd.DataFrame, since: date,
              f"Every graded game {span} with box scores and a projection run logged before tip. "
              "`season` is what was logged live; `rolling` is recomputed as of each tip with the same "
              "scenarios, from earlier dates' box scores only; `books` is the closing consensus mean. "
-             "Errors are projection minus actual, on the player-games all three cover. The opening "
-             "week shaped the rolling design, so it is in-sample; later nights are out of sample. "
-             "Generated by `python -m cold_start_usage.cli evaluate --docs`.", "",
-             "## Points, rebounds, assists", ""] + table(summary["accuracy"]) + [
-             "", "## Minutes", "",
-             "`beyond_rotation`: players the logged season run didn't project (mostly the bench rolling "
-             "adds from the team's last 5 games, plus a few the season run left unmapped).", ""] + table(summary["minutes"]) + [
-             "", "## Points MAE by date", ""] + table(dates) + [
-             "", "## Logged-only stats (no book line stored)", ""] + table(summary["extra"]) + [""]
+             "Errors are projection minus actual. Points, rebounds and assists are scored on the player-games "
+             "all three cover where the player played (a prop voids otherwise); minutes on every player a "
+             "source projected, a player who sat counting 0. Only the out-of-sample window counts toward "
+             "promotion (docs/MODEL_V2_PLAN.md). Generated by `python -m cold_start_usage.cli evaluate --docs`.", ""]
+    for label, summary in parts:
+        lines += [f"## {label}", "", "### Points, rebounds, assists", ""] + table(summary["accuracy"]) + [
+            "", "### Minutes", "",
+            "`beyond_rotation`: players the logged season run didn't project (mostly the bench rolling adds "
+            "from the team's last 5 games, plus a few the season run left unmapped).", ""] + table(summary["minutes"]) + [
+            "", "### Logged-only stats (no book line stored)", ""] + table(summary["extra"]) + [""]
+    lines += ["## Points MAE by date", ""] + table(dates) + [""]
     return "\n".join(lines)

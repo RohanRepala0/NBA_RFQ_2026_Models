@@ -203,3 +203,38 @@ def test_rolling_never_logs_a_player_it_could_not_map(storage, monkeypatch):
     for t in ("projections", "extra_projections"):
         assert storage.query(f"SELECT count(*) n FROM {t} WHERE player_id IS NULL").n.iloc[0] == 0
         assert "Bam Adebayo" not in set(storage.query(f"SELECT player_name FROM {t}").player_name)
+
+
+def test_a_replay_never_sees_roster_rows_stored_after_its_now(storage):
+    from datetime import timedelta
+
+    from cold_start_usage.pipeline import _roster, snapshot_from_file
+    from tests.fixtures.synthetic import EVENT_ID, FETCHED, events_response, synthetic_event
+    snapshot_from_file(storage, events_response([synthetic_event()]), FETCHED)
+    before = _roster(storage, EVENT_ID, FETCHED)
+    pid = before.player_id.iloc[0]
+    storage.append("event_players", [{"ts": FETCHED + timedelta(hours=3), "event_id": EVENT_ID, "player_id": pid,
+                                      "team_abbr": before.team_abbr.iloc[0], "name": "x", "status": "out"}])
+    assert _roster(storage, EVENT_ID, FETCHED).set_index("player_id").status.get(pid) != "out"
+    assert _roster(storage, EVENT_ID, FETCHED + timedelta(hours=4)).set_index("player_id").status.get(pid) == "out"
+
+
+def test_a_projected_player_who_sat_counts_in_minutes_but_not_in_stat_accuracy():
+    from datetime import date
+
+    from cold_start_usage.evaluation import summarize, windows
+    base = {"event_id": "E", "player_id": "P", "player": "P", "team": "AAA", "line": 10.5, "p_books": 0.5,
+            "role": None, "in_season_rotation": True, "listed": True}
+    rows = []
+    for d, played in ((date(2026, 10, 26), True), (date(2026, 10, 28), True), (date(2026, 10, 28), False)):
+        for stat in config.STATS + config.EXTRA_STATS:
+            rows.append({**base, "et_date": d, "stat": stat, "season": 12.0, "rolling": 11.0, "books": 10.0,
+                         "actual": 10.0 if played else np.nan, "season_min": 30.0, "rolling_min": 28.0,
+                         "actual_min": 30.0 if played else 0.0, "played": played})
+    df = pd.DataFrame(rows)
+    s = summarize(df)
+    assert s["accuracy"].set_index("stat").at["points", "n"] == 2
+    m = s["minutes"].set_index("players")
+    assert m.iloc[0].n == 3 and m.iloc[0].bias_season == pytest.approx(10.0) and m.loc["played only"].n == 2
+    labels = [label for label, _ in windows(df)]
+    assert labels[0].startswith("Out of sample") and labels[1].startswith("In-sample")

@@ -136,16 +136,17 @@ def snapshot_due(client: SGOClient, storage: Storage, now: datetime) -> dict:
 
 
 # --- Projections ---------------------------------------------------------------------
-def _odds_player_ids(storage: Storage, event_id: str) -> list[str]:
-    return storage.query("SELECT DISTINCT player_id FROM odds_snapshots WHERE event_id = ?",
-                         [event_id]).player_id.tolist()
+def _odds_player_ids(storage: Storage, event_id: str, now: datetime) -> list[str]:
+    return storage.query("SELECT DISTINCT player_id FROM odds_snapshots WHERE event_id = ? AND ts <= ?",
+                         [event_id, now]).player_id.tolist()
 
 
-def _roster(storage: Storage, event_id: str) -> pd.DataFrame:
+def _roster(storage: Storage, event_id: str, now: datetime) -> pd.DataFrame:
+    """The event's players as last stored by `now` (a replay as of a past tip never sees a later row)."""
     return storage.query("""
         SELECT player_id, name, team_abbr, status FROM (
           SELECT *, row_number() OVER (PARTITION BY player_id ORDER BY ts DESC) rn
-          FROM event_players WHERE event_id = ?) WHERE rn = 1""", [event_id])
+          FROM event_players WHERE event_id = ? AND ts <= ?) WHERE rn = 1""", [event_id, now])
 
 
 def latest_scenarios(storage: Storage, event_id: str, now: datetime) -> dict[str, str]:
@@ -203,8 +204,8 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
                 messages.append(f"{team}: keeping scenario {name} from the last run (pass --scenario {team}=... "
                                 "to change it)" if team in previous else
                                 f"{team}: no scenario chosen, using full_strength (pass --scenario {team}=...)")
-            roster = _roster(storage, ev.event_id)
-            cands = candidates_for_event(roster, _odds_player_ids(storage, ev.event_id))
+            roster = _roster(storage, ev.event_id, now)
+            cands = candidates_for_event(roster, _odds_player_ids(storage, ev.event_id, now))
             mapping, problems = map_players(scen.player.tolist(), cands, team, explicit)
             messages += [f"{team}: {p}" for p in problems]
             if source == "rolling":

@@ -240,6 +240,9 @@ MODEL_VERSION = "usage-squeeze-1.1"      # 1.1: rebounds and assists
 # beating it out of sample (docs/MODEL_V2_PLAN.md).
 PROJECTION_SOURCE = "season"
 ROLLING_MODEL_VERSION = "usage-squeeze-1.1+rolling-0.1"
+# The rolling settings below were chosen on the games before this ET date (the bench finding
+# came from them): `evaluate` reports those nights as in-sample and the rest as out of sample.
+ROLLING_FROZEN_AT = date(2026, 10, 27)
 # Prior weight in games of last season's rate: shrunk = (K * prior + sum) / (K + minutes),
 # K = games * prior minutes per game; "minutes" is in games of the scenario's minutes. Frozen
 # priors from how fast each stat settles (rebounds and usage fast, threes and steals slow), to

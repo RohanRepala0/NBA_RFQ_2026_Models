@@ -1,10 +1,10 @@
 # Model v2: from season averages to opportunity
 
 The v1 model projects a player from last season's usage, minutes and per-minute output, squeezed
-into this season's rotation (the usage budget in `usage_model.py`). It has been a coin flip against
-the books: on the season's first graded week its blended prices tie the closing consensus on Brier
-night after night, closing line value runs slightly negative (about -1c a ticket), and its misses
-share one cause. They are opportunity misses, not skill misses.
+into this season's rotation (the usage budget in `usage_model.py`). On its own it trails the books
+(points Brier 0.268 against the closing consensus's 0.249 over the first graded week); the 20%
+blend the venue scan prices from only ties them, closing line value runs slightly negative (about
+-1c a ticket), and most of the misses share one cause. They are opportunity misses, not skill misses.
 
 | What we saw | Why it matters |
 |---|---|
@@ -73,19 +73,24 @@ under the new version.
 
 ### First results
 
-On the season's first five graded nights, the 395 points player-games all three cover:
+On the season's first five graded nights (in-sample: see below). Points on the 395 player-games all
+three sources cover; minutes on every player a source projected, a player who sat counting 0 (and,
+in brackets, on those who played):
 
 | Source | Points MAE | Bias | Brier | Minutes MAE | Minutes bias |
 |---|---|---|---|---|---|
-| season (v1, logged) | 5.14 | +0.96 | 0.268 | 5.56 | +2.07 |
-| rolling (v2) | 5.01 | +0.09 | 0.269 | 5.04 | +0.21 |
+| season (v1, logged) | 5.14 | +0.96 | 0.268 | 7.60 (5.56) | +4.59 (+2.07) |
+| rolling (v2) | 5.01 | +0.09 | 0.269 | 6.94 (5.03) | +2.79 (+0.21) |
 | books' close | 4.82 | +0.20 | 0.249 | | |
 
-Rolling removes the minutes and points bias and closes part of the gap where it has history (the
-latest night: MAE 4.88 season, 4.49 rolling, 4.24 books); with two or three games a team, the
-rates are still mostly priors, so Brier doesn't move yet. These nights shaped the design (the
-bench finding came from them), so they are in-sample; the out-of-sample record starts with the
-next graded night. Not enough to switch: rule 2 applies.
+Rolling removes the points bias and most of the minutes bias among players who play, and closes
+part of the gap where it has history (the latest night: MAE 4.88 season, 4.49 rolling, 4.24
+books). What is left of the minutes bias is availability: players either source projected who sat
+(late scratches, coach's decisions). That is the injury-news input, not the rolling model, and it
+is the next thing to measure. With two or three games a team the rates are still mostly priors, so
+Brier doesn't move yet. These nights shaped the design (the bench finding came from them), so
+`evaluate` reports them as in-sample (`config.ROLLING_FROZEN_AT`); the out-of-sample record starts
+with the next graded night. Not enough to switch: rule 2 applies.
 
 ## Stage 2: a learned model (after the November budget reset)
 
