@@ -126,7 +126,7 @@ All three readers are public, keyless GETs with no account, order or portfolio e
 - **Options:**
   - (a) Keep doing hand lookups.
   - (b) Get a license (Stathead, SportsDataIO, Sportradar).
-  - (c) Build in-season usage from SportsGameOdds box scores, if `expandResults=true` carries FGA, FTA, turnovers and minutes. Not checked yet.
+  - (c) Build in-season usage from SportsGameOdds box scores. **Done (model v2):** the results responses `grade` already fetches carry each listed player's seconds, FGA, FTA, turnovers, threes, steals and blocks, and both teams' totals. `boxscores.py` stores them and the usage rate; see [`docs/MODEL_V2_PLAN.md`](docs/MODEL_V2_PLAN.md).
 
 ---
 
@@ -247,7 +247,9 @@ reb_new = r_i * min_new_i * k,   Var = phi * reb_new
 
 **Known bias:**
 - **The model:** it treats the game as one usage pool, but coaches stagger stars, so stars keep more usage than it projects. The v2 fix is a lineup-level budget.
-- **The minutes:** the drafted scenario minutes drive most bench-player edges. Review them before trusting any role-player signal.
+- **The minutes:** the drafted scenario minutes drive most bench-player edges. Review them before trusting any role-player signal. The first graded week measured it: the projected rotation plays about 191 of its 240 minutes (the rest of the roster takes ~50), so v1 runs about +2 minutes and +1 point too high a player.
+
+**Model v2 (built, off by default):** `config.PROJECTION_SOURCE = "rolling"` (or `project --source rolling`) feeds the same usage model this season's box scores before tip: recent minutes shrunk to the scenario's plus the team's recent bench, rates and usage shrunk to last season, pace and opponent multipliers, role-stability classes. Threes, steals, blocks and turnovers are logged to `extra_projections` only. `evaluate --docs` is the walk-forward check against the season model and the books' close; the promotion rules are in [`docs/MODEL_V2_PLAN.md`](docs/MODEL_V2_PLAN.md). Stage 2 (XGBoost on last season's SportsGameOdds box scores) waits for the November budget.
 
 ---
 
@@ -292,6 +294,7 @@ The weekly `report` adds CLV by week (the edge-decay chart).
 | **Mon Oct 19** | **M2:** consensus, usage model for the case-study teams, `project` + `signals`, dry run | MIA and TOR done with spacing, and dry-run on a synthetic MIN @ MIA slate. The scenario minutes need Rohan's review. |
 | **Before Tue Oct 20** | **M3:** install the cron job (`snapshot --due --with-signals --with-venues --with-projections`, every 5 minutes) on Rohan's machine before Opening Night (first tip 3:00 PM ET), so history starts with the first tip. It covers every game; projections and venue decisions cover all 30 teams and three stats (the sportsbook signals stay points). The MIA and TOR openers (both 7:30 PM ET, Oct 21) use the reviewed minutes. | Ready. Kalshi and Polymarket US both list NBA points, rebounds and assists props (Polymarket US since Oct 19). Run `catalog` and `board --docs` first, `tickets` before each tip, and `grade` each morning. |
 | **Week 1** | **M3b:** backtests on Kalshi's 2025-26 archive (`cli history`). The strategies: venue vs consensus, longshot bias, ladder and cross-venue consistency, entry timing, the teammate-vacuum news signal, and limit vs market orders. | Archive complete (1,096 games) and walk-forward results in [`docs/BACKTEST.md`](docs/BACKTEST.md). No Kalshi-price-only strategy beats the spread and fee; ladder fit as resting limit orders is the only positive one (+4.8%, interval includes zero). Venue vs consensus needs this season's own log. The April-onward holdout is still sealed. |
+| **Week 2** | **M5:** model v2 stage 1: box scores, usage rate, rolling opportunity features, `project --source rolling`, `evaluate` | Built behind the switch (default unchanged). First five nights: rolling removes the minutes and points bias; the books' close still has the lowest error. Promote per the plan's rules. |
 | **Week 2** | **M4:** weekly report; review auto minutes for the teams being acted on; fit `eff_per_usg_point` and `spacing_coef`; stats-source decision | `report`, `fit`, `catalog` and `board` are built. Data for the fits is still to be collected. |
 
 ---
