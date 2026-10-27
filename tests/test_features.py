@@ -138,3 +138,68 @@ def test_rolling_runs_without_history_match_the_season_model_and_log_the_extra_s
     assert set(extra.stat) == set(config.EXTRA_STATS)
     # A rolling run is stale for a cron on the season source, so switching back re-projects.
     assert EVENT_ID in events_without_projections(storage, {EVENT_ID})
+
+
+def test_a_player_who_never_shoots_threes_has_a_zero_threes_prior():
+    from cold_start_usage.features import prior_rates
+    players = pd.DataFrame([{"player": "Center", "team_2025_26": "AAA", "team_2026_27": "AAA", "usg_pct": 15.0,
+                             "mpg": 25.0, "ppg": 10.0, "rpg": 9.0, "apg": 1.0, "fg3a_pg": 0.0, "fg3_pct": np.nan,
+                             "verified": "yes", "sgo_player_id": "C_1_NBA"},
+                            {"player": "Shooter", "team_2025_26": "AAA", "team_2026_27": "AAA", "usg_pct": 20.0,
+                             "mpg": 30.0, "ppg": 15.0, "rpg": 3.0, "apg": 2.0, "fg3a_pg": 6.0, "fg3_pct": 40.0,
+                             "verified": "yes", "sgo_player_id": "S_1_NBA"}])
+    pr = prior_rates(players).set_index("player")
+    assert pr.at["Center", "prior_threes"] == 0.0
+    assert pr.at["Shooter", "prior_threes"] == pytest.approx(6 * 0.4 / 30)
+
+
+def test_a_bench_candidate_tagged_with_the_wrong_team_stays_off_its_rotation():
+    from cold_start_usage.features import rolling_inputs
+    with Storage(":memory:") as s:
+        game = _game("g1", "2026-10-25T23:00:00Z")
+        # Tag a CLE player as MIN's, the way SportsGameOdds once tagged a MIA player as DAL's.
+        cle = next(pid for pid, p in game["players"].items() if p["teamID"].startswith("CLEVELAND")
+                   and (game["results"]["game"].get(pid) or {}).get("secondsPlayed"))
+        name = game["players"][cle]["name"]
+        game["players"][cle]["teamID"] = game["teams"]["away"]["teamID"]
+        store_box_scores(s, [game], datetime(2026, 10, 26))
+        box, teams = history(s, datetime(2026, 10, 27, 23))
+        assert cle in set(box[box.team == "MIN"].player_id)
+        row = {"team_2025_26": "MIN", "usg_pct": 20.0, "games": 60, "mpg": 30.0, "ppg": 15.0, "rpg": 4.0,
+               "apg": 3.0, "fg3a_pg": 5.0, "fg3_pct": 36.0, "verified": "yes", "source": "src"}
+        players = pd.DataFrame([{**row, "player": "Anthony Edwards", "team_2026_27": "MIN",
+                                 "sgo_player_id": "ANTHONY_EDWARDS_1_NBA"},
+                                {**row, "player": name, "team_2025_26": "CLE", "team_2026_27": "CLE",
+                                 "sgo_player_id": cle}])
+        scen = pd.DataFrame({"player": ["Anthony Edwards"], "proj_mpg": [240.0]})
+        _, mins, _, _ = rolling_inputs(players, scen, "MIN", "CLE", box, teams)
+        assert name not in set(mins.player) and len(mins) > 1          # the rest of MIN's bench is in
+
+
+def test_the_rolling_hash_moves_with_the_opponent_context():
+    from cold_start_usage.features import rolling_inputs_hash
+    like = pd.DataFrame({"player": ["A"], "team_2025_26": ["AAA"], "team_2026_27": ["AAA"], "usg_pct": [20.0],
+                         "games": [3], "mpg": [30.0], "ppg": [15.0], "verified": ["yes"], "source": ["rolling"]})
+    mins = pd.DataFrame({"player": ["A"], "proj_mpg": [30.0]})
+    a = rolling_inputs_hash(like, mins, {"pace_mult": 1.0, "def_points": 0.99})
+    b = rolling_inputs_hash(like, mins, {"pace_mult": 1.0, "def_points": 0.97})
+    assert a != b and len(a) == 16
+
+
+def test_rolling_never_logs_a_player_it_could_not_map(storage, monkeypatch):
+    from cold_start_usage import pipeline
+    from cold_start_usage.pipeline import run_projections, snapshot_from_file
+    from tests.fixtures.synthetic import FETCHED, TIP, events_response, synthetic_event
+    real = pipeline.map_players
+
+    def drop_one(names, *a, **k):
+        mapping, problems = real(names, *a, **k)
+        mapping.pop("Bam Adebayo", None)
+        return mapping, problems + ["Bam Adebayo: no match on the event roster"]
+    monkeypatch.setattr(pipeline, "map_players", drop_one)
+    snapshot_from_file(storage, events_response([synthetic_event()]), FETCHED)
+    table, _ = run_projections(storage, TIP.date(), FETCHED, {"MIA": "full_strength"}, source="rolling")
+    assert table.loc[table.player == "Bam Adebayo", "player_id"].tolist() == ["UNMAPPED"]
+    for t in ("projections", "extra_projections"):
+        assert storage.query(f"SELECT count(*) n FROM {t} WHERE player_id IS NULL").n.iloc[0] == 0
+        assert "Bam Adebayo" not in set(storage.query(f"SELECT player_name FROM {t}").player_name)

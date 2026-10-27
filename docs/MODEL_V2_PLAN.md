@@ -83,7 +83,9 @@ On the season's first five graded nights, the 395 points player-games all three 
 
 Rolling removes the minutes and points bias and closes part of the gap where it has history (the
 latest night: MAE 4.88 season, 4.49 rolling, 4.24 books); with two or three games a team, the
-rates are still mostly priors, so Brier doesn't move yet. Not enough to switch: rule 2 applies.
+rates are still mostly priors, so Brier doesn't move yet. These nights shaped the design (the
+bench finding came from them), so they are in-sample; the out-of-sample record starts with the
+next graded night. Not enough to switch: rule 2 applies.
 
 ## Stage 2: a learned model (after the November budget reset)
 

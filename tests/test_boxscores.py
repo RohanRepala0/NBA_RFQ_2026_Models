@@ -104,3 +104,15 @@ def test_grading_stores_box_scores_for_every_listed_player(game):
         ingest_results(s, [game], NOW)            # no stored event or projection: results skip it
         assert s.count("results") == 0
         assert s.count("box_scores") == len(game["players"]) and s.count("team_box_scores") == 2
+
+
+def test_one_mis_tagged_player_does_not_invent_an_overtime(game):
+    del game["results"]["ot"]                       # say regulation: drop the overtime marker
+    for pid, s in game["results"]["game"].items():
+        if pid not in ("home", "away") and s.get("secondsPlayed"):
+            s["secondsPlayed"] = min(s["secondsPlayed"], 2400)
+    away = game["teams"]["away"]["teamID"]
+    moved = next(pid for pid, p in game["players"].items() if p["teamID"] != away
+                 and (game["results"]["game"].get(pid) or {}).get("secondsPlayed"))
+    game["players"][moved]["teamID"] = away          # one side now lists more than 240 minutes
+    assert overtimes(game) == 0

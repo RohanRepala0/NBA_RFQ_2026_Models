@@ -125,6 +125,7 @@ class Context:
     consensus: object | None = None           # consensus.Consensus
     model_mean: float | None = None
     projection_ts: datetime | None = None
+    model_version: str | None = None          # the projection's own (None: the configured source's)
     params: ModelParams = MODEL
 
 
@@ -162,7 +163,7 @@ def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float
         "consensus_ts": None if c is None else c.snapshot_ts,
         "consensus_mean": None if c is None else c.mean, "consensus_line": None if c is None else c.line,
         "model_mean": ctx.model_mean, "projection_ts": ctx.projection_ts,
-        "model_version": config.current_model_version(), "config_hash": config_hash(),
+        "model_version": ctx.model_version or config.current_model_version(), "config_hash": config_hash(),
         "decision": "abstain", "reason": None,
     }
 

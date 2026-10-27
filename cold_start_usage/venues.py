@@ -245,7 +245,8 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
                           status=None if r is None or pd.isna(r.status) else str(r.status).lower(),
                           consensus=cons.get(stat, {}).get(pid),
                           model_mean=None if p is None or pd.isna(p.mean) else float(p.mean),
-                          projection_ts=None if p is None else p.ts)
+                          projection_ts=None if p is None else p.ts,
+                          model_version=None if p is None or pd.isna(p.model_version) else str(p.model_version))
             if q.get("key") in dupes:
                 q = {**q, "parse_error": "ambiguous name on this game's rosters"}
             qts = q.get("quote_ts")

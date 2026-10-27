@@ -859,8 +859,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--from-raw", action="store_true", help="Store box scores from every saved results file first")
     p.add_argument("--dir", help="Raw folder (default data/raw)")
     p = sub.add_parser("evaluate", help="Walk-forward: season vs rolling projections vs the books (no API calls)")
-    p.add_argument("--since", type=_parse_date, default=config.SEASON_OPENER)
-    p.add_argument("--until", type=_parse_date)
+    p.add_argument("--since", type=_parse_date, default=config.SEASON_OPENER,
+                   help=f"First ET date (default the season opener, {config.SEASON_OPENER})")
+    p.add_argument("--until", type=_parse_date, help="Last ET date (default: every graded date)")
     p.add_argument("--csv", help="Also write the per player-game rows here")
     p.add_argument("--docs", action="store_true", help="Also write docs/MODEL_V2_EVAL.md")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")

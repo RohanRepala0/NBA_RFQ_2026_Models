@@ -34,7 +34,7 @@ import pandas as pd
 
 from . import config
 from .boxscores import REGULATION_MIN
-from .players import name_key
+from .players import load_overrides, name_key
 from .schedule import et_date, et_day_bounds
 from .storage import Storage
 
@@ -43,6 +43,7 @@ RATE_STATS = {"points": "pts", "rebounds": "reb", "assists": "ast", "threes": "f
               "steals": "stl", "blocks": "blk", "turnovers": "tov"}
 WINDOW_SHORT, WINDOW_LONG, WINDOW_ROLE = 5, 20, 10
 MINUTES_TIERS = (15.0, 25.0)            # prior minutes tiers for players with no prior row
+ROLE_MIN_MINUTES = 6.0                  # games shorter than this stay out of the usage and scoring CVs
 
 
 def history(storage: Storage, before) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -67,7 +68,10 @@ def prior_rates(players: pd.DataFrame) -> pd.DataFrame:
     out["prior_points"] = p.ppg / mpg
     out["prior_rebounds"] = p.rpg / mpg if "rpg" in p else np.nan
     out["prior_assists"] = p.apg / mpg if "apg" in p else np.nan
-    out["prior_threes"] = (p.fg3a_pg * p.fg3_pct / 100) / mpg if {"fg3a_pg", "fg3_pct"} <= set(p.columns) else np.nan
+    if {"fg3a_pg", "fg3_pct"} <= set(p.columns):      # no attempts means no 3P% in the table: a 0 rate, not unknown
+        out["prior_threes"] = (p.fg3a_pg * p.fg3_pct.where(p.fg3a_pg > 0, 0.0) / 100) / mpg
+    else:
+        out["prior_threes"] = np.nan
     for s in ("steals", "blocks", "turnovers"):
         out[f"prior_{s}"] = np.nan              # not in last season's table: the league rate stands in
     out.loc[p.verified.ne("yes"), [f"prior_{s}" for s in RATE_STATS]] = np.nan
@@ -176,8 +180,9 @@ def player_features(games: pd.DataFrame, prior: Prior) -> dict:
         out[f"raw_rate_{stat}"] = float(last20[col].sum()) / mins20 if mins20 > 0 else np.nan
     p5 = float(last5.pts.sum()) / float(last5.minutes.sum()) if len(last5) else np.nan
     out["d_pts_rate"] = p5 - out["raw_rate_points"] if n else np.nan
-    pts_rate = last10.pts / last10.minutes
-    out["cv_min"], out["cv_usg"], out["cv_pts"] = _cv(last10.minutes), _cv(last10.usg_pct), _cv(pts_rate)
+    real = last10[last10.minutes >= ROLE_MIN_MINUTES]             # a 1-minute cameo isn't a usage sample
+    out["cv_min"] = _cv(last10.minutes)
+    out["cv_usg"], out["cv_pts"] = _cv(real.usg_pct), _cv(real.pts / real.minutes)
     out["role"] = role_class(len(last10), float(last10.minutes.mean()) if len(last10) else 0.0,
                              out["cv_min"], out["cv_usg"], out["cv_pts"])
     out["prior_mpg"], out["prior_usg"], out["new_team"], out["has_prior"] = (prior.mpg, prior.usg,
@@ -260,9 +265,10 @@ def team_context(teams: pd.DataFrame, team: str, opponent: str) -> dict:
 # --- one team's inputs for the usage model ------------------------------------------------
 def player_ids(names: list[str], team: str, mapping: dict[str, str], priors: pd.DataFrame,
                box: pd.DataFrame) -> dict[str, str | None]:
-    """name -> SportsGameOdds player id: the event's mapping, then last season's table, then a
-    name match among this team's box scores."""
-    explicit = dict(zip(priors.player, priors.sgo_player_id)) if "sgo_player_id" in priors else {}
+    """name -> SportsGameOdds player id: the event's mapping, then data/player_id_overrides.csv
+    and last season's table, then a name match among this team's box scores."""
+    explicit = {**(dict(zip(priors.player, priors.sgo_player_id)) if "sgo_player_id" in priors else {}),
+                **load_overrides()}
     seen = {}
     if len(box):
         mine = box[box.team == team].drop_duplicates("player_id")
@@ -310,6 +316,10 @@ def rolling_inputs(players: pd.DataFrame, scen: pd.DataFrame, team: str, opponen
     gone = {i for i in player_ids(list(out_names), team, {}, priors, box).values() if i} | set(out_ids)
     bench = recent_rotation(box, team, {i for i in ids.values() if i} | gone)
     bench = bench[~bench.player.isin(set(scen.player))]
+    # SportsGameOdds sometimes tags a player with the other team in one game: a bench candidate
+    # last season's table puts on another 2026-27 team isn't this team's.
+    elsewhere = set(priors.sgo_player_id[priors.team_2026_27.ne(team)].dropna())
+    bench = bench[~bench.player_id.isin(elsewhere)]
     ids.update(dict(zip(bench.player, bench.player_id)))
     scen = pd.concat([scen, bench[["player", "proj_mpg"]]], ignore_index=True)
     feats, recent = {}, {}
@@ -318,7 +328,7 @@ def rolling_inputs(players: pd.DataFrame, scen: pd.DataFrame, team: str, opponen
         games = box[box.player_id == pid] if pid else box.iloc[0:0]
         row = by_name.loc[r.player] if r.player in by_name.index else None
         f = player_features(games, player_prior(row, league, team, float(r.proj_mpg)))
-        f["player_id"] = pid
+        f["player_id"] = pid if isinstance(pid, str) and pid else None
         feats[r.player] = f
         g = games[games.minutes.notna() & (games.minutes > 0)].head(WINDOW_SHORT)
         recent[r.player] = (float(g.minutes.mean()) if len(g) else np.nan, len(g))
@@ -331,8 +341,11 @@ def rolling_inputs(players: pd.DataFrame, scen: pd.DataFrame, team: str, opponen
         rows.append({"player": m.player, "team_2025_26": by_name.team_2025_26.get(m.player), "team_2026_27": team,
                      "usg_pct": f["usg"], "games": f["games"], "mpg": mpg,
                      "ppg": f["rate_points"] * mpg, "rpg": f["rate_rebounds"] * mpg, "apg": f["rate_assists"] * mpg,
-                     **{c: (shooting.at[m.player, c] if known and c in shooting.columns else np.nan)
-                        for c in ("fg3a_pg", "fg3_pct")},
+                     # spacing scales 3PA by proj_mpg / mpg, and mpg here is the new minutes
+                     "fg3a_pg": (shooting.at[m.player, "fg3a_pg"] / shooting.at[m.player, "mpg"] * mpg
+                                 if known and "fg3a_pg" in shooting.columns and shooting.at[m.player, "mpg"] > 0
+                                 else np.nan),
+                     "fg3_pct": shooting.at[m.player, "fg3_pct"] if known and "fg3_pct" in shooting.columns else np.nan,
                      "verified": "yes", "source": "rolling"})
     feat_df = pd.DataFrame([{"player": n, **f} for n, f in feats.items()]).merge(mins, on="player", how="left")
     return pd.DataFrame(rows), mins[["player", "proj_mpg"]], feat_df, ctx
@@ -364,3 +377,17 @@ def project_rolling(players: pd.DataFrame, scen: pd.DataFrame, team: str, oppone
         res[f"{stat}_proj"] = (m * squeeze if stat in ("threes", "turnovers") else m).astype(float)
         res[f"{stat}_sd"] = np.sqrt(res[f"{stat}_proj"].clip(lower=0))     # Poisson until fitted
     return res, like, mins, ctx
+
+
+def rolling_inputs_hash(like: pd.DataFrame, mins: pd.DataFrame, ctx: dict) -> str:
+    """inputs_hash of the rolling inputs, plus what else moves a rolling projection: the pace and
+    opponent context and the rolling settings."""
+    import hashlib
+    import json
+
+    from .usage_model import inputs_hash
+    keys = ("ROLLING_MODEL_VERSION", "ROLLING_PRIOR_GAMES", "TEAM_CHANGE_PRIOR_SCALE", "ROLLING_MINUTES_CAP",
+            "TEAM_PRIOR_GAMES", "CONTEXT_CLAMP", "ROLE_CLASSES", "ROLE_SD_MULT")
+    payload = {"base": inputs_hash(like, mins), "context": {k: round(float(v), 6) for k, v in ctx.items()},
+               "config": {k: getattr(config, k) for k in keys}}
+    return hashlib.sha256(json.dumps(payload, sort_keys=True, default=str).encode()).hexdigest()[:16]

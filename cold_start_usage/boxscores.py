@@ -59,19 +59,21 @@ def possessions(fga, fta, oreb, tov):
 
 
 def overtimes(event: dict) -> int:
-    """Overtime periods played: results keys like `ot` / `2ot`, and never fewer than the listed
-    players' own minutes imply (a team's players can't play more than its minutes)."""
+    """Overtime periods played: results keys like `ot` / `2ot`, and never fewer than both teams'
+    listed minutes imply (a team's players can't play more than its minutes; both teams, since
+    one player tagged with the wrong team can push one side past 240)."""
     results = event.get("results") or {}
     n = sum(1 for k in results if "ot" in str(k).lower())
     game = results.get("game") or {}
     teams = {side: (event.get("teams") or {}).get(side, {}).get("teamID") for side in ("home", "away")}
     players = event.get("players") or {}
-    for side, team_id in teams.items():
+    implied = []
+    for team_id in teams.values():
         secs = sum(float(s.get("secondsPlayed") or 0) for pid, s in game.items()
                    if pid not in ("home", "away") and isinstance(s, dict)
                    and (players.get(pid) or {}).get("teamID") == team_id)
-        n = max(n, math.ceil(max(0.0, secs / 60 - REGULATION_MIN - 0.5) / OVERTIME_MIN))
-    return n
+        implied.append(math.ceil(max(0.0, secs / 60 - REGULATION_MIN - 0.5) / OVERTIME_MIN))
+    return max(n, min(implied))
 
 
 def _num(stats: dict, key: str) -> float | None:
