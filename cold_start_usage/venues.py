@@ -131,23 +131,27 @@ def game_quotes(ev, fetchers: Fetchers, kalshi_df: pd.DataFrame | None, kalshi_t
 
 
 def issued_tickets(storage: Storage, d: date, now: datetime) -> pd.DataFrame:
-    """Every ticket already sent on this ET slate by `now`: the first actionable decision per
-    player-game and stat (the journal's ticket), however old, tipped or not."""
+    """Every ticket already sent on this ET slate by `now`, however old, tipped or not: one row per
+    player-game and stat (the journal's ticket, its first actionable decision), whose stake_usd is
+    the largest stake any scan ever suggested for that player-stat. A later, smaller re-pricing
+    can't shrink what Rohan may already hold."""
     df = storage.query("""
-        SELECT * FROM (
-          SELECT *, row_number() OVER (
-                   PARTITION BY coalesce(event_id, event_ticker), coalesce(player_id, player), coalesce(stat, 'points')
-                   ORDER BY ts, ev_blend DESC, signal_id) AS rn
+        SELECT * REPLACE (max_stake AS stake_usd) FROM (
+          SELECT *, row_number() OVER (w ORDER BY ts, ev_blend DESC, signal_id) AS rn,
+                 max(stake_usd) OVER w AS max_stake
           FROM venue_signals WHERE decision = 'actionable' AND stake_usd IS NOT NULL
-                                   AND tip_ts IS NOT NULL AND ts <= ?)
+                                   AND tip_ts IS NOT NULL AND ts <= ?
+          WINDOW w AS (PARTITION BY coalesce(event_id, event_ticker), coalesce(player_id, player),
+                                    coalesce(stat, 'points')))
         WHERE rn = 1""", [now])
-    return df[df.tip_ts.map(et_date) == d] if len(df) else df
+    return df[df.tip_ts.map(et_date) == d].drop(columns=["rn"]) if len(df) else df
 
 
 def prior_exposure(storage: Storage, d: date, now: datetime, bankroll: float | None) -> Exposure:
     """What's already committed on this ET slate: Rohan's fills, plus every ticket already sent
-    (`issued_tickets`), so a later scan can't stack new stakes past the caps. A rescan's pick on
-    a player-stat that already has a ticket replaces it (see size_positions)."""
+    (`issued_tickets`, each at the largest stake it was given), so a later scan can't stack new
+    stakes past the caps. A rescan's pick on a player-stat that already has a ticket re-prices it
+    (see size_positions)."""
     out = Exposure()
     fills = fills_with_games(storage)
     if len(fills):

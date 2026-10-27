@@ -235,6 +235,19 @@ def test_rebound_contracts_are_priced_off_the_count_distribution():
         "no consensus")
 
 
+def test_a_smaller_repricing_frees_nothing_for_other_picks():
+    from cold_start_usage.decision import Exposure
+    # The slate is at its 3% cap; 0.5% of it is his rebounds ticket. This scan re-prices that ticket
+    # smaller (only 5 contracts left at the edge) and finds a new pick on someone else.
+    used = Exposure(slate=0.03, game={"E": 0.01}, group={("E", "P"): 0.005},
+                    issued={("E", "P", "rebounds"): 0.005})
+    rows = pd.DataFrame([act("P", "rebounds", "8+ REB YES", 0.09, 0.40, "0.40:5"),
+                         act("Q", "points", "20+ YES", 0.05, 0.49, "0.49:500")])
+    out = size_positions(rows, 1000.0, used).set_index("player")
+    assert out.loc["P", "decision"] == "actionable" and out.loc["P", "stake_usd"] < 5.0   # re-priced in place
+    assert out.loc["Q", "decision"] == "watch" and "cap" in out.loc["Q", "reason"]       # Rohan may hold the $5
+
+
 def test_rebounds_need_two_more_points_of_edge():
     from cold_start_usage.decision import tau_for
     assert tau_for("kalshi", 5, "points") == tau_for("kalshi", 5, "assists") == pytest.approx(0.04)

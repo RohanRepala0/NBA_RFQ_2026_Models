@@ -206,3 +206,18 @@ def test_cli_journal_defaults_and_grade_splits_fills_by_kind(storage, capsys):
     assert "real 1" in line and "paper 2" in line and "discretionary 1" in line
     j = build(storage)
     assert len(j.tickets) == 3 and len(j.actionable) == 5 and len(j.fills) == 5
+
+
+def test_each_ticket_counts_at_the_largest_stake_it_was_given(storage):
+    from cold_start_usage.venues import issued_tickets
+    t6, t2, t60 = TIP1 - timedelta(hours=6), TIP1 - timedelta(hours=2), TIP1 - timedelta(minutes=60)
+    storage.append("venue_signals", [
+        _sig("a1", t6, "t-6h", K1, contracts=10.0),                             # the ticket
+        _sig("a2", t2, "t-2h", K1, contracts=30.0),                             # re-priced bigger
+        _sig("a3", t60, "t-60m", K2, contract="25+ YES", ask=0.20, contracts=5.0),  # then smaller, another rung
+        _sig("r1", t2, "t-2h", K3, stat="rebounds", contract="6+ REB YES", ask=0.30, contracts=20.0)])
+    got = issued_tickets(storage, DAY, TIP1).set_index("stat")
+    assert len(got) == 2 and got.loc["points", "signal_id"] == "a1"            # one row per player-stat
+    assert got.loc["points", "stake_usd"] == pytest.approx(30 * 0.42)            # the largest stake it was given
+    assert got.loc["rebounds", "stake_usd"] == pytest.approx(20 * 0.32)
+    assert len(issued_tickets(storage, DAY, t6 - timedelta(minutes=1))) == 0     # nothing sent yet

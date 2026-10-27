@@ -315,8 +315,9 @@ def size_positions(rows: pd.DataFrame, bankroll: float | None, prior: Exposure |
     EV >= tau on the blend, >= 0 on the market alone, quarter Kelly, and the per-bet, per-game
     and per-slate caps (counting `prior` exposure). The per-bet cap is per player-game across
     stats (points and rebounds on one player share it). A pick on a player-stat that already has a
-    ticket (`prior.issued`) replaces that ticket rather than adding to it, so its own stake is freed
-    first. No bankroll: the size available at the edge."""
+    ticket (`prior.issued`) re-prices that ticket instead of adding to it: it may be sized up to the
+    caps counting the ticket's own stake as free, but a smaller re-pricing frees nothing for other
+    picks, since Rohan may hold the bigger one. No bankroll: the size available at the edge."""
     rows = rows.copy()
     for col in ("kelly", "stake_frac", "contracts", "stake_usd", "ev_blend", "p_blend", "p_market",
                 "cost", "size_at_edge", "ladder", "tau"):
@@ -375,7 +376,8 @@ def size_positions(rows: pd.DataFrame, bankroll: float | None, prior: Exposure |
         if bankroll is not None:
             frac = total / bankroll
             rows.loc[i, "stake_frac"] = frac
-            game_used[game] = game_used.get(game, 0.0) + frac - credit
-            group_used[group] = group_used.get(group, 0.0) + frac - credit
-            slate_used += frac - credit
+            extra = max(0.0, frac - credit)              # a smaller re-pricing frees nothing
+            game_used[game] = game_used.get(game, 0.0) + extra
+            group_used[group] = group_used.get(group, 0.0) + extra
+            slate_used += extra
     return rows
