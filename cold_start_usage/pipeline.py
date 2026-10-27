@@ -6,6 +6,7 @@ from datetime import date, datetime
 import pandas as pd
 
 from . import config
+from .boxscores import store_box_scores
 from .config import CLOSE_TAG, MODEL_VERSION
 from .consensus import consensus_by_player, latest_snapshot_rows
 from .ingest import player_stat_results, save_raw, store_snapshot
@@ -294,9 +295,11 @@ def close_consensus(storage: Storage, event_id: str, starts_at: datetime):
 
 
 def ingest_results(storage: Storage, events: list[dict], now: datetime) -> tuple[int, list[str]]:
-    """Append results (points, rebounds, assists) for every projected player on finalized events.
-    The close consensus columns are the points consensus."""
+    """Append results (points, rebounds, assists) for every projected player on finalized events,
+    and the box scores of every listed player (boxscores.py). The close consensus columns are the
+    points consensus."""
     messages, n = [], 0
+    store_box_scores(storage, events, now)
     stored = storage.latest_events().set_index("event_id")
     for ev in events:
         eid = ev["eventID"]

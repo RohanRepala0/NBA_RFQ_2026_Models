@@ -110,6 +110,26 @@ SCHEMA: dict[str, dict[str, str]] = {
         "close_n_books": "INTEGER", "close_snapshot_ts": "TIMESTAMP",
         "close_source": "VARCHAR",
     },
+    # Box scores from the same results responses (boxscores.py): every listed player, played
+    # or not, and both teams' totals. One game is stored once.
+    "box_scores": {
+        "ts": "TIMESTAMP", "event_id": "VARCHAR", "starts_at": "TIMESTAMP", "team": "VARCHAR",
+        "opponent": "VARCHAR", "home": "BOOLEAN", "player_id": "VARCHAR", "player_name": "VARCHAR",
+        "played": "BOOLEAN", "seconds": "DOUBLE", "minutes": "DOUBLE",
+        "pts": "DOUBLE", "reb": "DOUBLE", "oreb": "DOUBLE", "dreb": "DOUBLE", "ast": "DOUBLE",
+        "stl": "DOUBLE", "blk": "DOUBLE", "tov": "DOUBLE", "fgm": "DOUBLE", "fga": "DOUBLE",
+        "fg3m": "DOUBLE", "fg3a": "DOUBLE", "ftm": "DOUBLE", "fta": "DOUBLE", "pf": "DOUBLE",
+        "plus_minus": "DOUBLE", "usg_pct": "DOUBLE", "source": "VARCHAR",
+    },
+    "team_box_scores": {
+        "ts": "TIMESTAMP", "event_id": "VARCHAR", "starts_at": "TIMESTAMP", "team": "VARCHAR",
+        "opponent": "VARCHAR", "home": "BOOLEAN", "overtimes": "INTEGER", "team_minutes": "DOUBLE",
+        "listed_minutes": "DOUBLE",
+        "pts": "DOUBLE", "reb": "DOUBLE", "oreb": "DOUBLE", "dreb": "DOUBLE", "ast": "DOUBLE",
+        "stl": "DOUBLE", "blk": "DOUBLE", "tov": "DOUBLE", "fgm": "DOUBLE", "fga": "DOUBLE",
+        "fg3m": "DOUBLE", "fg3a": "DOUBLE", "ftm": "DOUBLE", "fta": "DOUBLE", "pf": "DOUBLE",
+        "plus_minus": "DOUBLE", "possessions": "DOUBLE", "source": "VARCHAR",
+    },
 }
 
 _READ_ONLY = re.compile(r"^\s*(select|with|describe|show|pragma\s+table_info)\b", re.I)

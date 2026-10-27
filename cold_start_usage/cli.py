@@ -1,5 +1,5 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
-catalog | board | kalshi | venues | tickets | fill | journal | roster | history | backtest.
+catalog | board | kalshi | venues | tickets | fill | journal | roster | boxscores | history | backtest.
 
     python -m cold_start_usage.cli snapshot --date 2026-10-21
     python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
@@ -737,11 +737,26 @@ def cmd_roster(args, storage, now_fn) -> int:
     return 0
 
 
+def cmd_boxscores(args, storage, now_fn) -> int:
+    """Box scores stored per date; --from-raw first backfills them from saved results files."""
+    from .boxscores import backfill_from_raw, coverage
+    if args.from_raw:
+        c = backfill_from_raw(storage, now_fn(), Path(args.dir) if args.dir else None)
+        print(f"Read {c['files']} results file(s): stored {c['games']} game(s), {c['players']} player row(s); "
+              f"{c['skipped']} game(s) already stored")
+    cov = coverage(storage)
+    if cov.empty:
+        print("No box scores stored. Run `boxscores --from-raw`, or `grade` a date.")
+        return 0
+    _print_table(cov)
+    return 0
+
+
 COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "project": cmd_project,
             "signals": cmd_signals, "watchlist": cmd_watchlist, "grade": cmd_grade, "report": cmd_report,
             "fit": cmd_fit, "catalog": cmd_catalog, "board": cmd_board, "kalshi": cmd_kalshi,
             "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
-            "journal": cmd_journal, "roster": cmd_roster,
+            "journal": cmd_journal, "roster": cmd_roster, "boxscores": cmd_boxscores,
             "backtest": cmd_backtest}
 
 
@@ -813,6 +828,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--date", type=_parse_date)
     p.add_argument("--apply", action="store_true",
                    help="Write a rotation without the missing players (TEAM.csv) and re-project with it")
+    p = sub.add_parser("boxscores", help="Box scores per date (no API calls); --from-raw backfills saved results")
+    p.add_argument("--from-raw", action="store_true", help="Store box scores from every saved results file first")
+    p.add_argument("--dir", help="Raw folder (default data/raw)")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")
     p.add_argument("--series", default="KXNBAPTS")
     p.add_argument("--limit", type=int, help="Markets to fetch this run (default: all remaining)")
