@@ -1,5 +1,6 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
-catalog | board | kalshi | venues | tickets | fill | journal | roster | boxscores | history | backtest.
+catalog | board | kalshi | venues | tickets | fill | journal | roster | boxscores | evaluate | history |
+backtest.
 
     python -m cold_start_usage.cli snapshot --date 2026-10-21
     python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
@@ -219,7 +220,7 @@ def _scenario_choice(pairs: list[str]) -> dict[str, str]:
 def cmd_project(args, storage, now_fn) -> int:
     now = now_fn()
     d = args.date or et_date(now)
-    table, messages = run_projections(storage, d, now, _scenario_choice(args.scenario))
+    table, messages = run_projections(storage, d, now, _scenario_choice(args.scenario), source=args.source)
     for m in messages:
         print(f"note: {m}")
     if table.empty:
@@ -235,7 +236,7 @@ def cmd_project(args, storage, now_fn) -> int:
                              "side": sig["side"], "edge": sig["edge"], "decision": sig["decision"],
                              "reason": sig["reason"]})
     table = table.merge(pd.DataFrame(previews), on="player", how="left")
-    print(f"Logged projections at {now:%Y-%m-%d %H:%M} UTC (model {config.MODEL_VERSION}; points, "
+    print(f"Logged projections at {now:%Y-%m-%d %H:%M} UTC (model {config.current_model_version(args.source)}; points, "
           "rebounds and assists; the sportsbook preview is points)")
     _print_table(table, ["team", "scenario", "player", "status", "min", "usg", "usg_proj", "ppg_25_26",
                          "proj", "sd", "reb", "ast", "spc_old", "spc_new", "cons_line", "cons_mean", "side", "edge",
@@ -752,11 +753,35 @@ def cmd_boxscores(args, storage, now_fn) -> int:
     return 0
 
 
+def cmd_evaluate(args, storage, now_fn) -> int:
+    """Walk-forward: season vs rolling projections vs the books' close, against box scores."""
+    from .evaluation import by_date, markdown, summarize, walk_forward
+    df = walk_forward(storage, args.since, args.until)
+    if df.empty:
+        print("Nothing to evaluate: run `boxscores --from-raw` (or `grade`) first.")
+        return 1
+    summary, dates = summarize(df), by_date(df)
+    for name in ("accuracy", "minutes", "extra"):
+        print(f"{name}:")
+        _print_table(summary[name].round(3))
+    print("points MAE by date:")
+    _print_table(dates.round(3))
+    if args.csv:
+        df.to_csv(args.csv, index=False)
+        print(f"Wrote {args.csv}")
+    if args.docs:
+        path = config.REPO_DIR / "docs" / "MODEL_V2_EVAL.md"
+        path.write_text(markdown(summary, dates.round(3), args.since, args.until))
+        print(f"Wrote {path}")
+    return 0
+
+
 COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "project": cmd_project,
             "signals": cmd_signals, "watchlist": cmd_watchlist, "grade": cmd_grade, "report": cmd_report,
             "fit": cmd_fit, "catalog": cmd_catalog, "board": cmd_board, "kalshi": cmd_kalshi,
             "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
             "journal": cmd_journal, "roster": cmd_roster, "boxscores": cmd_boxscores,
+            "evaluate": cmd_evaluate,
             "backtest": cmd_backtest}
 
 
@@ -783,6 +808,8 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("project", help="Log projections for modeled teams on a date")
     p.add_argument("--date", type=_parse_date)
     p.add_argument("--scenario", action="append", help="TEAM=scenario, e.g. TOR=kawhi_out")
+    p.add_argument("--source", choices=["season", "rolling"],
+                   help=f"Projection inputs (default config.PROJECTION_SOURCE, now {config.PROJECTION_SOURCE!r})")
     p = sub.add_parser("signals", help="Log signals vs the latest consensus")
     p.add_argument("--date", type=_parse_date)
     p.add_argument("--timing", choices=list(config.SIGNAL_TIMINGS) + ["early", "adhoc"])
@@ -831,6 +858,11 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("boxscores", help="Box scores per date (no API calls); --from-raw backfills saved results")
     p.add_argument("--from-raw", action="store_true", help="Store box scores from every saved results file first")
     p.add_argument("--dir", help="Raw folder (default data/raw)")
+    p = sub.add_parser("evaluate", help="Walk-forward: season vs rolling projections vs the books (no API calls)")
+    p.add_argument("--since", type=_parse_date, default=config.SEASON_OPENER)
+    p.add_argument("--until", type=_parse_date)
+    p.add_argument("--csv", help="Also write the per player-game rows here")
+    p.add_argument("--docs", action="store_true", help="Also write docs/MODEL_V2_EVAL.md")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")
     p.add_argument("--series", default="KXNBAPTS")
     p.add_argument("--limit", type=int, help="Markets to fetch this run (default: all remaining)")

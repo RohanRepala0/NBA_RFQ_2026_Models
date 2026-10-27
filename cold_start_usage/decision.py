@@ -162,7 +162,7 @@ def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float
         "consensus_ts": None if c is None else c.snapshot_ts,
         "consensus_mean": None if c is None else c.mean, "consensus_line": None if c is None else c.line,
         "model_mean": ctx.model_mean, "projection_ts": ctx.projection_ts,
-        "model_version": config.MODEL_VERSION, "config_hash": config_hash(),
+        "model_version": config.current_model_version(), "config_hash": config_hash(),
         "decision": "abstain", "reason": None,
     }
 

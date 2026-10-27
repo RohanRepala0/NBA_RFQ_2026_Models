@@ -53,6 +53,15 @@ SCHEMA: dict[str, dict[str, str]] = {
         "proj_mpg": "DOUBLE", "usg_proj": "DOUBLE",
         "inputs_hash": "VARCHAR", "model_version": "VARCHAR",
     },
+    # Stats logged for validation only (config.EXTRA_STATS): same columns as projections, never
+    # read by the venue scan or the signals.
+    "extra_projections": {
+        "ts": "TIMESTAMP", "event_id": "VARCHAR", "player_id": "VARCHAR",
+        "player_name": "VARCHAR", "team": "VARCHAR", "new_team": "BOOLEAN",
+        "scenario": "VARCHAR", "stat": "VARCHAR", "mean": "DOUBLE", "sd": "DOUBLE",
+        "proj_mpg": "DOUBLE", "usg_proj": "DOUBLE",
+        "inputs_hash": "VARCHAR", "model_version": "VARCHAR",
+    },
     "signals": {
         "ts": "TIMESTAMP", "event_id": "VARCHAR", "player_id": "VARCHAR",
         "player_name": "VARCHAR", "team": "VARCHAR", "new_team": "BOOLEAN",

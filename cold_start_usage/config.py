@@ -233,6 +233,36 @@ class ModelParams:
 MODEL = ModelParams()
 MODEL_VERSION = "usage-squeeze-1.1"      # 1.1: rebounds and assists
 
+# --- Rolling projections (features.py) ------------------------------------------------
+# Where a projection's inputs come from: "season" = last season's averages and the scenario's
+# minutes (the model above, unchanged); "rolling" = the same usage model fed by this season's
+# box scores before tip, shrunk to last season. "season" stays until `evaluate` shows rolling
+# beating it out of sample (docs/MODEL_V2_PLAN.md).
+PROJECTION_SOURCE = "season"
+ROLLING_MODEL_VERSION = "usage-squeeze-1.1+rolling-0.1"
+# Prior weight in games of last season's rate: shrunk = (K * prior + sum) / (K + minutes),
+# K = games * prior minutes per game; "minutes" is in games of the scenario's minutes. Frozen
+# priors from how fast each stat settles (rebounds and usage fast, threes and steals slow), to
+# fit on 2025-26 box scores (stage 2).
+ROLLING_PRIOR_GAMES = {"minutes": 3, "usage": 6, "points": 6, "rebounds": 5, "assists": 5,
+                       "threes": 12, "steals": 15, "blocks": 10, "turnovers": 10}
+TEAM_CHANGE_PRIOR_SCALE = 0.5            # a new team halves the prior's weight
+ROLLING_MINUTES_CAP = 38.0               # added minutes stop here (a player already above keeps his)
+TEAM_PRIOR_GAMES = 10                    # pace and opponent allowances, in games of league average
+CONTEXT_CLAMP = (0.90, 1.10)             # pace and opponent multipliers
+# Role stability over the last 10 games (coefficients of variation), and the points SD multiplier
+# per class. Fewer than min_games: "unknown".
+ROLE_CLASSES = {"min_games": 4, "engine_minutes": 30.0, "engine_cv_minutes": 0.12, "engine_cv_usage": 0.20,
+                "heat_check_cv_points": 0.40, "volatile_cv_minutes": 0.25}
+ROLE_SD_MULT = {"engine": 1.0, "steady": 1.0, "volatile_role": 1.10, "heat_check": 1.10, "unknown": 1.0}
+# Logged for validation only (extra_projections): the venue scan never reads them.
+EXTRA_STATS = ("threes", "steals", "blocks", "turnovers")
+
+
+def current_model_version(source: str | None = None) -> str:
+    """The model_version a projection run logs under `source` (default PROJECTION_SOURCE)."""
+    return ROLLING_MODEL_VERSION if (source or PROJECTION_SOURCE) == "rolling" else MODEL_VERSION
+
 # --- Season --------------------------------------------------------------------
 ET = ZoneInfo("America/New_York")
 SEASON_OPENER = date(2026, 10, 20)
