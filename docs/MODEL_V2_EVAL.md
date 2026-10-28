@@ -8,9 +8,9 @@ Every graded game from 2026-10-20 with box scores and a projection run logged be
 
 | stat | n | mae_season | bias_season | mae_rolling | bias_rolling | mae_books | bias_books | n_lines | brier_season | brier_rolling | brier_books |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| points | 395 | 5.139 | 0.962 | 5.009 | 0.093 | 4.818 | 0.195 | 395 | 0.268 | 0.269 | 0.249 |
-| rebounds | 373 | 2.174 | 0.152 | 2.151 | -0.203 | 2.078 | 0.093 | 373 | 0.259 | 0.258 | 0.244 |
-| assists | 318 | 1.726 | 0.488 | 1.721 | 0.240 | 1.617 | 0.387 | 318 | 0.260 | 0.261 | 0.243 |
+| points | 395 | 5.139 | 0.962 | 5.006 | 0.119 | 4.818 | 0.195 | 395 | 0.268 | 0.267 | 0.249 |
+| rebounds | 373 | 2.174 | 0.152 | 2.169 | -0.175 | 2.078 | 0.093 | 373 | 0.259 | 0.260 | 0.244 |
+| assists | 318 | 1.726 | 0.488 | 1.724 | 0.263 | 1.617 | 0.387 | 318 | 0.260 | 0.261 | 0.243 |
 
 ### Minutes
 
@@ -18,17 +18,17 @@ Every graded game from 2026-10-20 with box scores and a projection run logged be
 
 | players | n | mae_season | bias_season | mae_rolling | bias_rolling | n_beyond_rotation | rolling_bias_beyond_rotation |
 |---|---|---|---|---|---|---|---|
-| all projected (a player who sat: 0) | 589 | 7.595 | 4.591 | 6.939 | 2.786 | 94 | -1.104 |
-| played only | 507 | 5.559 | 2.070 | 5.033 | 0.209 | 78 | -2.713 |
+| all projected (a player who sat: 0) | 589 | 7.595 | 4.591 | 6.829 | 2.783 | 111 | -1.568 |
+| played only | 507 | 5.559 | 2.070 | 4.938 | 0.239 | 86 | -3.464 |
 
 ### Logged-only stats (no book line stored)
 
 | stat | n | mae_rolling | bias_rolling | mean_actual |
 |---|---|---|---|---|
-| threes | 586 | 0.898 | 0.053 | 1.212 |
-| steals | 528 | 0.807 | -0.043 | 0.890 |
-| blocks | 528 | 0.658 | 0.099 | 0.481 |
-| turnovers | 528 | 1.060 | -0.155 | 1.534 |
+| threes | 594 | 0.898 | 0.049 | 1.207 |
+| steals | 536 | 0.800 | -0.070 | 0.884 |
+| blocks | 536 | 0.639 | 0.096 | 0.474 |
+| turnovers | 536 | 1.036 | -0.147 | 1.517 |
 
 ## Points MAE by date
 
@@ -37,5 +37,5 @@ Every graded game from 2026-10-20 with box scores and a projection run logged be
 | 2026-10-20 | 43 | 5.262 | 5.261 | 5.005 |
 | 2026-10-21 | 133 | 5.207 | 5.207 | 5.043 |
 | 2026-10-22 | 29 | 5.004 | 5.066 | 4.297 |
-| 2026-10-25 | 81 | 5.363 | 5.226 | 5.319 |
-| 2026-10-26 | 109 | 4.879 | 4.491 | 4.235 |
+| 2026-10-25 | 81 | 5.363 | 5.273 | 5.319 |
+| 2026-10-26 | 109 | 4.879 | 4.445 | 4.235 |
