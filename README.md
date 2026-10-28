@@ -60,6 +60,8 @@ python -m cold_start_usage.cli grade --date 2026-10-20     # venue settlements, 
 python -m cold_start_usage.cli journal --date 2026-10-20   # bets/: ledger, fills, the day's tickets/results/summary
 ```
 
+`grade` also stores the box scores of every listed player (`boxscores --from-raw` backfills them from saved results, free; `boxscores --date D` fetches a night `grade` never did, 1 object a game). Model v2 runs on them: `project --source rolling` projects from this season's games (recent minutes, usage and rates shrunk to last season, the team's recent bench, pace and opponent) and `evaluate --docs` replays every graded game, season vs rolling vs the books' close. The default stays the season model until rolling wins out of sample: [`docs/MODEL_V2_PLAN.md`](docs/MODEL_V2_PLAN.md), results in [`docs/MODEL_V2_EVAL.md`](docs/MODEL_V2_EVAL.md).
+
 Add `--venues-only` to `grade` to skip the metered SportsGameOdds results call (model-vs-books grading). `journal` makes no API calls and only reads the log (anything `grade` hasn't settled reads `pending`); `journal --all` rebuilds every day. A fill logged with `--paper` (or a note starting `paper`) is journaled as paper, one with a note starting `discretionary` (or logged by `--ticker` on a contract the scan never made actionable) as discretionary, anything else as real; see [`bets/README.md`](bets/README.md). Weekly: `report`.
 
 Teams without hand-reviewed minutes use the catalog's automatic rotation (`cold_start_usage/scenarios/auto/`). Copy one up to `cold_start_usage/scenarios/` and edit it to make it reviewed.
@@ -80,7 +82,7 @@ The matchup and player IDs are real; the odds are invented. `--now` only works w
 
 | Data | Source | Notes |
 |---|---|---|
-| Odds and results | SportsGameOdds API (licensed, free Amateur plan) | 9 books on this key; 4 post player points, rebounds and assists (Caesars joined Bovada, DraftKings and ESPN Bet for the opener). No prediction markets on this plan. |
+| Odds, results and box scores | SportsGameOdds API (licensed, free Amateur plan) | 9 books on this key; 4 post player points, rebounds and assists (Caesars joined Bovada, DraftKings and ESPN Bet for the opener). No prediction markets on this plan. |
 | Prediction-market prices | Kalshi (`api.elections.kalshi.com`) and Polymarket US (`gateway.polymarket.us`) public market-data APIs: read-only, no key | What each venue lists, its fees and its settlement rules: [`docs/VENUES.md`](docs/VENUES.md). The international polymarket.com book is read only as a reference price (US persons can't open positions there). |
 | Backtest archive | Kalshi `/historical/...`: every 2025-26 player-points ladder, result and 1-minute candles | `cli history` downloads it into `data/history/` (git-ignored). It's resumable, in random game order, so a partial download is a season-wide sample; the full download takes ~7 hours at the public rate limit. `cli backtest --docs` writes [`docs/BACKTEST.md`](docs/BACKTEST.md); the April-onward holdout stays sealed until `--reveal-holdout`. |
 | 2025-26 player lines (all 30 teams) | StatMuse team pages, one source URL per row | Usage, minutes, points, 3-point shooting, and season rebound and assist totals (offensive and defensive too). Every row is checked against its season totals. |

@@ -53,6 +53,15 @@ SCHEMA: dict[str, dict[str, str]] = {
         "proj_mpg": "DOUBLE", "usg_proj": "DOUBLE",
         "inputs_hash": "VARCHAR", "model_version": "VARCHAR",
     },
+    # Stats logged for validation only (config.EXTRA_STATS): same columns as projections, never
+    # read by the venue scan or the signals.
+    "extra_projections": {
+        "ts": "TIMESTAMP", "event_id": "VARCHAR", "player_id": "VARCHAR",
+        "player_name": "VARCHAR", "team": "VARCHAR", "new_team": "BOOLEAN",
+        "scenario": "VARCHAR", "stat": "VARCHAR", "mean": "DOUBLE", "sd": "DOUBLE",
+        "proj_mpg": "DOUBLE", "usg_proj": "DOUBLE",
+        "inputs_hash": "VARCHAR", "model_version": "VARCHAR",
+    },
     "signals": {
         "ts": "TIMESTAMP", "event_id": "VARCHAR", "player_id": "VARCHAR",
         "player_name": "VARCHAR", "team": "VARCHAR", "new_team": "BOOLEAN",
@@ -109,6 +118,26 @@ SCHEMA: dict[str, dict[str, str]] = {
         "close_consensus_p": "DOUBLE", "close_consensus_mean": "DOUBLE",
         "close_n_books": "INTEGER", "close_snapshot_ts": "TIMESTAMP",
         "close_source": "VARCHAR",
+    },
+    # Box scores from the same results responses (boxscores.py): every listed player, played
+    # or not, and both teams' totals. One game is stored once.
+    "box_scores": {
+        "ts": "TIMESTAMP", "event_id": "VARCHAR", "starts_at": "TIMESTAMP", "team": "VARCHAR",
+        "opponent": "VARCHAR", "home": "BOOLEAN", "player_id": "VARCHAR", "player_name": "VARCHAR",
+        "played": "BOOLEAN", "seconds": "DOUBLE", "minutes": "DOUBLE",
+        "pts": "DOUBLE", "reb": "DOUBLE", "oreb": "DOUBLE", "dreb": "DOUBLE", "ast": "DOUBLE",
+        "stl": "DOUBLE", "blk": "DOUBLE", "tov": "DOUBLE", "fgm": "DOUBLE", "fga": "DOUBLE",
+        "fg3m": "DOUBLE", "fg3a": "DOUBLE", "ftm": "DOUBLE", "fta": "DOUBLE", "pf": "DOUBLE",
+        "plus_minus": "DOUBLE", "usg_pct": "DOUBLE", "source": "VARCHAR",
+    },
+    "team_box_scores": {
+        "ts": "TIMESTAMP", "event_id": "VARCHAR", "starts_at": "TIMESTAMP", "team": "VARCHAR",
+        "opponent": "VARCHAR", "home": "BOOLEAN", "overtimes": "INTEGER", "team_minutes": "DOUBLE",
+        "listed_minutes": "DOUBLE",
+        "pts": "DOUBLE", "reb": "DOUBLE", "oreb": "DOUBLE", "dreb": "DOUBLE", "ast": "DOUBLE",
+        "stl": "DOUBLE", "blk": "DOUBLE", "tov": "DOUBLE", "fgm": "DOUBLE", "fga": "DOUBLE",
+        "fg3m": "DOUBLE", "fg3a": "DOUBLE", "ftm": "DOUBLE", "fta": "DOUBLE", "pf": "DOUBLE",
+        "plus_minus": "DOUBLE", "possessions": "DOUBLE", "source": "VARCHAR",
     },
 }
 

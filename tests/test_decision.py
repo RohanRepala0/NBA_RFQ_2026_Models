@@ -143,3 +143,9 @@ def test_config_hash_is_stable_and_changes_with_a_threshold(monkeypatch):
     assert h == config_hash()
     monkeypatch.setitem(config.VENUE_MIN_EDGE, "kalshi", 0.05)
     assert config_hash() != h
+
+
+def test_a_decision_carries_the_model_version_of_the_projection_it_used():
+    assert evaluate_contract(quote(0.40), "YES", ctx())["model_version"] == config.current_model_version()
+    rolled = evaluate_contract(quote(0.40), "YES", ctx(model_version=config.ROLLING_MODEL_VERSION))
+    assert rolled["model_version"] == config.ROLLING_MODEL_VERSION

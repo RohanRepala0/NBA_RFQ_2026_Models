@@ -6,8 +6,10 @@ from datetime import date, datetime
 import pandas as pd
 
 from . import config
+from .boxscores import store_box_scores
 from .config import CLOSE_TAG, MODEL_VERSION
 from .consensus import consensus_by_player, latest_snapshot_rows
+from .features import history, project_rolling, rolling_inputs_hash
 from .ingest import player_stat_results, save_raw, store_snapshot
 from .players import candidates_for_event, map_players
 from .schedule import current_timing, due_tag, et_date, et_day_bounds, iso_z
@@ -134,16 +136,17 @@ def snapshot_due(client: SGOClient, storage: Storage, now: datetime) -> dict:
 
 
 # --- Projections ---------------------------------------------------------------------
-def _odds_player_ids(storage: Storage, event_id: str) -> list[str]:
-    return storage.query("SELECT DISTINCT player_id FROM odds_snapshots WHERE event_id = ?",
-                         [event_id]).player_id.tolist()
+def _odds_player_ids(storage: Storage, event_id: str, now: datetime) -> list[str]:
+    return storage.query("SELECT DISTINCT player_id FROM odds_snapshots WHERE event_id = ? AND ts <= ?",
+                         [event_id, now]).player_id.tolist()
 
 
-def _roster(storage: Storage, event_id: str) -> pd.DataFrame:
+def _roster(storage: Storage, event_id: str, now: datetime) -> pd.DataFrame:
+    """The event's players as last stored by `now` (a replay as of a past tip never sees a later row)."""
     return storage.query("""
         SELECT player_id, name, team_abbr, status FROM (
           SELECT *, row_number() OVER (PARTITION BY player_id ORDER BY ts DESC) rn
-          FROM event_players WHERE event_id = ?) WHERE rn = 1""", [event_id])
+          FROM event_players WHERE event_id = ? AND ts <= ?) WHERE rn = 1""", [event_id, now])
 
 
 def latest_scenarios(storage: Storage, event_id: str, now: datetime) -> dict[str, str]:
@@ -157,18 +160,27 @@ def latest_scenarios(storage: Storage, event_id: str, now: datetime) -> dict[str
 
 def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: dict[str, str],
                     players: pd.DataFrame | None = None, scenarios_dir=None,
-                    log: bool = True, event_ids: set[str] | None = None) -> tuple[pd.DataFrame, list[str]]:
+                    log: bool = True, event_ids: set[str] | None = None,
+                    source: str | None = None) -> tuple[pd.DataFrame, list[str]]:
     """Project every modeled team on the date's un-tipped games and log one row per player and
     stat (config.STATS; a stat the inputs can't project is logged with a NULL mean). A team
     named in `scenario_choice` runs that scenario; any other team keeps the scenario of its
     latest logged run for the game (full_strength only when it has none), so
-    `project --scenario TOR=...` never resets an earlier `--scenario MIA=...`."""
+    `project --scenario TOR=...` never resets an earlier `--scenario MIA=...`.
+
+    `source` (default config.PROJECTION_SOURCE): "season" runs the usage model on last season's
+    averages; "rolling" on this season's box scores before tip (features.py), and also logs
+    config.EXTRA_STATS to extra_projections for validation."""
+    source = source or config.PROJECTION_SOURCE
+    if source not in ("season", "rolling"):
+        raise ValueError(f"Unknown projection source {source!r}")
     players = load_players() if players is None else players
     team_shooting = load_team_shooting()
     teams = set(modeled_teams(scenarios_dir))
     explicit = (dict(zip(players.player, players.sgo_player_id))
                 if "sgo_player_id" in players.columns else {})
-    printed, messages = [], []
+    printed, messages, history_cache = [], [], {}
+    last_season = players.drop_duplicates("player").set_index("player")[["usg_pct", "ppg"]]   # printed as is
     events = events_on(storage, d)
     if events.empty:
         messages.append(f"No stored events for {d}. Run `snapshot --date {d}` first.")
@@ -192,16 +204,32 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
                 messages.append(f"{team}: keeping scenario {name} from the last run (pass --scenario {team}=... "
                                 "to change it)" if team in previous else
                                 f"{team}: no scenario chosen, using full_strength (pass --scenario {team}=...)")
-            res = project_scenario(players, scen, team_shooting=team_shooting)
-            roster = _roster(storage, ev.event_id)
-            cands = candidates_for_event(roster, _odds_player_ids(storage, ev.event_id))
-            mapping, problems = map_players(res.player.tolist(), cands, team, explicit)
+            roster = _roster(storage, ev.event_id, now)
+            cands = candidates_for_event(roster, _odds_player_ids(storage, ev.event_id, now))
+            mapping, problems = map_players(scen.player.tolist(), cands, team, explicit)
             messages += [f"{team}: {p}" for p in problems]
+            if source == "rolling":
+                if history_cache.get(ev.event_id) is None:
+                    history_cache[ev.event_id] = history(storage, starts)
+                box, team_rows = history_cache[ev.event_id]
+                opponent = ev.home_abbr if team == ev.away_abbr else ev.away_abbr
+                full = scen_all[scen_all.scenario == "full_strength"]
+                out_names = tuple(sorted(set(full.player) - set(scen.player[scen.proj_mpg > 0])))
+                out_ids = tuple(sorted(pid for pid, st in zip(roster.player_id, roster.status)
+                                       if str(st).strip().lower() in config.OUT_STATUSES))
+                res, like, mins, ctx = project_rolling(players, scen, team, opponent, box, team_rows, mapping,
+                                                     team_shooting, out_names=out_names, out_ids=out_ids)
+                h, version = rolling_inputs_hash(like, mins, ctx), config.current_model_version(source)
+            else:
+                res = project_scenario(players, scen, team_shooting=team_shooting)
+                h, version = inputs_hash(players, scen), MODEL_VERSION
             roster_status = dict(zip(roster.player_id, roster.status))
-            h = inputs_hash(players, scen)
-            rows = []
+            scen_names = set(scen.player)
+            rows, extra = [], []
             for r in res.itertuples():
-                pid = mapping.get(r.player)
+                found = getattr(r, "player_id", None)        # rolling: the box-score id of a bench add
+                bench = r.player not in scen_names and isinstance(found, str) and found
+                pid = mapping.get(r.player) or (found if bench else None)
                 mean = None if pd.isna(r.ppg_proj) else float(r.ppg_proj)
                 if pid:
                     for stat in config.STATS:
@@ -214,24 +242,38 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
                                      "scenario": name, "stat": stat, "mean": m,
                                      "sd": None if m is None else float(getattr(r, sd_col)),
                                      "proj_mpg": float(r.proj_mpg), "usg_proj": float(r.usg_proj),
-                                     "inputs_hash": h, "model_version": MODEL_VERSION})
+                                     "inputs_hash": h, "model_version": version})
+                    for stat in (config.EXTRA_STATS if source == "rolling" else ()):
+                        m = getattr(r, f"{stat}_proj")
+                        ok = m is not None and not pd.isna(m)
+                        extra.append({**rows[-1], "stat": stat, "mean": float(m) if ok else None,
+                                      "sd": float(getattr(r, f"{stat}_sd")) if ok else None})
                 status = roster_status.get(pid)
                 reb, ast = getattr(r, "reb_proj", float("nan")), getattr(r, "ast_proj", float("nan"))
+                extra_cols = {"role": r.role, **{s: _round(getattr(r, f"{s}_proj")) for s in config.EXTRA_STATS}} \
+                    if source == "rolling" else {}
                 printed.append({"event": ev.event_id, "team": team, "scenario": name, "player": r.player,
                                 "player_id": pid or "UNMAPPED", "status": status,
-                                "min": r.proj_mpg, "usg": r.usg_pct, "usg_proj": round(r.usg_proj, 2),
-                                "ppg_25_26": r.ppg, "proj": None if mean is None else round(mean, 2),
+                                "min": r.proj_mpg, "usg": last_season.usg_pct.get(r.player, r.usg_pct),
+                                "usg_proj": round(r.usg_proj, 2), "ppg_25_26": last_season.ppg.get(r.player, r.ppg),
+                                "proj": None if mean is None else round(mean, 2),
                                 "spc_old": None if pd.isna(r.spacing_old) else round(r.spacing_old, 1),
                                 "spc_new": None if pd.isna(r.spacing_new) else round(r.spacing_new, 1),
                                 "sd": None if mean is None else round(float(r.sd_proj), 2),
                                 "fair_line": r.fair_line,
                                 "reb": None if pd.isna(reb) else round(float(reb), 2),
-                                "ast": None if pd.isna(ast) else round(float(ast), 2)})
+                                "ast": None if pd.isna(ast) else round(float(ast), 2),
+                                **extra_cols})
                 if status in ("out", "ir", "suspended", "doubtful"):
                     messages.append(f"{team}: {r.player} is listed {status} but is in scenario {name}")
             if log:
                 storage.append("projections", rows)
+                storage.append("extra_projections", extra)
     return pd.DataFrame(printed), messages
+
+
+def _round(v, nd: int = 2):
+    return None if v is None or pd.isna(v) else round(float(v), nd)
 
 
 # --- Signals -------------------------------------------------------------------------
@@ -281,7 +323,7 @@ def run_signals(storage: Storage, d: date, now: datetime, timing: str | None = N
 
 
 # --- Results (for grading) -------------------------------------------------------------
-def close_consensus(storage: Storage, event_id: str, starts_at: datetime):
+def close_consensus(storage: Storage, event_id: str, starts_at: datetime, stat: str = "points"):
     snap_ts, _ = latest_snapshot_rows(storage, event_id, before=starts_at, tag=CLOSE_TAG)
     source = CLOSE_TAG
     if snap_ts is None:
@@ -290,13 +332,15 @@ def close_consensus(storage: Storage, event_id: str, starts_at: datetime):
     if snap_ts is None:
         return {}, None
     tag = CLOSE_TAG if source == CLOSE_TAG else None
-    return consensus_by_player(storage, event_id, as_of=snap_ts, before=starts_at, tag=tag), source
+    return consensus_by_player(storage, event_id, as_of=snap_ts, before=starts_at, tag=tag, stat=stat), source
 
 
 def ingest_results(storage: Storage, events: list[dict], now: datetime) -> tuple[int, list[str]]:
-    """Append results (points, rebounds, assists) for every projected player on finalized events.
-    The close consensus columns are the points consensus."""
+    """Append results (points, rebounds, assists) for every projected player on finalized events,
+    and the box scores of every listed player (boxscores.py). The close consensus columns are the
+    points consensus."""
     messages, n = [], 0
+    store_box_scores(storage, events, now)
     stored = storage.latest_events().set_index("event_id")
     for ev in events:
         eid = ev["eventID"]
@@ -368,7 +412,8 @@ def venue_due_plan(storage: Storage, now: datetime) -> dict[str, str]:
 
 def events_without_projections(storage: Storage, event_ids: set[str], scenarios_dir=None) -> set[str]:
     """Events where a modeled team has no current projection run: none logged, a latest run
-    logged under an older MODEL_VERSION, or one missing a configured stat (say, points-only rows
+    logged under another model version than the configured source's (config.current_model_version:
+    an older MODEL_VERSION, or the other source), or one missing a configured stat (say, points-only rows
     from before rebounds and assists). The cron re-runs them, and run_projections keeps each
     team's latest scenario, so a model update never leaves stale projections driving the scan."""
     if not event_ids:
@@ -381,8 +426,9 @@ def events_without_projections(storage: Storage, event_ids: set[str], scenarios_
         SELECT p.event_id, p.team, min(p.model_version) AS v_min, max(p.model_version) AS v_max,
                list(DISTINCT coalesce(p.stat, 'points')) AS stats
         FROM projections p JOIN last USING (event_id, team, ts) GROUP BY 1, 2""")
+    version = config.current_model_version()
     current = {(r.event_id, r.team) for r in runs.itertuples()
-               if r.v_min == MODEL_VERSION and r.v_max == MODEL_VERSION and set(config.STATS) <= set(r.stats)}
+               if r.v_min == version and r.v_max == version and set(config.STATS) <= set(r.stats)}
     out = set()
     for e in ev.itertuples():
         if any(t in teams and (e.event_id, t) not in current for t in (e.away_abbr, e.home_abbr)):
