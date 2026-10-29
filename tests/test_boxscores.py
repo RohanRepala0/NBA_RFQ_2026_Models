@@ -139,3 +139,5 @@ def test_fetching_a_past_night_saves_a_results_file_and_stores_its_finals(game, 
         assert params["startsAfter"].startswith("2026-10-26T04:00")          # midnight ET (EDT)
         saved = list(tmp_path.glob("*/*results_2026-10-26.json"))
         assert len(saved) == 1 and backfill_from_raw(s, NOW, tmp_path)["games"] == 0
+        assert len(list(tmp_path.glob("*/*boxscores_pending_2026-10-26.json"))) == 1   # outside the results glob
+        assert c["pending_statuses"] == ["started/ended/completed"]

@@ -748,6 +748,9 @@ def cmd_boxscores(args, storage, now_fn) -> int:
         c = fetch_box_scores(_client(storage, now_fn), storage, args.date, now_fn())
         print(f"{args.date}: {c['events']} game(s) returned, {c['final']} final; stored {c['games']} game(s), "
               f"{c['players']} player row(s) ({c['objects']} API objects)")
+        if c["pending_statuses"]:
+            print(f"note: {c['events'] - c['final']} game(s) not finalized by SportsGameOdds yet "
+                  f"(status flags: {', '.join(c['pending_statuses'])}); saved as boxscores_pending_{args.date}, retry later")
     if args.from_raw:
         c = backfill_from_raw(storage, now_fn(), Path(args.dir) if args.dir else None)
         print(f"Read {c['files']} results file(s): stored {c['games']} game(s), {c['players']} player row(s); "

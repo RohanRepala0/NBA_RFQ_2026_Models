@@ -174,10 +174,15 @@ def fetch_box_scores(client, storage: Storage, d, now: datetime, raw_dir: Path |
               "bookmakerID": config.request_bookmaker_filter()}
     result = client.events(params, max_objects=MAX_GAMES_PER_DATE, note=f"boxscores:{d.isoformat()}")
     final = [e for e in result.events if (e.get("status") or {}).get("finalized")]
+    pending = [e for e in result.events if not (e.get("status") or {}).get("finalized")]
     if final:
         save_raw(final, now, f"results_{d.isoformat()}", raw_dir)
+    if pending:          # kept (outside the results glob) so a status SportsGameOdds hasn't finalized can be read
+        save_raw(pending, now, f"boxscores_pending_{d.isoformat()}", raw_dir)
+    statuses = sorted({"/".join(k for k in ("started", "ended", "completed", "finalized", "cancelled")
+                                if (e.get("status") or {}).get(k)) or "none" for e in pending})
     return {"objects": result.objects, "events": len(result.events), "final": len(final),
-            **store_box_scores(storage, final, now)}
+            "pending_statuses": statuses, **store_box_scores(storage, final, now)}
 
 
 def results_files(raw_dir: Path | None = None) -> list[Path]:
