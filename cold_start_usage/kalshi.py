@@ -1,4 +1,5 @@
-"""Read-only Kalshi market data for NBA player points, rebounds and assists.
+"""Read-only Kalshi market data for NBA player props: points, rebounds and assists, and the
+shadow stats (threes, steals, blocks, points + rebounds + assists: config.KALSHI_SERIES).
 
 Kalshi lists each stat as its own series (config.KALSHI_SERIES: KXNBAPTS,
 KXNBAREB, KXNBAAST) of "N+" ladders, one binary market per rung (points 10+,
@@ -45,7 +46,10 @@ SERIES = "KXNBAPTS"                                # points: the archive and the
 SERIES_STAT = {series: stat for stat, series in config.KALSHI_SERIES.items()}
 HEADERS = {"User-Agent": "cold-start-usage-research/1.0"}
 # "Derrick White: 25+ points" (live), "Tyler Herro records 30+ points" (archive), "Derrick White: 25+" (sub-title)
-TITLE_RE = re.compile(r"^(?P<name>.+?)(?::\s*|\s+records\s+)(?P<n>\d+)\+(?:\s+(?P<word>[a-z][a-z-]*))?", re.I)
+TITLE_RE = re.compile(r"^(?P<name>.+?)(?::\s*|\s+records\s+)(?P<n>\d+)\+(?:\s+(?P<word>[a-z][a-z, -]*[a-z]))?", re.I)
+# A title's stat words per stat ("Damian Lillard: 6+ threes", "... 35+ points, rebounds, and assists").
+STAT_WORDS = {"threes": ("three", "threes", "3-pointer", "3-pointers"),
+              "pra": ("points, rebounds, and assists", "points, rebounds and assists", "pts+reb+ast")}
 MONTHS = "JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split()
 TIP_BEFORE_OCCURRENCE = timedelta(hours=3)
 COLUMNS = ["ticker", "event_ticker", "stat", "player", "key", "team", "threshold", "line", "strike_type",
@@ -155,9 +159,15 @@ def stat_from_ticker(ticker: str | None) -> str | None:
 
 
 def stat_word_ok(word: str | None, stat: str) -> bool:
-    """A title's stat word ('rebounds', 'rebound') against the series' stat. No word (a sub-title
-    such as 'Derrick White: 25+') leaves the series to decide."""
-    return word is None or word.lower().rstrip("s") == stat.rstrip("s")
+    """A title's stat words ('rebounds', 'rebound', 'points, rebounds, and assists') against the
+    series' stat. No word (a sub-title such as 'Derrick White: 25+') leaves the series to decide."""
+    if word is None:
+        return True
+    w = " ".join(word.lower().split())
+    if any(w in words for s, words in STAT_WORDS.items() if s != stat):   # another stat's own words
+        return False
+    first = w.split(" ")[0].rstrip(",")                                  # "points" in "points in the game"
+    return w in STAT_WORDS.get(stat, ()) or first.rstrip("s") == stat.rstrip("s") or first in STAT_WORDS.get(stat, ())
 
 
 def team_from_ticker(ticker: str) -> str | None:

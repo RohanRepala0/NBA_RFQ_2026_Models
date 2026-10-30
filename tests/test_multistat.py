@@ -97,7 +97,7 @@ def test_missing_or_unverified_rates_blank_that_stat_only():
 
 
 # --- SportsGameOdds: ingest and consensus per stat --------------------------------------------
-def test_multi_stat_event_ingests_every_stat_and_drops_combos():
+def test_multi_stat_event_ingests_every_stat_and_reads_combos_under_our_names():
     ev = SGO["data"][0]
     rows = pd.DataFrame(quote_rows(ev, READ_AT, "open"))
     assert set(rows.stat) == {"points", "rebounds", "assists"}
@@ -106,10 +106,14 @@ def test_multi_stat_event_ingests_every_stat_and_drops_combos():
     no_stat = {"byBookmaker": {}}                                     # the oddID regex path (no statID field)
     assert player_stat_side("rebounds-CADE_CUNNINGHAM_1_NBA-game-ou-under", no_stat) == (
         "CADE_CUNNINGHAM_1_NBA", "rebounds", "under")
-    assert player_stat_side("points+rebounds+assists-CADE_CUNNINGHAM_1_NBA-game-ou-over", no_stat) is None
+    assert player_stat_side("points+rebounds+assists-CADE_CUNNINGHAM_1_NBA-game-ou-over", no_stat) == (
+        "CADE_CUNNINGHAM_1_NBA", "pra", "over")                       # shadow stats, under our names
+    assert player_stat_side("threePointersMade-CADE_CUNNINGHAM_1_NBA-game-ou-under", no_stat) == (
+        "CADE_CUNNINGHAM_1_NBA", "threes", "under")
     combo = {"statID": "points+rebounds", "periodID": "game", "betTypeID": "ou", "sideID": "over", "playerID": "X_1_NBA"}
-    assert player_stat_side("x", combo) is None
+    assert player_stat_side("x", combo) == ("X_1_NBA", "pr", "over")
     assert player_stat_side("x", combo | {"statID": "assists", "periodID": "1q"}) is None
+    assert player_stat_side("x", combo | {"statID": "dunks"}) is None
 
 
 def test_rebounds_odds_never_move_the_points_consensus(storage):
@@ -140,7 +144,8 @@ def test_results_parse_all_three_stats(storage):
     final["results"] = {"game": {"home": {"points": 120}, "CADE_CUNNINGHAM_1_NBA": {"points": 31, "rebounds": 6,
                                                                                      "assists": 11},
                                  "AUSAR_THOMPSON_1_NBA": {"points": 9, "rebounds": 8}}}
-    assert player_stat_results(final)["AUSAR_THOMPSON_1_NBA"] == {"points": 9.0, "rebounds": 8.0}
+    assert player_stat_results(final)["AUSAR_THOMPSON_1_NBA"] == {"points": 9.0, "rebounds": 8.0, "pr": 17.0}
+    assert player_stat_results(final)["CADE_CUNNINGHAM_1_NBA"]["pra"] == 48.0       # combos sum their parts
     n, _ = ingest_results(storage, [final], READ_AT + timedelta(days=1))
     res = storage.query("SELECT * FROM results ORDER BY player_id").set_index("player_id")
     assert n == 2 and res.loc["CADE_CUNNINGHAM_1_NBA", ["actual_points", "actual_rebounds", "actual_assists"]].tolist() == [
@@ -164,12 +169,18 @@ REB_ASK = [kalshi("KXNBAREB-26OCT20BOSDET-DETATHOMPSON9-6", "Ausar Thompson: 6+ 
 
 def test_kalshi_takes_the_stat_from_the_series_and_checks_the_title():
     bad = [kalshi("KXNBAREB-26OCT20BOSDET-BOSDWHITE9-4", "Derrick White: 4+ assists", 3.5, 0.5, 0.55),   # wrong word
-           kalshi("KXNBA3PT-26OCT20BOSDET-BOSDWHITE9-2", "Derrick White: 2+ threes", 1.5, 0.5, 0.55),     # not read
+           kalshi("KXNBA3PT-26OCT20BOSDET-BOSDWHITE9-2", "Derrick White: 2+ threes", 1.5, 0.5, 0.55),     # a shadow stat
            kalshi("KXNBAAST-26OCT20BOSDET-BOSDWHITE9-4", "Derrick White: 4+", 3.5, 0.5, 0.55)]            # sub-title form
     df = parse_markets(REB_ASK + bad)
-    assert df.stat.fillna("-").tolist() == ["rebounds", "rebounds", "assists", "rebounds", "-", "assists"]
+    assert df.stat.fillna("-").tolist() == ["rebounds", "rebounds", "assists", "rebounds", "threes", "assists"]
     assert df.parse_error.iloc[:3].isna().all() and df.threshold.iloc[:3].tolist() == [6, 8, 10]
-    assert "title says 'assists'" in df.parse_error.iloc[3] and "unknown series 'KXNBA3PT'" in df.parse_error.iloc[4]
+    assert "title says 'assists'" in df.parse_error.iloc[3] and pd.isna(df.parse_error.iloc[4])
+    pra = parse_markets([kalshi("KXNBAPRA-26OCT20BOSDET-BOSDWHITE9-35", "Derrick White: 35+ points, rebounds, and assists",
+                                34.5, 0.2, 0.25),
+                         kalshi("KXNBAPRA-26OCT20BOSDET-BOSDWHITE9-30", "Derrick White: 30+ points", 29.5, 0.2, 0.25),
+                         kalshi("KXNBA9ZZ-26OCT20BOSDET-BOSDWHITE9-2", "Derrick White: 2+ dunks", 1.5, 0.5, 0.55)])
+    assert pra.stat.fillna("-").tolist() == ["pra", "pra", "-"] and pd.isna(pra.parse_error.iloc[0])
+    assert "title says 'points'" in pra.parse_error.iloc[1] and "unknown series 'KXNBA9ZZ'" in pra.parse_error.iloc[2]
     assert pd.isna(df.parse_error.iloc[5])                           # no stat word: the series decides
     assert df.team.iloc[0] == "DET" and df.player.iloc[0] == "Ausar Thompson"
 
@@ -383,7 +394,8 @@ def test_one_kalshi_series_failing_keeps_the_others():
         if series == "KXNBAREB":
             raise RuntimeError("429")
         return [{"ticker": f"{series}-X"}]
-    assert [m["ticker"] for m in kalshi_series_markets(read, errors)] == ["KXNBAPTS-X", "KXNBAAST-X"]
+    assert [m["ticker"] for m in kalshi_series_markets(read, errors)] == [
+        f"{s}-X" for s in config.KALSHI_SERIES.values() if s != "KXNBAREB"]
     assert errors == ["kalshi KXNBAREB: RuntimeError: 429"]
     with pytest.raises(RuntimeError):
         kalshi_series_markets(lambda s: (_ for _ in ()).throw(RuntimeError("down")), [])
@@ -442,3 +454,26 @@ def test_an_old_schema_database_migrates_additively(tmp_path):
         assert c.stat == "points" and c.n_books == 2 and c.line == 24.5
         assert consensus_by_player(s, "E", as_of=as_of, stat="rebounds") == {}
         assert latest_projections(s, "E", as_of).stat.tolist() == ["points"]
+
+
+def test_a_shadow_stat_is_priced_against_its_own_books_and_never_becomes_a_ticket(storage, monkeypatch):
+    from cold_start_usage.venues import issued_tickets
+    monkeypatch.setattr(config, "bankroll_usd", lambda: 5000.0)
+    snapshot_from_file(storage, SGO, READ_AT)
+    odds = [{"ts": READ_AT, "event_id": BOS_DET, "odd_id": f"threePointersMade-AUSAR_THOMPSON_1_NBA-game-ou-{side}",
+             "player_id": "AUSAR_THOMPSON_1_NBA", "stat": "threes", "side": side, "book": book, "book_role": "reference",
+             "line": 1.5, "odds_american": price, "available": True, "is_main_line": True, "quote_ts": READ_AT,
+             "snapshot_tag": "open"}
+            for book in ("draftkings", "betmgm", "caesars") for side, price in (("over", -150), ("under", 120))]
+    storage.append("odds_snapshots", odds)
+    cheap = kalshi("KXNBA3PT-26OCT20BOSDET-DETATHOMPSON9-2", "Ausar Thompson: 2+ threes", 1.5, 0.44, 0.48)
+    df = scan(storage, date(2026, 10, 20), READ_AT + timedelta(minutes=1),
+              Fetchers(kalshi_markets=lambda: REB_ASK + [cheap]), tag="t-6h", bankroll=5000.0)
+    yes = df[(df.ticker == cheap["ticker"]) & (df.side == "YES")].iloc[0]
+    assert yes.stat == "threes" and 0.5 < yes.p_market < 0.65 and yes.consensus_line == 1.5
+    assert yes.decision == "shadow", yes.reason
+    assert yes.reason.startswith("shadow, would be actionable") and pd.isna(yes.stake_usd)
+    logged = storage.query("SELECT decision, stake_usd FROM venue_signals WHERE stat = 'threes'")
+    assert set(logged.decision) <= {"shadow", "abstain"} and logged.stake_usd.isna().all()
+    assert "threes" not in set(issued_tickets(storage, date(2026, 10, 20), READ_AT + timedelta(minutes=2)).stat)
+    assert set(df[df.stat == "rebounds"].decision) <= {"actionable", "watch", "abstain"}        # the real stats as before

@@ -336,6 +336,12 @@ def cmd_grade(args, storage, now_fn) -> int:
             print("Calibration:")
             _print_table(calibration(df))
     _grade_venues(storage, d, now, offline=args.offline)
+    from .grade import shadow_graded, shadow_summary
+    sh = shadow_summary(shadow_graded(storage, d, d))
+    if not sh.empty:
+        print(f"Shadow stats {d} (graded from box scores; never tickets): Brier of our price, the books', the venue ask;"
+              " would-be tickets at the ask:")
+        _print_table(sh.round(3))
     return 0
 
 

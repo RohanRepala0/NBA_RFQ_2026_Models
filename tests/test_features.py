@@ -135,7 +135,7 @@ def test_rolling_runs_without_history_match_the_season_model_and_log_the_extra_s
     logged = storage.query("SELECT DISTINCT model_version FROM projections").model_version.tolist()
     assert logged == [config.ROLLING_MODEL_VERSION]
     extra = storage.query("SELECT stat, count(*) n FROM extra_projections GROUP BY 1")
-    assert set(extra.stat) == set(config.EXTRA_STATS)
+    assert set(extra.stat) == set(config.SHADOW_STATS)
     # A rolling run is stale for a cron on the season source, so switching back re-projects.
     assert EVENT_ID in events_without_projections(storage, {EVENT_ID})
 

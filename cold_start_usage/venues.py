@@ -30,7 +30,7 @@ from . import config
 from .consensus import consensus_by_player
 from .decision import Context, Exposure, evaluate_contract, pick_per_group, size_positions
 from .kalshi import event_code
-from .pipeline import events_on, latest_projections
+from .pipeline import events_on, latest_extra_projections, latest_projections
 from .players import name_key
 from .schedule import et_date
 from .storage import Storage
@@ -115,7 +115,8 @@ def game_quotes(ev, fetchers: Fetchers, kalshi_df: pd.DataFrame | None, kalshi_t
         code = event_code(d, ev.away_abbr, ev.home_abbr)
         k = kalshi_df[kalshi_df.event_ticker.isin({f"{series}-{code}" for series in config.KALSHI_SERIES.values()})]
         parts.append(k.assign(venue="kalshi", fee_rate=None, quote_ts=kalshi_ts))
-    for name, getter, parse in (("polymarket_us", fetchers.pm_us_event, polymarket_us.prop_markets),
+    for name, getter, parse in (("polymarket_us", fetchers.pm_us_event,
+                                 lambda e: polymarket_us.prop_markets(e, config.ALL_STATS)),
                                 ("polymarket_intl", fetchers.pm_intl_event, polymarket.points_markets)):
         if getter is None:
             continue
@@ -226,8 +227,10 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
         roster = _roster(storage, ev.event_id)
         by_key, dupes = roster_keys(roster)
         cons = {stat: consensus_by_player(storage, ev.event_id, as_of=now, before=now, stat=stat)
-                for stat in config.STATS}
+                for stat in config.ALL_STATS}
         projs = {(p.player_id, p.stat): p for p in latest_projections(storage, ev.event_id, now).itertuples()}
+        projs.update({(p.player_id, p.stat): p for p in latest_extra_projections(storage, ev.event_id, now).itertuples()
+                      if p.stat in config.SHADOW_STATS})
         game = f"{ev.away_abbr} @ {ev.home_abbr}"
         rows, pending = [], []
         for q in quotes.to_dict("records"):
@@ -239,7 +242,7 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
             pid = r.player_id if team_ok else None
             if team_ok and q_team is None:
                 q = {**q, "team": r.team_abbr}               # venues without a team code take the roster's
-            stat = q.get("stat") if q.get("stat") in config.STATS else None   # unknown: already a parse error
+            stat = q.get("stat") if q.get("stat") in config.ALL_STATS else None   # unknown: already a parse error
             p = projs.get((pid, stat))
             ctx = Context(now=now, tip=tip, event_id=ev.event_id, game=game, player_id=pid, stat=stat or "points",
                           status=None if r is None or pd.isna(r.status) else str(r.status).lower(),
@@ -258,6 +261,9 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
                                 "open_interest": q.get("open_interest")})
             for side in ("YES", "NO"):
                 row = evaluate_contract(q, side, ctx, tag=tag)
+                if stat in config.SHADOW_STATS:
+                    rows.append(shadow(row))                 # priced and logged, never a ticket
+                    continue
                 rows.append(row)
                 # Depth only for contracts that already clear the bar at the top of the book.
                 if row["decision"] in ("actionable", "watch") and str(row["reason"]).startswith(("thin", "EV")):
@@ -284,6 +290,16 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
     if log:
         storage.append("venue_signals", df)
     return df
+
+
+def shadow(row: dict) -> dict:
+    """A shadow stat's decision (config.SHADOW_STATS): what the rules would have said, kept in the
+    reason, under decision 'shadow' with no stake, so no pick, ticket, cap or journal ever sees it.
+    Abstains stay abstains."""
+    if row.get("decision") not in ("actionable", "watch"):
+        return row
+    return {**row, "decision": "shadow", "reason": f"shadow, would be {row['decision']}: {row.get('reason')}",
+            "kelly": None, "stake_frac": None, "contracts": None, "stake_usd": None}
 
 
 def _depth(pending: list, fetchers: Fetchers) -> dict[tuple[str, str], dict[str, Levels]]:

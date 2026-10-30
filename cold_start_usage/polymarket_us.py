@@ -8,7 +8,8 @@ trading host api.polymarket.us is never called (hard rule 4).
 - Game events: /v1/events/slug/nba-{away}-{home}-{ET date}, with US team codes
   (ny, sa, gs, no, pho for NYK, SAS, GSW, NOP, PHX; others lower case).
 - Player props are "N+" ladders, one sportsMarketType per stat
-  (config.PM_US_STAT_TYPES: basketball_player_points / _rebounds / _assists).
+  (config.PM_US_STAT_TYPES: basketball_player_points / _rebounds / _assists, and the shadow
+  stats' _threes / _steals / _blocks / _points_rebounds_assists).
   NBA wording: "Will Jaylen Brown record at least 10 total rebounds in ...?",
   title "Jaylen Brown 10+ rebounds", line 10 (= 10 or more); points and assists
   read the same way ("at least 30 points", "at least 5 assists"). YES is the
@@ -38,7 +39,19 @@ GATEWAY = "https://gateway.polymarket.us"
 HEADERS = {"User-Agent": "cold-start-usage-research/1.0"}
 VENUE = "polymarket_us"
 US_TEAM = {"NYK": "ny", "SAS": "sa", "GSW": "gs", "NOP": "no", "PHX": "pho"}
-STAT_WORD = r"(?:total\s+)?(?P<word>points?|rebounds?|assists?)\b"
+STAT_WORD = (r"(?:total\s+|combined\s+)?(?P<word>points,\s+rebounds,?\s+and\s+assists|three-point field goals?(?: made)?"
+             r"|threes?|points?|rebounds?|assists?|steals?|blocks?)\b")
+# A question's stat words -> our stat ("at least 15 combined points, rebounds and assists" is pra).
+WORD_STAT = {"point": "points", "rebound": "rebounds", "assist": "assists", "steal": "steals", "block": "blocks",
+             "three": "threes", "three-point field goals made": "threes", "three-point field goal made": "threes",
+             "three-point field goals": "threes", "three-point field goal": "threes"}
+
+
+def word_stat(word: str) -> str | None:
+    w = " ".join(word.lower().split())
+    if w.startswith("points, rebounds"):
+        return "pra"
+    return WORD_STAT.get(w) or WORD_STAT.get(w.rstrip("s"))
 QUESTION_RE = re.compile(r"^Will (?P<name>.+?) (?:record|score)(?: at least| over)? (?P<n>\d+(?:\.\d+)?)\+? "
                          + STAT_WORD, re.I)
 TITLE_RE = re.compile(r"^(?P<name>.+?):?\s+(?:(?:over|o)\s*)?(?P<n>\d+(?:\.\d+)?)\+?\s+" + STAT_WORD, re.I)
@@ -101,7 +114,7 @@ def prop_markets(event: dict, stats: tuple[str, ...] = config.STATS) -> pd.DataF
         error = None
         if not hit:
             error = f"unparsed question {question!r}"
-        elif hit["word"].lower().rstrip("s") != stat.rstrip("s"):
+        elif word_stat(hit["word"]) != stat:
             error = f"question says {hit['word']!r} but sportsMarketType is {m.get('sportsMarketType')}"
         if line_raw is None:
             error = error or "no line"
