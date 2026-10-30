@@ -285,7 +285,10 @@ def shadow_graded(storage: Storage, start: date, end: date) -> pd.DataFrame:
     df["won"] = (yes == (df.side == "YES")).astype(float)
     df["cost"] = df.cost.fillna(df.ask)
     df["pnl_per_contract"] = df.won - df.cost
-    df["would_be"] = df.decision.eq("shadow")
+    # A would-be ticket is what would have been actionable (not watch), the best per player-game and stat.
+    actionable = df.decision.eq("shadow") & df.reason.fillna("").str.startswith("shadow, would be actionable")
+    best = df[actionable].sort_values("ev_blend", ascending=False).drop_duplicates(["event_id", "player_id", "stat"])
+    df["would_be"] = df.index.isin(best.index)
     return df
 
 

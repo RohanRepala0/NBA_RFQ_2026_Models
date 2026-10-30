@@ -222,14 +222,17 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
             if source == "rolling":
                 res, like, mins, ctx = rolling()
                 h, version = rolling_inputs_hash(like, mins, ctx), config.current_model_version(source)
-                extras = res.set_index("player")
+                extras, extra_meta = res.set_index("player"), {"inputs_hash": h, "model_version": version}
             else:
                 res = project_scenario(players, scen, team_shooting=team_shooting)
                 h, version = inputs_hash(players, scen), MODEL_VERSION
                 try:            # the shadow stats' rates only: never let them block the season projections
-                    extras = rolling()[0].set_index("player")
+                    r_res, r_like, r_mins, r_ctx = rolling()
+                    extras = r_res.set_index("player")
+                    extra_meta = {"inputs_hash": rolling_inputs_hash(r_like, r_mins, r_ctx),
+                                  "model_version": config.ROLLING_MODEL_VERSION}
                 except Exception as exc:
-                    extras = None
+                    extras, extra_meta = None, None
                     messages.append(f"{team}: no shadow-stat projections ({type(exc).__name__}: {exc})")
             roster_status = dict(zip(roster.player_id, roster.status))
             scen_names = set(scen.player)
@@ -253,7 +256,7 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
                                      "inputs_hash": h, "model_version": version})
                     extra += shadow_rows(rows[-1], {x["stat"]: x["mean"] for x in rows[-len(config.STATS):]},
                                          extras.loc[r.player] if extras is not None and r.player in extras.index
-                                         else None)
+                                         else None, extra_meta)
                 status = roster_status.get(pid)
                 reb, ast = getattr(r, "reb_proj", float("nan")), getattr(r, "ast_proj", float("nan"))
                 extra_cols = {"role": r.role, **{s: _round(getattr(r, f"{s}_proj")) for s in config.EXTRA_STATS}} \
@@ -278,10 +281,13 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
     return pd.DataFrame(printed), messages
 
 
-def shadow_rows(base: dict, means: dict[str, float | None], extra: pd.Series | None) -> list[dict]:
+def shadow_rows(base: dict, means: dict[str, float | None], extra: pd.Series | None,
+                extra_meta: dict | None = None) -> list[dict]:
     """extra_projections rows for config.SHADOW_STATS: the per-minute stats from the rolling
     projection (`extra`, its <stat>_proj columns) and each combo as the sum of its parts' means,
-    from this run's points, rebounds and assists, priced with the combo's own SD."""
+    from this run's points, rebounds and assists, priced with the combo's own SD. A row built only
+    from the rolling projection (the per-minute stats, steals + blocks) carries its inputs hash and
+    model version (`extra_meta`); the combos of points, rebounds and assists carry this run's."""
     from . import distributions
     got = dict(means)
     for stat in config.EXTRA_STATS:
@@ -292,7 +298,9 @@ def shadow_rows(base: dict, means: dict[str, float | None], extra: pd.Series | N
         parts = config.COMBO_PARTS.get(stat)
         m = got.get(stat) if parts is None else (
             sum(got[x] for x in parts) if all(got.get(x) is not None for x in parts) else None)
-        rows.append({**base, "stat": stat, "mean": m,
+        from_rolling = parts is None or set(parts) <= set(config.EXTRA_STATS)
+        meta = extra_meta if from_rolling and extra_meta else {}
+        rows.append({**base, **meta, "stat": stat, "mean": m,
                      "sd": None if m is None else float(distributions.sd(stat, m))})
     return rows
 

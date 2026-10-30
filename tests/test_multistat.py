@@ -477,3 +477,24 @@ def test_a_shadow_stat_is_priced_against_its_own_books_and_never_becomes_a_ticke
     assert set(logged.decision) <= {"shadow", "abstain"} and logged.stake_usd.isna().all()
     assert "threes" not in set(issued_tickets(storage, date(2026, 10, 20), READ_AT + timedelta(minutes=2)).stat)
     assert set(df[df.stat == "rebounds"].decision) <= {"actionable", "watch", "abstain"}        # the real stats as before
+
+
+def test_a_kalshi_outage_on_the_real_stats_keeps_the_checkpoint_open_whatever_the_shadow_series_do():
+    def read(series):
+        if series in ("KXNBAPTS", "KXNBAREB", "KXNBAAST"):
+            raise RuntimeError("429")
+        return []
+    with pytest.raises(RuntimeError):
+        kalshi_series_markets(read, [])
+
+
+def test_shadow_settings_never_move_the_real_stats_config_hash():
+    from cold_start_usage.decision import config_hash
+    assert config_hash() == "377859dd66fc"                   # as before the shadow stats were added
+    assert config_hash(shadow=True) != config_hash()
+
+
+def test_kalshi_reads_every_spelling_of_threes():
+    rows = parse_markets([kalshi(f"KXNBA3PT-26OCT20BOSDET-BOSDWHITE9-{i}", f"Derrick White: 3+ {w}", 2.5, 0.4, 0.45)
+                          for i, w in enumerate(("threes", "three-pointers", "3-pointers", "three pointers made"))])
+    assert rows.stat.tolist() == ["threes"] * 4 and rows.parse_error.isna().all()

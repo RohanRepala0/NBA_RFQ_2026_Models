@@ -69,8 +69,9 @@ def live_fetchers() -> Fetchers:
 
 def kalshi_series_markets(read: Callable[[str], list[dict]], errors: list[str]) -> list[dict]:
     """Open markets of every configured Kalshi series, one read each. A series that fails is
-    recorded and skipped, so a rebounds outage never drops the points ladders; only when
-    every series fails does the read fail (and the checkpoint stays open for the next tick)."""
+    recorded and skipped, so a rebounds outage never drops the points ladders; when every series
+    of the real stats (config.STATS) fails the read fails, whatever the shadow series did, and the
+    checkpoint stays open for the next tick."""
     out, failed = [], []
     for series in config.KALSHI_SERIES.values():
         try:
@@ -78,7 +79,8 @@ def kalshi_series_markets(read: Callable[[str], list[dict]], errors: list[str]) 
         except Exception as exc:
             failed.append(series)
             errors.append(f"kalshi {series}: {type(exc).__name__}: {exc}")
-    if len(failed) == len(config.KALSHI_SERIES):
+    real = [config.KALSHI_SERIES[s] for s in config.STATS if s in config.KALSHI_SERIES]
+    if all(series in failed for series in real):
         raise RuntimeError(f"every Kalshi series failed ({', '.join(failed)})")
     return out
 

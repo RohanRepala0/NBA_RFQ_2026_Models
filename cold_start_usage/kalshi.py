@@ -48,7 +48,8 @@ HEADERS = {"User-Agent": "cold-start-usage-research/1.0"}
 # "Derrick White: 25+ points" (live), "Tyler Herro records 30+ points" (archive), "Derrick White: 25+" (sub-title)
 TITLE_RE = re.compile(r"^(?P<name>.+?)(?::\s*|\s+records\s+)(?P<n>\d+)\+(?:\s+(?P<word>[a-z][a-z, -]*[a-z]))?", re.I)
 # A title's stat words per stat ("Damian Lillard: 6+ threes", "... 35+ points, rebounds, and assists").
-STAT_WORDS = {"threes": ("three", "threes", "3-pointer", "3-pointers"),
+STAT_WORDS = {"threes": ("three", "threes", "3-pointer", "3-pointers", "three-pointer", "three-pointers",
+                        "three pointers", "three pointers made", "three-pointers made", "3-pointers made"),
               "pra": ("points, rebounds, and assists", "points, rebounds and assists", "pts+reb+ast")}
 MONTHS = "JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split()
 TIP_BEFORE_OCCURRENCE = timedelta(hours=3)
