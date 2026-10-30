@@ -818,7 +818,7 @@ def cmd_persistence(args, storage, now_fn) -> int:
     from . import persistence as P
     from .usage_model import load_players
     raw = Path(args.dir) if args.dir else config.RAW_DIR / "courtai" / "persist_2025_26"
-    df, notes = P.study(raw, load_players())
+    df, notes = P.study(raw, load_players(), args.target_end)
     for n in notes:
         print("note:", n)
     if df.empty:
@@ -943,6 +943,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("persistence", help="Fit the rolling shrinkage on 2025-26 game logs copied from Court AI (no API calls)")
     p.add_argument("--dir", help="Folder of the copied text (default data/raw/courtai/persist_2025_26)")
     p.add_argument("--reps", type=int, default=200, help="Bootstrap resamples for the k band")
+    p.add_argument("--target-end", help="Last date of the rest-of-season target, YYYY-MM-DD (e.g. before the trade deadline)")
     p.add_argument("--csv", help="Also write the player-cut rows here")
     p = sub.add_parser("dashboard", help="Write the Prop Desk dashboard's row files (no API calls)")
     p.add_argument("--out", required=True, help="Folder for tickets.json, model_eval.json, minutes_eval.json")

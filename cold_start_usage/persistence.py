@@ -122,8 +122,10 @@ def load_player(raw_dir: Path, name: str) -> tuple[dict, pd.DataFrame] | None:
     return prior, games.sort_values("date").reset_index(drop=True)
 
 
-def player_rows(name: str, prior: dict, games: pd.DataFrame, usg_2025_26: float, team_2025_26: str) -> list[dict]:
-    """One row per early cut: the first n games' sums, the rest of the season's, and the prior."""
+def player_rows(name: str, prior: dict, games: pd.DataFrame, usg_2025_26: float, team_2025_26: str,
+                target_end: str | None = None) -> list[dict]:
+    """One row per early cut: the first n games' sums, the rest of the season's (through
+    `target_end` when given, e.g. before the trade deadline) and the prior."""
     g = games[games.MIN > 0].copy()
     g["plays"] = g.FGA + FTA_WEIGHT * g.FTA + g.TOV
     if len(g) < MIN_REST_GAMES + 1 or g.plays.sum() <= 0 or not prior.get("tot_MIN"):
@@ -137,6 +139,8 @@ def player_rows(name: str, prior: dict, games: pd.DataFrame, usg_2025_26: float,
     rows = []
     for n in CUTS:
         early, rest = g.iloc[:n], g.iloc[n:]
+        if target_end:
+            rest = rest[rest.date <= target_end]
         if len(rest) < MIN_REST_GAMES:
             break
         r = {**base, "n": n, "early_min": early.MIN.sum(), "rest_min": rest.MIN.sum(), "rest_games": len(rest),
@@ -148,7 +152,7 @@ def player_rows(name: str, prior: dict, games: pd.DataFrame, usg_2025_26: float,
     return rows
 
 
-def study(raw_dir: Path, players: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
+def study(raw_dir: Path, players: pd.DataFrame, target_end: str | None = None) -> tuple[pd.DataFrame, list[str]]:
     """Rows for every player with all files (players: players_2025_26.csv). Returns (rows, notes)."""
     rows, notes = [], []
     by_slug = {slug(p): r for p, r in zip(players.player, players.itertuples())}
@@ -170,7 +174,7 @@ def study(raw_dir: Path, players: pd.DataFrame) -> tuple[pd.DataFrame, list[str]
         if not prior["gp"] >= MIN_PRIOR_GAMES or np.isnan(prior["usg"]):
             notes.append(f"{row.player}: 2024-25 sample too small (GP {prior['gp']})")
             continue
-        r = player_rows(row.player, prior, games, float(row.usg_pct), row.team_2025_26)
+        r = player_rows(row.player, prior, games, float(row.usg_pct), row.team_2025_26, target_end)
         if not r:
             notes.append(f"{row.player}: too few 2025-26 games ({len(games)})")
         rows += r
