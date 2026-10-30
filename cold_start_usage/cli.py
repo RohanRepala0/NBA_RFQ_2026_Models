@@ -813,6 +813,30 @@ def cmd_shifts(args, storage, now_fn) -> int:
     return 0
 
 
+def cmd_persistence(args, storage, now_fn) -> int:
+    """Fit the rolling model's shrinkage on 2025-26: first n games against the rest (no API calls)."""
+    from . import persistence as P
+    from .usage_model import load_players
+    raw = Path(args.dir) if args.dir else config.RAW_DIR / "courtai" / "persist_2025_26"
+    df, notes = P.study(raw, load_players())
+    for n in notes:
+        print("note:", n)
+    if df.empty:
+        print(f"No usable players under {raw}.")
+        return 1
+    print(f"{df.player.nunique()} players ({int(df.groupby('player').new_team.first().sum())} on a new team), "
+          f"{len(df)} player-cuts")
+    fit = P.fit(df, reps=args.reps)
+    _print_table(fit)
+    _print_table(pd.concat([P.fit_by_cut(df, s) for s in P.STUDY_STATS]))
+    _print_table(P.team_scale(df))
+    _print_table(pd.DataFrame([P.direction(df, n) for n in (3, 4, 5, 10)]))
+    if args.csv:
+        df.to_csv(args.csv, index=False)
+        print(f"Wrote {args.csv}")
+    return 0
+
+
 def cmd_dashboard(args, storage, now_fn) -> int:
     """Write the Prop Desk dashboard's row files (no API calls)."""
     from .dashboard import export
@@ -827,6 +851,7 @@ COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "p
             "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
             "journal": cmd_journal, "roster": cmd_roster, "boxscores": cmd_boxscores,
             "evaluate": cmd_evaluate, "dashboard": cmd_dashboard, "shifts": cmd_shifts,
+            "persistence": cmd_persistence,
             "backtest": cmd_backtest}
 
 
@@ -915,6 +940,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--top", type=int, default=30)
     p.add_argument("--all", action="store_true", help="Every player, not only the flagged ones")
     p.add_argument("--json", help="Also write every row here")
+    p = sub.add_parser("persistence", help="Fit the rolling shrinkage on 2025-26 game logs copied from Court AI (no API calls)")
+    p.add_argument("--dir", help="Folder of the copied text (default data/raw/courtai/persist_2025_26)")
+    p.add_argument("--reps", type=int, default=200, help="Bootstrap resamples for the k band")
+    p.add_argument("--csv", help="Also write the player-cut rows here")
     p = sub.add_parser("dashboard", help="Write the Prop Desk dashboard's row files (no API calls)")
     p.add_argument("--out", required=True, help="Folder for tickets.json, model_eval.json, minutes_eval.json")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")
