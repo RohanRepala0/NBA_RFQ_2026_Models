@@ -1,6 +1,6 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
-catalog | board | kalshi | venues | tickets | fill | journal | roster | boxscores | evaluate | history |
-backtest.
+catalog | board | kalshi | venues | tickets | fill | journal | roster | boxscores | evaluate | dashboard |
+history | backtest.
 
     python -m cold_start_usage.cli snapshot --date 2026-10-21
     python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
@@ -788,12 +788,20 @@ def cmd_evaluate(args, storage, now_fn) -> int:
     return 0
 
 
+def cmd_dashboard(args, storage, now_fn) -> int:
+    """Write the Prop Desk dashboard's row files (no API calls)."""
+    from .dashboard import export
+    counts = export(storage, Path(args.out), now_fn())
+    print("Wrote " + ", ".join(f"{k} ({v} rows)" for k, v in counts.items()) + f" to {args.out}")
+    return 0
+
+
 COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "project": cmd_project,
             "signals": cmd_signals, "watchlist": cmd_watchlist, "grade": cmd_grade, "report": cmd_report,
             "fit": cmd_fit, "catalog": cmd_catalog, "board": cmd_board, "kalshi": cmd_kalshi,
             "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
             "journal": cmd_journal, "roster": cmd_roster, "boxscores": cmd_boxscores,
-            "evaluate": cmd_evaluate,
+            "evaluate": cmd_evaluate, "dashboard": cmd_dashboard,
             "backtest": cmd_backtest}
 
 
@@ -878,6 +886,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--until", type=_parse_date, help="Last ET date (default: every graded date)")
     p.add_argument("--csv", help="Also write the per player-game rows here")
     p.add_argument("--docs", action="store_true", help="Also write docs/MODEL_V2_EVAL.md")
+    p = sub.add_parser("dashboard", help="Write the Prop Desk dashboard's row files (no API calls)")
+    p.add_argument("--out", required=True, help="Folder for tickets.json, model_eval.json, minutes_eval.json")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")
     p.add_argument("--series", default="KXNBAPTS")
     p.add_argument("--limit", type=int, help="Markets to fetch this run (default: all remaining)")
