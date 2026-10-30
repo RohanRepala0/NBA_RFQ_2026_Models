@@ -63,11 +63,16 @@ def test_no_games_means_the_prior_and_momentum_is_five_minus_twenty():
     assert f["rate_points"] == pytest.approx((k * 0.5 + 360) / (k + sum(mins)))
 
 
-def test_a_new_team_halves_the_prior_weight():
+def test_a_new_team_cuts_the_prior_weight_per_stat():
     games = _games([30.0] * 3, [30.0] * 3, [20.0] * 3)
     same = player_features(games, PRIOR)
     moved = player_features(games, Prior(**{**PRIOR.__dict__, "new_team": True}))
     assert abs(moved["rate_points"] - 1.0) < abs(same["rate_points"] - 1.0)
+    moved = player_features(_games([30.0] * 3, [30.0] * 3, [25.0] * 3), Prior(**{**PRIOR.__dict__, "new_team": True}))
+    for stat, col, prior, total in (("points", "rate_points", 0.5, 90.0), ("usage", "usg", 20.0, 25.0 * 90),
+                                    ("rebounds", "rate_rebounds", 0.5, 15.0)):
+        k = config.ROLLING_PRIOR_GAMES[stat] * config.TEAM_CHANGE_PRIOR_SCALE[stat] * 30.0
+        assert moved[col] == pytest.approx((k * prior + total) / (k + 90))
 
 
 def test_role_classes():

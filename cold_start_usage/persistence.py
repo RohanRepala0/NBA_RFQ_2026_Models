@@ -33,7 +33,7 @@ CUTS = range(1, 16)                 # early samples of 1..15 games
 MIN_REST_GAMES = 20                 # a target needs the rest of a season, not a few games
 MIN_PRIOR_GAMES = 25
 K_GRID = (0.0, 0.5, 1, 1.5, 2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20, 25, 30, 40, 60, 100)
-SCALE_GRID = (0.25, 0.5, 0.75, 1.0, 1.5)
+SCALE_GRID = (0.0, 0.1, 0.25, 0.5, 0.75, 1.0, 1.5)
 SHIFT_USG = 3.0                     # a usage shift worth asking about (points of USG%)
 # study stat -> (game-log column, season-totals key); usage and minutes are handled apart
 RATE_COLS = {"points": ("PTS", "PTS"), "rebounds": ("REB", "REB"), "assists": ("AST", "AST"),
@@ -204,7 +204,7 @@ def loss(df: pd.DataFrame, stat: str, k: float, team_scale: float = 1.0) -> floa
 
 def live_scale(stat: str) -> float:
     """The k multiplier the live model gives a player on a new team (rolling minutes use none)."""
-    return 1.0 if stat == "minutes" else config.TEAM_CHANGE_PRIOR_SCALE
+    return config.TEAM_CHANGE_PRIOR_SCALE.get(stat, 1.0)
 
 
 def best_k(df: pd.DataFrame, stat: str, grid=K_GRID, scale: float = 1.0) -> float:

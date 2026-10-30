@@ -10,7 +10,8 @@ Per player (box scores of games he played, newest first):
 
       rate = (K * prior_rate + sum(stat)) / (K + sum(minutes)),  K = k_games * prior_mpg
 
-  with k_games per stat in config.ROLLING_PRIOR_GAMES (halved for a player on a new team).
+  with k_games per stat in config.ROLLING_PRIOR_GAMES (scaled down for a player on a new team,
+  config.TEAM_CHANGE_PRIOR_SCALE).
   No prior row (a rookie): the as-of league rate for his minutes tier;
 - role stability from the last 10 games: the coefficient of variation of minutes, usage and
   points per minute, as a class (config.ROLE_CLASSES), which widens the points SD.
@@ -159,8 +160,8 @@ def player_features(games: pd.DataFrame, prior: Prior) -> dict:
     g = games[games.minutes.notna() & (games.minutes > 0)]
     last5, last20, last10 = g.head(WINDOW_SHORT), g.head(WINDOW_LONG), g.head(WINDOW_ROLE)
     n = len(last20)
-    scale = config.TEAM_CHANGE_PRIOR_SCALE if prior.new_team else 1.0
-    k = {s: config.ROLLING_PRIOR_GAMES[s] * scale * max(prior.mpg, 1.0) for s in (*RATE_STATS, "usage")}
+    k = {s: config.ROLLING_PRIOR_GAMES[s] * (config.TEAM_CHANGE_PRIOR_SCALE[s] if prior.new_team else 1.0)
+            * max(prior.mpg, 1.0) for s in (*RATE_STATS, "usage")}
     mins20 = float(last20.minutes.sum())
     out = {"games": n,
            "min_5": last5.minutes.mean() if len(last5) else np.nan,

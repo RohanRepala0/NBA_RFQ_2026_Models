@@ -35,7 +35,7 @@ rows and team minutes from the periods played (240, plus 25 per overtime).
 | minutes, FGA, FTA, TOV, usage | means over the last 5 and last 20 games (usage minute-weighted) |
 | momentum | 5-game minus 20-game minutes, usage and points per minute |
 | per-minute rates | points, rebounds, assists, threes, steals, blocks, turnovers over the last 20 games |
-| shrinkage | `rate = (K * prior + sum) / (K + minutes)`, `K = k games x prior minutes per game`; k per stat in `config.ROLLING_PRIOR_GAMES` (rebounds and usage settle fast, threes and steals slowly), halved for a player on a new team; rookies take the league rate for their minutes tier |
+| shrinkage | `rate = (K * prior + sum) / (K + minutes)`, `K = k games x prior minutes per game`; k per stat in `config.ROLLING_PRIOR_GAMES`, fitted on 2025-26 for points and rebounds (`docs/PERSISTENCE_STUDY.md`: usage settles in a few games, rebounds and threes slowly); a player on a new team keeps a tenth of the prior's weight for usage and points, half for the rest (`config.TEAM_CHANGE_PRIOR_SCALE`); rookies take the league rate for their minutes tier |
 | role stability | coefficient of variation of minutes, usage and points per minute over the last 10 games: `engine` (30+ minutes, steady minutes and usage), `heat_check` (points per minute swing), `volatile_role` (minutes swing), `steady`, or `unknown` under 4 games; volatile classes widen the points SD 10% |
 | pace | each team's possessions per 48 (`FGA + 0.44 FTA - OREB + TOV`), shrunk to the league over 10 games; the game's expected pace over the team's own is a multiplier |
 | opponent resistance | what the opponent allows per possession in each stat, shrunk to the league over 10 games |
@@ -52,7 +52,7 @@ starter already near the cap; an excess comes off in proportion.
 **Production.** The rolling inputs feed the same usage model: shrunk usage in the usage budget,
 shrunk rates times projected minutes into the points, rebound and assist budgets, then the pace
 and opponent multipliers. Threes, steals, blocks and turnovers are projected the same way and
-logged to `extra_projections` only: the venue scan never reads them.
+logged to `extra_projections` and priced as shadow sides only (never tickets).
 
 **The switch.** `config.PROJECTION_SOURCE` is `season` (v1, unchanged). `project --source rolling`
 runs v2 under its own `model_version`; flipping the config makes the cron re-project every game

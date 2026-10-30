@@ -829,7 +829,7 @@ def cmd_persistence(args, storage, now_fn) -> int:
     fit = P.fit(df, reps=args.reps)
     _print_table(fit)
     _print_table(pd.concat([P.fit_by_cut(df, s) for s in P.STUDY_STATS]))
-    _print_table(P.team_scale(df))
+    _print_table(pd.concat([P.team_scale(df, s) for s in P.STUDY_STATS if s != "minutes"]))
     _print_table(pd.DataFrame([P.direction(df, n) for n in (3, 4, 5, 10)]))
     if args.csv:
         df.to_csv(args.csv, index=False)

@@ -259,17 +259,21 @@ MODEL_VERSION = "usage-squeeze-1.1"      # 1.1: rebounds and assists
 # box scores before tip, shrunk to last season. "season" stays until `evaluate` shows rolling
 # beating it out of sample (docs/MODEL_V2_PLAN.md).
 PROJECTION_SOURCE = "season"
-ROLLING_MODEL_VERSION = "usage-squeeze-1.1+rolling-0.1"
+ROLLING_MODEL_VERSION = "usage-squeeze-1.1+rolling-0.2"
 # The rolling settings below were chosen on the games before this ET date (the bench finding
 # came from them): `evaluate` reports those nights as in-sample and the rest as out of sample.
 ROLLING_FROZEN_AT = date(2026, 10, 27)
 # Prior weight in games of last season's rate: shrunk = (K * prior + sum) / (K + minutes),
-# K = games * prior minutes per game; "minutes" is in games of the scenario's minutes. Frozen
-# priors from how fast each stat settles (rebounds and usage fast, threes and steals slow), to
-# fit on 2025-26 box scores (stage 2).
-ROLLING_PRIOR_GAMES = {"minutes": 3, "usage": 6, "points": 6, "rebounds": 5, "assists": 5,
+# K = games * prior minutes per game; "minutes" is in games of the scenario's minutes. Points 10
+# and rebounds 20 are fitted on 2025-26 (`persistence`, docs/PERSISTENCE_STUDY.md: a player's
+# first games against the rest of his season, prior 2024-25); the others sat inside the fit's
+# bootstrap band and stay as set (steals and blocks weren't studied).
+ROLLING_PRIOR_GAMES = {"minutes": 3, "usage": 6, "points": 10, "rebounds": 20, "assists": 5,
                        "threes": 12, "steals": 15, "blocks": 10, "turnovers": 10}
-TEAM_CHANGE_PRIOR_SCALE = 0.5            # a new team halves the prior's weight
+# A player on a new team: the prior's weight times this. Same study: a new team's usage and
+# scoring showed in the first games (last season's barely helped), the box rates much less.
+TEAM_CHANGE_PRIOR_SCALE = {"usage": 0.1, "points": 0.1, "rebounds": 0.5, "assists": 0.5,
+                           "threes": 0.5, "steals": 0.5, "blocks": 0.5, "turnovers": 0.5}
 ROLLING_MINUTES_CAP = 38.0               # added minutes stop here (a player already above keeps his)
 TEAM_PRIOR_GAMES = 10                    # pace and opponent allowances, in games of league average
 CONTEXT_CLAMP = (0.90, 1.10)             # pace and opponent multipliers
