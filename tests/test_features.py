@@ -238,3 +238,19 @@ def test_a_projected_player_who_sat_counts_in_minutes_but_not_in_stat_accuracy()
     assert m.iloc[0].n == 3 and m.iloc[0].bias_season == pytest.approx(10.0) and m.loc["played only"].n == 2
     labels = [label for label, _ in windows(df)]
     assert labels[0].startswith("Out of sample") and labels[1].startswith("In-sample")
+
+
+def test_shifts_flag_a_big_usage_change_on_enough_minutes():
+    from cold_start_usage.shifts import shifts
+    with Storage(":memory:") as s:
+        store_box_scores(s, [_game("g1", "2026-10-21T23:00:00Z"), _game("g2", "2026-10-23T23:00:00Z")], datetime(2026, 10, 24))
+        row = {"team_2025_26": "MIN", "team_2026_27": "MIN", "games": 70, "ppg": 20.0, "rpg": 5.0, "apg": 4.0,
+               "fg3a_pg": 7.0, "fg3_pct": 36.0, "verified": "yes", "source": "src"}
+        players = pd.DataFrame([{**row, "player": "Anthony Edwards", "sgo_player_id": "ANTHONY_EDWARDS_1_NBA",
+                                 "usg_pct": 20.0, "mpg": 34.0}])
+        df = shifts(s, datetime(2026, 10, 25, 23), players).set_index("player_id")
+        ant = df.loc["ANTHONY_EDWARDS_1_NBA"]
+        assert ant.games == 2 and ant.minutes >= 60 and ant.usg > 35 and ant.d_usg > 15
+        assert ant.flagged and "usage +" in ant["flags"]
+        assert ant.usg_prior < ant.usg_model < ant.usg and ant.gap > 0          # the shrinkage holds some back
+        assert not df[~df.has_prior].flagged.any()                               # no prior row: never flagged

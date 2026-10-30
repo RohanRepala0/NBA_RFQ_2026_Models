@@ -1,6 +1,6 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
-catalog | board | kalshi | venues | tickets | fill | journal | roster | boxscores | evaluate | dashboard |
-history | backtest.
+catalog | board | kalshi | venues | tickets | fill | journal | roster | boxscores | evaluate | shifts |
+dashboard | history | backtest.
 
     python -m cold_start_usage.cli snapshot --date 2026-10-21
     python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
@@ -794,6 +794,25 @@ def cmd_evaluate(args, storage, now_fn) -> int:
     return 0
 
 
+def cmd_shifts(args, storage, now_fn) -> int:
+    """Role shifts: this season's usage, minutes and threes volume against last season's (no API calls)."""
+    from .shifts import shifts
+    from .usage_model import load_players
+    df = shifts(storage, now_fn(), load_players())
+    if df.empty:
+        print("No box scores yet: run `boxscores --from-raw` or `grade` first.")
+        return 1
+    show = df[df.flagged] if not args.all else df
+    print(f"{int(df.flagged.sum())} flagged of {len(df)} players (min {config.SHIFT_MIN_MINUTES:g} minutes; "
+          "gap = this season's usage minus the rolling model's shrunk usage):")
+    _print_table(show.head(args.top), ["player", "team", "team_2025_26", "games", "mpg", "mpg_prior", "usg", "usg_prior",
+                                       "usg_model", "gap", "pts36", "pts36_prior", "fg3a36", "fg3a36_prior", "flags"])
+    if args.json:
+        Path(args.json).write_text(df.to_json(orient="records"))
+        print(f"Wrote {args.json}")
+    return 0
+
+
 def cmd_dashboard(args, storage, now_fn) -> int:
     """Write the Prop Desk dashboard's row files (no API calls)."""
     from .dashboard import export
@@ -807,7 +826,7 @@ COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "p
             "fit": cmd_fit, "catalog": cmd_catalog, "board": cmd_board, "kalshi": cmd_kalshi,
             "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
             "journal": cmd_journal, "roster": cmd_roster, "boxscores": cmd_boxscores,
-            "evaluate": cmd_evaluate, "dashboard": cmd_dashboard,
+            "evaluate": cmd_evaluate, "dashboard": cmd_dashboard, "shifts": cmd_shifts,
             "backtest": cmd_backtest}
 
 
@@ -892,6 +911,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--until", type=_parse_date, help="Last ET date (default: every graded date)")
     p.add_argument("--csv", help="Also write the per player-game rows here")
     p.add_argument("--docs", action="store_true", help="Also write docs/MODEL_V2_EVAL.md")
+    p = sub.add_parser("shifts", help="Role shifts: this season's usage, minutes and 3PA vs last season (no API calls)")
+    p.add_argument("--top", type=int, default=30)
+    p.add_argument("--all", action="store_true", help="Every player, not only the flagged ones")
+    p.add_argument("--json", help="Also write every row here")
     p = sub.add_parser("dashboard", help="Write the Prop Desk dashboard's row files (no API calls)")
     p.add_argument("--out", required=True, help="Folder for tickets.json, model_eval.json, minutes_eval.json")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")

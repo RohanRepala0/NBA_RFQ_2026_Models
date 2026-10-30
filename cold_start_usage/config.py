@@ -278,6 +278,10 @@ CONTEXT_CLAMP = (0.90, 1.10)             # pace and opponent multipliers
 ROLE_CLASSES = {"min_games": 4, "engine_minutes": 30.0, "engine_cv_minutes": 0.12, "engine_cv_usage": 0.20,
                 "heat_check_cv_points": 0.40, "volatile_cv_minutes": 0.25}
 ROLE_SD_MULT = {"engine": 1.0, "steady": 1.0, "volatile_role": 1.10, "heat_check": 1.10, "unknown": 1.0}
+# Role shifts (shifts.py): this season against last on at least SHIFT_MIN_MINUTES minutes. A shift is
+# flagged at a change of at least: usage points, minutes a game, threes attempts per 36.
+SHIFT_MIN_MINUTES = 60.0
+SHIFT_FLAGS = {"usage": 4.0, "minutes": 6.0, "fg3a36": 2.0}
 # Projected from per-minute rates (features.py) and logged to extra_projections with the combos.
 EXTRA_STATS = ("threes", "steals", "blocks", "turnovers")
 
