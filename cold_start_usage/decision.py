@@ -96,14 +96,20 @@ def tau_for(venue: str, n_books: int, stat: str = "points") -> float:
     return tau + (config.THIN_CONSENSUS_EXTRA_EDGE if n_books <= config.MIN_PRICED_BOOKS else 0.0)
 
 
-def config_hash() -> str:
-    """Fingerprint of every number that changes a decision, logged on each row."""
+def config_hash(shadow: bool = False) -> str:
+    """Fingerprint of every number that changes a decision, logged on each row. The real stats'
+    rows hash only their own dispersion (so adding a shadow stat doesn't move it); a shadow stat's
+    row also hashes the shadow settings."""
     keys = ["EDGE_THRESHOLD", "MAX_CREDIBLE_EDGE", "VIG_METHOD", "BOOK_WEIGHTS", "VENUE_FEES", "VENUE_MIN_EDGE",
             "THIN_CONSENSUS_EXTRA_EDGE", "MIN_SIZE_AT_EDGE", "PLANNED_CONTRACTS", "TAIL_P", "W_MODEL",
             "Z_GAP_MAX", "SD_COMPOUND", "KELLY_LAMBDA", "MAX_BET_FRAC", "MAX_GAME_FRAC", "MAX_SLATE_FRAC",
-            "MAX_QUOTE_AGE_MIN", "MIN_PRICED_BOOKS", "LEAK_TOLERANCE_MIN", "STATS", "COUNT_DISPERSION"]
-    blob = json.dumps({k: getattr(config, k) for k in keys} | {"MODEL": MODEL.__dict__},
-                      sort_keys=True, default=str)
+            "MAX_QUOTE_AGE_MIN", "MIN_PRICED_BOOKS", "LEAK_TOLERANCE_MIN", "STATS"]
+    values = {k: getattr(config, k) for k in keys}
+    values["COUNT_DISPERSION"] = {k: v for k, v in config.COUNT_DISPERSION.items() if k in config.STATS}
+    if shadow:
+        values |= {"SHADOW_STATS": config.SHADOW_STATS, "NORMAL_STATS": config.NORMAL_STATS,
+                   "SHADOW_DISPERSION": {k: v for k, v in config.COUNT_DISPERSION.items() if k not in config.STATS}}
+    blob = json.dumps(values | {"MODEL": MODEL.__dict__}, sort_keys=True, default=str)
     return hashlib.sha256(blob.encode()).hexdigest()[:12]
 
 
@@ -163,7 +169,7 @@ def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float
         "consensus_ts": None if c is None else c.snapshot_ts,
         "consensus_mean": None if c is None else c.mean, "consensus_line": None if c is None else c.line,
         "model_mean": ctx.model_mean, "projection_ts": ctx.projection_ts,
-        "model_version": ctx.model_version or config.current_model_version(), "config_hash": config_hash(),
+        "model_version": ctx.model_version or config.current_model_version(), "config_hash": config_hash(stat in config.SHADOW_STATS),
         "decision": "abstain", "reason": None,
     }
 

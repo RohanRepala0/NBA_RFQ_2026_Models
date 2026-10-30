@@ -81,17 +81,29 @@ def request_bookmaker_filter(path: Path | None = None) -> str | None:
 # a normal (odds_math); rebounds and assists are counts, priced off a negative binomial
 # (distributions.py). The sportsbook-line `signals` stay points-only.
 STATS = ("points", "rebounds", "assists")
-STAT_LABELS = {"points": "PTS", "rebounds": "REB", "assists": "AST"}
+# Shadow stats: projected, priced against the books and the venues, logged and graded like the three
+# above, but a shadow decision is never actionable (no ticket, no stake, no cap) until the stat beats
+# the books out of sample (docs/MODEL_V2_PLAN.md). Combos are the sum of their parts.
+SHADOW_STATS = ("threes", "steals", "blocks", "turnovers", "pra", "pr", "pa", "ra", "stocks")
+ALL_STATS = STATS + SHADOW_STATS
+COMBO_PARTS = {"pra": ("points", "rebounds", "assists"), "pr": ("points", "rebounds"),
+               "pa": ("points", "assists"), "ra": ("rebounds", "assists"), "stocks": ("steals", "blocks")}
+STAT_LABELS = {"points": "PTS", "rebounds": "REB", "assists": "AST", "threes": "3PM", "steals": "STL",
+               "blocks": "BLK", "turnovers": "TOV", "pra": "PRA", "pr": "PR", "pa": "PA", "ra": "RA",
+               "stocks": "STK"}
+# Our stat name -> the SportsGameOdds statID (sportsgameodds.com/docs/data-types/stats).
+SGO_STAT_IDS = {"points": "points", "rebounds": "rebounds", "assists": "assists", "threes": "threePointersMade",
+                "steals": "steals", "blocks": "blocks", "turnovers": "turnovers", "pra": "points+rebounds+assists",
+                "pr": "points+rebounds", "pa": "points+assists", "ra": "rebounds+assists", "stocks": "blocks+steals"}
 
 # --- SportsGameOdds API --------------------------------------------------------
 API_BASE = "https://api.sportsgameodds.com/v2"
 API_KEY_ENV = "SPORTS_ODDS_API_KEY"
 LEAGUE_ID = "NBA"
 POINTS_ODD_FILTER = "points-PLAYER_ID-game-ou-over"   # + includeOpposingOdds=true
-# Every /events call asks for all of STATS in one comma list. Billing is per event, so the
-# extra stats cost nothing (checked live: 80 odds, 1 object).
-STATS_ODD_FILTER = ("points-PLAYER_ID-game-ou-over,rebounds-PLAYER_ID-game-ou-over,"
-                    "assists-PLAYER_ID-game-ou-over")
+# Every /events call asks for all of ALL_STATS in one comma list. Billing is per event, so the
+# extra stats cost nothing (checked live with three stats: 80 odds, 1 object).
+STATS_ODD_FILTER = ",".join(f"{SGO_STAT_IDS[s]}-PLAYER_ID-game-ou-over" for s in ALL_STATS)
 REQUESTS_PER_MINUTE = 10                 # Amateur plan
 MONTHLY_OBJECT_LIMIT = 2500              # Amateur plan
 MONTHLY_OBJECT_HARD_STOP = 2200          # our own ceiling, below the plan limit
@@ -133,11 +145,13 @@ LADDER_HALF_WIDTH = 3                    # "N+ points" rungs either side of the 
 ACTIONABLE_VENUES = ("kalshi", "polymarket_us")
 REFERENCE_VENUES = ("polymarket_intl",)
 VENUES = ACTIONABLE_VENUES + REFERENCE_VENUES
-# Kalshi series and Polymarket US sportsMarketTypes read, by stat. Other prop series
-# (threes, steals, blocks, combos) are not read.
-KALSHI_SERIES = {"points": "KXNBAPTS", "rebounds": "KXNBAREB", "assists": "KXNBAAST"}
+# Kalshi series and Polymarket US sportsMarketTypes read, by stat (the shadow ones too).
+KALSHI_SERIES = {"points": "KXNBAPTS", "rebounds": "KXNBAREB", "assists": "KXNBAAST",
+                 "threes": "KXNBA3PT", "steals": "KXNBASTL", "blocks": "KXNBABLK", "pra": "KXNBAPRA"}
 PM_US_STAT_TYPES = {"basketball_player_points": "points", "basketball_player_rebounds": "rebounds",
-                    "basketball_player_assists": "assists"}
+                    "basketball_player_assists": "assists", "basketball_player_threes": "threes",
+                    "basketball_player_steals": "steals", "basketball_player_blocks": "blocks",
+                    "basketball_player_points_rebounds_assists": "pra"}
 # Taker fee per order = rate * C * P * (1 - P), rounded per order:
 #   kalshi: up to the next cent (KXNBAPTS, KXNBAREB, KXNBAAST fee_type "quadratic": makers pay 0)
 #   polymarket_us: to the cent, half to even (feeCoefficient 0.0695; no maker rebate at tier 1)
@@ -174,7 +188,13 @@ SD_COMPOUND = (2.2, 0.15)
 # 2021-24 box scores (var / mean around a 20-game mean: 1.26 rebounds, 1.15 assists, plus a
 # little for opening-night uncertainty about the mean); phi_alt on the top of the range the
 # opening-week Kalshi and Polymarket US ladders imply. Frozen until graded.
-COUNT_DISPERSION = {"rebounds": (1.30, 1.50), "assists": (1.15, 1.30)}
+COUNT_DISPERSION = {"rebounds": (1.30, 1.50), "assists": (1.15, 1.30),
+                    # Shadow stats: unfitted priors (Var / mean of a player's game logs around his own mean;
+                    # threes and blocks are lumpy, steals near Poisson), to fit from game logs.
+                    "threes": (1.25, 1.45), "steals": (1.05, 1.20), "blocks": (1.30, 1.60),
+                    "turnovers": (1.10, 1.25), "ra": (1.30, 1.50), "stocks": (1.15, 1.35)}
+# Big combos are priced off a normal like points: SD = max(floor, fraction x mean), (fraction, floor).
+NORMAL_STATS = {"pra": (0.24, 4.5), "pr": (0.26, 4.0), "pa": (0.27, 4.0)}
 
 # --- Sizing (suggested contracts only; nothing is ever placed) ---------------------
 # Set COLD_START_BANKROLL_USD in the environment (or .env) to see stakes; see bankroll_usd().
@@ -258,7 +278,11 @@ CONTEXT_CLAMP = (0.90, 1.10)             # pace and opponent multipliers
 ROLE_CLASSES = {"min_games": 4, "engine_minutes": 30.0, "engine_cv_minutes": 0.12, "engine_cv_usage": 0.20,
                 "heat_check_cv_points": 0.40, "volatile_cv_minutes": 0.25}
 ROLE_SD_MULT = {"engine": 1.0, "steady": 1.0, "volatile_role": 1.10, "heat_check": 1.10, "unknown": 1.0}
-# Logged for validation only (extra_projections): the venue scan never reads them.
+# Role shifts (shifts.py): this season against last on at least SHIFT_MIN_MINUTES minutes. A shift is
+# flagged at a change of at least: usage points, minutes a game, threes attempts per 36.
+SHIFT_MIN_MINUTES = 60.0
+SHIFT_FLAGS = {"usage": 4.0, "minutes": 6.0, "fg3a36": 2.0}
+# Projected from per-minute rates (features.py) and logged to extra_projections with the combos.
 EXTRA_STATS = ("threes", "steals", "blocks", "turnovers")
 
 

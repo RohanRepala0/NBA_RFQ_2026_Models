@@ -8,7 +8,9 @@ draws and the grading routine uploads them after each morning's grade:
   stake it was given, as the caps count them);
 - model_eval.json: `evaluate`'s accuracy table per window (out of sample / in-sample), stat and
   source (season model, rolling, books' close);
-- minutes_eval.json: its minutes table per window and player set.
+- minutes_eval.json: its minutes table per window and player set;
+- shifts.json: the flagged role shifts (shifts.py): this season's usage, minutes and threes volume
+  against last season's, and the rolling model's shrunk usage.
 
 A ticket's `won` is its own side's result (a NO ticket wins when the YES contract settles no).
 """
@@ -79,6 +81,22 @@ def eval_rows(storage: Storage) -> tuple[list[dict], list[dict]]:
     return acc, mins
 
 
+SHIFT_COLUMNS = ["player_id", "player", "team", "team_2025_26", "games", "minutes", "mpg", "mpg_prior", "usg",
+                 "usg_prior", "usg_model", "gap", "d_usg", "d_mpg", "fg3a36", "fg3a36_prior", "d_fg3a36", "pts36",
+                 "pts36_prior", "flags", "score"]
+
+
+def shift_rows(storage: Storage, now: datetime) -> list[dict]:
+    from .shifts import shifts
+    from .usage_model import load_players
+    df = shifts(storage, now, load_players())
+    if df.empty:
+        return []
+    df = df[df.flagged][SHIFT_COLUMNS].copy()
+    df["score"] = df.score.round(2)
+    return json.loads(df.to_json(orient="records"))
+
+
 def export(storage: Storage, out: Path, now: datetime) -> dict[str, int]:
     out.mkdir(parents=True, exist_ok=True)
     graded = ledger_tickets()
@@ -88,7 +106,7 @@ def export(storage: Storage, out: Path, now: datetime) -> dict[str, int]:
     tickets = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
     acc, mins = eval_rows(storage)
     files = {"tickets.json": json.loads(tickets.to_json(orient="records")) if len(tickets) else [],
-             "model_eval.json": acc, "minutes_eval.json": mins}
+             "model_eval.json": acc, "minutes_eval.json": mins, "shifts.json": shift_rows(storage, now)}
     for name, rows in files.items():
         (out / name).write_text(json.dumps(rows, indent=0))
     return {k: len(v) for k, v in files.items()}

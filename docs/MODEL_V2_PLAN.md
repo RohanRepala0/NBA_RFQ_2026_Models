@@ -67,9 +67,17 @@ under the new version.
    of games it has not seen (the parameters above are frozen until then).
 3. `W_MODEL` stays 0.20 for a stat until the model beats the books' closing mean on that stat out
    of sample; today the books still win every stat.
-4. A new stat (threes, steals, blocks, combos) gets venue tickets only after it beats the books out
-   of sample (Kalshi lists threes, steals, blocks and points + rebounds + assists series). Turnovers
-   have no venue market and stay a feature.
+4. A new stat gets venue tickets only after it beats the books out of sample. They are all tracked
+   now as shadow stats (config.SHADOW_STATS): threes, steals, blocks, turnovers, points + rebounds +
+   assists, points + rebounds, points + assists, rebounds + assists, steals + blocks. Each is
+   projected, priced against its own books' consensus and against Kalshi (threes, steals, blocks,
+   PRA) and Polymarket US (the same four), and logged as a `shadow` decision with no stake;
+   `grade` scores them from box scores. Their dispersion is an unfitted prior until game logs fit
+   it. Turnovers have no venue market and no allowlisted book line: a projection only.
+5. Role shifts (`cli shifts`): this season's usage, minutes and threes volume against last
+   season's. Early shifts mostly keep their direction, so the flagged list is where the shrinkage
+   priors are most likely stale; the next fit is how much weight an early shift deserves
+   (last season's early games against the rest of its season).
 
 ### First results
 

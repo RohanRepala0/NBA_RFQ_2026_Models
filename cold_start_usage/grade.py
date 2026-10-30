@@ -14,6 +14,7 @@ from datetime import date
 
 import pandas as pd
 
+from . import config
 from .odds_math import p_over_normal
 from .schedule import et_date, et_day_bounds, week_of_season
 from .storage import Storage
@@ -132,10 +133,12 @@ def fetch_venue_settlements(storage: Storage, start: date, end: date, now,
     """Store settlements for every venue contract logged for games in [start, end]."""
     lo, _ = et_day_bounds(start)
     _, hi = et_day_bounds(end)
+    # Shadow stats are graded from box scores (shadow_graded), so their contracts cost no settlement reads.
     want = storage.query("""
         SELECT DISTINCT venue, ticker FROM venue_signals WHERE tip_ts >= ? AND tip_ts < ?
           AND venue IN ('kalshi', 'polymarket_us') AND ticker IS NOT NULL
-        UNION SELECT DISTINCT t.venue, t.ticker FROM tickets t""", [lo, hi])
+          AND coalesce(stat, 'points') IN (SELECT unnest(?))
+        UNION SELECT DISTINCT t.venue, t.ticker FROM tickets t""", [lo, hi, list(config.STATS)])
     have = set(map(tuple, storage.query("SELECT DISTINCT venue, ticker FROM venue_settlements")
                    [["venue", "ticker"]].itertuples(index=False)))
     rows = []
@@ -238,3 +241,71 @@ def venue_summary_by_stat(df: pd.DataFrame, min_n: int = 50) -> dict[str, dict]:
         return {}
     stats = df.stat.fillna("points") if "stat" in df else pd.Series("points", index=df.index)
     return {stat: venue_summary(df[stats == stat], min_n) for stat in sorted(set(stats))}
+
+
+# --- Shadow stats (config.SHADOW_STATS): graded from box scores ---------------------------------
+BOX_STAT = {"points": "pts", "rebounds": "reb", "assists": "ast", "threes": "fg3m", "steals": "stl",
+            "blocks": "blk", "turnovers": "tov"}
+
+
+def box_actuals(storage: Storage, event_ids: list[str]) -> pd.DataFrame:
+    """(event_id, player_id) -> each stat's full-game value for players who played, combos summed."""
+    if not event_ids:
+        return pd.DataFrame()
+    box = storage.query("SELECT * FROM box_scores WHERE played AND event_id IN (SELECT unnest(?))", [event_ids])
+    if box.empty:
+        return box
+    box = box.drop_duplicates(["event_id", "player_id"]).set_index(["event_id", "player_id"])
+    out = pd.DataFrame({stat: box[col] for stat, col in BOX_STAT.items()})
+    for combo, parts in config.COMBO_PARTS.items():
+        out[combo] = out[list(parts)].sum(axis=1, min_count=len(parts))
+    return out
+
+
+def shadow_graded(storage: Storage, start: date, end: date) -> pd.DataFrame:
+    """Each shadow contract side's last pre-tip read, against what the player did: the venue's
+    price and our fair price as forecasts, and the would-be decision (shadow = it cleared the bar)."""
+    lo, _ = et_day_bounds(start)
+    _, hi = et_day_bounds(end)
+    df = storage.query("""
+        SELECT * EXCLUDE (rn) FROM (
+          SELECT *, row_number() OVER (PARTITION BY venue, ticker, side ORDER BY quote_ts DESC, ts DESC) rn
+          FROM venue_signals WHERE tip_ts >= ? AND tip_ts < ? AND stat IN (SELECT unnest(?))
+            AND venue IN ('kalshi', 'polymarket_us') AND line IS NOT NULL AND ask IS NOT NULL)
+        WHERE rn = 1""", [lo, hi, list(config.SHADOW_STATS)])
+    if df.empty:
+        return df
+    actual = box_actuals(storage, sorted(df.event_id.dropna().unique()))
+    if actual.empty:
+        return df.iloc[0:0]
+    df["actual"] = [actual[s].get((e, p)) if s in actual.columns else None
+                    for e, p, s in zip(df.event_id, df.player_id, df.stat)]
+    df = df[df.actual.notna()].copy()
+    yes = df.actual > df.line
+    df["won"] = (yes == (df.side == "YES")).astype(float)
+    df["cost"] = df.cost.fillna(df.ask)
+    df["pnl_per_contract"] = df.won - df.cost
+    # A would-be ticket is what would have been actionable (not watch), the best per player-game and stat.
+    actionable = df.decision.eq("shadow") & df.reason.fillna("").str.startswith("shadow, would be actionable")
+    best = df[actionable].sort_values("ev_blend", ascending=False).drop_duplicates(["event_id", "player_id", "stat"])
+    df["would_be"] = df.index.isin(best.index)
+    return df
+
+
+def shadow_summary(df: pd.DataFrame) -> pd.DataFrame:
+    """Per shadow stat: Brier of our fair price vs the books' (p_market) vs the venue's ask on every
+    priced side, and the would-be tickets' record at the ask."""
+    if df.empty:
+        return pd.DataFrame()
+    out = []
+    for stat, g in df.groupby("stat"):
+        priced = g.dropna(subset=["p_blend", "p_market"])
+        wb = g[g.would_be]
+        out.append({"stat": stat, "sides": len(g), "priced": len(priced),
+                    "brier_ours": ((priced.p_blend - priced.won) ** 2).mean() if len(priced) else None,
+                    "brier_books": ((priced.p_market - priced.won) ** 2).mean() if len(priced) else None,
+                    "brier_venue": ((priced.ask - priced.won) ** 2).mean() if len(priced) else None,
+                    "would_be": len(wb), "would_be_won": wb.won.sum() if len(wb) else 0,
+                    "would_be_expected": wb.p_blend.sum() if len(wb) else 0.0,
+                    "would_be_pnl_per_contract": wb.pnl_per_contract.mean() if len(wb) else None})
+    return pd.DataFrame(out)

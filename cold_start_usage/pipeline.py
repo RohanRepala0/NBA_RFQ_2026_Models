@@ -208,7 +208,7 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
             cands = candidates_for_event(roster, _odds_player_ids(storage, ev.event_id, now))
             mapping, problems = map_players(scen.player.tolist(), cands, team, explicit)
             messages += [f"{team}: {p}" for p in problems]
-            if source == "rolling":
+            def rolling():
                 if history_cache.get(ev.event_id) is None:
                     history_cache[ev.event_id] = history(storage, starts)
                 box, team_rows = history_cache[ev.event_id]
@@ -217,12 +217,23 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
                 out_names = tuple(sorted(set(full.player) - set(scen.player[scen.proj_mpg > 0])))
                 out_ids = tuple(sorted(pid for pid, st in zip(roster.player_id, roster.status)
                                        if str(st).strip().lower() in config.OUT_STATUSES))
-                res, like, mins, ctx = project_rolling(players, scen, team, opponent, box, team_rows, mapping,
-                                                     team_shooting, out_names=out_names, out_ids=out_ids)
+                return project_rolling(players, scen, team, opponent, box, team_rows, mapping,
+                                       team_shooting, out_names=out_names, out_ids=out_ids)
+            if source == "rolling":
+                res, like, mins, ctx = rolling()
                 h, version = rolling_inputs_hash(like, mins, ctx), config.current_model_version(source)
+                extras, extra_meta = res.set_index("player"), {"inputs_hash": h, "model_version": version}
             else:
                 res = project_scenario(players, scen, team_shooting=team_shooting)
                 h, version = inputs_hash(players, scen), MODEL_VERSION
+                try:            # the shadow stats' rates only: never let them block the season projections
+                    r_res, r_like, r_mins, r_ctx = rolling()
+                    extras = r_res.set_index("player")
+                    extra_meta = {"inputs_hash": rolling_inputs_hash(r_like, r_mins, r_ctx),
+                                  "model_version": config.ROLLING_MODEL_VERSION}
+                except Exception as exc:
+                    extras, extra_meta = None, None
+                    messages.append(f"{team}: no shadow-stat projections ({type(exc).__name__}: {exc})")
             roster_status = dict(zip(roster.player_id, roster.status))
             scen_names = set(scen.player)
             rows, extra = [], []
@@ -243,11 +254,9 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
                                      "sd": None if m is None else float(getattr(r, sd_col)),
                                      "proj_mpg": float(r.proj_mpg), "usg_proj": float(r.usg_proj),
                                      "inputs_hash": h, "model_version": version})
-                    for stat in (config.EXTRA_STATS if source == "rolling" else ()):
-                        m = getattr(r, f"{stat}_proj")
-                        ok = m is not None and not pd.isna(m)
-                        extra.append({**rows[-1], "stat": stat, "mean": float(m) if ok else None,
-                                      "sd": float(getattr(r, f"{stat}_sd")) if ok else None})
+                    extra += shadow_rows(rows[-1], {x["stat"]: x["mean"] for x in rows[-len(config.STATS):]},
+                                         extras.loc[r.player] if extras is not None and r.player in extras.index
+                                         else None, extra_meta)
                 status = roster_status.get(pid)
                 reb, ast = getattr(r, "reb_proj", float("nan")), getattr(r, "ast_proj", float("nan"))
                 extra_cols = {"role": r.role, **{s: _round(getattr(r, f"{s}_proj")) for s in config.EXTRA_STATS}} \
@@ -272,11 +281,43 @@ def run_projections(storage: Storage, d: date, now: datetime, scenario_choice: d
     return pd.DataFrame(printed), messages
 
 
+def shadow_rows(base: dict, means: dict[str, float | None], extra: pd.Series | None,
+                extra_meta: dict | None = None) -> list[dict]:
+    """extra_projections rows for config.SHADOW_STATS: the per-minute stats from the rolling
+    projection (`extra`, its <stat>_proj columns) and each combo as the sum of its parts' means,
+    from this run's points, rebounds and assists, priced with the combo's own SD. A row built only
+    from the rolling projection (the per-minute stats, steals + blocks) carries its inputs hash and
+    model version (`extra_meta`); the combos of points, rebounds and assists carry this run's."""
+    from . import distributions
+    got = dict(means)
+    for stat in config.EXTRA_STATS:
+        v = None if extra is None else extra.get(f"{stat}_proj")
+        got[stat] = None if v is None or pd.isna(v) else float(v)
+    rows = []
+    for stat in config.SHADOW_STATS:
+        parts = config.COMBO_PARTS.get(stat)
+        m = got.get(stat) if parts is None else (
+            sum(got[x] for x in parts) if all(got.get(x) is not None for x in parts) else None)
+        from_rolling = parts is None or set(parts) <= set(config.EXTRA_STATS)
+        meta = extra_meta if from_rolling and extra_meta else {}
+        rows.append({**base, **meta, "stat": stat, "mean": m,
+                     "sd": None if m is None else float(distributions.sd(stat, m))})
+    return rows
+
+
 def _round(v, nd: int = 2):
     return None if v is None or pd.isna(v) else round(float(v), nd)
 
 
 # --- Signals -------------------------------------------------------------------------
+def latest_extra_projections(storage: Storage, event_id: str, now: datetime) -> pd.DataFrame:
+    """The shadow stats' rows of each team's latest projection run for the game (extra_projections)."""
+    return storage.query("""
+        WITH runs AS (SELECT team, max(ts) AS ts FROM extra_projections WHERE event_id = ? AND ts <= ? GROUP BY team)
+        SELECT p.* FROM extra_projections p JOIN runs USING (team, ts) WHERE p.event_id = ?""",
+                         [event_id, now, event_id])
+
+
 def latest_projections(storage: Storage, event_id: str, now: datetime) -> pd.DataFrame:
     """Each team's most recent projection run for the game, one row per player and stat (a NULL
     stat, from runs logged before rebounds and assists, reads as points). A later run (say
