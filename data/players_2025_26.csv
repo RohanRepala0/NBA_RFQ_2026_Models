@@ -485,3 +485,14 @@ Tre Johnson,WAS,WAS,22.6,60,24.05,12.22,2.83,2.03,5.4,35.8,yes,https://www.statm
 Tre Mann,CHA,WAS,23.4,53,12.62,5.49,1.74,1.62,5.7,32.3,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,TRE_MANN_1_NBA
 Tristan Vukcevic,WAS,WAS,26.6,49,13.69,9.0,3.0,1.12,2.9,34.7,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,T_VUKCEVIC_1_NBA
 Will Riley,WAS,WAS,20.2,74,22.07,10.32,2.86,1.97,3.3,31.6,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,WILL_RILEY_1_NBA
+Kyrie Irving,DAL,DAL,26.4,50,36.08,24.68,4.8,4.62,7.2,40.1,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",KYRIE_IRVING_1_NBA
+Fred VanVleet,HOU,HOU,17.6,60,35.18,14.07,3.68,5.55,7.7,34.5,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",FRED_VANVLEET_1_NBA
+Georges Niang,ATL,GSW,17.7,79,21.48,9.92,3.44,1.41,5.2,40.6,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",GEORGES_NIANG_1_NBA
+Trey Lyles,SAC,MIN,13.9,69,19.57,6.54,4.58,1.19,3.4,34.0,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",TREY_LYLES_1_NBA
+Yaxel Lendeborg,,GSW,27.6,5,33.59,22.6,9.2,4.0,6.2,35.5,yes,"SportsGameOdds box scores, first 5 games of 2026-27 (rookie stand-in prior)",YAXEL_LENDEBORG_1_NBA
+Keaton Wagler,,LAC,25.1,4,26.48,15.0,4.25,3.5,5.5,40.9,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie stand-in prior)",KEATON_WAGLER_1_NBA
+Trevon Brazile,,DEN,16.5,4,23.69,9.5,7.5,0.0,3.8,33.3,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie stand-in prior)",TREVON_BRAZILE_1_NBA
+Allen Graves,,TOR,12.6,4,15.95,5.25,3.5,1.0,1.5,16.7,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie stand-in prior)",ALLEN_GRAVES_1_NBA
+AJ Dybantsa,,WAS,26.4,1,26.95,19.0,2.0,2.0,3.0,33.3,yes,"SportsGameOdds box scores, first 1 games of 2026-27 (rookie stand-in prior)",AJ_DYBANTSA_1_NBA
+Noa Essengue,,CHI,11.5,4,13.31,2.0,2.0,0.5,1.5,16.7,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie stand-in prior)",NOA_ESSENGUE_1_NBA
+Graham Ike,,GSW,21.7,4,13.37,8.25,3.5,1.25,1.0,100.0,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie stand-in prior)",GRAHAM_IKE_1_NBA

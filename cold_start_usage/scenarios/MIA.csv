@@ -1,32 +1,42 @@
 scenario,player,proj_mpg
-full_strength,Giannis Antetokounmpo,33
-full_strength,Bam Adebayo,33
-full_strength,Andrew Wiggins,29
-full_strength,Davion Mitchell,26
-full_strength,Tim Hardaway Jr.,22
-full_strength,Klay Thompson,20
-full_strength,Bobby Portis,20
-full_strength,Pelle Larsson,20
-full_strength,Nikola Jović,15
-full_strength,Simone Fontecchio,12
-full_strength,Nick Richards,10
-giannis_out,Bam Adebayo,35
-giannis_out,Andrew Wiggins,32
-giannis_out,Davion Mitchell,29
-giannis_out,Tim Hardaway Jr.,25
-giannis_out,Bobby Portis,27
-giannis_out,Klay Thompson,24
-giannis_out,Pelle Larsson,22
-giannis_out,Nikola Jović,20
-giannis_out,Simone Fontecchio,14
-giannis_out,Nick Richards,12
-bam_out,Giannis Antetokounmpo,35
-bam_out,Andrew Wiggins,31
-bam_out,Davion Mitchell,28
-bam_out,Bobby Portis,28
-bam_out,Tim Hardaway Jr.,24
-bam_out,Klay Thompson,22
-bam_out,Pelle Larsson,20
-bam_out,Nikola Jović,18
-bam_out,Nick Richards,20
-bam_out,Simone Fontecchio,14
+full_strength,Giannis Antetokounmpo,33.0
+full_strength,Bam Adebayo,33.0
+full_strength,Andrew Wiggins,29.0
+full_strength,Davion Mitchell,26.0
+full_strength,Tim Hardaway Jr.,22.0
+full_strength,Klay Thompson,20.0
+full_strength,Bobby Portis,20.0
+full_strength,Pelle Larsson,20.0
+full_strength,Nikola Jović,15.0
+full_strength,Simone Fontecchio,12.0
+full_strength,Nick Richards,10.0
+giannis_out,Bam Adebayo,35.0
+giannis_out,Andrew Wiggins,32.0
+giannis_out,Davion Mitchell,29.0
+giannis_out,Tim Hardaway Jr.,25.0
+giannis_out,Bobby Portis,27.0
+giannis_out,Klay Thompson,24.0
+giannis_out,Pelle Larsson,22.0
+giannis_out,Nikola Jović,20.0
+giannis_out,Simone Fontecchio,14.0
+giannis_out,Nick Richards,12.0
+bam_out,Giannis Antetokounmpo,35.0
+bam_out,Andrew Wiggins,31.0
+bam_out,Davion Mitchell,28.0
+bam_out,Bobby Portis,28.0
+bam_out,Tim Hardaway Jr.,24.0
+bam_out,Klay Thompson,22.0
+bam_out,Pelle Larsson,20.0
+bam_out,Nikola Jović,18.0
+bam_out,Nick Richards,20.0
+bam_out,Simone Fontecchio,14.0
+report_1030,Bam Adebayo,33.4
+report_1030,Giannis Antetokounmpo,32.3
+report_1030,Davion Mitchell,30.4
+report_1030,Andrew Wiggins,28.0
+report_1030,Pelle Larsson,26.6
+report_1030,Bobby Portis,22.2
+report_1030,Klay Thompson,20.7
+report_1030,Tim Hardaway Jr.,20.6
+report_1030,Dru Smith,14.2
+report_1030,Nikola Jović,11.6
