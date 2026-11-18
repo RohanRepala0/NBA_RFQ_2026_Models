@@ -1,0 +1,290 @@
+{
+ "tickets": 79,
+ "settled": 79,
+ "confidence": "LOW-CONFIDENCE (n<100)",
+ "date_range_et": [
+  "2026-10-20",
+  "2026-10-31"
+ ],
+ "win_rate": {
+  "value": 0.4430379746835443,
+  "lo": 0.33867609150989586,
+  "hi": 0.5526828392688433,
+  "n": 79
+ },
+ "hits": 35.0,
+ "expected_hits_model": 45.21980000000001,
+ "expected_hits_close": 39.29000000000001,
+ "expected_hits_entry_ask": 39.690000000000005,
+ "expected_hits_books": 43.6858,
+ "stake_usd_median": 24.43,
+ "stake_usd_max": 24.99,
+ "contracts_median": 36.0,
+ "hits_minus_expected_model_z": -2.629045514442672,
+ "avg_edge_model_minus_ask": {
+  "value": 0.06999746835443038,
+  "se": 0.0018210603702420282,
+  "lo": 0.06642819002875601,
+  "hi": 0.07356674668010475,
+  "n": 79
+ },
+ "avg_edge_books_minus_ask": {
+  "value": 0.050579746835443036,
+  "se": 0.0022788860399501412,
+  "lo": 0.04611313019714076,
+  "hi": 0.055046363473745315,
+  "n": 79
+ },
+ "avg_ev_after_fee_model": {
+  "value": 0.05292151898734178,
+  "se": 0.0013920249399993715,
+  "lo": 0.05019315010494301,
+  "hi": 0.055649887869740546,
+  "n": 79
+ },
+ "clv_cents": {
+  "value": -0.5063291139240509,
+  "se": 0.36172053500841866,
+  "lo": -1.2153013625405515,
+  "hi": 0.20264313469244966,
+  "n": 79
+ },
+ "clv_cents_median": -0.5000000000000004,
+ "clv_pct": {
+  "value": -2.2968632415078307,
+  "se": 1.1151928943420557,
+  "lo": -4.4826413144182595,
+  "hi": -0.11108516859740147,
+  "n": 79
+ },
+ "clv_pct_median": -0.7812500000000007,
+ "clv_net_of_fee_cents": {
+  "value": -2.214303797468354,
+  "se": 0.35737660222478396,
+  "lo": -2.9147619378289304,
+  "hi": -1.5138456571077776,
+  "n": 79
+ },
+ "clv_beat_close": {
+  "value": 0.27848101265822783,
+  "lo": 0.19168037554546474,
+  "hi": 0.3858265774829654,
+  "n": 79
+ },
+ "clv_tied_close": {
+  "value": 0.02531645569620253,
+  "lo": 0.006970221164761904,
+  "hi": 0.08768753532473128,
+  "n": 79
+ },
+ "clv_worse_than_close": {
+  "value": 0.6962025316455697,
+  "lo": 0.5876513167107897,
+  "hi": 0.7865568106068865,
+  "n": 79
+ },
+ "contracts": 3487,
+ "capital_deployed_usd": 1419.4399999999998,
+ "pnl_net_usd": -362.44,
+ "pnl_gross_before_exec_usd": -301.5899999999999,
+ "fees_usd": 45.55,
+ "book_walk_and_rounding_usd": 15.305399999999993,
+ "pnl_per_contract_usd": -0.10394034987094924,
+ "roi_on_capital": -0.2553401341374063,
+ "clv_implied_pnl_usd": -92.4504,
+ "scores": {
+  "n": 79,
+  "brier_model_p_blend": 0.23399950379746837,
+  "logloss_model_p_blend": 0.6710889905097291,
+  "brier_venue_close_mid": 0.2204943037974683,
+  "logloss_venue_close_mid": 0.6354154082849898,
+  "brier_venue_entry_ask": 0.21836835443037966,
+  "logloss_venue_entry_ask": 0.6299140912678602,
+  "brier_sportsbook_consensus": 0.22970574430379745,
+  "logloss_sportsbook_consensus": 0.6594748951023884,
+  "brier_gap_vs_close": {
+   "value": -0.013505200000000014,
+   "se": 0.008919129722524186,
+   "lo": -0.030986694256147418,
+   "hi": 0.0039762942561473915,
+   "n": 79
+  },
+  "logloss_gap_vs_close": {
+   "value": -0.035673582224739306,
+   "se": 0.0241486908359416,
+   "lo": -0.08300501626318485,
+   "hi": 0.011657851813706231,
+   "n": 79
+  },
+  "brier_gap_vs_entry": {
+   "value": -0.01563114936708861,
+   "se": 0.007833083151901168,
+   "lo": -0.0309839923448149,
+   "hi": -0.0002783063893623209,
+   "n": 79
+  },
+  "logloss_gap_vs_entry": {
+   "value": -0.04117489924186882,
+   "se": 0.020916020228206433,
+   "lo": -0.08217029888915342,
+   "hi": -0.0001794995945842079,
+   "n": 79
+  },
+  "brier_gap_vs_books": {
+   "value": -0.0042937594936708935,
+   "se": 0.0026635724111932955,
+   "lo": -0.009514361419609752,
+   "hi": 0.0009268424322679651,
+   "n": 79
+  },
+  "logloss_gap_vs_books": {
+   "value": -0.01161409540734056,
+   "se": 0.0067688868341268926,
+   "lo": -0.02488111360222927,
+   "hi": 0.0016529227875481493,
+   "n": 79
+  }
+ },
+ "roi_ci_by_ticket": {
+  "value": -0.2553401341374063,
+  "lo": -0.46912826449655326,
+  "hi": -0.030942703459004947,
+  "se": 0.11279203330012143,
+  "n": 79,
+  "clusters": null,
+  "method": "bootstrap, 10000 resamples, by row"
+ },
+ "roi_ci_by_date": {
+  "value": -0.2553401341374063,
+  "lo": -0.3318597830015043,
+  "hi": -0.15486816793431293,
+  "se": 0.043946068442028585,
+  "n": 79,
+  "clusters": 9,
+  "method": "bootstrap, 10000 resamples, by date_et"
+ },
+ "pnl_ci_by_ticket": {
+  "value": -362.44,
+  "lo": -677.9397499999999,
+  "hi": -43.54675000000002,
+  "se": 161.74558386381804,
+  "n": 79,
+  "clusters": null,
+  "method": "bootstrap, 10000 resamples, by row"
+ },
+ "pnl_ci_by_date": {
+  "value": -362.44,
+  "lo": -606.1022500000001,
+  "hi": -173.89925000000002,
+  "se": 112.47738689688401,
+  "n": 79,
+  "clusters": 9,
+  "method": "bootstrap, 10000 resamples, by date_et"
+ },
+ "brier_gap_vs_close_ci_by_date": {
+  "value": -0.013505200000000014,
+  "lo": -0.021348358170719298,
+  "hi": -0.004341489600000005,
+  "se": 0.004238321530173643,
+  "n": 79,
+  "clusters": 9,
+  "method": "bootstrap, 10000 resamples, by date_et"
+ },
+ "clv_cents_ci_by_date": {
+  "value": -0.5063291139240509,
+  "lo": -1.1083333333333336,
+  "hi": 0.3461538461538456,
+  "se": 0.37464225120483485,
+  "n": 79,
+  "clusters": 9,
+  "method": "bootstrap, 10000 resamples, by date_et"
+ },
+ "clv_median_ci_by_ticket": {
+  "value": -0.5000000000000004,
+  "lo": -0.5000000000000004,
+  "hi": -0.5000000000000004,
+  "se": 0.0319693557015214,
+  "n": 79,
+  "clusters": null,
+  "method": "bootstrap, 10000 resamples, by row"
+ },
+ "daily": {
+  "trading_days": 9,
+  "confidence": "LOW-CONFIDENCE (n<100)",
+  "mean_daily_pnl_usd": {
+   "value": -40.27111111111111,
+   "se": 13.233204391106113,
+   "lo": -70.78688043700181,
+   "hi": -9.755341785220413,
+   "n": 9
+  },
+  "sd_daily_pnl_usd": 39.69961317331834,
+  "sharpe_daily_pnl": -1.014395554316808,
+  "sharpe_daily_return": -1.7267068601571085,
+  "sharpe_se_approx": 0.410216632512472,
+  "losing_days": 9,
+  "longest_losing_day_run": 9,
+  "max_drawdown_daily": {
+   "max_drawdown": 362.44,
+   "peak_index": 0,
+   "trough_index": 9,
+   "peak_value": 0.0,
+   "trough_value": -362.44
+  }
+ },
+ "per_ticket_path": {
+  "max_drawdown": {
+   "max_drawdown": 408.53000000000003,
+   "peak_index": 5,
+   "trough_index": 78,
+   "peak_value": 44.199999999999996,
+   "trough_value": -364.33000000000004
+  },
+  "longest_losing_streak_tickets": 8,
+  "longest_winning_streak_tickets": 3
+ },
+ "pipeline_counts": {
+  "actionable_rows_logged": 142,
+  "actionable_rows_by_flag": {
+   "ticket": 79,
+   "repeat": 52,
+   "new contract": 11
+  },
+  "tickets": 79,
+  "fills_logged_any_kind": 0,
+  "real_fills": 0,
+  "paper_fills": 0
+ },
+ "capacity_at_ticket": {
+  "n": 79,
+  "size_at_edge_median": 166.05,
+  "size_at_edge_p25": 22.13,
+  "size_at_edge_p75": 598.885,
+  "size_at_edge_sum": 87117.84999999999,
+  "dollars_at_edge_sum_usd": 48129.4199,
+  "suggested_contracts_median": 36.0,
+  "share_where_suggested_exceeds_offered": 0.0,
+  "by_venue_median_size_at_edge": {
+   "kalshi": 191.5,
+   "polymarket_us": 128.89
+  }
+ },
+ "definitions": {
+  "trade": "paper ticket at suggested size (no fill logged; real-money P&L not available)",
+  "close": "mid of the last two-sided venue book read before tip (normally the T-5m checkpoint), ticket side",
+  "clv": "close_mid - ask; cents per contract; pct = / ask",
+  "pnl": "contracts x (settlement value - all-in cost); net of Kalshi / Polymarket US taker fees",
+  "fees_usd": "recomputed at the ask with cold_start_usage/fees.py; book_walk = (cost-ask)*contracts - fee",
+  "positive brier/logloss gap": "the model (p_blend) scored better than the benchmark on the same contracts"
+ },
+ "tickets_by_venue": {
+  "kalshi": 46,
+  "polymarket_us": 33
+ },
+ "tickets_by_stat": {
+  "points": 38,
+  "assists": 24,
+  "rebounds": 17
+ },
+ "journal_crosscheck_all_days_match": true
+}

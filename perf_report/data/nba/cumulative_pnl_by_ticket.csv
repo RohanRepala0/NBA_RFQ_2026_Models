@@ -1,0 +1,80 @@
+date_et,tip_utc,player,stat,contract,venue,outcome,pnl_usd,cum_pnl_usd
+2026-10-20,2026-10-20 19:00:00+00:00,John Collins,points,10+ YES,kalshi,lost,-24.68,-24.68
+2026-10-20,2026-10-20 23:00:00+00:00,Jaylen Brown,rebounds,8+ REB YES,kalshi,won,66.11,41.43
+2026-10-20,2026-10-20 23:00:00+00:00,Tyrese Maxey,rebounds,6+ REB YES,kalshi,lost,-8.06,33.37
+2026-10-20,2026-10-20 23:00:00+00:00,LeBron James,assists,10+ AST NO,polymarket_us,won,9.04,42.41
+2026-10-20,2026-10-21 01:30:00+00:00,Cason Wallace,points,15+ NO,kalshi,won,1.79,44.199999999999996
+2026-10-20,2026-10-21 01:30:00+00:00,De'Aaron Fox,assists,8+ AST YES,kalshi,lost,-24.94,19.259999999999994
+2026-10-20,2026-10-21 01:30:00+00:00,Isaiah Hartenstein,assists,4+ AST YES,kalshi,lost,-24.99,-5.730000000000004
+2026-10-21,2026-10-22 02:00:00+00:00,Walker Kessler,rebounds,8+ REB YES,kalshi,won,6.44,0.7099999999999964
+2026-10-21,2026-10-22 02:00:00+00:00,Luka Dončić,points,25+ NO,kalshi,lost,-24.96,-24.250000000000004
+2026-10-22,2026-10-22 23:00:00+00:00,Jaylen Brown,rebounds,10+ REB YES,kalshi,lost,-12.44,-36.690000000000005
+2026-10-22,2026-10-22 23:00:00+00:00,Anfernee Simons,points,15+ NO,kalshi,won,6.14,-30.550000000000004
+2026-10-22,2026-10-23 01:30:00+00:00,Jared McCain,points,15+ NO,kalshi,won,2.72,-27.830000000000005
+2026-10-22,2026-10-23 01:30:00+00:00,Jamal Murray,assists,6+ AST YES,kalshi,lost,-24.84,-52.67
+2026-10-25,2026-10-25 21:00:00+00:00,Keyonte George,points,15+ YES,polymarket_us,won,9.04,-43.63
+2026-10-25,2026-10-25 22:00:00+00:00,Andrew Nembhard,assists,8+ AST YES,kalshi,lost,-23.08,-66.71000000000001
+2026-10-25,2026-10-25 22:00:00+00:00,Pascal Siakam,points,25+ YES,kalshi,lost,-1.63,-68.34
+2026-10-25,2026-10-25 22:00:00+00:00,Michael Porter Jr.,assists,2+ AST YES,kalshi,lost,-24.68,-93.02000000000001
+2026-10-25,2026-10-25 22:00:00+00:00,Ivica Zubac,points,10+ YES,kalshi,lost,-24.87,-117.89000000000001
+2026-10-25,2026-10-25 22:00:00+00:00,Day'Ron Sharpe,rebounds,6+ REB YES,kalshi,lost,-8.12,-126.01000000000002
+2026-10-25,2026-10-25 23:00:00+00:00,Kris Dunn,rebounds,6+ REB YES,polymarket_us,lost,-24.86,-150.87
+2026-10-25,2026-10-25 23:00:00+00:00,Rudy Gobert,rebounds,14+ REB YES,kalshi,lost,-24.24,-175.11
+2026-10-25,2026-10-25 23:00:00+00:00,Mikal Bridges,points,10+ YES,kalshi,lost,-24.57,-199.68
+2026-10-25,2026-10-25 23:00:00+00:00,Darius Garland,assists,8+ AST YES,kalshi,won,6.34,-193.34
+2026-10-25,2026-10-25 23:00:00+00:00,LaMelo Ball,assists,6+ AST YES,polymarket_us,won,15.34,-178.0
+2026-10-25,2026-10-25 23:00:00+00:00,Ajay Mitchell,points,10+ YES,kalshi,won,18.17,-159.82999999999998
+2026-10-25,2026-10-25 23:00:00+00:00,LaMelo Ball,rebounds,6+ REB YES,kalshi,lost,-24.89,-184.71999999999997
+2026-10-25,2026-10-25 23:00:00+00:00,Anthony Black,rebounds,6+ REB YES,kalshi,lost,-1.39,-186.10999999999996
+2026-10-25,2026-10-25 23:00:00+00:00,Ja'Kobe Walter,points,15+ NO,polymarket_us,lost,-24.55,-210.65999999999997
+2026-10-25,2026-10-25 23:00:00+00:00,RJ Barrett,rebounds,8+ REB YES,kalshi,lost,-10.24,-220.89999999999998
+2026-10-25,2026-10-25 23:00:00+00:00,Immanuel Quickley,points,15+ YES,kalshi,won,7.84,-213.05999999999997
+2026-10-25,2026-10-25 23:30:00+00:00,Duncan Robinson,points,10+ YES,kalshi,won,13.06,-199.99999999999997
+2026-10-25,2026-10-25 23:30:00+00:00,Adem Bona,rebounds,8+ REB YES,polymarket_us,won,57.05,-142.95
+2026-10-25,2026-10-25 23:30:00+00:00,Tyrese Maxey,rebounds,6+ REB YES,kalshi,lost,-3.82,-146.76999999999998
+2026-10-25,2026-10-25 23:30:00+00:00,Duncan Robinson,rebounds,4+ REB YES,kalshi,lost,-24.86,-171.63
+2026-10-25,2026-10-25 23:30:00+00:00,Daniss Jenkins,rebounds,4+ REB NO,polymarket_us,lost,-24.52,-196.15
+2026-10-25,2026-10-26 01:00:00+00:00,Cedric Coward,points,10+ YES,kalshi,won,11.41,-184.74
+2026-10-26,2026-10-26 23:00:00+00:00,Peyton Watson,points,10+ YES,kalshi,won,10.02,-174.72
+2026-10-26,2026-10-26 23:30:00+00:00,Tre Jones,assists,4+ AST YES,polymarket_us,lost,-24.47,-199.19
+2026-10-26,2026-10-26 23:30:00+00:00,Max Christie,assists,4+ AST YES,kalshi,lost,-5.77,-204.96
+2026-10-26,2026-10-27 00:00:00+00:00,Jaime Jaquez Jr.,assists,4+ AST YES,kalshi,lost,-24.97,-229.93
+2026-10-26,2026-10-27 00:00:00+00:00,Aaron Nesmith,rebounds,6+ REB YES,polymarket_us,lost,-24.91,-254.84
+2026-10-26,2026-10-27 00:00:00+00:00,Aaron Nesmith,points,10+ YES,kalshi,won,9.33,-245.51
+2026-10-26,2026-10-27 00:00:00+00:00,Pascal Siakam,assists,6+ AST YES,kalshi,won,4.98,-240.53
+2026-10-26,2026-10-27 00:00:00+00:00,Jaylin Williams,points,10+ YES,polymarket_us,lost,-16.22,-256.75
+2026-10-26,2026-10-27 01:00:00+00:00,Ace Bailey,points,10+ YES,kalshi,won,15.32,-241.43
+2026-10-26,2026-10-27 01:00:00+00:00,Isaiah Collier,assists,4+ AST YES,kalshi,won,12.36,-229.07
+2026-10-27,2026-10-27 23:30:00+00:00,Neemias Queta,rebounds,4+ REB YES,polymarket_us,lost,-7.63,-236.7
+2026-10-27,2026-10-27 23:30:00+00:00,Paul George,points,15+ YES,polymarket_us,won,12.36,-224.33999999999997
+2026-10-27,2026-10-27 23:30:00+00:00,Derrick White,points,10+ YES,kalshi,won,7.27,-217.06999999999996
+2026-10-27,2026-10-27 23:30:00+00:00,Payton Pritchard,points,15+ YES,polymarket_us,lost,-17.89,-234.95999999999998
+2026-10-27,2026-10-28 00:00:00+00:00,Josh Hart,points,10+ YES,kalshi,lost,-17.61,-252.57
+2026-10-27,2026-10-28 00:00:00+00:00,Keldon Johnson,points,15+ NO,kalshi,won,9.04,-243.53
+2026-10-27,2026-10-28 00:00:00+00:00,Josh Hart,assists,4+ AST YES,polymarket_us,won,5.19,-238.34
+2026-10-27,2026-10-28 00:00:00+00:00,John Collins,points,10+ YES,polymarket_us,lost,-0.79,-239.13
+2026-10-27,2026-10-28 03:00:00+00:00,Jrue Holiday,points,15+ NO,polymarket_us,lost,-24.67,-263.8
+2026-10-29,2026-10-30 00:00:00+00:00,Bennedict Mathurin,points,15+ NO,polymarket_us,won,13.07,-250.73000000000002
+2026-10-29,2026-10-30 00:00:00+00:00,Jeremiah Fears,points,20+ NO,kalshi,lost,-24.33,-275.06
+2026-10-29,2026-10-30 00:00:00+00:00,Luguentz Dort,points,10+ NO,kalshi,won,11.32,-263.74
+2026-10-29,2026-10-30 02:00:00+00:00,Jrue Holiday,rebounds,6+ REB YES,polymarket_us,won,8.79,-254.95000000000002
+2026-10-29,2026-10-30 02:00:00+00:00,Ty Jerome,assists,8+ AST YES,kalshi,lost,-24.78,-279.73
+2026-10-29,2026-10-30 02:00:00+00:00,Jerami Grant,points,10+ YES,polymarket_us,lost,-5.58,-285.31
+2026-10-29,2026-10-30 02:00:00+00:00,Toumani Camara,points,10+ YES,polymarket_us,won,19.04,-266.27
+2026-10-30,2026-10-30 23:00:00+00:00,Bilal Coulibaly,points,10+ YES,kalshi,lost,-24.78,-291.04999999999995
+2026-10-30,2026-10-30 23:30:00+00:00,Joel Embiid,points,20+ YES,polymarket_us,lost,-24.67,-315.71999999999997
+2026-10-30,2026-10-31 00:00:00+00:00,Tari Eason,points,10+ YES,polymarket_us,won,14.57,-301.15
+2026-10-30,2026-10-31 02:00:00+00:00,Jordan Goodwin,assists,4+ AST YES,polymarket_us,won,18.55,-282.59999999999997
+2026-10-30,2026-10-31 02:00:00+00:00,Collin Gillespie,assists,2+ AST YES,polymarket_us,won,4.58,-278.02
+2026-10-30,2026-10-31 02:00:00+00:00,Sandro Mamukelashvili,points,5+ YES,polymarket_us,lost,-16.63,-294.65
+2026-10-31,2026-10-31 19:00:00+00:00,Jrue Holiday,assists,6+ AST YES,polymarket_us,lost,-8.05,-302.7
+2026-10-31,2026-10-31 22:00:00+00:00,Dennis Schroder,assists,4+ AST YES,polymarket_us,won,2.5,-300.2
+2026-10-31,2026-10-31 22:00:00+00:00,Dennis Schroder,points,10+ YES,polymarket_us,lost,-9.04,-309.24
+2026-10-31,2026-10-31 22:00:00+00:00,Brandon Miller,assists,2+ AST YES,polymarket_us,won,2.84,-306.40000000000003
+2026-10-31,2026-10-31 22:00:00+00:00,Anfernee Simons,assists,4+ AST YES,polymarket_us,lost,-22.38,-328.78000000000003
+2026-10-31,2026-10-31 22:00:00+00:00,Grayson Allen,assists,4+ AST YES,polymarket_us,lost,-24.89,-353.67
+2026-10-31,2026-10-31 23:00:00+00:00,Trey Murphy III,points,15+ YES,kalshi,won,14.15,-339.52000000000004
+2026-10-31,2026-10-31 23:00:00+00:00,Kingston Flemings,points,5+ YES,polymarket_us,won,4.01,-335.51000000000005
+2026-10-31,2026-11-01 00:00:00+00:00,Keldon Johnson,points,10+ YES,kalshi,lost,-10.75,-346.26000000000005
+2026-10-31,2026-11-01 00:30:00+00:00,Kevin Durant,assists,6+ AST YES,kalshi,lost,-18.07,-364.33000000000004
+2026-10-31,2026-11-01 00:30:00+00:00,Marcus Smart,assists,2+ AST YES,polymarket_us,won,1.89,-362.44000000000005

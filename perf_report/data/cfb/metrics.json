@@ -1,0 +1,574 @@
+{
+ "definitions": {
+  "p": "push-excluded P(win) of the signal's side at the early number",
+  "positive gap": "the model scored better than that benchmark on the same bets",
+  "close benchmark": "closing-market distribution priced at the bet's own early line",
+  "units": "1 unit risked per signal at -110; no $ amounts (no real bets logged)",
+  "clv_net_points": "CLV minus the season's average early-to-close drift (sign by side)"
+ },
+ "backtest_2022_2025": {
+  "sample": "walk-forward backtest 2022-2025 (fit on earlier seasons only)",
+  "signals": 337,
+  "confidence": "",
+  "date_range": [
+   "2022-09-01",
+   "2025-12-13"
+  ],
+  "record": "178-154-5",
+  "win_rate_ex_push": {
+   "value": 0.536144578313253,
+   "lo": 0.4823934466455329,
+   "hi": 0.5890688141345493,
+   "n": 332
+  },
+  "break_even": 0.5238095238095238,
+  "units": 7.818181818181819,
+  "roi_per_unit": {
+   "value": 0.02319935257620718,
+   "se": 0.051551975373066626,
+   "lo": -0.0778425191550034,
+   "hi": 0.12424122430741777,
+   "n": 337
+  },
+  "units_ci_by_week": {
+   "value": 7.818181818181819,
+   "lo": -25.184090909090905,
+   "hi": 38.91136363636361,
+   "se": 16.374632861474137,
+   "n": 337,
+   "clusters": 59,
+   "method": "bootstrap, 10000 resamples, by wk"
+  },
+  "expected_wins_model": 181.68284872189952,
+  "wins": 178,
+  "avg_ev_at_entry": {
+   "value": 0.044365457788023234,
+   "se": 0.0014424639163035575,
+   "lo": 0.04153822851206826,
+   "hi": 0.04719268706397821,
+   "n": 337
+  },
+  "avg_edge_pp_model_minus_50": {
+   "value": 4.7221698856150285,
+   "se": 0.07595649823824886,
+   "lo": 4.573295149068061,
+   "hi": 4.871044622161996,
+   "n": 337
+  },
+  "clv_points": {
+   "value": 0.6980712166172107,
+   "se": 0.120703548125362,
+   "lo": 0.4614922622915012,
+   "hi": 0.9346501709429202,
+   "n": 337
+  },
+  "clv_points_median": 0.5,
+  "clv_net_points": {
+   "value": 0.6744051972220001,
+   "se": 0.1209078681150782,
+   "lo": 0.4374257757164468,
+   "hi": 0.9113846187275534,
+   "n": 337
+  },
+  "clv_prob_pp": {
+   "value": 2.0477461596688187,
+   "se": 0.2982089509788346,
+   "lo": 1.4632566157503029,
+   "hi": 2.6322357035873347,
+   "n": 337
+  },
+  "clv_prob_pp_median": 1.5515715428971122,
+  "beat_close": {
+   "value": 0.5667655786350149,
+   "lo": 0.513400753850327,
+   "hi": 0.6186253838042316,
+   "n": 337
+  },
+  "tied_close": {
+   "value": 0.13649851632047477,
+   "lo": 0.10391784021722257,
+   "hi": 0.1772731881079584,
+   "n": 337
+  },
+  "worse_than_close": {
+   "value": 0.29673590504451036,
+   "lo": 0.25047477420474734,
+   "hi": 0.3475789844913742,
+   "n": 337
+  },
+  "scores_on_signals": {
+   "n": 332,
+   "brier_model": 0.24961976364658353,
+   "logloss_model": 0.6924495386366707,
+   "brier_close_market": 0.24324086208395967,
+   "logloss_close_market": 0.6794758160482008,
+   "brier_early_market": 0.25,
+   "logloss_early_market": 0.6931471805599455,
+   "brier_gap_vs_close": {
+    "value": -0.006378901562623847,
+    "se": 0.0033011138922408307,
+    "lo": -0.012849084791415874,
+    "hi": 9.128166616818086e-05,
+    "n": 332
+   },
+   "logloss_gap_vs_close": {
+    "value": -0.012973722588469875,
+    "se": 0.006689161888989549,
+    "lo": -0.02608447989088939,
+    "hi": 0.00013703471394964188,
+    "n": 332
+   },
+   "brier_gap_vs_early_market": {
+    "value": 0.00038023635341648217,
+    "se": 0.0027218620984590975,
+    "lo": -0.004954613359563349,
+    "hi": 0.005715086066396312,
+    "n": 332
+   },
+   "logloss_gap_vs_early_market": {
+    "value": 0.0006976419232745858,
+    "se": 0.005476659785962765,
+    "lo": -0.010036611257212434,
+    "hi": 0.011431895103761606,
+    "n": 332
+   }
+  },
+  "max_drawdown_units": {
+   "max_drawdown": 12.545454545454545,
+   "peak_index": 250,
+   "trough_index": 337,
+   "peak_value": 20.36363636363634,
+   "trough_value": 7.8181818181817935
+  },
+  "longest_losing_streak": 6,
+  "weeks": 59,
+  "losing_weeks": 30,
+  "sharpe_weekly_units": 0.06126803668666208,
+  "by_season": {
+   "2022": {
+    "signals": 120,
+    "record": "71-45-4",
+    "units": 19.545454545454547,
+    "clv_points": 0.9833333333333333
+   },
+   "2023": {
+    "signals": 85,
+    "record": "42-42-1",
+    "units": -3.8181818181818175,
+    "clv_points": 0.5823529411764706
+   },
+   "2024": {
+    "signals": 39,
+    "record": "21-18-0",
+    "units": 1.0909090909090908,
+    "clv_points": 0.00641025641025641
+   },
+   "2025": {
+    "signals": 93,
+    "record": "44-49-0",
+    "units": -9.0,
+    "clv_points": 0.7258064516129032
+   }
+  },
+  "by_side": {
+   "over": {
+    "signals": 179,
+    "record": "95-83-1",
+    "units": 3.363636363636362,
+    "clv_points": 0.45391061452513964,
+    "clv_net_points": 0.945945455013846
+   },
+   "under": {
+    "signals": 158,
+    "record": "83-71-4",
+    "units": 4.454545454545453,
+    "clv_points": 0.9746835443037974,
+    "clv_net_points": 0.36677414567301
+   }
+  }
+ },
+ "walkforward_2026_w1_11": {
+  "sample": "2026 weeks 1-11, walk-forward (fit on 2021-2025)",
+  "signals": 65,
+  "confidence": "LOW-CONFIDENCE (n<100)",
+  "date_range": [
+   "2026-09-05",
+   "2026-11-15"
+  ],
+  "record": "36-29-0",
+  "win_rate_ex_push": {
+   "value": 0.5538461538461539,
+   "lo": 0.4333760431730088,
+   "hi": 0.6683066603086071,
+   "n": 65
+  },
+  "break_even": 0.5238095238095238,
+  "units": 3.7272727272727266,
+  "roi_per_unit": {
+   "value": 0.05734265734265733,
+   "se": 0.11862425973757824,
+   "lo": -0.175160891742996,
+   "hi": 0.28984620642831066,
+   "n": 65
+  },
+  "units_ci_by_week": {
+   "value": 3.7272727272727266,
+   "lo": -13.181818181818182,
+   "hi": 21.63636363636364,
+   "se": 8.84327681093417,
+   "n": 65,
+   "clusters": 11,
+   "method": "bootstrap, 10000 resamples, by wk"
+  },
+  "expected_wins_model": 35.44072958018954,
+  "wins": 36,
+  "avg_ev_at_entry": {
+   "value": 0.04091653312444796,
+   "se": 0.002210721774447552,
+   "lo": 0.03658351844653075,
+   "hi": 0.04524954780236516,
+   "n": 65
+  },
+  "avg_edge_pp_model_minus_50": {
+   "value": 4.5241993541377505,
+   "se": 0.1157997119948717,
+   "lo": 4.297231918627802,
+   "hi": 4.751166789647699,
+   "n": 65
+  },
+  "clv_points": {
+   "value": 0.8923076923076924,
+   "se": 0.2595512741354306,
+   "lo": 0.38358719500224836,
+   "hi": 1.4010281896131365,
+   "n": 65
+  },
+  "clv_points_median": 1.0,
+  "clv_net_points": {
+   "value": 0.8789141726440762,
+   "se": 0.2642360359142756,
+   "lo": 0.3610115422520961,
+   "hi": 1.3968168030360564,
+   "n": 65
+  },
+  "clv_prob_pp": {
+   "value": 2.895742532757187,
+   "se": 0.6455571195546709,
+   "lo": 1.6304505784300323,
+   "hi": 4.161034487084342,
+   "n": 65
+  },
+  "clv_prob_pp_median": 3.277159023409182,
+  "beat_close": {
+   "value": 0.6615384615384615,
+   "lo": 0.5403814981313132,
+   "hi": 0.764666612313534,
+   "n": 65
+  },
+  "tied_close": {
+   "value": 0.07692307692307693,
+   "lo": 0.03330301045885137,
+   "hi": 0.16776146218559615,
+   "n": 65
+  },
+  "worse_than_close": {
+   "value": 0.26153846153846155,
+   "lo": 0.17018055060319132,
+   "hi": 0.3795103339782245,
+   "n": 65
+  },
+  "scores_on_signals": {
+   "n": 65,
+   "brier_model": 0.24725217924090537,
+   "logloss_model": 0.6876483752091471,
+   "brier_close_market": 0.23906057370350542,
+   "logloss_close_market": 0.670908176956466,
+   "brier_early_market": 0.25,
+   "logloss_early_market": 0.6931471805599454,
+   "brier_gap_vs_close": {
+    "value": -0.008191605537399975,
+    "se": 0.006727577571036849,
+    "lo": -0.021377657576632198,
+    "hi": 0.004994446501832249,
+    "n": 65
+   },
+   "logloss_gap_vs_close": {
+    "value": -0.01674019825268108,
+    "se": 0.013646614521067815,
+    "lo": -0.043487562713974,
+    "hi": 0.010007166208611838,
+    "n": 65
+   },
+   "brier_gap_vs_early_market": {
+    "value": 0.0027478207590946107,
+    "se": 0.005744410767141571,
+    "lo": -0.008511224344502868,
+    "hi": 0.014006865862692088,
+    "n": 65
+   },
+   "logloss_gap_vs_early_market": {
+    "value": 0.005498805350798215,
+    "se": 0.011528127081722739,
+    "lo": -0.017096323729378353,
+    "hi": 0.028093934430974785,
+    "n": 65
+   }
+  },
+  "max_drawdown_units": {
+   "max_drawdown": 6.363636363636363,
+   "peak_index": 46,
+   "trough_index": 60,
+   "peak_value": 9.363636363636363,
+   "trough_value": 3.0
+  },
+  "longest_losing_streak": 3,
+  "weeks": 11,
+  "losing_weeks": 5,
+  "sharpe_weekly_units": 0.12193279567148144
+ },
+ "all_games_2022_2025": {
+  "games": 2919,
+  "at_early_number": {
+   "n": 2919,
+   "brier_model": 0.2497572656598514,
+   "logloss_model": 0.6926687653270122,
+   "brier_close_market": 0.24718331348317382,
+   "logloss_close_market": 0.6874490034027522,
+   "brier_early_market": 0.25,
+   "logloss_early_market": 0.6931471805599454,
+   "brier_gap_vs_close": {
+    "value": -0.0025739521766776005,
+    "se": 0.0010081978658303718,
+    "lo": -0.004550019993705129,
+    "hi": -0.0005978843596500718,
+    "n": 2919
+   },
+   "logloss_gap_vs_close": {
+    "value": -0.00521976192426001,
+    "se": 0.0020444927656939247,
+    "lo": -0.009226967745020104,
+    "hi": -0.0012125561034999179,
+    "n": 2919
+   },
+   "brier_gap_vs_early_market": {
+    "value": 0.00024273434014859086,
+    "se": 0.00041211631073902237,
+    "lo": -0.0005650136288998929,
+    "hi": 0.0010504823091970748,
+    "n": 2919
+   },
+   "logloss_gap_vs_early_market": {
+    "value": 0.00047841523293310634,
+    "se": 0.0008273262196993453,
+    "lo": -0.0011431441576776106,
+    "hi": 0.002099974623543823,
+    "n": 2919
+   }
+  },
+  "at_close_p_over": {
+   "n": 2902,
+   "logloss_model": 0.6934163664059558,
+   "logloss_market_0.5": 0.6931471805599453,
+   "brier_model": 0.2501328353169665,
+   "brier_market_0.5": 0.25
+  }
+ },
+ "live_2026": {
+  "posted": 19,
+  "graded": 9,
+  "pending": 10,
+  "confidence": "LOW-CONFIDENCE (n<100)",
+  "first_posted_utc": "2026-10-16T02:00:55.004783+00:00",
+  "weeks_posted": [
+   7,
+   8,
+   12
+  ],
+  "graded_totals_matched_to_walkforward": "9 of 9",
+  "clv_points": {
+   "value": 2.361111111111111,
+   "se": 0.9710310162749186,
+   "lo": 0.12191358758114879,
+   "hi": 4.600308634641074,
+   "n": 9
+  },
+  "clv_prob_pp": {
+   "value": 6.488674037086817,
+   "se": 2.382348206459446,
+   "lo": 0.9949790729913346,
+   "hi": 11.982369001182299,
+   "n": 9
+  },
+  "beat_close": {
+   "value": 0.7777777777777778,
+   "lo": 0.4525833436728054,
+   "hi": 0.9367762376877727,
+   "n": 9
+  },
+  "scores": {
+   "n": 9,
+   "brier_model": 0.2307640140459642,
+   "logloss_model": 0.6546185032741739,
+   "brier_close_market": 0.21732551295100666,
+   "logloss_close_market": 0.6257508906705735,
+   "brier_early_market": 0.25,
+   "logloss_early_market": 0.6931471805599453,
+   "brier_gap_vs_close": {
+    "value": -0.01343850109495755,
+    "se": 0.021228432540965233,
+    "lo": -0.06239126653442338,
+    "hi": 0.03551426434450827,
+    "n": 9
+   },
+   "logloss_gap_vs_close": {
+    "value": -0.028867612603600306,
+    "se": 0.043472589128303624,
+    "lo": -0.12911540313346845,
+    "hi": 0.07138017792626784,
+    "n": 9
+   },
+   "brier_gap_vs_early_market": {
+    "value": 0.01923598595403581,
+    "se": 0.01302826931718652,
+    "lo": -0.010807203091396309,
+    "hi": 0.04927917499946793,
+    "n": 9
+   },
+   "logloss_gap_vs_early_market": {
+    "value": 0.03852867728577144,
+    "se": 0.02613425474186507,
+    "lo": -0.02173691414896941,
+    "hi": 0.09879426872051228,
+    "n": 9
+   }
+  },
+  "record_at_posted_number": "7-2-0",
+  "win_rate_ex_push": {
+   "value": 0.7777777777777778,
+   "lo": 0.4525833436728054,
+   "hi": 0.9367762376877727,
+   "n": 9
+  },
+  "units_at_posted_number": 4.363636363636364,
+  "roi_per_unit": {
+   "value": 0.4848484848484849,
+   "se": 0.28060998753715355,
+   "lo": -0.1622381464121912,
+   "hi": 1.131935116109161,
+   "n": 9
+  },
+  "regraded_at_book_number_when_posted": {
+   "n": 5,
+   "record": "4-1-0",
+   "units": 2.6363636363636362,
+   "units_same_picks_at_posted_number": 2.6363636363636367,
+   "share_with_now_ev_below_2pct": 0.8,
+   "clv_points_from_book_number": {
+    "value": 2.15,
+    "se": 0.5511351921262151,
+    "lo": 0.620048706657627,
+    "hi": 3.6799512933423726,
+    "n": 5
+   },
+   "clv_points_from_early_number_same_picks": {
+    "value": 3.75,
+    "se": 1.3670223114492315,
+    "lo": -0.04485393658306647,
+    "hi": 7.544853936583067,
+    "n": 5
+   }
+  },
+  "week12_pending": [
+   {
+    "kickoff": "2026-11-20 00:30:00+00:00",
+    "game": "Rice at Temple",
+    "rule": "Totals, early number",
+    "pick": "Over 48.5",
+    "ev": "0.0228374340023522",
+    "now_line": "50.5",
+    "now_ev": "-0.0008992296918833"
+   },
+   {
+    "kickoff": "2026-11-21 02:00:00+00:00",
+    "game": "New Mexico at Wyoming",
+    "rule": "Totals, early number",
+    "pick": "Over 37.5",
+    "ev": "0.0440094128867815",
+    "now_line": "37.5",
+    "now_ev": "0.0221864517328881"
+   },
+   {
+    "kickoff": "2026-11-21 17:00:00+00:00",
+    "game": "Ohio State at Nebraska",
+    "rule": "Totals, early number",
+    "pick": "Over 43.5",
+    "ev": "0.0272411393859975",
+    "now_line": "41.5",
+    "now_ev": "-0.0121641962107925"
+   },
+   {
+    "kickoff": "2026-11-21 17:00:00+00:00",
+    "game": "Northwestern at Minnesota",
+    "rule": "Totals, early number",
+    "pick": "Over 43.5",
+    "ev": "0.022713259344287",
+    "now_line": "42.5",
+    "now_ev": "-0.0138675932055047"
+   },
+   {
+    "kickoff": "2026-11-21 17:00:00+00:00",
+    "game": "Wisconsin at Purdue",
+    "rule": "Totals, early number",
+    "pick": "Over 44.5",
+    "ev": "0.0298236117834759",
+    "now_line": "46.5",
+    "now_ev": "-0.026045068114787"
+   },
+   {
+    "kickoff": "2026-11-21 17:00:00+00:00",
+    "game": "East Carolina at Army",
+    "rule": "Totals, early number",
+    "pick": "Over 44.5",
+    "ev": "0.0517496627451866",
+    "now_line": "45.5",
+    "now_ev": "-0.014759041050158"
+   },
+   {
+    "kickoff": "2026-11-21 17:30:00+00:00",
+    "game": "North Carolina at Virginia",
+    "rule": "Totals, early number",
+    "pick": "Over 43.5",
+    "ev": "0.040163583472391",
+    "now_line": "43.5",
+    "now_ev": "0.0070073184966559"
+   },
+   {
+    "kickoff": "2026-11-21 19:30:00+00:00",
+    "game": "South Florida at Florida Atlantic",
+    "rule": "Totals, early number",
+    "pick": "Under 65.5",
+    "ev": "0.0492905378534411",
+    "now_line": "64.5",
+    "now_ev": "-0.0112197052207025"
+   },
+   {
+    "kickoff": "2026-11-21 20:30:00+00:00",
+    "game": "NC State at Florida State",
+    "rule": "Totals, early number",
+    "pick": "Over 54.5",
+    "ev": "0.0311418403664001",
+    "now_line": "56.5",
+    "now_ev": "-0.030055103853395"
+   },
+   {
+    "kickoff": "2026-11-19 00:00:00+00:00",
+    "game": "Akron at Massachusetts",
+    "rule": "Spreads, your book now",
+    "pick": "Massachusetts \u22123 (draftkings (CFBD line))",
+    "ev": "0.0449",
+    "now_line": "-3.0",
+    "now_ev": "0.0449"
+   }
+  ]
+ }
+}
