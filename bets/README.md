@@ -19,12 +19,13 @@ python -m cold_start_usage.cli journal --all               # or every day (also 
 | Path | What's in it |
 |---|---|
 | `ledger.csv` | The season ledger: one row per ticket, every date, sorted by tip and then first-seen time |
+| `SEASON.md` | The season record from `ledger.csv`: totals, by stat and by day (wins vs expected, stake, P&L, yield, CLV) |
 | `fills.csv` | Every fill logged with `cli fill`, corrections included (a replaced fill stays, marked `superseded`) |
 | `days/YYYY-MM-DD/tickets.csv` | Every actionable row logged for that slate, at every checkpoint, with re-confirmations flagged |
 | `days/YYYY-MM-DD/results.csv` | Each of that slate's tickets graded, plus any fills on it |
 | `days/YYYY-MM-DD/summary.md` | The slate, tickets with entry / close / result, totals, CLV by stat, fills by kind, reviewed scenarios, pending items |
 
-A day is the **ET date of the games' tip**. A decision logged late the evening before, for a next-day game, files under the game's day. A day gets a folder once it has a logged venue decision or a fill.
+`ledger.csv` and `fills.csv` are rebuilt in full from the log, except that rows for days the log doesn't cover are kept as committed. A fresh database (the daily job's cache lost, a new machine) never drops earlier days. A day is the **ET date of the games' tip**. A decision logged late the evening before, for a next-day game, files under the game's day. A day gets a folder once it has a logged venue decision or a fill.
 
 ## Conventions
 

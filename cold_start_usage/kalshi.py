@@ -115,6 +115,18 @@ class KalshiReader:
     def market(self, ticker: str) -> dict:
         return self.get(f"/markets/{ticker}").get("market") or {}
 
+    def event_markets(self, event_ticker: str, max_pages: int = 20) -> list[dict]:
+        """Every market of one event in any status (one call a game instead of one a contract)."""
+        out, cursor = [], None
+        for _ in range(max_pages):
+            params = {"event_ticker": event_ticker, "limit": 1000, **({"cursor": cursor} if cursor else {})}
+            body = self.get("/markets", params)
+            out += body.get("markets") or []
+            cursor = body.get("cursor")
+            if not cursor or not body.get("markets"):
+                return out
+        raise RuntimeError(f"Kalshi {event_ticker}: more than {max_pages} pages")
+
     def orderbook(self, ticker: str) -> dict[str, list[tuple[float, float]]]:
         return asks_from_orderbook(self.get(f"/markets/{ticker}/orderbook"))
 

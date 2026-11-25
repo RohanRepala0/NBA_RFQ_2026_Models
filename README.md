@@ -17,6 +17,10 @@ export COLD_START_BANKROLL_USD=1000     # optional: turns on suggested contract 
 python -m pytest -q                      # 181 offline tests
 ```
 
+## Daily job (GitHub Actions)
+
+`python -m cold_start_usage.cli daily` runs the whole pipeline unattended. Each run grades past days, takes the slate and each game's pre-tip checkpoints, builds rotations from recent box scores, logs paper tickets and sends alerts, and does only what's due. The workflow in `.github/workflows/nba-daily.yml` runs it on a schedule and commits `bets/`. The season record is [`bets/SEASON.md`](bets/SEASON.md). For setup (secrets, first run), schedule and costs, see [`docs/DAILY_JOB.md`](docs/DAILY_JOB.md).
+
 ## Opening Night plan: cron goes live before Tue 10/20
 
 The job is installed on a local machine **before Opening Night (Tuesday, October 20, 2026; first tip 3:00 PM ET)**, so the first snapshot history starts with the first tip of the season. It runs every 5 minutes:

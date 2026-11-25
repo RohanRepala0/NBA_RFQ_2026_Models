@@ -164,7 +164,7 @@ def test_output_is_deterministic(storage, tmp_path):
     write_journal(storage, b)
     files = sorted(p.relative_to(a) for p in a.rglob("*") if p.is_file())
     assert files == sorted(p.relative_to(b) for p in b.rglob("*") if p.is_file())
-    assert len(files) == 5 and len(first["written"]) == 5
+    assert len(files) == 6 and len(first["written"]) == 6                # ledger, fills, SEASON.md, one day (3)
     for rel in files:
         assert (a / rel).read_bytes() == (b / rel).read_bytes()
     assert write_journal(storage, a)["written"] == []                    # an unchanged rebuild touches nothing
@@ -186,7 +186,7 @@ def test_no_secret_reaches_any_file(storage, tmp_path, monkeypatch, capsys):
     assert cli.cmd_journal(args, storage, lambda: TIP2 + timedelta(hours=10)) == 0
     printed = capsys.readouterr().out
     files = [p for p in out.rglob("*") if p.is_file()]
-    assert len(files) == 5
+    assert len(files) == 6
     for p in files:
         text = p.read_text()
         assert key not in text and topic not in text, p

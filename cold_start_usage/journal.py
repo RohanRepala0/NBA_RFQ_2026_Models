@@ -21,6 +21,7 @@ leaves the tree byte-identical.
 """
 from __future__ import annotations
 
+import io
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -520,16 +521,88 @@ def _write(path: Path, text: str) -> bool:
     return True
 
 
+def _carry(path: Path, new_text: str, columns: list[str], logged: set[str], sort_cols: list[str], key: str) -> str:
+    """`new_text` plus the rows of the committed file at `path` whose date_et the log doesn't
+    cover (`logged`: ISO dates with a decision or fill in this database). A fresh database (the
+    daily job's cache lost, a new machine) then never drops earlier days from the record; a day
+    the log does cover is rebuilt from the log as before."""
+    if not path.exists():
+        return new_text
+    old = pd.read_csv(path, dtype=str, keep_default_na=False)
+    if old.empty or "date_et" not in old.columns:
+        return new_text
+    new = pd.read_csv(io.StringIO(new_text), dtype=str, keep_default_na=False)
+    carried = old[~old.date_et.isin(logged) & ~old[key].isin(set(new[key]))]
+    if carried.empty:
+        return new_text
+    merged = pd.concat([carried.reindex(columns=columns, fill_value=""), new.reindex(columns=columns, fill_value="")],
+                       ignore_index=True)
+    merged = merged.sort_values(sort_cols, kind="mergesort")
+    return merged.to_csv(index=False, lineterminator="\n")
+
+
+def _num(s: pd.Series) -> pd.Series:
+    return pd.to_numeric(s.replace("", None), errors="coerce")
+
+
+def season_summary(ledger_text: str) -> str:
+    """bets/SEASON.md: the season's paper record from the ledger (every committed day), by stat
+    and by day. Deterministic like the rest of the journal: no generated-at stamp."""
+    t = pd.read_csv(io.StringIO(ledger_text), dtype=str, keep_default_na=False)
+    lines = ["# Season record", "",
+             "Paper tickets at the suggested sizes: one per player-game and stat, the first time it was actionable, "
+             "at the logged all-in cost. Real money only where a fill is logged. Rebuilt with the rest of `bets/` "
+             "(by `cli journal` and the daily job) from `ledger.csv`. Research only: nothing here places an order.", ""]
+    if t.empty:
+        return "\n".join(lines + ["No tickets yet.", ""])
+    for c in ("suggested_stake_usd", "pnl_suggested_usd", "p_blend", "settlement_value", "clv", "fill_pnl_usd"):
+        t[c] = _num(t[c])
+    settled = t.outcome.isin(["won", "lost", "fair price"])
+    t["value"] = (t.settlement_value.where(t.side == "YES", 1 - t.settlement_value)).where(settled)
+
+    def row(g: pd.DataFrame, label: str) -> list[str]:
+        s = g[g.outcome.isin(["won", "lost", "fair price"])]
+        staked = float(s.suggested_stake_usd.fillna(0).sum())
+        pnl = float(s.pnl_suggested_usd.fillna(0).sum())
+        clv = g.clv.dropna()
+        return [label, str(len(g)), str(len(s)), _fmt(s.value.sum(), "num"), f"{s.p_blend.sum():.1f}",
+                _usd(staked), _usd(pnl, signed=True), f"{100 * pnl / staked:+.1f}%" if staked > 0 else "",
+                _cents(clv.mean(), signed=True) if len(clv) else ""]
+
+    header = ["", "Tickets", "Settled", "Won", "Expected", "Staked", "P&L", "Yield", "Avg CLV"]
+    lines += ["## Totals", ""] + _md_table(header, [row(t, "season")]) + [""]
+    lines += ["Won counts a fair-price settlement as its fraction. Expected is the sum of `p_blend` (our fair "
+              "probability) over the settled tickets: winning fewer than expected means our prices were too "
+              "confident. CLV is the venue's last mid before tip minus our entry; positive means the market moved "
+              "our way.", ""]
+    pending = int((t.outcome == "pending").sum())
+    if pending:
+        lines += [f"{pending} ticket(s) pending settlement.", ""]
+    fills = t[t.fill_pnl_usd.notna()]
+    lines += [f"Logged fills on tickets: {len(fills)}" + (f", P&L {_usd(fills.fill_pnl_usd.sum(), signed=True)}"
+                                                        if len(fills) else " (no real-money record yet)"), ""]
+    lines += ["## By stat", ""] + _md_table(header, [row(g, s) for s, g in t.groupby("stat", sort=True)]) + [""]
+    days = [row(g, d) for d, g in t.groupby("date_et", sort=True)]
+    lines += ["## By day (newest first)", ""] + _md_table(["Date", *header[1:]], days[::-1]) + [""]
+    return "\n".join(lines)
+
+
 def write_journal(storage: Storage, out_dir: Path | str | None = None, dates: list[date] | None = None) -> dict:
-    """Rebuild ledger.csv and fills.csv in full, and the day folders for `dates` (default: every
-    date with a venue decision or a fill). Returns what was written."""
+    """Rebuild ledger.csv and fills.csv in full (keeping committed rows for days this database
+    doesn't log), SEASON.md, and the day folders for `dates` (default: every date with a venue
+    decision or a fill). Returns what was written."""
     out = Path(out_dir) if out_dir is not None else config.BETS_DIR
     j = build(storage)
     all_dates = journal_dates(storage, j.fills)
     dates = all_dates if dates is None else list(dates)
     written: list[Path] = []
-    files = {out / "ledger.csv": _csv(j.tickets, LEDGER_COLUMNS),
-             out / "fills.csv": _csv(j.fills, FILLS_COLUMNS)}
+    logged = {d.isoformat() for d in all_dates}
+    ledger_text = _carry(out / "ledger.csv", _csv(j.tickets, LEDGER_COLUMNS), LEDGER_COLUMNS, logged,
+                         ["tip_utc", "first_seen_utc"], "signal_id")
+    files = {out / "ledger.csv": ledger_text,
+             out / "fills.csv": _carry(out / "fills.csv", _csv(j.fills, FILLS_COLUMNS), FILLS_COLUMNS, logged,
+                                       ["filled_at_utc", "logged_utc"], "fill_id"),
+             out / "SEASON.md": season_summary(ledger_text)}
     days, skipped = [], []
     for d in dates:
         if d not in all_dates:

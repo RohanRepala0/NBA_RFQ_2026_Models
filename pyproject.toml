@@ -3,7 +3,7 @@ name = "cold-start-usage-projection-modeling"
 version = "1.0.0"
 description = "NBA player-points projections vs a sportsbook consensus, with a prediction-market watchlist (research only)"
 requires-python = ">=3.11"
-dependencies = ["pandas>=2.0", "duckdb>=1.0", "requests>=2.31"]
+dependencies = ["pandas>=2.0,<3", "duckdb>=1.0,<2", "requests>=2.31"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]

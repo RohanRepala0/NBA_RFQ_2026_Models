@@ -1,6 +1,6 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
 catalog | board | kalshi | venues | tickets | fill | journal | roster | boxscores | evaluate | shifts |
-dashboard | history | backtest.
+persistence | daily | dashboard | history | backtest.
 
     python -m cold_start_usage.cli snapshot --date 2026-10-21
     python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
@@ -837,6 +837,20 @@ def cmd_persistence(args, storage, now_fn) -> int:
     return 0
 
 
+def cmd_daily(args, storage, now_fn) -> int:
+    """The unattended daily job (GitHub Actions; docs/DAILY_JOB.md): grade, box scores, slate,
+    rotations, checkpoints, venue scan, journal and alerts, each only when due."""
+    from . import daily
+    simulated = args.now is not None
+    fetchers = None
+    if simulated:                                   # never log live prices at a simulated time
+        from .venues import Fetchers
+        fetchers = Fetchers
+    return daily.run(storage, now_fn, lambda: _client(storage, now_fn), fetchers_factory=fetchers,
+                     state_path=Path(args.state) if args.state else None,
+                     settle=(lambda *a: 0) if simulated else None)
+
+
 def cmd_dashboard(args, storage, now_fn) -> int:
     """Write the Prop Desk dashboard's row files (no API calls)."""
     from .dashboard import export
@@ -851,7 +865,7 @@ COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "p
             "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
             "journal": cmd_journal, "roster": cmd_roster, "boxscores": cmd_boxscores,
             "evaluate": cmd_evaluate, "dashboard": cmd_dashboard, "shifts": cmd_shifts,
-            "persistence": cmd_persistence,
+            "persistence": cmd_persistence, "daily": cmd_daily,
             "backtest": cmd_backtest}
 
 
@@ -945,6 +959,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--reps", type=int, default=200, help="Bootstrap resamples for the k band")
     p.add_argument("--target-end", help="Last date of the rest-of-season target, YYYY-MM-DD (e.g. before the trade deadline)")
     p.add_argument("--csv", help="Also write the player-cut rows here")
+    p = sub.add_parser("daily", help="The unattended daily job: grade, slate, rotations, checkpoints, tickets, "
+                                     "journal, alerts (each only when due; safe to repeat)")
+    p.add_argument("--state", help="Run-state file (default data/daily_state.json)")
     p = sub.add_parser("dashboard", help="Write the Prop Desk dashboard's row files (no API calls)")
     p.add_argument("--out", required=True, help="Folder for tickets.json, model_eval.json, minutes_eval.json")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")

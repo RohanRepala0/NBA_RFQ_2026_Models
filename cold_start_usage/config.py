@@ -259,6 +259,9 @@ MODEL_VERSION = "usage-squeeze-1.1"      # 1.1: rebounds and assists
 # box scores before tip, shrunk to last season. "season" stays until `evaluate` shows rolling
 # beating it out of sample (docs/MODEL_V2_PLAN.md).
 PROJECTION_SOURCE = "season"
+# The unattended daily job (daily.py) prices with the rolling model: the season model needs its
+# minutes reviewed by hand every day, and the rolling model rebuilds them from box scores.
+DAILY_JOB_SOURCE = "rolling"
 ROLLING_MODEL_VERSION = "usage-squeeze-1.1+rolling-0.2"
 # The rolling settings below were chosen on the games before this ET date (the bench finding
 # came from them): `evaluate` reports those nights as in-sample and the rest as out of sample.
