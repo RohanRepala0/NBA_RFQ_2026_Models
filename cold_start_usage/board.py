@@ -71,6 +71,8 @@ def _cents(x) -> str:
 
 def venue_status(rows: pd.DataFrame) -> dict:
     """Best line of the board from a player's logged venue decisions."""
+    if "stat" in rows:                                   # a shadow stat is never a player's displayed line
+        rows = rows[~rows.stat.isin(config.SHADOW_STATS)]
     act = rows[rows.decision == "actionable"]
     if len(act):
         r = act.sort_values("ev_blend", ascending=False).iloc[0]

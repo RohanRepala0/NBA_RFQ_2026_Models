@@ -18,6 +18,7 @@ REPO_DIR = PACKAGE_DIR.parent
 DATA_DIR = REPO_DIR / "data"
 RAW_DIR = DATA_DIR / "raw"                      # allowlist-filtered API responses
 REPORTS_DIR = REPO_DIR / "reports"
+BETS_DIR = REPO_DIR / "bets"                    # the committed bet journal (`cli journal`)
 SCENARIOS_DIR = PACKAGE_DIR / "scenarios"
 PLAYERS_CSV = DATA_DIR / "players_2025_26.csv"
 TEAM_SHOOTING_CSV = DATA_DIR / "team_shooting_2025_26.csv"   # spacing context
@@ -80,17 +81,29 @@ def request_bookmaker_filter(path: Path | None = None) -> str | None:
 # a normal (odds_math); rebounds and assists are counts, priced off a negative binomial
 # (distributions.py). The sportsbook-line `signals` stay points-only.
 STATS = ("points", "rebounds", "assists")
-STAT_LABELS = {"points": "PTS", "rebounds": "REB", "assists": "AST"}
+# Shadow stats: projected, priced against the books and the venues, logged and graded like the three
+# above, but a shadow decision is never actionable (no ticket, no stake, no cap) until the stat beats
+# the books out of sample (docs/MODEL_V2_PLAN.md). Combos are the sum of their parts.
+SHADOW_STATS = ("threes", "steals", "blocks", "turnovers", "pra", "pr", "pa", "ra", "stocks")
+ALL_STATS = STATS + SHADOW_STATS
+COMBO_PARTS = {"pra": ("points", "rebounds", "assists"), "pr": ("points", "rebounds"),
+               "pa": ("points", "assists"), "ra": ("rebounds", "assists"), "stocks": ("steals", "blocks")}
+STAT_LABELS = {"points": "PTS", "rebounds": "REB", "assists": "AST", "threes": "3PM", "steals": "STL",
+               "blocks": "BLK", "turnovers": "TOV", "pra": "PRA", "pr": "PR", "pa": "PA", "ra": "RA",
+               "stocks": "STK"}
+# Our stat name -> the SportsGameOdds statID (sportsgameodds.com/docs/data-types/stats).
+SGO_STAT_IDS = {"points": "points", "rebounds": "rebounds", "assists": "assists", "threes": "threePointersMade",
+                "steals": "steals", "blocks": "blocks", "turnovers": "turnovers", "pra": "points+rebounds+assists",
+                "pr": "points+rebounds", "pa": "points+assists", "ra": "rebounds+assists", "stocks": "blocks+steals"}
 
 # --- SportsGameOdds API --------------------------------------------------------
 API_BASE = "https://api.sportsgameodds.com/v2"
 API_KEY_ENV = "SPORTS_ODDS_API_KEY"
 LEAGUE_ID = "NBA"
 POINTS_ODD_FILTER = "points-PLAYER_ID-game-ou-over"   # + includeOpposingOdds=true
-# Every /events call asks for all of STATS in one comma list. Billing is per event, so the
-# extra stats cost nothing (checked live: 80 odds, 1 object).
-STATS_ODD_FILTER = ("points-PLAYER_ID-game-ou-over,rebounds-PLAYER_ID-game-ou-over,"
-                    "assists-PLAYER_ID-game-ou-over")
+# Every /events call asks for all of ALL_STATS in one comma list. Billing is per event, so the
+# extra stats cost nothing (checked live with three stats: 80 odds, 1 object).
+STATS_ODD_FILTER = ",".join(f"{SGO_STAT_IDS[s]}-PLAYER_ID-game-ou-over" for s in ALL_STATS)
 REQUESTS_PER_MINUTE = 10                 # Amateur plan
 MONTHLY_OBJECT_LIMIT = 2500              # Amateur plan
 MONTHLY_OBJECT_HARD_STOP = 2200          # our own ceiling, below the plan limit
@@ -132,11 +145,13 @@ LADDER_HALF_WIDTH = 3                    # "N+ points" rungs either side of the 
 ACTIONABLE_VENUES = ("kalshi", "polymarket_us")
 REFERENCE_VENUES = ("polymarket_intl",)
 VENUES = ACTIONABLE_VENUES + REFERENCE_VENUES
-# Kalshi series and Polymarket US sportsMarketTypes read, by stat. Other prop series
-# (threes, steals, blocks, combos) are not read.
-KALSHI_SERIES = {"points": "KXNBAPTS", "rebounds": "KXNBAREB", "assists": "KXNBAAST"}
+# Kalshi series and Polymarket US sportsMarketTypes read, by stat (the shadow ones too).
+KALSHI_SERIES = {"points": "KXNBAPTS", "rebounds": "KXNBAREB", "assists": "KXNBAAST",
+                 "threes": "KXNBA3PT", "steals": "KXNBASTL", "blocks": "KXNBABLK", "pra": "KXNBAPRA"}
 PM_US_STAT_TYPES = {"basketball_player_points": "points", "basketball_player_rebounds": "rebounds",
-                    "basketball_player_assists": "assists"}
+                    "basketball_player_assists": "assists", "basketball_player_threes": "threes",
+                    "basketball_player_steals": "steals", "basketball_player_blocks": "blocks",
+                    "basketball_player_points_rebounds_assists": "pra"}
 # Taker fee per order = rate * C * P * (1 - P), rounded per order:
 #   kalshi: up to the next cent (KXNBAPTS, KXNBAREB, KXNBAAST fee_type "quadratic": makers pay 0)
 #   polymarket_us: to the cent, half to even (feeCoefficient 0.0695; no maker rebate at tier 1)
@@ -148,6 +163,9 @@ VENUE_FEES = {
 }
 VENUE_MIN_EDGE = {"kalshi": 0.04, "polymarket_us": 0.04}   # expected value per $1 contract, after fees
 THIN_CONSENSUS_EXTRA_EDGE = 0.01         # +1pp when only 2 books make the consensus
+# Extra edge by stat, on top of the venue's. Rohan's call after Oct 25: rebounds were the only stat
+# whose closing line ran against us (-2.0c over its first 14 tickets). Revisit at 50 rebound tickets.
+STAT_EXTRA_EDGE = {"rebounds": 0.02}
 MIN_SIZE_AT_EDGE = {"kalshi": 10, "polymarket_us": 10}     # contracts available at or under the max price
 PLANNED_CONTRACTS = 10                   # order size used to price fees before sizing
 TAIL_P = (0.10, 0.90)                    # market P outside this: the rung is too far from the books' line
@@ -170,7 +188,13 @@ SD_COMPOUND = (2.2, 0.15)
 # 2021-24 box scores (var / mean around a 20-game mean: 1.26 rebounds, 1.15 assists, plus a
 # little for opening-night uncertainty about the mean); phi_alt on the top of the range the
 # opening-week Kalshi and Polymarket US ladders imply. Frozen until graded.
-COUNT_DISPERSION = {"rebounds": (1.30, 1.50), "assists": (1.15, 1.30)}
+COUNT_DISPERSION = {"rebounds": (1.30, 1.50), "assists": (1.15, 1.30),
+                    # Shadow stats: unfitted priors (Var / mean of a player's game logs around his own mean;
+                    # threes and blocks are lumpy, steals near Poisson), to fit from game logs.
+                    "threes": (1.25, 1.45), "steals": (1.05, 1.20), "blocks": (1.30, 1.60),
+                    "turnovers": (1.10, 1.25), "ra": (1.30, 1.50), "stocks": (1.15, 1.35)}
+# Big combos are priced off a normal like points: SD = max(floor, fraction x mean), (fraction, floor).
+NORMAL_STATS = {"pra": (0.24, 4.5), "pr": (0.26, 4.0), "pa": (0.27, 4.0)}
 
 # --- Sizing (suggested contracts only; nothing is ever placed) ---------------------
 # Set COLD_START_BANKROLL_USD in the environment (or .env) to see stakes; see bankroll_usd().
@@ -228,6 +252,50 @@ class ModelParams:
 
 MODEL = ModelParams()
 MODEL_VERSION = "usage-squeeze-1.1"      # 1.1: rebounds and assists
+
+# --- Rolling projections (features.py) ------------------------------------------------
+# Where a projection's inputs come from: "season" = last season's averages and the scenario's
+# minutes (the model above, unchanged); "rolling" = the same usage model fed by this season's
+# box scores before tip, shrunk to last season. "season" stays until `evaluate` shows rolling
+# beating it out of sample (docs/MODEL_V2_PLAN.md).
+PROJECTION_SOURCE = "season"
+# The unattended daily job (daily.py) prices with the rolling model: the season model needs its
+# minutes reviewed by hand every day, and the rolling model rebuilds them from box scores.
+DAILY_JOB_SOURCE = "rolling"
+ROLLING_MODEL_VERSION = "usage-squeeze-1.1+rolling-0.2"
+# The rolling settings below were chosen on the games before this ET date (the bench finding
+# came from them): `evaluate` reports those nights as in-sample and the rest as out of sample.
+ROLLING_FROZEN_AT = date(2026, 10, 27)
+# Prior weight in games of last season's rate: shrunk = (K * prior + sum) / (K + minutes),
+# K = games * prior minutes per game; "minutes" is in games of the scenario's minutes. Points 10
+# and rebounds 20 are fitted on 2025-26 (`persistence`, docs/PERSISTENCE_STUDY.md: a player's
+# first games against the rest of his season, prior 2024-25); the others sat inside the fit's
+# bootstrap band and stay as set (steals and blocks weren't studied).
+ROLLING_PRIOR_GAMES = {"minutes": 3, "usage": 6, "points": 10, "rebounds": 20, "assists": 5,
+                       "threes": 12, "steals": 15, "blocks": 10, "turnovers": 10}
+# A player on a new team: the prior's weight times this. Same study: a new team's usage and
+# scoring showed in the first games (last season's barely helped), the box rates much less.
+TEAM_CHANGE_PRIOR_SCALE = {"usage": 0.1, "points": 0.1, "rebounds": 0.5, "assists": 0.5,
+                           "threes": 0.5, "steals": 0.5, "blocks": 0.5, "turnovers": 0.5}
+ROLLING_MINUTES_CAP = 38.0               # added minutes stop here (a player already above keeps his)
+TEAM_PRIOR_GAMES = 10                    # pace and opponent allowances, in games of league average
+CONTEXT_CLAMP = (0.90, 1.10)             # pace and opponent multipliers
+# Role stability over the last 10 games (coefficients of variation), and the points SD multiplier
+# per class. Fewer than min_games: "unknown".
+ROLE_CLASSES = {"min_games": 4, "engine_minutes": 30.0, "engine_cv_minutes": 0.12, "engine_cv_usage": 0.20,
+                "heat_check_cv_points": 0.40, "volatile_cv_minutes": 0.25}
+ROLE_SD_MULT = {"engine": 1.0, "steady": 1.0, "volatile_role": 1.10, "heat_check": 1.10, "unknown": 1.0}
+# Role shifts (shifts.py): this season against last on at least SHIFT_MIN_MINUTES minutes. A shift is
+# flagged at a change of at least: usage points, minutes a game, threes attempts per 36.
+SHIFT_MIN_MINUTES = 60.0
+SHIFT_FLAGS = {"usage": 4.0, "minutes": 6.0, "fg3a36": 2.0}
+# Projected from per-minute rates (features.py) and logged to extra_projections with the combos.
+EXTRA_STATS = ("threes", "steals", "blocks", "turnovers")
+
+
+def current_model_version(source: str | None = None) -> str:
+    """The model_version a projection run logs under `source` (default PROJECTION_SOURCE)."""
+    return ROLLING_MODEL_VERSION if (source or PROJECTION_SOURCE) == "rolling" else MODEL_VERSION
 
 # --- Season --------------------------------------------------------------------
 ET = ZoneInfo("America/New_York")

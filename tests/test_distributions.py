@@ -48,7 +48,7 @@ def test_poisson_limit_and_guards():
     assert dist.count_sf(3.0, -0.5, 1.3) == 1.0
     assert dist.count_sf(5.0, 7.5, 1.3) == dist.count_sf(5.0, 7.0, 1.3)                # P(X > 7.5) = P(X >= 8)
     with pytest.raises(ValueError):
-        dist.p_over("steals", 2.0, 1.5)
+        dist.p_over("dunks", 2.0, 1.5)
 
 
 def test_count_prices_rise_with_the_mean_and_round_trip():

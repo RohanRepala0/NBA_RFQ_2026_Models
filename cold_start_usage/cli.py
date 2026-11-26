@@ -1,11 +1,13 @@
 """Command line: usage | books | snapshot | project | signals | watchlist | grade | report | fit |
-catalog | board | kalshi | venues | tickets | fill | history | backtest.
+catalog | board | kalshi | venues | tickets | fill | journal | roster | boxscores | evaluate | shifts |
+persistence | daily | dashboard | history | backtest.
 
     python -m cold_start_usage.cli snapshot --date 2026-10-21
     python -m cold_start_usage.cli project --date 2026-10-21 --scenario MIA=full_strength --scenario TOR=kawhi_out
     python -m cold_start_usage.cli signals --date 2026-10-21
     python -m cold_start_usage.cli watchlist --date 2026-10-21
     python -m cold_start_usage.cli grade --date 2026-10-21
+    python -m cold_start_usage.cli journal --date 2026-10-21
 
 Research only: `tickets` suggests a limit price and size to enter by hand; nothing here
 places or routes an order anywhere.
@@ -218,7 +220,7 @@ def _scenario_choice(pairs: list[str]) -> dict[str, str]:
 def cmd_project(args, storage, now_fn) -> int:
     now = now_fn()
     d = args.date or et_date(now)
-    table, messages = run_projections(storage, d, now, _scenario_choice(args.scenario))
+    table, messages = run_projections(storage, d, now, _scenario_choice(args.scenario), source=args.source)
     for m in messages:
         print(f"note: {m}")
     if table.empty:
@@ -234,7 +236,7 @@ def cmd_project(args, storage, now_fn) -> int:
                              "side": sig["side"], "edge": sig["edge"], "decision": sig["decision"],
                              "reason": sig["reason"]})
     table = table.merge(pd.DataFrame(previews), on="player", how="left")
-    print(f"Logged projections at {now:%Y-%m-%d %H:%M} UTC (model {config.MODEL_VERSION}; points, "
+    print(f"Logged projections at {now:%Y-%m-%d %H:%M} UTC (model {config.current_model_version(args.source)}; points, "
           "rebounds and assists; the sportsbook preview is points)")
     _print_table(table, ["team", "scenario", "player", "status", "min", "usg", "usg_proj", "ppg_25_26",
                          "proj", "sd", "reb", "ast", "spc_old", "spc_new", "cons_line", "cons_mean", "side", "edge",
@@ -334,6 +336,12 @@ def cmd_grade(args, storage, now_fn) -> int:
             print("Calibration:")
             _print_table(calibration(df))
     _grade_venues(storage, d, now, offline=args.offline)
+    from .grade import shadow_graded, shadow_summary
+    sh = shadow_summary(shadow_graded(storage, d, d))
+    if not sh.empty:
+        print(f"Shadow stats {d} (graded from box scores; never tickets): Brier of our price, the books', the venue ask;"
+              " would-be tickets at the ask:")
+        _print_table(sh.round(3))
     return 0
 
 
@@ -360,7 +368,12 @@ def _grade_venues(storage, d, now, offline: bool = False) -> None:
                           "result", "value", "pnl_per_contract", "close_mid", "clv_venue"])
     fills = fills_graded(storage)
     if not fills.empty:
-        print(f"Your fills: {len(fills)}, settled {int(fills.pnl.notna().sum())}, P&L ${fills.pnl.sum():.2f}")
+        from .journal import FILL_KINDS, fills_journal
+        fj = fills_journal(storage)
+        cur = fj[fj.status == "current"]
+        kinds = "; ".join(f"{k} {int((cur.kind == k).sum())}: ${cur[cur.kind == k].pnl_usd.sum():.2f}"
+                          for k in FILL_KINDS if (cur.kind == k).any())
+        print(f"Your fills: {len(fills)}, settled {int(fills.pnl.notna().sum())}, P&L ${fills.pnl.sum():.2f} ({kinds})")
 
 
 def cmd_fit(args, storage, now_fn) -> int:
@@ -589,6 +602,9 @@ def cmd_fill(args, storage, now_fn) -> int:
         if int(prev.n.iloc[0]) == 0:
             print(f"No fill {args.replaces} to replace")
             return 2
+    note = args.note
+    if args.paper and not (note or "").strip().lower().startswith("paper"):
+        note = f"paper: {note}" if note else "paper"
     from .fees import fee_total
     fees = args.fees if args.fees is not None else fee_total(venue, args.contracts, args.price)
     filled_at = to_naive_utc(args.filled_at) if args.filled_at else now
@@ -596,10 +612,25 @@ def cmd_fill(args, storage, now_fn) -> int:
                               digest_size=6).hexdigest()
     storage.append("tickets", [{"ts": now, "filled_at": filled_at, "venue": venue, "ticker": ticker, "side": side,
                                 "contracts": args.contracts, "price": args.price, "fees": fees,
-                                "signal_id": args.signal_id, "note": args.note, "fill_id": fill_id,
+                                "signal_id": args.signal_id, "note": note, "fill_id": fill_id,
                                 "replaces": args.replaces}])
     print(f"Logged fill {fill_id}: {venue} {ticker} {side} {args.contracts:g} @ {100 * args.price:.0f}c, fees ${fees:.2f}"
-          + (f" (replaces {args.replaces})" if args.replaces else ""))
+          + (" (paper)" if args.paper else "") + (f" (replaces {args.replaces})" if args.replaces else ""))
+    return 0
+
+
+def cmd_journal(args, storage, now_fn) -> int:
+    """Rebuild the committed bet journal (bets/) from the log. Reads only; no API calls."""
+    from .journal import write_journal
+    out = Path(args.out) if args.out else config.BETS_DIR
+    res = write_journal(storage, out, None if args.all or not args.date else [args.date])
+    for d in res["skipped"]:
+        print(f"No venue decisions or fills logged for {d}: no day folder written")
+    days = ", ".join(map(str, res["days"])) or "none"
+    print(f"Journal in {res['out']}: {res['tickets']} ticket(s) ({res['pending']} pending), {res['fills']} fill(s); "
+          f"days: {days}; {len(res['written'])} file(s) changed")
+    if res["pending"]:
+        print("Pending tickets settle via `grade --date YYYY-MM-DD` (venue settlements); then rerun journal.")
     return 0
 
 
@@ -659,10 +690,182 @@ def cmd_backtest(args, storage, now_fn) -> int:
     return 0
 
 
+def cmd_roster(args, storage, now_fn) -> int:
+    """Check each un-tipped team's minutes against its ESPN roster page (one public read per team);
+    --apply writes a rotation without the missing players and re-projects with it."""
+    import time
+
+    from . import rosters
+    from .pipeline import latest_scenarios
+    from .usage_model import modeled_teams
+    now = now_fn()
+    d = args.date or et_date(now)
+    ev = events_on(storage, d)
+    ev = ev[pd.to_datetime(ev.starts_at) > pd.Timestamp(now)] if len(ev) else ev
+    if ev.empty:
+        print(f"No un-tipped games stored for {d}: run `snapshot --date {d}` first.")
+        return 1
+    modeled, teams = set(modeled_teams()), {}
+    for e in ev.itertuples():
+        used = latest_scenarios(storage, e.event_id, now)
+        for team in (e.away_abbr, e.home_abbr):
+            if team in modeled:
+                teams[team] = used.get(team, "full_strength")
+    found, off, notes = rosters.check_teams(teams, fetch=rosters.fetch_roster_page,
+                                            save_dir=config.DATA_DIR / "rosters" / d.isoformat(),
+                                            sleep=time.sleep)
+    for n in notes:
+        print(f"note: {n}")
+    if off.empty:
+        print(f"All {len(found)} rotations checked match their ESPN rosters ({d}).")
+        return 0
+    print(f"In the minutes but not on the team's ESPN roster ({d}):")
+    _print_table(off, ["team", "scenario", "player", "proj_mpg"])
+    if not args.apply:
+        print("Run with --apply to write rotations without them and re-project.")
+        return 0
+    choice = {}
+    for team, grp in off.groupby("team"):
+        base = grp.scenario.iloc[0]
+        try:
+            rows = rosters.scenario_without(team, base, f"{base}_roster", grp.player.tolist(), roster=found[team])
+        except ValueError as exc:
+            print(f"note: {exc}")
+            continue
+        choice[team] = f"{base}_roster"
+        print(f"{team}: wrote {base}_roster to scenarios/{team}.csv: "
+              + ", ".join(f"{r.player} {r.proj_mpg:g}" for r in rows.itertuples()))
+    if choice:
+        table, messages = run_projections(storage, d, now, choice)
+        for m in messages:
+            print(f"note: {m}")
+        print(f"Re-projected {', '.join(sorted(choice))} ({len(table)} rows). The minutes are mechanical: review "
+              "them, then commit the scenario files.")
+    return 0
+
+
+def cmd_boxscores(args, storage, now_fn) -> int:
+    """Box scores stored per date; --from-raw first backfills them from saved results files."""
+    from .boxscores import backfill_from_raw, coverage, fetch_box_scores
+    if args.date:
+        if args.date >= et_date(now_fn()):
+            print(f"{args.date} isn't over yet: fetch a past date (today's games come with tomorrow's `grade`)")
+            return 1
+        c = fetch_box_scores(_client(storage, now_fn), storage, args.date, now_fn())
+        print(f"{args.date}: {c['events']} game(s) returned, {c['final']} final; stored {c['games']} game(s), "
+              f"{c['players']} player row(s) ({c['objects']} API objects)")
+        if c["pending_statuses"]:
+            print(f"note: {c['events'] - c['final']} game(s) not finalized by SportsGameOdds yet "
+                  f"(status flags: {', '.join(c['pending_statuses'])}); saved as boxscores_pending_{args.date}, retry later")
+    if args.from_raw:
+        c = backfill_from_raw(storage, now_fn(), Path(args.dir) if args.dir else None)
+        print(f"Read {c['files']} results file(s): stored {c['games']} game(s), {c['players']} player row(s); "
+              f"{c['skipped']} game(s) already stored")
+    cov = coverage(storage)
+    if cov.empty:
+        print("No box scores stored. Run `boxscores --from-raw`, or `grade` a date.")
+        return 0
+    _print_table(cov)
+    return 0
+
+
+def cmd_evaluate(args, storage, now_fn) -> int:
+    """Walk-forward: season vs rolling projections vs the books' close, against box scores."""
+    from .evaluation import by_date, markdown, walk_forward, windows
+    df = walk_forward(storage, args.since, args.until)
+    if df.empty:
+        print("Nothing to evaluate: run `boxscores --from-raw` (or `grade`) first.")
+        return 1
+    parts, dates = windows(df), by_date(df)
+    for label, summary in parts:
+        print(f"== {label}")
+        for name in ("accuracy", "minutes", "extra"):
+            print(f"{name}:")
+            _print_table(summary[name].round(3))
+    print("points MAE by date:")
+    _print_table(dates.round(3))
+    if args.csv:
+        df.to_csv(args.csv, index=False)
+        print(f"Wrote {args.csv}")
+    if args.docs:
+        path = config.REPO_DIR / "docs" / "MODEL_V2_EVAL.md"
+        path.write_text(markdown(parts, dates.round(3), args.since, args.until))
+        print(f"Wrote {path}")
+    return 0
+
+
+def cmd_shifts(args, storage, now_fn) -> int:
+    """Role shifts: this season's usage, minutes and threes volume against last season's (no API calls)."""
+    from .shifts import shifts
+    from .usage_model import load_players
+    df = shifts(storage, now_fn(), load_players())
+    if df.empty:
+        print("No box scores yet: run `boxscores --from-raw` or `grade` first.")
+        return 1
+    show = df[df.flagged] if not args.all else df
+    print(f"{int(df.flagged.sum())} flagged of {len(df)} players (min {config.SHIFT_MIN_MINUTES:g} minutes; "
+          "gap = this season's usage minus the rolling model's shrunk usage):")
+    _print_table(show.head(args.top), ["player", "team", "team_2025_26", "games", "mpg", "mpg_prior", "usg", "usg_prior",
+                                       "usg_model", "gap", "pts36", "pts36_prior", "fg3a36", "fg3a36_prior", "flags"])
+    if args.json:
+        Path(args.json).write_text(df.to_json(orient="records"))
+        print(f"Wrote {args.json}")
+    return 0
+
+
+def cmd_persistence(args, storage, now_fn) -> int:
+    """Fit the rolling model's shrinkage on 2025-26: first n games against the rest (no API calls)."""
+    from . import persistence as P
+    from .usage_model import load_players
+    raw = Path(args.dir) if args.dir else config.RAW_DIR / "courtai" / "persist_2025_26"
+    df, notes = P.study(raw, load_players(), args.target_end)
+    for n in notes:
+        print("note:", n)
+    if df.empty:
+        print(f"No usable players under {raw}.")
+        return 1
+    print(f"{df.player.nunique()} players ({int(df.groupby('player').new_team.first().sum())} on a new team), "
+          f"{len(df)} player-cuts")
+    fit = P.fit(df, reps=args.reps)
+    _print_table(fit)
+    _print_table(pd.concat([P.fit_by_cut(df, s) for s in P.STUDY_STATS]))
+    _print_table(pd.concat([P.team_scale(df, s) for s in P.STUDY_STATS if s != "minutes"]))
+    _print_table(pd.DataFrame([P.direction(df, n) for n in (3, 4, 5, 10)]))
+    if args.csv:
+        df.to_csv(args.csv, index=False)
+        print(f"Wrote {args.csv}")
+    return 0
+
+
+def cmd_daily(args, storage, now_fn) -> int:
+    """The unattended daily job (GitHub Actions; docs/DAILY_JOB.md): grade, box scores, slate,
+    rotations, checkpoints, venue scan, journal and alerts, each only when due."""
+    from . import daily
+    simulated = args.now is not None
+    fetchers = None
+    if simulated:                                   # never log live prices at a simulated time
+        from .venues import Fetchers
+        fetchers = Fetchers
+    return daily.run(storage, now_fn, lambda: _client(storage, now_fn), fetchers_factory=fetchers,
+                     state_path=Path(args.state) if args.state else None,
+                     settle=(lambda *a: 0) if simulated else None)
+
+
+def cmd_dashboard(args, storage, now_fn) -> int:
+    """Write the Prop Desk dashboard's row files (no API calls)."""
+    from .dashboard import export
+    counts = export(storage, Path(args.out), now_fn())
+    print("Wrote " + ", ".join(f"{k} ({v} rows)" for k, v in counts.items()) + f" to {args.out}")
+    return 0
+
+
 COMMANDS = {"usage": cmd_usage, "books": cmd_books, "snapshot": cmd_snapshot, "project": cmd_project,
             "signals": cmd_signals, "watchlist": cmd_watchlist, "grade": cmd_grade, "report": cmd_report,
             "fit": cmd_fit, "catalog": cmd_catalog, "board": cmd_board, "kalshi": cmd_kalshi,
             "venues": cmd_venues, "history": cmd_history, "tickets": cmd_tickets, "fill": cmd_fill,
+            "journal": cmd_journal, "roster": cmd_roster, "boxscores": cmd_boxscores,
+            "evaluate": cmd_evaluate, "dashboard": cmd_dashboard, "shifts": cmd_shifts,
+            "persistence": cmd_persistence, "daily": cmd_daily,
             "backtest": cmd_backtest}
 
 
@@ -689,6 +892,8 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("project", help="Log projections for modeled teams on a date")
     p.add_argument("--date", type=_parse_date)
     p.add_argument("--scenario", action="append", help="TEAM=scenario, e.g. TOR=kawhi_out")
+    p.add_argument("--source", choices=["season", "rolling"],
+                   help=f"Projection inputs (default config.PROJECTION_SOURCE, now {config.PROJECTION_SOURCE!r})")
     p = sub.add_parser("signals", help="Log signals vs the latest consensus")
     p.add_argument("--date", type=_parse_date)
     p.add_argument("--timing", choices=list(config.SIGNAL_TIMINGS) + ["early", "adhoc"])
@@ -722,7 +927,43 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--fees", type=float, help="Fees paid in dollars (default: the venue formula)")
     p.add_argument("--filled-at", help="UTC time of the fill (default now)")
     p.add_argument("--note")
+    p.add_argument("--paper", action="store_true",
+                   help="A paper fill (no money): writes note 'paper' (combines with --note)")
     p.add_argument("--replaces", help="fill_id of an earlier fill this one corrects")
+    p = sub.add_parser("journal", help="Rebuild the committed bet journal in bets/ (reads the log; no API calls)")
+    g = p.add_mutually_exclusive_group()
+    g.add_argument("--date", type=_parse_date, help="Rebuild one ET day's folder (ledger and fills are always full)")
+    g.add_argument("--all", action="store_true", help="Rebuild every day with a venue decision or fill (the default)")
+    p.add_argument("--out", help="Output folder (default: the repo's bets/)")
+    p = sub.add_parser("roster", help="Check each team's minutes against its ESPN roster (one read per team)")
+    p.add_argument("--date", type=_parse_date)
+    p.add_argument("--apply", action="store_true",
+                   help="Write a rotation without the missing players (TEAM.csv) and re-project with it")
+    p = sub.add_parser("boxscores", help="Box scores per date; --from-raw backfills saved results (free), "
+                                          "--date fetches a past night (1 object a game)")
+    p.add_argument("--from-raw", action="store_true", help="Store box scores from every saved results file first")
+    p.add_argument("--date", type=_parse_date, help="Fetch and store a past ET date's box scores (1 object a game)")
+    p.add_argument("--dir", help="Raw folder (default data/raw)")
+    p = sub.add_parser("evaluate", help="Walk-forward: season vs rolling projections vs the books (no API calls)")
+    p.add_argument("--since", type=_parse_date, default=config.SEASON_OPENER,
+                   help=f"First ET date (default the season opener, {config.SEASON_OPENER})")
+    p.add_argument("--until", type=_parse_date, help="Last ET date (default: every graded date)")
+    p.add_argument("--csv", help="Also write the per player-game rows here")
+    p.add_argument("--docs", action="store_true", help="Also write docs/MODEL_V2_EVAL.md")
+    p = sub.add_parser("shifts", help="Role shifts: this season's usage, minutes and 3PA vs last season (no API calls)")
+    p.add_argument("--top", type=int, default=30)
+    p.add_argument("--all", action="store_true", help="Every player, not only the flagged ones")
+    p.add_argument("--json", help="Also write every row here")
+    p = sub.add_parser("persistence", help="Fit the rolling shrinkage on 2025-26 game logs copied from Court AI (no API calls)")
+    p.add_argument("--dir", help="Folder of the copied text (default data/raw/courtai/persist_2025_26)")
+    p.add_argument("--reps", type=int, default=200, help="Bootstrap resamples for the k band")
+    p.add_argument("--target-end", help="Last date of the rest-of-season target, YYYY-MM-DD (e.g. before the trade deadline)")
+    p.add_argument("--csv", help="Also write the player-cut rows here")
+    p = sub.add_parser("daily", help="The unattended daily job: grade, slate, rotations, checkpoints, tickets, "
+                                     "journal, alerts (each only when due; safe to repeat)")
+    p.add_argument("--state", help="Run-state file (default data/daily_state.json)")
+    p = sub.add_parser("dashboard", help="Write the Prop Desk dashboard's row files (no API calls)")
+    p.add_argument("--out", required=True, help="Folder for tickets.json, model_eval.json, minutes_eval.json")
     p = sub.add_parser("history", help="Download Kalshi's archive of settled player props (resumable, no key)")
     p.add_argument("--series", default="KXNBAPTS")
     p.add_argument("--limit", type=int, help="Markets to fetch this run (default: all remaining)")

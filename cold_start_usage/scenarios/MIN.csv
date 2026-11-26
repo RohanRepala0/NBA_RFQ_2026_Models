@@ -1,0 +1,67 @@
+scenario,player,proj_mpg
+full_strength,Anthony Edwards,35.0
+full_strength,Jaden McDaniels,31.7
+full_strength,Rudy Gobert,31.3
+full_strength,Donte DiVincenzo,30.4
+full_strength,LaMelo Ball,28.0
+full_strength,Ayo Dosunmu,21.8
+full_strength,Cody Williams,19.5
+full_strength,Jonathan Kuminga,18.5
+full_strength,Bones Hyland,13.3
+full_strength,Jaylen Clark,10.5
+report_1025,Anthony Edwards,36.9
+report_1025,Jaden McDaniels,36.9
+report_1025,Rudy Gobert,36.4
+report_1025,LaMelo Ball,32.6
+report_1025,Ayo Dosunmu,25.3
+report_1025,Cody Williams,22.7
+report_1025,Jonathan Kuminga,21.5
+report_1025,Bones Hyland,15.5
+report_1025,Jaylen Clark,12.2
+report_1026,Anthony Edwards,36.9
+report_1026,Jaden McDaniels,36.9
+report_1026,Rudy Gobert,36.4
+report_1026,LaMelo Ball,32.6
+report_1026,Ayo Dosunmu,25.3
+report_1026,Cody Williams,22.7
+report_1026,Jonathan Kuminga,21.5
+report_1026,Bones Hyland,15.5
+report_1026,Jaylen Clark,12.2
+report_1026_edwards_out,Jaden McDaniels,37.0
+report_1026_edwards_out,Rudy Gobert,37.0
+report_1026_edwards_out,LaMelo Ball,37.0
+report_1026_edwards_out,Ayo Dosunmu,31.2
+report_1026_edwards_out,Cody Williams,28.0
+report_1026_edwards_out,Jonathan Kuminga,26.5
+report_1026_edwards_out,Bones Hyland,19.1
+report_1026_edwards_out,Jaylen Clark,15.0
+report_1026_edwards_out,Terrence Shannon Jr.,9.2
+report_1030,Jaden McDaniels,36.1
+report_1030,Rudy Gobert,33.1
+report_1030,LaMelo Ball,31.3
+report_1030,Jonathan Kuminga,29.2
+report_1030,Ayo Dosunmu,28.9
+report_1030,Terrence Shannon Jr.,17.2
+report_1030,Joan Beringer,16.8
+report_1030,Trey Lyles,16.6
+report_1030,Bones Hyland,15.8
+report_1030,Cody Williams,15.0
+report_1031,Jaden McDaniels,35.9
+report_1031,Rudy Gobert,31.0
+report_1031,LaMelo Ball,30.5
+report_1031,Jonathan Kuminga,29.9
+report_1031,Ayo Dosunmu,28.9
+report_1031,Terrence Shannon Jr.,20.8
+report_1031,Joan Beringer,18.0
+report_1031,Trey Lyles,17.4
+report_1031,Bones Hyland,15.2
+report_1031,Jaylen Clark,12.4
+gobert_out_1031,Jaden McDaniels,37.0
+gobert_out_1031,LaMelo Ball,35.8
+gobert_out_1031,Jonathan Kuminga,35.1
+gobert_out_1031,Ayo Dosunmu,33.9
+gobert_out_1031,Terrence Shannon Jr.,24.4
+gobert_out_1031,Joan Beringer,21.1
+gobert_out_1031,Trey Lyles,20.4
+gobert_out_1031,Bones Hyland,17.8
+gobert_out_1031,Jaylen Clark,14.5

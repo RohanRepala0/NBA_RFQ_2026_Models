@@ -14,8 +14,12 @@ Research only: this tool doesn't connect to any venue account and doesn't place 
 pip install -r requirements.txt          # Python 3.11+
 export SPORTS_ODDS_API_KEY=...           # or put it in .env (git-ignored); never commit it
 export COLD_START_BANKROLL_USD=1000     # optional: turns on suggested contract counts (never read from any account)
-python -m pytest -q                      # 174 offline tests
+python -m pytest -q                      # 181 offline tests
 ```
+
+## Daily job (GitHub Actions)
+
+`python -m cold_start_usage.cli daily` runs the whole pipeline unattended. Each run grades past days, takes the slate and each game's pre-tip checkpoints, builds rotations from recent box scores, logs paper tickets and sends alerts, and does only what's due. The workflow in `.github/workflows/nba-daily.yml` runs it on a schedule and commits `bets/`. The season record is [`bets/SEASON.md`](bets/SEASON.md). For setup (secrets, first run), schedule and costs, see [`docs/DAILY_JOB.md`](docs/DAILY_JOB.md).
 
 ## Opening Night plan: cron goes live before Tue 10/20
 
@@ -35,6 +39,7 @@ Before the first game day:
 python -m cold_start_usage.cli usage                 # objects used / left (this call is free)
 python -m cold_start_usage.cli catalog               # rebuild the league-wide catalog (no API calls)
 python -m cold_start_usage.cli board --docs          # refresh the waiting list
+python -m cold_start_usage.cli roster --date 2026-10-26 --apply   # minutes vs ESPN rosters; writes and projects fixes
 ```
 
 On each game day:
@@ -47,11 +52,23 @@ python -m cold_start_usage.cli tickets               # reads the venues now, the
                                                      # side, limit price, quantity, cancel-by (only reads from the last 20 min)
 # enter the tickets by hand as limit orders, then record what you got (a typo? log the right one with --replaces):
 python -m cold_start_usage.cli fill --signal-id <id> --contracts 10 --price 0.41
+python -m cold_start_usage.cli fill --signal-id <id> --contracts 10 --price 0.41 --paper   # tracked, no money
 python -m cold_start_usage.cli board                 # the waiting list: READY only when a venue price clears the bar
 python -m cold_start_usage.cli watchlist             # sportsbook leans next to what the venues list (not actionable)
 ```
 
-The next morning: `grade --date YYYY-MM-DD` (venue settlements, P&L at the price paid, venue CLV; add `--venues-only` to skip the metered results call), and weekly: `report`.
+The next morning, settle and then journal the day, and commit `bets/`:
+
+```bash
+python -m cold_start_usage.cli grade --date 2026-10-20     # venue settlements, P&L at the price paid, venue CLV
+python -m cold_start_usage.cli journal --date 2026-10-20   # bets/: ledger, fills, the day's tickets/results/summary
+```
+
+`grade` also stores the box scores of every listed player (`boxscores --from-raw` backfills them from saved results, free; `boxscores --date D` fetches a night `grade` never did, 1 object a game). Model v2 runs on them: `project --source rolling` projects from this season's games (recent minutes, usage and rates shrunk to last season, the team's recent bench, pace and opponent) and `evaluate --docs` replays every graded game, season vs rolling vs the books' close. The default stays the season model until rolling wins out of sample: [`docs/MODEL_V2_PLAN.md`](docs/MODEL_V2_PLAN.md), results in [`docs/MODEL_V2_EVAL.md`](docs/MODEL_V2_EVAL.md). How far rolling trusts this season's games is fitted on last season's (`persistence`: 9 in 10 early usage shifts held, and a new team's held in full): [`docs/PERSISTENCE_STUDY.md`](docs/PERSISTENCE_STUDY.md).
+
+Every other prop is tracked as a **shadow stat**: threes, steals, blocks, turnovers and the combos (points + rebounds + assists, points + rebounds, points + assists, rebounds + assists, steals + blocks). Each projection run logs them, the books' consensus comes from the same SportsGameOdds call (no extra cost), and each checkpoint reads and prices their Kalshi and Polymarket US markets. A shadow decision is logged as `shadow` with what the rules would have said, but it never gets a stake, a ticket or a cap: `grade` scores them from box scores until a stat beats the books out of sample. `shifts` lists the players whose usage, minutes or threes volume this season already disagree with last season's (the priors most likely to be stale).
+
+Add `--venues-only` to `grade` to skip the metered SportsGameOdds results call (model-vs-books grading). `journal` makes no API calls and only reads the log (anything `grade` hasn't settled reads `pending`); `journal --all` rebuilds every day. A fill logged with `--paper` (or a note starting `paper`) is journaled as paper, one with a note starting `discretionary` (or logged by `--ticker` on a contract the scan never made actionable) as discretionary, anything else as real; see [`bets/README.md`](bets/README.md). Weekly: `report`.
 
 Teams without hand-reviewed minutes use the catalog's automatic rotation (`cold_start_usage/scenarios/auto/`). Copy one up to `cold_start_usage/scenarios/` and edit it to make it reviewed.
 
@@ -71,7 +88,7 @@ The matchup and player IDs are real; the odds are invented. `--now` only works w
 
 | Data | Source | Notes |
 |---|---|---|
-| Odds and results | SportsGameOdds API (licensed, free Amateur plan) | 9 books on this key; 4 post player points, rebounds and assists (Caesars joined Bovada, DraftKings and ESPN Bet for the opener). No prediction markets on this plan. |
+| Odds, results and box scores | SportsGameOdds API (licensed, free Amateur plan) | 9 books on this key; 4 post player points, rebounds and assists (Caesars joined Bovada, DraftKings and ESPN Bet for the opener). No prediction markets on this plan. |
 | Prediction-market prices | Kalshi (`api.elections.kalshi.com`) and Polymarket US (`gateway.polymarket.us`) public market-data APIs: read-only, no key | What each venue lists, its fees and its settlement rules: [`docs/VENUES.md`](docs/VENUES.md). The international polymarket.com book is read only as a reference price (US persons can't open positions there). |
 | Backtest archive | Kalshi `/historical/...`: every 2025-26 player-points ladder, result and 1-minute candles | `cli history` downloads it into `data/history/` (git-ignored). It's resumable, in random game order, so a partial download is a season-wide sample; the full download takes ~7 hours at the public rate limit. `cli backtest --docs` writes [`docs/BACKTEST.md`](docs/BACKTEST.md); the April-onward holdout stays sealed until `--reveal-holdout`. |
 | 2025-26 player lines (all 30 teams) | StatMuse team pages, one source URL per row | Usage, minutes, points, 3-point shooting, and season rebound and assist totals (offensive and defensive too). Every row is checked against its season totals. |
@@ -98,7 +115,7 @@ A Kalshi rung or Polymarket US market is then actionable only if all of these ho
 3. The edge after the venue's fee is at least 4pp (5pp with only 2 books), the sportsbook market alone isn't against it, and it's below the 15pp "check inputs" cap.
 4. At least 10 contracts are offered at or under the max price.
 
-It's one pick per player-game and stat, sized at quarter Kelly, capped at 0.5% of bankroll per player-game (a player's points and rebounds picks share it, since both ride on his minutes), 1.5% per game and 3% per slate while ungraded. The caps count your logged fills and the live picks from earlier scans, so following every ticket can't stack past them, and a stat you already hold on a player-game gets no new pick. Each contract's cost is walked up the order book (average price plus the fee at the real order size). The limit price never exceeds what the sportsbook market alone says the contract is worth. Questionable players and thin books show as `watch`.
+It's one pick per player-game and stat, sized at quarter Kelly, capped at 0.5% of bankroll per player-game (a player's points and rebounds picks share it, since both ride on his minutes), 1.5% per game and 3% per slate while ungraded. The caps count your logged fills and every ticket already sent on the slate, however old, so following every ticket can't stack past them; each player-stat counts at the largest stake it was ever ticketed at, and a later pick on it re-prices that ticket rather than adding to it (a smaller re-pricing frees nothing for other picks, since you may hold the bigger one); a stat you already hold on a player-game gets no new pick. Rebounds need 2pp more edge than points and assists (`STAT_EXTRA_EDGE` in `config.py`). Each contract's cost is walked up the order book (average price plus the fee at the real order size). The limit price never exceeds what the sportsbook market alone says the contract is worth. Questionable players and thin books show as `watch`.
 
 ## Rules the code enforces
 
@@ -126,6 +143,7 @@ It's one pick per player-game and stat, sized at quarter Kelly, capped at 0.5% o
 |---|---|
 | `cold_start_usage/` | The package (module map in `HANDOFF.md` section 5) |
 | `data/` | Inputs, the catalog outputs and the roster sources. The DuckDB file and raw cache are git-ignored. |
+| `bets/` | The bet journal, committed: every ticket, fill and result by day (`cli journal`; see [`bets/README.md`](bets/README.md)) |
 | `docs/` | Architecture diagrams, catalog, board snapshot, venue and scaling notes |
 | `v0/` | The reference implementation |
 | `examples/` | Synthetic payloads |

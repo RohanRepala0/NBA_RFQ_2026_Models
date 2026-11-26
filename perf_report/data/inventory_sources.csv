@@ -1,0 +1,262 @@
+repo,path,kind,rows,unit,category,in_git
+nba,bets/days/2026-10-20/results.csv,csv,7,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-20/tickets.csv,csv,16,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-21/results.csv,csv,2,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-21/tickets.csv,csv,2,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-22/results.csv,csv,4,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-22/tickets.csv,csv,4,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-25/results.csv,csv,23,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-25/tickets.csv,csv,43,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-26/results.csv,csv,10,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-26/tickets.csv,csv,22,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-27/results.csv,csv,9,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-27/tickets.csv,csv,23,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-29/results.csv,csv,7,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-29/tickets.csv,csv,11,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-30/results.csv,csv,6,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-30/tickets.csv,csv,7,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-31/results.csv,csv,11,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/days/2026-10-31/tickets.csv,csv,14,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/fills.csv,csv,0,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,bets/ledger.csv,csv,79,data rows (header excluded),trade journal (paper tickets / fills),yes
+nba,cold_start_usage/books.json,json,7,top-level entries,model input / reference data,yes
+nba,cold_start_usage/scenarios/ATL.csv,csv,29,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/BKN.csv,csv,58,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/BOS.csv,csv,30,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/CHA.csv,csv,47,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/CHI.csv,csv,56,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/CLE.csv,csv,37,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/DAL.csv,csv,47,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/DEN.csv,csv,37,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/DET.csv,csv,59,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/GSW.csv,csv,49,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/HOU.csv,csv,54,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/IND.csv,csv,66,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/LAC.csv,csv,49,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/LAL.csv,csv,30,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/MEM.csv,csv,38,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/MIA.csv,csv,51,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/MIL.csv,csv,29,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/MIN.csv,csv,66,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/NOP.csv,csv,48,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/NYK.csv,csv,47,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/OKC.csv,csv,28,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/ORL.csv,csv,48,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/PHI.csv,csv,123,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/PHX.csv,csv,39,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/POR.csv,csv,48,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/SAC.csv,csv,45,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/SAS.csv,csv,47,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/TOR.csv,csv,39,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/UTA.csv,csv,57,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/WAS.csv,csv,38,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/ATL.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/BKN.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/BOS.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/CHA.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/CHI.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/CLE.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/DAL.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/DEN.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/DET.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/GSW.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/HOU.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/IND.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/LAC.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/LAL.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/MEM.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/MIL.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/MIN.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/NOP.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/NYK.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/OKC.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/ORL.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/PHI.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/PHX.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/POR.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/SAC.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/SAS.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/UTA.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,cold_start_usage/scenarios/auto/WAS.csv,csv,10,data rows (header excluded),model input: minutes scenarios,yes
+nba,data/catalog/players.csv,csv,301,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/roster_conflicts.csv,csv,9,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/teams.csv,csv,30,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/high/arrival.csv,csv,12,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/high/squeeze.csv,csv,15,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/high/steady.csv,csv,28,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/high/vacuum.csv,csv,7,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/low/arrival.csv,csv,21,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/low/squeeze.csv,csv,18,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/low/steady.csv,csv,55,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/low/vacuum.csv,csv,17,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/medium/arrival.csv,csv,35,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/medium/squeeze.csv,csv,24,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/medium/steady.csv,csv,56,data rows (header excluded),model input / reference data,yes
+nba,data/catalog/usage_tiers/medium/vacuum.csv,csv,13,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/ATL.csv,csv,18,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/BKN.csv,csv,21,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/BOS.csv,csv,16,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/CHA.csv,csv,18,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/CHI.csv,csv,22,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/CLE.csv,csv,19,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/DAL.csv,csv,22,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/DEN.csv,csv,15,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/DET.csv,csv,16,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/GSW.csv,csv,22,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/HOU.csv,csv,14,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/IND.csv,csv,21,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/LAC.csv,csv,19,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/LAL.csv,csv,18,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/MEM.csv,csv,20,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/MIA.csv,csv,14,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/MIL.csv,csv,19,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/MIN.csv,csv,15,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/NOP.csv,csv,17,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/NYK.csv,csv,17,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/OKC.csv,csv,18,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/ORL.csv,csv,16,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/PHI.csv,csv,17,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/PHX.csv,csv,17,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/POR.csv,csv,17,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/SAC.csv,csv,17,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/SAS.csv,csv,15,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/TOR.csv,csv,15,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/UTA.csv,csv,21,data rows (header excluded),model input / reference data,yes
+nba,data/league_2025_26/WAS.csv,csv,22,data rows (header excluded),model input / reference data,yes
+nba,data/offseason_moves_2026.csv,csv,97,data rows (header excluded),model input / reference data,yes
+nba,data/player_id_overrides.csv,csv,1,data rows (header excluded),model input / reference data,yes
+nba,data/players_2025_26.csv,csv,512,data rows (header excluded),NIL data / outputs,yes
+nba,data/roster_overrides_2026_27.csv,csv,1,data rows (header excluded),model input / reference data,yes
+nba,data/rosters_2026_27_sgo.json,json,3,top-level entries,model input / reference data,yes
+nba,data/team_shooting_2025_26.csv,csv,30,data rows (header excluded),model input / reference data,yes
+nba,examples/synthetic_final_2026-10-21.json,json,2,top-level entries,model input / reference data,yes
+nba,examples/synthetic_slate_2026-10-21.json,json,2,top-level entries,model input / reference data,yes
+nba,tests/fixtures/pmus_okc_sa_props.json,json,2,top-level entries,test fixture,yes
+nba,tests/fixtures/regression/players_2025_26.csv,csv,21,data rows (header excluded),test fixture,yes
+nba,tests/fixtures/regression/scenarios/MIA.csv,csv,31,data rows (header excluded),test fixture,yes
+nba,tests/fixtures/regression/scenarios/TOR.csv,csv,19,data rows (header excluded),test fixture,yes
+nba,tests/fixtures/regression/team_shooting_2025_26.csv,csv,30,data rows (header excluded),test fixture,yes
+nba,tests/fixtures/sgo_multistat_bos_det.json,json,2,top-level entries,test fixture,yes
+nba,tests/fixtures/sgo_results_ot_game.json,json,8,top-level entries,test fixture,yes
+cfb,2026/week-01/bets.csv,csv,6,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-01/ratings.csv,csv,99,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-02/bets.csv,csv,11,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-02/ratings.csv,csv,86,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-03/bets.csv,csv,8,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-03/ratings.csv,csv,75,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-04/bets.csv,csv,8,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-04/ratings.csv,csv,71,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-05/bets.csv,csv,4,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-05/ratings.csv,csv,59,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-06/bets.csv,csv,7,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-06/ratings.csv,csv,58,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-07/bets.csv,csv,4,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-07/ratings.csv,csv,62,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-08/bets.csv,csv,5,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-08/ratings.csv,csv,56,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-09/bets.csv,csv,9,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-09/ratings.csv,csv,56,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-10/bets.csv,csv,11,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-10/ratings.csv,csv,63,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-11/bets.csv,csv,12,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-11/ratings.csv,csv,67,data rows (header excluded),weekly model ratings (every game),yes
+cfb,2026/week-12/bets.csv,csv,10,data rows (header excluded),weekly signals (graded),yes
+cfb,2026/week-12/ratings.csv,csv,66,data rows (header excluded),weekly model ratings (every game),yes
+cfb,data/cfb.duckdb::api_calls,duckdb table,25,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::bets,duckdb table,0,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::csc_latest,duckdb table,0,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::csc_percentiles,duckdb table,0,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::csc_releases,duckdb table,0,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::exclusions,duckdb table,64448,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::games,duckdb table,30646,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::lines,duckdb table,54233,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::raw_snapshots,duckdb table,36,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::source_projections,duckdb table,8938,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::source_ratings,duckdb table,28658,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::team_aliases,duckdb table,0,rows,database (git-ignored),no
+cfb,data/cfb.duckdb::teams,duckdb table,1933,rows,database (git-ignored),no
+cfb,data/csc/percentiles.csv,csv,246,data rows (header excluded),NIL data / outputs,yes
+cfb,data/csc/releases/nil_go_2026-10-30_b4cabcad31e5.json.gz,json,5,top-level entries,NIL data / outputs,yes
+cfb,data/csc/releases/revenue_share_2026-10-30_a2ec7da1ead1.json.gz,json,5,top-level entries,NIL data / outputs,yes
+cfb,data/models/distribution.json,json,2,top-level entries,model input / reference data,yes
+cfb,data/models/params.json,json,9,top-level entries,model input / reference data,yes
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2014_9640c7b9e9_023129458002.json,json,1586,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2015_dc8eaaf735_023132427791.json,json,1538,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2016_9aa33821be_023136671097.json,json,1549,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2017_f8f6584238_023139648083.json,json,1551,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2018_fcd8089e45_023143524668.json,json,1556,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2019_a083344c4f_023146926234.json,json,1623,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2021_711b52fd5c_023150106596.json,json,2454,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2022_50c26c2b52_023153649430.json,json,3705,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2023_18ff7239cd_023158065675.json,json,3734,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2024_930e3f6033_023205800230.json,json,3801,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2025_6a621ee0d2_023211178363.json,json,3831,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_games_seasonType=both_year=2026_b0b05d3399_023215764456.json,json,3718,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2014_1fe8017e2d_023131013333.json,json,868,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2015_53b992ad0e_023135186456.json,json,870,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2016_2863278e69_023138213715.json,json,873,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2017_e09d8c94b1_023141912126.json,json,874,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2018_27c56b93a8_023145389589.json,json,884,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2019_e2e63e7a52_023148614020.json,json,888,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2021_b967dd5636_023152089973.json,json,887,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2022_32bcf06060_023156503257.json,json,1463,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2023_3cf5a4e468_023201182451.json,json,1416,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2024_1caab46bcc_023209286770.json,json,1573,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2025_159a58bf92_023213762053.json,json,1597,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_lines_seasonType=both_year=2026_7c76131b60_023218352086.json,json,1477,top-level entries,model input / reference data,no (generated this session)
+cfb,data/raw/cfbd/2026-11-18/api.collegefootballdata.com_teams_29a735ddaa_023127916505.json,json,1933,top-level entries,model input / reference data,no (generated this session)
+cfb,data/reference/team_aliases.csv,csv,12,data rows (header excluded),model input / reference data,yes
+cfb,reports/bcftoys_issues_2022.csv,csv,7,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/bcftoys_issues_2023.csv,csv,7,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/bcftoys_issues_2024.csv,csv,44,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/bcftoys_issues_2025.csv,csv,46,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/bcftoys_issues_2026.csv,csv,8,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/record_2026.json,json,7,top-level entries,generated report data,no (generated this session)
+cfb,reports/sp_plus_issues_2021.csv,csv,12,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/sp_plus_issues_2022.csv,csv,14,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/sp_plus_issues_2023.csv,csv,479,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/sp_plus_issues_2024.csv,csv,12,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/sp_plus_issues_2025.csv,csv,11,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/sp_plus_issues_2026.csv,csv,10,data rows (header excluded),generated report data,no (generated this session)
+cfb,reports/totals_picks_2026_w12.csv,csv,66,data rows (header excluded),generated report data,no (generated this session)
+nil,data/benchmark/curves.csv,csv,195,data rows (header excluded),NIL data / outputs,yes
+nil,data/claims/template.csv,csv,0,data rows (header excluded),model input / reference data,yes
+nil,data/csc/nil_data/correction-nil-data-report-september-5-2026_2026-11-09_a43f879081bd.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-january-12-2026_2026-11-09_68698b083497.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-july-1-august-31-2026_2026-11-09_b4bd051b49a2.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-july-1-august-31-2026_2026-11-11_3f13fd948cfd.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-july-8-2026_2026-11-09_f628c1ddf987.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-july-8-2026_2026-11-11_4b9be3bc7193.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-march-10-2026_2026-11-09_588b610cad60.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-may-1-2026_2026-11-09_dd39ebb75425.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-may-1-2026_2026-11-11_752a5fb1f57a.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-november-6-2025_2026-11-09_7a3de43e3daf.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-september-1-october-31-2026_2026-11-09_69470ad19694.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data/nil-data-report-september-4-2025_2026-11-09_13bc300053ab.json.gz,json,4,top-level entries,NIL data / outputs,yes
+nil,data/csc/nil_data_periods.csv,csv,6,data rows (header excluded),NIL data / outputs,yes
+nil,data/csc/percentiles.csv,csv,246,data rows (header excluded),NIL data / outputs,yes
+nil,data/csc/releases/nil_go_2026-10-30_b4cabcad31e5.json.gz,json,5,top-level entries,NIL data / outputs,yes
+nil,data/csc/releases/revenue_share_2026-10-30_a2ec7da1ead1.json.gz,json,5,top-level entries,NIL data / outputs,yes
+nil,data/csc/releases/revenue_share_2026-11-09_dd5f41f7f47b.json.gz,json,5,top-level entries,NIL data / outputs,yes
+nil,data/dashboard/cohorts.json,json,246,top-level entries,model input / reference data,yes
+nil,data/dashboard/curves.json,json,195,top-level entries,model input / reference data,yes
+nil,data/dashboard/football_validation.json,json,10,top-level entries,model input / reference data,yes
+nil,data/dashboard/nil_flow.json,json,6,top-level entries,model input / reference data,yes
+nil,data/dashboard/releases.json,json,3,top-level entries,model input / reference data,yes
+nil,data/dashboard/rosters.json,json,68,top-level entries,model input / reference data,yes
+nil,data/dashboard/season_games.json,json,556,top-level entries,model input / reference data,yes
+nil,data/dashboard/totals.json,json,1,top-level entries,model input / reference data,yes
+nil,data/dashboard/validation.json,json,15,top-level entries,model input / reference data,yes
+nil,data/players/history/2026-11-10/football_validation.json,json,10,top-level entries,NIL data / outputs,yes
+nil,data/players/history/2026-11-10/rosters.json,json,68,top-level entries,NIL data / outputs,yes
+nil,data/players/history/2026-11-10/surplus_by_rating.csv,csv,68,data rows (header excluded),NIL data / outputs,yes
+nil,data/players/history/2026-11-10/surplus_units.csv,csv,68,data rows (header excluded),NIL data / outputs,yes
+nil,data/players/roster_values_2026.csv,csv,68,data rows (header excluded),NIL data / outputs,yes
+nil,data/players/surplus_2026.csv,csv,68,data rows (header excluded),NIL data / outputs,yes
+nil,data/players/surplus_by_rating_2026.csv,csv,68,data rows (header excluded),NIL data / outputs,yes
+nba,data/edge_lab.duckdb,git-ignored store,,NOT AVAILABLE (git-ignored; lives on the owner's machine),"NBA decision log: odds_snapshots, projections, signals, venue_snapshots, venue_signals (every decision incl. non-actionable), tickets (fills), venue_settlements, results",no
+nba,data/history/,git-ignored store,,NOT AVAILABLE (git-ignored; lives on the owner's machine),Kalshi 2025-26 KXNBAPTS archive with 1-min candles (input to docs/BACKTEST.md),no
+nba,data/cron.log,git-ignored store,,NOT AVAILABLE (git-ignored; lives on the owner's machine),cron run log (uptime / run history),no
+cfb,data/cfb.duckdb,git-ignored store,,present here,"CFB log: games, lines, source_projections, bets (cfb log-bet)",no
+nil,data/nil.duckdb,git-ignored store,,NOT AVAILABLE (git-ignored; lives on the owner's machine),NIL CSC releases database (rebuildable from data/csc/releases),no
+all,(none),venue fills export search,0,files matching kalshi_fills / fills_export / trade_history / orders,venue exports,

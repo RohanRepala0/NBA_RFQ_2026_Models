@@ -90,19 +90,26 @@ def vwap(levels: list[tuple[float, float]], n: float) -> float | None:
     return None
 
 
-def tau_for(venue: str, n_books: int) -> float:
+def tau_for(venue: str, n_books: int, stat: str = "points") -> float:
     tau = config.VENUE_MIN_EDGE.get(venue, max(config.VENUE_MIN_EDGE.values()))
+    tau += config.STAT_EXTRA_EDGE.get(stat, 0.0)
     return tau + (config.THIN_CONSENSUS_EXTRA_EDGE if n_books <= config.MIN_PRICED_BOOKS else 0.0)
 
 
-def config_hash() -> str:
-    """Fingerprint of every number that changes a decision, logged on each row."""
+def config_hash(shadow: bool = False) -> str:
+    """Fingerprint of every number that changes a decision, logged on each row. The real stats'
+    rows hash only their own dispersion (so adding a shadow stat doesn't move it); a shadow stat's
+    row also hashes the shadow settings."""
     keys = ["EDGE_THRESHOLD", "MAX_CREDIBLE_EDGE", "VIG_METHOD", "BOOK_WEIGHTS", "VENUE_FEES", "VENUE_MIN_EDGE",
             "THIN_CONSENSUS_EXTRA_EDGE", "MIN_SIZE_AT_EDGE", "PLANNED_CONTRACTS", "TAIL_P", "W_MODEL",
             "Z_GAP_MAX", "SD_COMPOUND", "KELLY_LAMBDA", "MAX_BET_FRAC", "MAX_GAME_FRAC", "MAX_SLATE_FRAC",
-            "MAX_QUOTE_AGE_MIN", "MIN_PRICED_BOOKS", "LEAK_TOLERANCE_MIN", "STATS", "COUNT_DISPERSION"]
-    blob = json.dumps({k: getattr(config, k) for k in keys} | {"MODEL": MODEL.__dict__},
-                      sort_keys=True, default=str)
+            "MAX_QUOTE_AGE_MIN", "MIN_PRICED_BOOKS", "LEAK_TOLERANCE_MIN", "STATS"]
+    values = {k: getattr(config, k) for k in keys}
+    values["COUNT_DISPERSION"] = {k: v for k, v in config.COUNT_DISPERSION.items() if k in config.STATS}
+    if shadow:
+        values |= {"SHADOW_STATS": config.SHADOW_STATS, "NORMAL_STATS": config.NORMAL_STATS,
+                   "SHADOW_DISPERSION": {k: v for k, v in config.COUNT_DISPERSION.items() if k not in config.STATS}}
+    blob = json.dumps(values | {"MODEL": MODEL.__dict__}, sort_keys=True, default=str)
     return hashlib.sha256(blob.encode()).hexdigest()[:12]
 
 
@@ -124,6 +131,7 @@ class Context:
     consensus: object | None = None           # consensus.Consensus
     model_mean: float | None = None
     projection_ts: datetime | None = None
+    model_version: str | None = None          # the projection's own (None: the configured source's)
     params: ModelParams = MODEL
 
 
@@ -161,7 +169,7 @@ def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float
         "consensus_ts": None if c is None else c.snapshot_ts,
         "consensus_mean": None if c is None else c.mean, "consensus_line": None if c is None else c.line,
         "model_mean": ctx.model_mean, "projection_ts": ctx.projection_ts,
-        "model_version": config.MODEL_VERSION, "config_hash": config_hash(),
+        "model_version": ctx.model_version or config.current_model_version(), "config_hash": config_hash(stat in config.SHADOW_STATS),
         "decision": "abstain", "reason": None,
     }
 
@@ -200,7 +208,7 @@ def evaluate_contract(q: dict, side: str, ctx: Context, levels: list[tuple[float
     p_mkt_center = distributions.side_p(stat, c.mean, line, side, ctx.params)
     m_b, w_eff, flag = blend(ctx.model_mean, c.mean, ctx.params, stat=stat)
     p_bl, spread = distributions.robust_p(stat, m_b, line, side, ctx.params)
-    tau = tau_for(venue, c.n_books)
+    tau = tau_for(venue, c.n_books, stat)
     row.update(p_market=p_mkt, w_model=w_eff, blend_mean=m_b, p_blend=p_bl, p_spread=spread, tau=tau)
     lo, hi = config.TAIL_P
     p_yes_center = p_mkt_center if side == "YES" else 1 - p_mkt_center
@@ -299,12 +307,13 @@ def kelly_fraction(p: float, cost: float) -> float:
 
 @dataclass
 class Exposure:
-    """Stake already committed today, as fractions of bankroll: fills plus live picks from
-    earlier scans of other games. Caps hold across scans, not just within one."""
+    """Stake already committed today, as fractions of bankroll: fills plus every ticket already
+    sent on the slate, however old. Caps hold across scans, not just within one."""
     slate: float = 0.0
     game: dict = field(default_factory=dict)        # event id -> fraction
     group: dict = field(default_factory=dict)       # (event id, player id) -> fraction, across stats
     filled: set = field(default_factory=set)        # (event id, player id, stat) already held
+    issued: dict = field(default_factory=dict)      # (event id, player id, stat) -> fraction of its ticket
 
 
 def size_positions(rows: pd.DataFrame, bankroll: float | None, prior: Exposure | None = None) -> pd.DataFrame:
@@ -312,7 +321,10 @@ def size_positions(rows: pd.DataFrame, bankroll: float | None, prior: Exposure |
     its ladder (VWAP plus the fee at the real order size), and the count is the largest that keeps
     EV >= tau on the blend, >= 0 on the market alone, quarter Kelly, and the per-bet, per-game
     and per-slate caps (counting `prior` exposure). The per-bet cap is per player-game across
-    stats (points and rebounds on one player share it). No bankroll: the size available at the edge."""
+    stats (points and rebounds on one player share it). A pick on a player-stat that already has a
+    ticket (`prior.issued`) re-prices that ticket instead of adding to it: it may be sized up to the
+    caps counting the ticket's own stake as free, but a smaller re-pricing frees nothing for other
+    picks, since Rohan may hold the bigger one. No bankroll: the size available at the edge."""
     rows = rows.copy()
     for col in ("kelly", "stake_frac", "contracts", "stake_usd", "ev_blend", "p_blend", "p_market",
                 "cost", "size_at_edge", "ladder", "tau"):
@@ -323,16 +335,19 @@ def size_positions(rows: pd.DataFrame, bankroll: float | None, prior: Exposure |
         return rows
     prior = prior or Exposure()
     game_used, group_used, slate_used = dict(prior.game), dict(prior.group), prior.slate
+    issued = dict(prior.issued)
+    stats = _stats(act)
     for i, r in act.iterrows():
         levels = parse_ladder(r.ladder) or ([(r.ask, r.size_at_edge)] if r.size_at_edge else [])
         rate = _rate(r.fee_rate)
         game = r.event_id or r.event_ticker
         group = (game, r.player_id or r.player)
+        credit = issued.pop((*group, stats[i]), 0.0)     # this pick stands in for that ticket
         room = None
         if bankroll is not None:
-            room = bankroll * max(0.0, min(config.MAX_BET_FRAC - group_used.get(group, 0.0),
-                                           config.MAX_GAME_FRAC - game_used.get(game, 0.0),
-                                           config.MAX_SLATE_FRAC - slate_used))
+            room = bankroll * max(0.0, min(config.MAX_BET_FRAC - group_used.get(group, 0.0) + credit,
+                                           config.MAX_GAME_FRAC - game_used.get(game, 0.0) + credit,
+                                           config.MAX_SLATE_FRAC - slate_used + credit))
         best = None
         n_max = min(int(sum(s for _, s in levels)), 20000)
         for n in range(1, n_max + 1):
@@ -352,8 +367,9 @@ def size_positions(rows: pd.DataFrame, bankroll: float | None, prior: Exposure |
         if best is None:
             if room is not None and room < 0.01:
                 # Name the cap that binds: a player's stats share one per-player cap.
-                player_room = config.MAX_BET_FRAC - group_used.get(group, 0.0)
-                other_room = min(config.MAX_GAME_FRAC - game_used.get(game, 0.0), config.MAX_SLATE_FRAC - slate_used)
+                player_room = config.MAX_BET_FRAC - group_used.get(group, 0.0) + credit
+                other_room = min(config.MAX_GAME_FRAC - game_used.get(game, 0.0),
+                                 config.MAX_SLATE_FRAC - slate_used) + credit
                 reason = (f"per-player cap ({100 * config.MAX_BET_FRAC:g}% per player-game, all stats) "
                           "used by an earlier pick" if player_room <= other_room else "over the game or slate cap")
             else:
@@ -367,7 +383,8 @@ def size_positions(rows: pd.DataFrame, bankroll: float | None, prior: Exposure |
         if bankroll is not None:
             frac = total / bankroll
             rows.loc[i, "stake_frac"] = frac
-            game_used[game] = game_used.get(game, 0.0) + frac
-            group_used[group] = group_used.get(group, 0.0) + frac
-            slate_used += frac
+            extra = max(0.0, frac - credit)              # a smaller re-pricing frees nothing
+            game_used[game] = game_used.get(game, 0.0) + extra
+            group_used[group] = group_used.get(group, 0.0) + extra
+            slate_used += extra
     return rows

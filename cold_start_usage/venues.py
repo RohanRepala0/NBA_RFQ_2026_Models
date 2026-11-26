@@ -30,7 +30,7 @@ from . import config
 from .consensus import consensus_by_player
 from .decision import Context, Exposure, evaluate_contract, pick_per_group, size_positions
 from .kalshi import event_code
-from .pipeline import events_on, latest_projections
+from .pipeline import events_on, latest_extra_projections, latest_projections
 from .players import name_key
 from .schedule import et_date
 from .storage import Storage
@@ -69,8 +69,9 @@ def live_fetchers() -> Fetchers:
 
 def kalshi_series_markets(read: Callable[[str], list[dict]], errors: list[str]) -> list[dict]:
     """Open markets of every configured Kalshi series, one read each. A series that fails is
-    recorded and skipped, so a rebounds outage never drops the points ladders; only when
-    every series fails does the read fail (and the checkpoint stays open for the next tick)."""
+    recorded and skipped, so a rebounds outage never drops the points ladders; when every series
+    of the real stats (config.STATS) fails the read fails, whatever the shadow series did, and the
+    checkpoint stays open for the next tick."""
     out, failed = [], []
     for series in config.KALSHI_SERIES.values():
         try:
@@ -78,7 +79,8 @@ def kalshi_series_markets(read: Callable[[str], list[dict]], errors: list[str]) 
         except Exception as exc:
             failed.append(series)
             errors.append(f"kalshi {series}: {type(exc).__name__}: {exc}")
-    if len(failed) == len(config.KALSHI_SERIES):
+    real = [config.KALSHI_SERIES[s] for s in config.STATS if s in config.KALSHI_SERIES]
+    if all(series in failed for series in real):
         raise RuntimeError(f"every Kalshi series failed ({', '.join(failed)})")
     return out
 
@@ -115,7 +117,8 @@ def game_quotes(ev, fetchers: Fetchers, kalshi_df: pd.DataFrame | None, kalshi_t
         code = event_code(d, ev.away_abbr, ev.home_abbr)
         k = kalshi_df[kalshi_df.event_ticker.isin({f"{series}-{code}" for series in config.KALSHI_SERIES.values()})]
         parts.append(k.assign(venue="kalshi", fee_rate=None, quote_ts=kalshi_ts))
-    for name, getter, parse in (("polymarket_us", fetchers.pm_us_event, polymarket_us.prop_markets),
+    for name, getter, parse in (("polymarket_us", fetchers.pm_us_event,
+                                 lambda e: polymarket_us.prop_markets(e, config.ALL_STATS)),
                                 ("polymarket_intl", fetchers.pm_intl_event, polymarket.points_markets)):
         if getter is None:
             continue
@@ -130,9 +133,28 @@ def game_quotes(ev, fetchers: Fetchers, kalshi_df: pd.DataFrame | None, kalshi_t
     return pd.concat(parts, ignore_index=True) if parts else pd.DataFrame()
 
 
-def prior_exposure(storage: Storage, d: date, now: datetime, scanning: set[str], bankroll: float | None) -> Exposure:
-    """What's already committed on this ET slate: Rohan's fills, plus the live picks of earlier
-    scans for games not being rescanned now (a rescanned game's old picks are superseded)."""
+def issued_tickets(storage: Storage, d: date, now: datetime) -> pd.DataFrame:
+    """Every ticket already sent on this ET slate by `now`, however old, tipped or not: one row per
+    player-game and stat (the journal's ticket, its first actionable decision), whose stake_usd is
+    the largest stake any scan ever suggested for that player-stat. A later, smaller re-pricing
+    can't shrink what Rohan may already hold."""
+    df = storage.query("""
+        SELECT * REPLACE (max_stake AS stake_usd) FROM (
+          SELECT *, row_number() OVER (w ORDER BY ts, ev_blend DESC, signal_id) AS rn,
+                 max(stake_usd) OVER w AS max_stake
+          FROM venue_signals WHERE decision = 'actionable' AND stake_usd IS NOT NULL
+                                   AND tip_ts IS NOT NULL AND ts <= ?
+          WINDOW w AS (PARTITION BY coalesce(event_id, event_ticker), coalesce(player_id, player),
+                                    coalesce(stat, 'points')))
+        WHERE rn = 1""", [now])
+    return df[df.tip_ts.map(et_date) == d].drop(columns=["rn"]) if len(df) else df
+
+
+def prior_exposure(storage: Storage, d: date, now: datetime, bankroll: float | None) -> Exposure:
+    """What's already committed on this ET slate: Rohan's fills, plus every ticket already sent
+    (`issued_tickets`, each at the largest stake it was given), so a later scan can't stack new
+    stakes past the caps. A rescan's pick on a player-stat that already has a ticket re-prices it
+    (see size_positions)."""
     out = Exposure()
     fills = fills_with_games(storage)
     if len(fills):
@@ -146,17 +168,17 @@ def prior_exposure(storage: Storage, d: date, now: datetime, scanning: set[str],
                 out.group[(r.event_id, r.player_id)] = out.group.get((r.event_id, r.player_id), 0.0) + frac
                 out.slate += frac
     if bankroll:
-        live = latest_venue_signals(storage, now)
-        live = live[(live.decision == "actionable") & ~live.event_id.isin(scanning)] if len(live) else live
-        if len(live):
-            live = live[live.tip_ts.map(et_date) == d]
-            for r in live.itertuples():
-                stat = "points" if pd.isna(r.stat) else r.stat
-                if (r.event_id, r.player_id, stat) in out.filled or pd.isna(r.stake_usd):
-                    continue
-                frac = r.stake_usd / bankroll
-                out.game[r.event_id] = out.game.get(r.event_id, 0.0) + frac
-                out.slate += frac
+        for r in issued_tickets(storage, d, now).itertuples():
+            game = r.event_ticker if pd.isna(r.event_id) else r.event_id
+            player = r.player if pd.isna(r.player_id) else r.player_id
+            key = (game, player, "points" if pd.isna(r.stat) else r.stat)
+            if key in out.filled:
+                continue
+            frac = r.stake_usd / bankroll
+            out.issued[key] = frac
+            out.game[game] = out.game.get(game, 0.0) + frac
+            out.group[(game, player)] = out.group.get((game, player), 0.0) + frac
+            out.slate += frac
     return out
 
 
@@ -186,7 +208,7 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
             kalshi_df = parse_markets(raw)
         except Exception as exc:
             fetchers.errors.append(f"kalshi markets: {type(exc).__name__}: {exc}")
-    out, scanned = [], set()
+    out = []
     for ev in events_on(storage, d).itertuples():
         if event_ids is not None and ev.event_id not in event_ids:
             continue
@@ -204,12 +226,13 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
             if log and snaps:
                 storage.append("venue_snapshots", snaps)
             continue
-        scanned.add(ev.event_id)
         roster = _roster(storage, ev.event_id)
         by_key, dupes = roster_keys(roster)
         cons = {stat: consensus_by_player(storage, ev.event_id, as_of=now, before=now, stat=stat)
-                for stat in config.STATS}
+                for stat in config.ALL_STATS}
         projs = {(p.player_id, p.stat): p for p in latest_projections(storage, ev.event_id, now).itertuples()}
+        projs.update({(p.player_id, p.stat): p for p in latest_extra_projections(storage, ev.event_id, now).itertuples()
+                      if p.stat in config.SHADOW_STATS})
         game = f"{ev.away_abbr} @ {ev.home_abbr}"
         rows, pending = [], []
         for q in quotes.to_dict("records"):
@@ -221,13 +244,14 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
             pid = r.player_id if team_ok else None
             if team_ok and q_team is None:
                 q = {**q, "team": r.team_abbr}               # venues without a team code take the roster's
-            stat = q.get("stat") if q.get("stat") in config.STATS else None   # unknown: already a parse error
+            stat = q.get("stat") if q.get("stat") in config.ALL_STATS else None   # unknown: already a parse error
             p = projs.get((pid, stat))
             ctx = Context(now=now, tip=tip, event_id=ev.event_id, game=game, player_id=pid, stat=stat or "points",
                           status=None if r is None or pd.isna(r.status) else str(r.status).lower(),
                           consensus=cons.get(stat, {}).get(pid),
                           model_mean=None if p is None or pd.isna(p.mean) else float(p.mean),
-                          projection_ts=None if p is None else p.ts)
+                          projection_ts=None if p is None else p.ts,
+                          model_version=None if p is None or pd.isna(p.model_version) else str(p.model_version))
             if q.get("key") in dupes:
                 q = {**q, "parse_error": "ambiguous name on this game's rosters"}
             qts = q.get("quote_ts")
@@ -239,6 +263,9 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
                                 "open_interest": q.get("open_interest")})
             for side in ("YES", "NO"):
                 row = evaluate_contract(q, side, ctx, tag=tag)
+                if stat in config.SHADOW_STATS:
+                    rows.append(shadow(row))                 # priced and logged, never a ticket
+                    continue
                 rows.append(row)
                 # Depth only for contracts that already clear the bar at the top of the book.
                 if row["decision"] in ("actionable", "watch") and str(row["reason"]).startswith(("thin", "EV")):
@@ -260,11 +287,21 @@ def scan(storage: Storage, d: date, now: datetime, fetchers: Fetchers, tag: str 
     df = pd.DataFrame(out)
     if df.empty:
         return df
-    prior = prior_exposure(storage, d, now, scanned, bankroll)
+    prior = prior_exposure(storage, d, now, bankroll)
     df = size_positions(pick_per_group(df, prior.filled), bankroll, prior)
     if log:
         storage.append("venue_signals", df)
     return df
+
+
+def shadow(row: dict) -> dict:
+    """A shadow stat's decision (config.SHADOW_STATS): what the rules would have said, kept in the
+    reason, under decision 'shadow' with no stake, so no pick, ticket, cap or journal ever sees it.
+    Abstains stay abstains."""
+    if row.get("decision") not in ("actionable", "watch"):
+        return row
+    return {**row, "decision": "shadow", "reason": f"shadow, would be {row['decision']}: {row.get('reason')}",
+            "kelly": None, "stake_frac": None, "contracts": None, "stake_usd": None}
 
 
 def _depth(pending: list, fetchers: Fetchers) -> dict[tuple[str, str], dict[str, Levels]]:

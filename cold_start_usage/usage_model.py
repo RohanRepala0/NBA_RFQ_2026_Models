@@ -185,7 +185,7 @@ def project_scenario(players: pd.DataFrame, scen: pd.DataFrame,
     eff = 1 + params.eff_per_usg_point * (df.usg_pct - df.usg_proj)
     add_spacing(df, team_shooting, params)
     df["ppg_proj"] = (df.ppg * (df.usg_proj / df.usg_pct)
-                      * (df.proj_mpg / df.mpg) * eff * df.spacing_mult).where(has_stats)
+                      * (df.proj_mpg / df.mpg) * eff * df.spacing_mult).where(has_stats).astype(float)
     df["sd_proj"] = df.ppg_proj.map(lambda m: points_sd(m, params) if pd.notna(m) else float("nan"))
     add_count_stats(df, params)
     df["fair_line"] = (df.ppg_proj * 2).round() / 2

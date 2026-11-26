@@ -485,3 +485,29 @@ Tre Johnson,WAS,WAS,22.6,60,24.05,12.22,2.83,2.03,5.4,35.8,yes,https://www.statm
 Tre Mann,CHA,WAS,23.4,53,12.62,5.49,1.74,1.62,5.7,32.3,yes,https://www.statmuse.com/nba/ask/hornets-players-usage-rate-2025-26,TRE_MANN_1_NBA
 Tristan Vukcevic,WAS,WAS,26.6,49,13.69,9.0,3.0,1.12,2.9,34.7,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,T_VUKCEVIC_1_NBA
 Will Riley,WAS,WAS,20.2,74,22.07,10.32,2.86,1.97,3.3,31.6,yes,https://www.statmuse.com/nba/ask/wizards-players-usage-rate-2025-26,WILL_RILEY_1_NBA
+Kyrie Irving,DAL,DAL,26.4,50,36.08,24.68,4.8,4.62,7.2,40.1,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",KYRIE_IRVING_1_NBA
+Fred VanVleet,HOU,HOU,17.6,60,35.18,14.07,3.68,5.55,7.7,34.5,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",FRED_VANVLEET_1_NBA
+Georges Niang,ATL,GSW,17.7,79,21.48,9.92,3.44,1.41,5.2,40.6,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",GEORGES_NIANG_1_NBA
+Trey Lyles,SAC,MIN,13.9,69,19.57,6.54,4.58,1.19,3.4,34.0,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",TREY_LYLES_1_NBA
+Yaxel Lendeborg,,GSW,27.6,5,33.59,22.6,9.2,4.0,6.2,35.5,yes,"SportsGameOdds box scores, first 5 games of 2026-27 (rookie stand-in prior)",YAXEL_LENDEBORG_1_NBA
+Keaton Wagler,,LAC,25.1,4,26.48,15.0,4.25,3.5,5.5,40.9,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie stand-in prior)",KEATON_WAGLER_1_NBA
+Trevon Brazile,,DEN,16.5,4,23.69,9.5,7.5,0.0,3.8,33.3,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie stand-in prior)",TREVON_BRAZILE_1_NBA
+Allen Graves,,TOR,12.6,4,15.95,5.25,3.5,1.0,1.5,16.7,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie stand-in prior)",ALLEN_GRAVES_1_NBA
+AJ Dybantsa,,WAS,26.4,1,26.95,19.0,2.0,2.0,3.0,33.3,yes,"SportsGameOdds box scores, first 1 games of 2026-27 (rookie stand-in prior)",AJ_DYBANTSA_1_NBA
+Noa Essengue,,CHI,11.5,4,13.31,2.0,2.0,0.5,1.5,16.7,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie stand-in prior)",NOA_ESSENGUE_1_NBA
+Graham Ike,,GSW,21.7,4,13.37,8.25,3.5,1.25,1.0,100.0,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie stand-in prior)",GRAHAM_IKE_1_NBA
+Damian Lillard,MIL,POR,26.9,58,36.09,24.95,4.69,7.07,9.0,37.6,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",DAMIAN_LILLARD_1_NBA
+Mo Bamba,NOP,UTA,15.0,32,12.91,4.31,4.53,0.56,1.7,27.8,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",MO_BAMBA_1_NBA
+Darryn Peterson,,UTA,21.5,5,28.67,12.8,4.4,2.6,4.0,35.0,yes,"SportsGameOdds box scores, first 5 games of 2026-27 (rookie / no-NBA-history stand-in prior)",DARRYN_PETERSON_1_NBA
+Kingston Flemings,,ATL,16.8,6,19.58,6.33,3.0,4.33,1.8,36.4,yes,"SportsGameOdds box scores, first 6 games of 2026-27 (rookie / no-NBA-history stand-in prior)",KINGSTON_FLEMINGS_1_NBA
+Emanuel Sharp,,SAC,11.8,5,16.81,4.2,0.4,0.6,2.6,38.5,yes,"SportsGameOdds box scores, first 5 games of 2026-27 (rookie / no-NBA-history stand-in prior)",EMANUEL_SHARP_1_NBA
+Cedric Coward,,MEM,17.4,4,29.57,13.75,9.0,2.75,4.0,68.8,yes,"SportsGameOdds box scores, first 4 games of 2026-27 (rookie / no-NBA-history stand-in prior)",CEDRIC_COWARD_1_NBA
+Cameron Boozer,,MEM,23.3,5,32.12,15.8,10.8,6.2,6.2,35.5,yes,"SportsGameOdds box scores, first 5 games of 2026-27 (rookie / no-NBA-history stand-in prior)",CAMERON_BOOZER_1_NBA
+Mario Hezonja,,CLE,18.5,5,17.44,7.4,4.0,1.6,3.4,35.3,yes,"SportsGameOdds box scores, first 5 games of 2026-27 (rookie / no-NBA-history stand-in prior)",MARIO_HEZONJA_1_NBA
+Brayden Burries,,MIL,21.2,5,14.91,7.8,3.6,1.4,2.6,30.8,yes,"SportsGameOdds box scores, first 5 games of 2026-27 (rookie / no-NBA-history stand-in prior)",BRAYDEN_BURRIES_1_NBA
+Bennett Stirtz,,OKC,12.5,5,13.26,3.4,0.4,0.8,1.8,22.2,yes,"SportsGameOdds box scores, first 5 games of 2026-27 (rookie / no-NBA-history stand-in prior)",BENNETT_STIRTZ_1_NBA
+Aday Mara,,OKC,18.4,5,15.84,5.6,4.2,1.0,0.0,,yes,"SportsGameOdds box scores, first 5 games of 2026-27 (rookie / no-NBA-history stand-in prior)",ADAY_MARA_1_NBA
+Josh Dix,,OKC,12.1,2,23.11,1.0,1.5,0.0,4.0,0.0,yes,"SportsGameOdds box scores, first 2 games of 2026-27 (rookie / no-NBA-history stand-in prior)",JOSH_DIX_1_NBA
+Christian Anderson,,CHA,20.5,6,10.9,1.83,1.67,1.5,2.3,7.1,yes,"SportsGameOdds box scores, first 6 games of 2026-27 (rookie / no-NBA-history stand-in prior)",CHRISTIAN_ANDERSON_1_NBA
+Rayan Rupert,POR,PHI,15.6,52,8.85,2.98,1.35,0.48,1.1,27.1,yes,"Court AI get_season_stats 2024-25 (NBA.com); stand-in prior, no 2025-26 season",
+Labaron Philon Jr.,,PHI,18.4,3,7.49,2.33,1.33,0.33,1.7,20.0,yes,"SportsGameOdds box scores, first 3 games of 2026-27 (rookie stand-in prior)",LABARON_PHILON_1_NBA

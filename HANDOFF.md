@@ -126,7 +126,7 @@ All three readers are public, keyless GETs with no account, order or portfolio e
 - **Options:**
   - (a) Keep doing hand lookups.
   - (b) Get a license (Stathead, SportsDataIO, Sportradar).
-  - (c) Build in-season usage from SportsGameOdds box scores, if `expandResults=true` carries FGA, FTA, turnovers and minutes. Not checked yet.
+  - (c) Build in-season usage from SportsGameOdds box scores. **Done (model v2):** the results responses `grade` already fetches carry each listed player's seconds, FGA, FTA, turnovers, threes, steals and blocks, and both teams' totals. `boxscores.py` stores them and the usage rate; see [`docs/MODEL_V2_PLAN.md`](docs/MODEL_V2_PLAN.md).
 
 ---
 
@@ -163,16 +163,17 @@ cold_start_usage/
   pipeline.py      # snapshot / project / signals / results orchestration
   storage.py       # DuckDB, append-only tables, allowlist check on write
   grade.py         # CLV, hit rate, Brier, log loss, calibration, segments
+  journal.py       # bets/: the committed ledger, fills and per-day tickets / results / summary (reads only)
   report.py        # weekly markdown report
   cli.py           # usage | books | snapshot | project | signals | watchlist | grade | report | fit
-                   # | catalog | board | kalshi | venues | tickets | fill | history
+                   # | catalog | board | kalshi | venues | tickets | fill | journal | history | backtest
 tests/
 ```
 
 **Tables** (UTC, append-only): `odds_snapshots`, `projections`, `signals`, `results`, plus `events`, `event_players` (roster and injury status), `books_seen` and `api_calls` (the local object ledger). `odds_snapshots`, `projections`, `signals`, `venue_snapshots` and `venue_signals` carry a `stat` column (`points`, `rebounds`, `assists`); rows logged before it existed have NULL there, and every read treats NULL as points. `results` has `actual_points`, `actual_rebounds` and `actual_assists`. The venue side adds four more:
 - `venue_snapshots`: every venue price read, refused at or after tip.
 - `venue_signals`: every decision, with its reason and a config hash, also refused at or after tip.
-- `tickets`: fills Rohan entered by hand.
+- `tickets`: fills Rohan entered by hand (`fill`; `--paper` writes note `paper`).
 - `venue_settlements`.
 
 Schema changes are additive only: new columns are added to existing tables, and nothing is dropped. Columns are listed in `storage.SCHEMA`.
@@ -246,7 +247,9 @@ reb_new = r_i * min_new_i * k,   Var = phi * reb_new
 
 **Known bias:**
 - **The model:** it treats the game as one usage pool, but coaches stagger stars, so stars keep more usage than it projects. The v2 fix is a lineup-level budget.
-- **The minutes:** the drafted scenario minutes drive most bench-player edges. Review them before trusting any role-player signal.
+- **The minutes:** the drafted scenario minutes drive most bench-player edges. Review them before trusting any role-player signal. The first graded week measured it: the projected rotation plays about 191 of its 240 minutes (the rest of the roster takes ~50), so v1 runs about +2 minutes and +1 point too high a player.
+
+**Model v2 (built, off by default):** `config.PROJECTION_SOURCE = "rolling"` (or `project --source rolling`) feeds the same usage model this season's box scores before tip: recent minutes shrunk to the scenario's plus the team's recent bench, rates and usage shrunk to last season (how much is fitted on 2025-26 game logs: [`docs/PERSISTENCE_STUDY.md`](docs/PERSISTENCE_STUDY.md), `cli persistence`), pace and opponent multipliers, role-stability classes. Threes, steals, blocks and turnovers are logged to `extra_projections` and priced as shadow sides only. `evaluate --docs` is the walk-forward check against the season model and the books' close; the promotion rules are in [`docs/MODEL_V2_PLAN.md`](docs/MODEL_V2_PLAN.md). Stage 2 (XGBoost on last season's SportsGameOdds box scores) waits for the November budget.
 
 ---
 
@@ -267,9 +270,11 @@ A Kalshi or Polymarket US contract is **actionable** only if all of these hold:
 - the market-only EV is at most 15pp (above that: "check inputs");
 - at least 10 contracts are offered at or under the max price.
 
-Questionable players and thin books are `watch`. There's one pick per player-game and stat; a stat already held gets no new pick. Contracts are sized at quarter Kelly and capped at 0.5% of bankroll per player-game across his stats (points and rebounds on one player ride on the same minutes), 1.5% per game and 3% per slate; the bankroll comes from `COLD_START_BANKROLL_USD`, and no stake is shown without it.
+Questionable players and thin books are `watch`. There's one pick per player-game and stat; a stat already held gets no new pick. Contracts are sized at quarter Kelly and capped at 0.5% of bankroll per player-game across his stats (points and rebounds on one player ride on the same minutes), 1.5% per game and 3% per slate; the bankroll comes from `COLD_START_BANKROLL_USD`, and no stake is shown without it. The caps count every ticket already sent on the slate (the journal's first actionable decision per player-game and stat), however old, each at the largest stake any scan gave it: a later pick on the same player-stat re-prices that ticket instead of stacking on it, and a smaller re-pricing frees nothing. Until Oct 25 the caps only counted picks from the last 20 minutes ($434 of tickets that night against a $150 cap); on Oct 26 a smaller re-pricing still freed room ($182).
 
-**Tickets:** `tickets` lists the actionable decisions: venue, ticker or slug, side, limit price (the max price), quantity, and a cancel-by time 5 minutes before tip. `fill` records what was actually filled.
+**Tickets:** `tickets` lists the actionable decisions: venue, ticker or slug, side, limit price (the max price), quantity, and a cancel-by time 5 minutes before tip. `fill` records what was actually filled; `fill --paper` records a paper fill (no money), which still counts toward the caps and blocks a new pick on that stat, like a real one.
+
+**Journal:** `journal` rebuilds `bets/` from the log, which is git-ignored, so the record lives in git: `ledger.csv` (one row per ticket, i.e. the first actionable decision per player-game and stat, graded with `grade.venue_graded`), `fills.csv` (every fill, with a replaced one marked superseded, and its kind: paper, real or discretionary), and per ET slate `days/YYYY-MM-DD/` with `tickets.csv` (every actionable row at every checkpoint, repeats flagged), `results.csv` and `summary.md`. It reads only and makes no API calls, so run `grade` first. The output is deterministic, so a rebuild with nothing new changes no file. Columns and conventions: [`bets/README.md`](bets/README.md).
 
 **Timing:** the cron logs sportsbook signals at T-60m and T-15m, and venue decisions at T-6h, T-2h, T-60m, T-15m and T-5m (the venue close).
 
@@ -288,7 +293,8 @@ The weekly `report` adds CLV by week (the edge-decay chart).
 | **Sat Oct 17** | **M1:** config, client with budget guard, allowlist test, usage check, book list, storage, odds math, first snapshot | Done. The key works, the books are discovered, and the first live snapshot (BOS @ DET) is stored. |
 | **Mon Oct 19** | **M2:** consensus, usage model for the case-study teams, `project` + `signals`, dry run | MIA and TOR done with spacing, and dry-run on a synthetic MIN @ MIA slate. The scenario minutes need Rohan's review. |
 | **Before Tue Oct 20** | **M3:** install the cron job (`snapshot --due --with-signals --with-venues --with-projections`, every 5 minutes) on Rohan's machine before Opening Night (first tip 3:00 PM ET), so history starts with the first tip. It covers every game; projections and venue decisions cover all 30 teams and three stats (the sportsbook signals stay points). The MIA and TOR openers (both 7:30 PM ET, Oct 21) use the reviewed minutes. | Ready. Kalshi and Polymarket US both list NBA points, rebounds and assists props (Polymarket US since Oct 19). Run `catalog` and `board --docs` first, `tickets` before each tip, and `grade` each morning. |
-| **Week 1** | **M3b:** backtests on Kalshi's 2025-26 archive (`cli history`). The strategies: venue vs consensus, longshot bias, ladder and cross-venue consistency, entry timing, the teammate-vacuum news signal, and limit vs market orders. | The archive download is running; the engine is next. |
+| **Week 1** | **M3b:** backtests on Kalshi's 2025-26 archive (`cli history`). The strategies: venue vs consensus, longshot bias, ladder and cross-venue consistency, entry timing, the teammate-vacuum news signal, and limit vs market orders. | Archive complete (1,096 games) and walk-forward results in [`docs/BACKTEST.md`](docs/BACKTEST.md). No Kalshi-price-only strategy beats the spread and fee; ladder fit as resting limit orders is the only positive one (+4.8%, interval includes zero). Venue vs consensus needs this season's own log. The April-onward holdout is still sealed. |
+| **Week 2** | **M5:** model v2 stage 1: box scores, usage rate, rolling opportunity features, `project --source rolling`, `evaluate` | Built behind the switch (default unchanged). First five nights: rolling removes the minutes and points bias; the books' close still has the lowest error. Promote per the plan's rules. |
 | **Week 2** | **M4:** weekly report; review auto minutes for the teams being acted on; fit `eff_per_usg_point` and `spacing_coef`; stats-source decision | `report`, `fit`, `catalog` and `board` are built. Data for the fits is still to be collected. |
 
 ---
@@ -325,7 +331,8 @@ The weekly `report` adds CLV by week (the edge-decay chart).
 - Python 3.11+, DuckDB, pandas, requests, pytest. Scheduling via local cron or launchd.
 - Markets: player points, rebounds and assists (full game, over/under and "N+" ladders). The sportsbook-line `signals` stay points-only.
 - Venue fees in `config.VENUE_FEES`. Kalshi is rounded up to the cent per order; accounts held directly with Kalshi may be charged on a $0.0001 grid. Check one real fill.
-- Decision gates and sizing in `config.py` ("Venues" and "Sizing"). They're frozen until about 800 graded rows exist, then tuned walk-forward only.
+- Decision gates and sizing in `config.py` ("Venues" and "Sizing"). They're frozen until about 800 graded rows exist, then tuned walk-forward only. One exception, Rohan's call after Oct 25: rebounds need 2pp more edge (`STAT_EXTRA_EDGE`), because they were the only stat whose closing line ran against us (-2.0c over their first 14 tickets). Revisit at 50 rebound tickets.
+- Rotations vs rosters: `roster --date D` reads each un-tipped team's ESPN roster page and lists players in its minutes who aren't on the team; `--apply` writes `<scenario>_roster` into the reviewed file and re-projects. Run it after the slate is stored and before injury scenarios, and build those from the `_roster` rotation. On Oct 26 it found 16 such players in the full-strength minutes (Kevin Porter Jr. MIL, Bez Mbeng UTA, Russell Westbrook SAC, Leaky Black WAS, D'Angelo Russell MEM, and 11 more): the auto minutes come from `data/players_2025_26.csv`'s 2026-27 teams, which need the same correction.
 
 ---
 

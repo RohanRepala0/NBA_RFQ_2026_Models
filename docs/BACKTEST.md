@@ -1,8 +1,8 @@
 # Backtest: Kalshi NBA player points, 2025-26
 
-Archive: 2,622 settled `KXNBAPTS` markets with candles across 176 games, 2025-11-18 to 2026-05-19 (`cli history`; `cli backtest --docs` rebuilds this page).
+Archive: 23,543 settled `KXNBAPTS` markets with candles across 1,096 games, 2025-11-18 to 2026-06-13 (`cli history`; `cli backtest --docs` rebuilds this page).
 
-**Partial archive: 2,622 of 23,562 markets (11%), 176 of 1,096 games.** The download fetches whole games in random order (after November and part of December, which came first), so this is a season-wide sample, but a small one. Treat every number here as preliminary.
+Every game is in. 19 of 23,562 markets have no candles (they never traded) and are left out.
 
 **How it's scored.**
 - Fills:
@@ -20,43 +20,46 @@ Archive: 2,622 settled `KXNBAPTS` markets with candles across 176 games, 2025-11
 | month | markets | two-sided | median spread | median volume |
 |---|---|---|---|---|
 | 2025-11 | 1,115 | 42% | 45c | 295 |
-| 2025-12 | 839 | 49% | 7c | 200 |
-| 2026-01 | 95 | 94% | 5c | 300 |
-| 2026-02 | 130 | 68% | 6c | 1,002 |
-| 2026-03 | 152 | 92% | 4c | 1,698 |
-| 2026-04 | 210 | 98% | 3c | 2,065 |
-| 2026-05 | 81 | 95% | 1c | 13,507 |
+| 2025-12 | 2,877 | 74% | 6c | 251 |
+| 2026-01 | 3,657 | 87% | 5c | 508 |
+| 2026-02 | 3,232 | 79% | 4c | 1,226 |
+| 2026-03 | 6,684 | 87% | 4c | 1,096 |
+| 2026-04 | 4,220 | 91% | 3c | 2,127 |
+| 2026-05 | 1,473 | 95% | 1c | 14,116 |
+| 2026-06 | 285 | 97% | 1c | 31,478 |
 
 ## Results
 
 | strategy | by hand? | period | fills | contracts | cost | P&L | yield | 95% CI (by date) | hit rate | avg CLV | max DD |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| baseline: buy every YES | yes | walk-forward | 625 | 6,250 | 2,936.10 | -365.80 | -12.5% | -24.7% to -2.9% | +41.1% | -0.03 | 422.93 |
+| baseline: buy every YES | yes | walk-forward | 11898 | 118,980 | 52,970.84 | -4,822.44 | -9.1% | -11.7% to -6.7% | +40.4% | -0.02 | 4,905.72 |
 | baseline: buy every YES | yes | holdout | 0 | 0 |  |  |  |  |  |  |  |
 | calibration @ t-6h | | both | 0 | | | | | | | | |
-| ladder fit @ t-6h | yes | walk-forward | 36 | 360 | 259.14 | 47.56 | +18.4% | +1.7% to +35.8% | +85.7% | -0.02 | 8.96 |
+| ladder fit @ t-6h | yes | walk-forward | 998 | 9,980 | 6,821.02 | -229.72 | -3.4% | -7.5% to +0.7% | +66.1% | -0.01 | 291.10 |
 | ladder fit @ t-6h | yes | holdout | 0 | 0 |  |  |  |  |  |  |  |
 | calibration @ t-2h | | both | 0 | | | | | | | | |
-| ladder fit @ t-2h | yes | walk-forward | 38 | 380 | 273.44 | 18.16 | +6.6% | -12.2% to +19.7% | +77.8% | -0.02 | 14.73 |
+| ladder fit @ t-2h | yes | walk-forward | 1253 | 12,530 | 8,578.99 | -264.59 | -3.1% | -6.7% to +0.5% | +66.3% | -0.01 | 397.73 |
 | ladder fit @ t-2h | yes | holdout | 0 | 0 |  |  |  |  |  |  |  |
-| calibration @ t-60m | yes | walk-forward | 22 | 220 | 120.32 | -50.32 | -41.8% | -75.6% to +2.6% | +31.8% | -0.02 | 50.32 |
-| calibration @ t-60m | yes | holdout | 0 | 0 |  |  |  |  |  |  |  |
-| ladder fit @ t-60m | yes | walk-forward | 39 | 390 | 277.06 | 14.54 | +5.2% | -20.3% to +25.5% | +75.7% | -0.02 | 23.13 |
+| calibration @ t-60m | | both | 0 | | | | | | | | |
+| ladder fit @ t-60m | yes | walk-forward | 1336 | 13,360 | 9,191.44 | -471.54 | -5.1% | -9.1% to -1.2% | +65.2% | -0.01 | 547.50 |
 | ladder fit @ t-60m | yes | holdout | 0 | 0 |  |  |  |  |  |  |  |
-| calibration @ t-15m | yes | walk-forward | 17 | 170 | 116.89 | -16.89 | -14.4% | -46.9% to +3.9% | +58.8% | -0.02 | 21.92 |
+| calibration @ t-15m | yes | walk-forward | 356 | 3,560 | 227.15 | -20.25 | -8.9% | -49.8% to +36.3% | +5.8% | -0.02 | 47.41 |
 | calibration @ t-15m | yes | holdout | 0 | 0 |  |  |  |  |  |  |  |
-| ladder fit @ t-15m | yes | walk-forward | 55 | 550 | 390.27 | 6.43 | +1.6% | -16.0% to +19.1% | +72.2% | -0.02 | 22.94 |
+| ladder fit @ t-15m | yes | walk-forward | 1455 | 14,550 | 10,025.19 | -307.99 | -3.1% | -6.9% to +0.8% | +66.8% | -0.01 | 347.78 |
 | ladder fit @ t-15m | yes | holdout | 0 | 0 |  |  |  |  |  |  |  |
 | ladder arbitrage | | both | 0 | | | | | | | | |
-| teammate vacuum (1-min, automated) | | both | 0 | | | | | | | | |
-| teammate vacuum (10-min, by hand) | | both | 0 | | | | | | | | |
-| reversion (1-min) | no | walk-forward | 2 | 20 | 8.84 | -8.84 | -100.0% |  | +0.0% | -0.02 | 8.84 |
+| teammate vacuum (1-min, automated) | no | walk-forward | 2 | 20 | 11.05 | -1.05 | -9.5% |  | +50.0% | -0.01 | 4.68 |
+| teammate vacuum (1-min, automated) | no | holdout | 0 | 0 |  |  |  |  |  |  |  |
+| teammate vacuum (10-min, by hand) | yes | walk-forward | 1 | 10 | 4.68 | -4.68 | -100.0% |  | +0.0% | -0.02 | 4.68 |
+| teammate vacuum (10-min, by hand) | yes | holdout | 0 | 0 |  |  |  |  |  |  |  |
+| reversion (1-min) | no | walk-forward | 70 | 700 | 313.24 | -65.84 | -21.0% | -41.5% to +2.7% | +32.3% | -0.01 | 79.36 |
 | reversion (1-min) | no | holdout | 0 | 0 |  |  |  |  |  |  |  |
-| momentum (1-min) | no | walk-forward | 2 | 20 | 12.44 | 7.56 | +60.8% |  | +100.0% | -0.02 | 0.00 |
+| momentum (1-min) | no | walk-forward | 70 | 700 | 441.17 | 11.43 | +2.6% | -14.4% to +17.3% | +67.7% | -0.04 | 43.93 |
 | momentum (1-min) | no | holdout | 0 | 0 |  |  |  |  |  |  |  |
-| ladder fit @ t-60m (as limit orders) | yes | walk-forward | 13 | 130 | 88.40 | 8.30 | +9.4% | -18.2% to +31.8% | +75.0% | 0.01 | 8.20 |
+| ladder fit @ t-60m (as limit orders) | yes | walk-forward | 366 | 3,660 | 2,435.80 | 117.40 | +4.8% | -2.6% to +11.4% | +69.7% | 0.00 | 123.20 |
 | ladder fit @ t-60m (as limit orders) | yes | holdout | 0 | 0 |  |  |  |  |  |  |  |
-| teammate vacuum (10-min, by hand) (as limit orders) | | both | 0 | | | | | | | | |
+| teammate vacuum (10-min, by hand) (as limit orders) | yes | walk-forward | 0 | 0 |  |  |  |  |  |  |  |
+| teammate vacuum (10-min, by hand) (as limit orders) | yes | holdout | 0 | 0 |  |  |  |  |  |  |  |
 
 **Holdout (2026-04-01 on): sealed.** It is scored once, with `--reveal-holdout`, after the strategies and their parameters are frozen.
 
@@ -64,46 +67,53 @@ Archive: 2,622 settled `KXNBAPTS` markets with candles across 176 games, 2025-11
 
 | strategy | entry | fills | yield | avg CLV |
 |---|---|---|---|---|
-| ladder fit | t-6h | 36 | +18.4% | -0.02 |
-| ladder fit | t-2h | 38 | +6.6% | -0.02 |
-| calibration | t-60m | 22 | -41.8% | -0.02 |
-| ladder fit | t-60m | 39 | +5.2% | -0.02 |
-| calibration | t-15m | 17 | -14.4% | -0.02 |
-| ladder fit | t-15m | 55 | +1.6% | -0.02 |
-| ladder fit | t-60m (as limit orders) | 13 | +9.4% | 0.01 |
+| ladder fit | t-6h | 998 | -3.4% | -0.01 |
+| ladder fit | t-2h | 1253 | -3.1% | -0.01 |
+| ladder fit | t-60m | 1336 | -5.1% | -0.01 |
+| calibration | t-15m | 356 | -8.9% | -0.02 |
+| ladder fit | t-15m | 1455 | -3.1% | -0.01 |
+| ladder fit | t-60m (as limit orders) | 366 | +4.8% | 0.00 |
 
 ## By month
 
 | strategy | month | fills | yield |
 |---|---|---|---|
-| baseline: buy every YES | 2025-12 | 350 | +2.1% |
-| baseline: buy every YES | 2026-01 | 79 | -45.5% |
-| baseline: buy every YES | 2026-02 | 61 | -26.3% |
-| baseline: buy every YES | 2026-03 | 135 | -27.4% |
-| ladder fit @ t-6h | 2025-12 | 7 | +31.3% |
-| ladder fit @ t-6h | 2026-01 | 8 | +18.0% |
-| ladder fit @ t-6h | 2026-02 | 5 | +15.7% |
-| ladder fit @ t-6h | 2026-03 | 16 | +13.2% |
-| ladder fit @ t-2h | 2025-12 | 8 | -5.2% |
-| ladder fit @ t-2h | 2026-01 | 6 | +12.6% |
-| ladder fit @ t-2h | 2026-02 | 6 | +7.7% |
-| ladder fit @ t-2h | 2026-03 | 18 | +10.2% |
-| calibration @ t-60m | 2026-01 | 22 | -41.8% |
-| ladder fit @ t-60m | 2025-12 | 11 | -9.8% |
-| ladder fit @ t-60m | 2026-01 | 6 | +15.8% |
-| ladder fit @ t-60m | 2026-02 | 6 | +21.9% |
-| ladder fit @ t-60m | 2026-03 | 16 | +7.7% |
-| calibration @ t-15m | 2026-03 | 17 | -14.4% |
-| ladder fit @ t-15m | 2025-12 | 15 | -13.6% |
-| ladder fit @ t-15m | 2026-01 | 7 | +22.3% |
-| ladder fit @ t-15m | 2026-02 | 15 | +16.2% |
-| ladder fit @ t-15m | 2026-03 | 18 | -4.6% |
-| reversion (1-min) | 2026-03 | 2 | -100.0% |
-| momentum (1-min) | 2026-03 | 2 | +60.8% |
-| ladder fit @ t-60m (as limit orders) | 2025-12 | 2 | -37.5% |
-| ladder fit @ t-60m (as limit orders) | 2026-01 | 1 | +26.6% |
-| ladder fit @ t-60m (as limit orders) | 2026-02 | 1 | +96.1% |
-| ladder fit @ t-60m (as limit orders) | 2026-03 | 9 | +12.3% |
+| baseline: buy every YES | 2025-12 | 1916 | -8.1% |
+| baseline: buy every YES | 2026-01 | 2651 | -12.3% |
+| baseline: buy every YES | 2026-02 | 2102 | -9.9% |
+| baseline: buy every YES | 2026-03 | 5229 | -7.4% |
+| ladder fit @ t-6h | 2025-12 | 23 | -3.2% |
+| ladder fit @ t-6h | 2026-01 | 160 | -2.8% |
+| ladder fit @ t-6h | 2026-02 | 163 | -1.1% |
+| ladder fit @ t-6h | 2026-03 | 652 | -4.1% |
+| ladder fit @ t-2h | 2025-12 | 38 | -13.2% |
+| ladder fit @ t-2h | 2026-01 | 199 | -4.6% |
+| ladder fit @ t-2h | 2026-02 | 237 | -4.3% |
+| ladder fit @ t-2h | 2026-03 | 779 | -1.7% |
+| ladder fit @ t-60m | 2025-12 | 56 | -7.7% |
+| ladder fit @ t-60m | 2026-01 | 193 | -3.1% |
+| ladder fit @ t-60m | 2026-02 | 248 | -9.2% |
+| ladder fit @ t-60m | 2026-03 | 839 | -4.2% |
+| calibration @ t-15m | 2026-02 | 77 | +0.1% |
+| calibration @ t-15m | 2026-03 | 279 | -11.6% |
+| ladder fit @ t-15m | 2025-12 | 55 | -6.9% |
+| ladder fit @ t-15m | 2026-01 | 203 | -2.1% |
+| ladder fit @ t-15m | 2026-02 | 303 | -4.9% |
+| ladder fit @ t-15m | 2026-03 | 894 | -2.4% |
+| teammate vacuum (1-min, automated) | 2026-03 | 2 | -9.5% |
+| teammate vacuum (10-min, by hand) | 2026-03 | 1 | -100.0% |
+| reversion (1-min) | 2025-12 | 2 | +15.6% |
+| reversion (1-min) | 2026-01 | 18 | +2.6% |
+| reversion (1-min) | 2026-02 | 11 | +17.8% |
+| reversion (1-min) | 2026-03 | 39 | -43.9% |
+| momentum (1-min) | 2025-12 | 2 | -22.1% |
+| momentum (1-min) | 2026-01 | 18 | -16.0% |
+| momentum (1-min) | 2026-02 | 11 | -21.4% |
+| momentum (1-min) | 2026-03 | 39 | +19.7% |
+| ladder fit @ t-60m (as limit orders) | 2025-12 | 10 | -19.8% |
+| ladder fit @ t-60m (as limit orders) | 2026-01 | 51 | +17.1% |
+| ladder fit @ t-60m (as limit orders) | 2026-02 | 86 | +1.1% |
+| ladder fit @ t-60m (as limit orders) | 2026-03 | 219 | +4.5% |
 
 ## The strategies
 

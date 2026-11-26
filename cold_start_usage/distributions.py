@@ -7,6 +7,11 @@
   (r = m / (phi - 1), success probability 1 / phi; phi <= 1 is Poisson), with an
   exact discrete CDF from lgamma pmf terms. Robust pricing takes the lower of
   phi and phi_alt (config.COUNT_DISPERSION).
+- shadow stats (config.SHADOW_STATS): threes, steals, blocks, turnovers and the small
+  combos (rebounds + assists, steals + blocks) are counts like rebounds; the big
+  combos (points + rebounds + assists, points + rebounds, points + assists) are
+  normals with their own SD fraction and floor (config.NORMAL_STATS), and robust
+  pricing takes the lower of that SD and the compound-Poisson one, as for points.
 
 Lines are X.5, so for a count P(X > 7.5) = P(X >= 8). Pure Python (no scipy).
 """
@@ -20,12 +25,19 @@ from .odds_math import implied_mean as normal_implied_mean
 from .odds_math import p_over_normal, points_sd
 
 COUNT_MEAN_MAX = 60.0            # bisection ceiling for a count mean (no player averages 60 boards)
+COMBO_MEAN_MAX = 120.0           # and for a big combo's mean
 
 
 def check_stat(stat: str) -> str:
-    if stat not in config.STATS:
-        raise ValueError(f"Unknown stat {stat!r}; choose from {config.STATS}")
+    if stat not in config.ALL_STATS:
+        raise ValueError(f"Unknown stat {stat!r}; choose from {config.ALL_STATS}")
     return stat
+
+
+def normal_sd(stat: str, mean: float) -> float:
+    """A big combo's SD: max(floor, fraction x mean)."""
+    frac, floor = config.NORMAL_STATS[stat]
+    return max(floor, frac * max(mean, 0.0))
 
 
 def dispersion(stat: str) -> tuple[float, float]:
@@ -42,6 +54,8 @@ def sd(stat: str, mean: float, params: ModelParams = MODEL) -> float:
     """The centre model's SD: points max(4, 0.30 m); counts sqrt(phi * m)."""
     if check_stat(stat) == "points":
         return points_sd(mean, params)
+    if stat in config.NORMAL_STATS:
+        return normal_sd(stat, mean)
     phi, _ = dispersion(stat)
     return math.sqrt(max(phi, 1.0) * max(mean, 0.0))
 
@@ -68,6 +82,8 @@ def p_over(stat: str, mean: float, line: float, params: ModelParams = MODEL, phi
     """P(X > line) under the centre model (or a given phi, for counts)."""
     if check_stat(stat) == "points":
         return p_over_normal(mean, line, params=params)
+    if stat in config.NORMAL_STATS:
+        return p_over_normal(mean, line, sd=normal_sd(stat, mean))
     return count_sf(mean, line, dispersion(stat)[0] if phi is None else phi)
 
 
@@ -78,7 +94,7 @@ def implied_mean(stat: str, line: float, p: float, params: ModelParams = MODEL) 
         return normal_implied_mean(line, p, params)
     if not 0.0 < p < 1.0:
         raise ValueError(f"p_over must be in (0, 1): {p}")
-    lo, hi = 0.0, COUNT_MEAN_MAX
+    lo, hi = 0.0, COMBO_MEAN_MAX if stat in config.NORMAL_STATS else COUNT_MEAN_MAX
     for _ in range(200):
         mid = (lo + hi) / 2
         if p_over(stat, mid, line, params) < p:
@@ -101,6 +117,8 @@ def side_p(stat: str, mean: float, line: float, side: str, params: ModelParams =
     """P(this side wins) under the centre model: YES pays if X > line."""
     if check_stat(stat) == "points":
         return normal_side_p(mean, line, side, points_sd(mean, params))
+    if stat in config.NORMAL_STATS:
+        return normal_side_p(mean, line, side, normal_sd(stat, mean))
     p = p_over(stat, mean, line, params, phi)
     return p if side == "YES" else 1.0 - p
 
@@ -110,6 +128,9 @@ def robust_p(stat: str, mean: float, line: float, side: str, params: ModelParams
     compound-Poisson SD. Counts: phi and phi_alt."""
     if check_stat(stat) == "points":
         p1 = normal_side_p(mean, line, side, points_sd(mean, params))
+        p2 = normal_side_p(mean, line, side, sd_compound(mean))
+    elif stat in config.NORMAL_STATS:
+        p1 = normal_side_p(mean, line, side, normal_sd(stat, mean))
         p2 = normal_side_p(mean, line, side, sd_compound(mean))
     else:
         phi, phi_alt = dispersion(stat)

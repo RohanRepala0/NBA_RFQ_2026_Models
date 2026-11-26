@@ -1,0 +1,49 @@
+scenario,player,proj_mpg
+full_strength,Paolo Banchero,34.8
+full_strength,Desmond Bane,33.6
+full_strength,Franz Wagner,30.0
+full_strength,Anthony Black,29.8
+full_strength,Wendell Carter Jr.,29.3
+full_strength,Nikola Vučević,20.9
+full_strength,Jalen Suggs,20.3
+full_strength,Tristan da Silva,18.1
+full_strength,Jevon Carter,12.0
+full_strength,Goga Bitadze,11.2
+banchero_out,Desmond Bane,35.6
+banchero_out,Franz Wagner,34.0
+banchero_out,Anthony Black,32.8
+banchero_out,Wendell Carter Jr.,32.3
+banchero_out,Nikola Vučević,26.9
+banchero_out,Tristan da Silva,26.1
+banchero_out,Jalen Suggs,23.1
+banchero_out,Jevon Carter,15.0
+banchero_out,Goga Bitadze,14.2
+banchero_black_out,Franz Wagner,37.0
+banchero_black_out,Wendell Carter Jr.,37.0
+banchero_black_out,Desmond Bane,36.9
+banchero_black_out,Nikola Vučević,30.8
+banchero_black_out,Tristan da Silva,29.9
+banchero_black_out,Jalen Suggs,26.5
+banchero_black_out,Jevon Carter,17.2
+banchero_black_out,Goga Bitadze,16.3
+banchero_black_out,Jamal Cain,8.4
+report_1030,Franz Wagner,34.7
+report_1030,Desmond Bane,34.0
+report_1030,Wendell Carter Jr.,31.2
+report_1030,Anthony Black,29.8
+report_1030,Tristan da Silva,28.2
+report_1030,Nikola Vučević,20.1
+report_1030,Jevon Carter,16.9
+report_1030,Jase Richardson,16.2
+report_1030,Jamal Cain,14.9
+report_1030,Goga Bitadze,14.0
+report_1101,Franz Wagner,36.1
+report_1101,Desmond Bane,35.1
+report_1101,Wendell Carter Jr.,32.5
+report_1101,Anthony Black,28.8
+report_1101,Tristan da Silva,28.4
+report_1101,Jase Richardson,19.9
+report_1101,Nikola Vučević,17.2
+report_1101,Jamal Cain,16.2
+report_1101,Jevon Carter,13.0
+report_1101,Goga Bitadze,12.8

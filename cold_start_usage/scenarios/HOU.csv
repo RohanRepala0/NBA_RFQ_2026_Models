@@ -1,0 +1,55 @@
+scenario,player,proj_mpg
+full_strength,Amen Thompson,37.0
+full_strength,Kevin Durant,36.4
+full_strength,Jabari Smith Jr.,35.1
+full_strength,Alperen Şengün,33.3
+full_strength,Marcus Smart,28.5
+full_strength,Reed Sheppard,16.9
+full_strength,Tari Eason,16.6
+full_strength,Steven Adams,14.7
+full_strength,Bogdan Bogdanović,12.6
+full_strength,Aaron Holiday,8.9
+full_strength_roster,Kevin Durant,37.0
+full_strength_roster,Amen Thompson,36.9
+full_strength_roster,Jabari Smith Jr.,36.9
+full_strength_roster,Alperen Şengün,35.1
+full_strength_roster,Marcus Smart,30.0
+full_strength_roster,Reed Sheppard,17.8
+full_strength_roster,Tari Eason,17.5
+full_strength_roster,Steven Adams,15.5
+full_strength_roster,Bogdan Bogdanović,13.3
+report_1026,Amen Thompson,37.0
+report_1026,Alperen Şengün,37.0
+report_1026,Jabari Smith Jr.,37.0
+report_1026,Kevin Durant,36.9
+report_1026,Reed Sheppard,26.7
+report_1026,Tari Eason,26.3
+report_1026,Bogdan Bogdanović,20.0
+report_1026,Clint Capela,11.1
+report_1026,Jae'Sean Tate,8.0
+report_1030,Jabari Smith Jr.,36.5
+report_1030,Amen Thompson,36.5
+report_1030,Kevin Durant,36.3
+report_1030,Fred VanVleet,33.8
+report_1030,Tari Eason,33.7
+report_1030,Bogdan Bogdanović,25.1
+report_1030,Oscar Tshiebwe,20.3
+report_1030,Clint Capela,17.8
+report_1031,Jabari Smith Jr.,35.3
+report_1031,Amen Thompson,35.0
+report_1031,Kevin Durant,34.4
+report_1031,Fred VanVleet,32.1
+report_1031,Tari Eason,31.7
+report_1031,Bogdan Bogdanović,18.9
+report_1031,Clint Capela,18.2
+report_1031,Marcus Smart,17.3
+report_1031,Oscar Tshiebwe,17.1
+report_1031_b,Alperen Şengün,37.0
+report_1031_b,Jabari Smith Jr.,35.5
+report_1031_b,Amen Thompson,35.0
+report_1031_b,Kevin Durant,34.4
+report_1031_b,Tari Eason,31.4
+report_1031_b,Bogdan Bogdanović,17.7
+report_1031_b,Clint Capela,17.0
+report_1031_b,Marcus Smart,16.1
+report_1031_b,Oscar Tshiebwe,15.9

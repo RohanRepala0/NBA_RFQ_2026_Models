@@ -1,8 +1,9 @@
 """Turn allowlist-filtered SportsGameOdds events into table rows.
 
-Player props kept: full-game over/unders on config.STATS (points, rebounds,
-assists), one row per book and side with its stat. Combo markets
-(points+rebounds+assists and the like) are other statIDs and never match.
+Player props kept: full-game over/unders on config.ALL_STATS (points, rebounds,
+assists and the shadow stats: threes, steals, blocks, turnovers and the combos), one row
+per book and side, under our stat name (config.SGO_STAT_IDS maps it to the statID:
+threes is threePointersMade, pra is points+rebounds+assists).
 """
 from __future__ import annotations
 
@@ -16,21 +17,28 @@ from .config import book_role, is_allowed_book, team_abbr
 from .odds_math import parse_american
 from .storage import Storage, to_naive_utc
 
-STAT_ODD_RE = re.compile(rf"^(?P<stat>{'|'.join(config.STATS)})-(?P<player>.+_NBA)-game-ou-(?P<side>over|under)$")
+STAT_FROM_SGO = {sgo: ours for ours, sgo in config.SGO_STAT_IDS.items() if ours in config.ALL_STATS}
+STAT_ODD_RE = re.compile(rf"^(?P<stat>{'|'.join(re.escape(x) for x in sorted(STAT_FROM_SGO, key=len, reverse=True))})"
+                         r"-(?P<player>.+_NBA)-game-ou-(?P<side>over|under)$")
 TEAM_ENTITIES = {"home", "away", "all"}
+# results.game.<player> keys for the single stats; a combo is the sum of its parts.
+RESULT_KEYS = {"points": "points", "rebounds": "rebounds", "assists": "assists", "threes": "threePointersMade",
+               "steals": "steals", "blocks": "blocks", "turnovers": "turnovers"}
 
 
 def player_stat_side(odd_id: str, odd: dict) -> tuple[str, str, str] | None:
-    """(player_id, stat, side) if this odd is a full-game player over/under on one of config.STATS."""
+    """(player_id, stat, side) if this odd is a full-game player over/under on one of
+    config.ALL_STATS; the stat is our name (threes, pra, ...), not the statID."""
     if odd.get("statID") is not None:
-        if (odd.get("statID") in config.STATS and odd.get("periodID") == "game"
+        stat = STAT_FROM_SGO.get(odd.get("statID"))
+        if (stat is not None and odd.get("periodID") == "game"
                 and odd.get("betTypeID") == "ou" and odd.get("sideID") in ("over", "under")):
             player = odd.get("playerID") or odd.get("statEntityID")
             if player and player not in TEAM_ENTITIES:
-                return player, odd["statID"], odd["sideID"]
+                return player, stat, odd["sideID"]
         return None
     m = STAT_ODD_RE.match(odd_id)
-    return (m["player"], m["stat"], m["side"]) if m else None
+    return (m["player"], STAT_FROM_SGO[m["stat"]], m["side"]) if m else None
 
 
 def player_points_side(odd_id: str, odd: dict) -> tuple[str, str] | None:
@@ -113,15 +121,20 @@ def books_seen_rows(event: dict, ts: datetime) -> list[dict]:
 
 
 def player_stat_results(event: dict) -> dict[str, dict[str, float]]:
-    """player_id -> {stat: actual full-game value} for config.STATS, from
-    results.game.<playerID>.<stat> (fallback: the ended odd's score). Overtime counts."""
+    """player_id -> {stat: actual full-game value} for config.ALL_STATS, from
+    results.game.<playerID> (RESULT_KEYS; a combo is the sum of its parts when every part is
+    there; fallback: the ended odd's score). Overtime counts."""
     out: dict[str, dict[str, float]] = {}
     for entity, stats in ((event.get("results") or {}).get("game") or {}).items():
         if entity in TEAM_ENTITIES or not isinstance(stats, dict):
             continue
-        for stat in config.STATS:
-            if stats.get(stat) is not None:
-                out.setdefault(entity, {})[stat] = float(stats[stat])
+        for stat, key in RESULT_KEYS.items():
+            if stats.get(key) is not None:
+                out.setdefault(entity, {})[stat] = float(stats[key])
+        got = out.get(entity, {})
+        for combo, parts in config.COMBO_PARTS.items():
+            if all(x in got for x in parts):
+                got[combo] = float(sum(got[x] for x in parts))
     for odd_id, odd in (event.get("odds") or {}).items():
         hit = player_stat_side(odd_id, odd)
         if hit and hit[1] not in out.get(hit[0], {}) and odd.get("score") is not None and odd.get("ended"):
